@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use PDO;
+
 class Post extends \Core\Model
 {
     public static function getAll()
     {
-        $conn = \Core\Model::getDB();
+        $db = static::getDB();
 
-        $sql = "SELECT * FROM posts";
-        $res = mysqli_query($conn, $sql);
+        $stmt = $db->query('SELECT id, title, content FROM 
+            posts');
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return $res;
     }

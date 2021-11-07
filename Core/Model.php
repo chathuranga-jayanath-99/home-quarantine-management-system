@@ -2,6 +2,10 @@
 
 namespace Core;
 
+use PDO;
+use PDOException;
+use App\Config;
+
 abstract class Model
 {
     protected static function getDB()
@@ -9,14 +13,16 @@ abstract class Model
         static $db = null;
 
         if ($db === null) {
-            $host = 'localhost';
-            $db_name = 'mvc';
-            $db_username = 'root';
-            $db_password = '';
     
-            $conn = mysqli_connect($host, $db_username, $db_password, $db_name);
-            
-            return $conn;
+            try {
+                // $db = new PDO("mysql:host=$host;dbname=$dbname, $username, $password");
+                $dsn = 'mysql:host='.Config::DB_HOST.';dbname='.Config::DB_NAME;
+                $db = new PDO($dsn, Config::DB_USER, Config::DB_PASSWORD);
+            }
+            catch (PDOException $e) {
+                echo $e->getMessage();
+            }
         }
+        return $db;
     }
 }

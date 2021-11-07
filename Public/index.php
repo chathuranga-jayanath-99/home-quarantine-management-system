@@ -1,5 +1,7 @@
 <?php
 
+require('../App/Config.php');
+
 // Require Core
 require '../Core/Router.php';
 require '../Core/Controller.php';
