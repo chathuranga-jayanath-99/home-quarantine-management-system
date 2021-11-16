@@ -8,28 +8,35 @@
 </head>
 <body>
     
-    <h2>Log In</h2>
+    <h2>Log in</h2>
 
     <form action="<?php echo URLROOT?>/patients/register" method='POST'>
-
+        <div>
+            <label for="name">Name: </label>
+            <input type="text" name="name">
+        </div>
         <div>
             <label for="email">Email: </label>
             <input type="text" name="email">
         </div>
-
         <div>
             <label for="password">Password: </label>
             <input type="password" name="password">
         </div>
-
-
         <div>
-            <input type="submit" value="log-in">
+            <label for="confirm_password">Confirm Password: </label>
+            <input type="password" name="confirm_password">
         </div>
 
         <div>
-            <a href="<?php echo URLROOT; ?>/patients/login">Have an account? Login</a>
+            <input type="submit" value="register">
+        </div>
+
+        <div>
+            <a href="<?php echo URLROOT; ?>/doctors/login">Have an account? Login</a>
         </div>
     </form>
+
+    
 </body>
 </html>

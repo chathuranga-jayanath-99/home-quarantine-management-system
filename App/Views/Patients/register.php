@@ -33,8 +33,10 @@
         </div>
 
         <div>
-            <a href="<?php echo URLROOT; ?>/patients/login">Have an account? Login</a>
+            <a href="<?php echo URLROOT; ?>/patients/register">Have an account? Login</a>
         </div>
     </form>
+
+
 </body>
 </html>
