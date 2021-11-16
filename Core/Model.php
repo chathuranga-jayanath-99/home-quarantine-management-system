@@ -7,12 +7,13 @@ use PDOException;
 use App\Config;
 
 abstract class Model
-{
+{   
+    private static $db = null;
+
     protected static function getDB()
     {
-        static $db = null;
 
-        if ($db === null) {
+        if (self::$db === null) {
     
             try {
                 // $db = new PDO("mysql:host=$host;dbname=$dbname, $username, $password");

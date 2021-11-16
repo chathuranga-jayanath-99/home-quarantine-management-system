@@ -10,13 +10,12 @@
     
     <h2>Log In</h2>
 
-    <form action="<?php echo URLROOT?>/patients/register" method='POST'>
+    <form action="<?php echo URLROOT?>/patients/login" method='POST'>
 
         <div>
             <label for="email">Email: </label>
             <input type="text" name="email">
         </div>
-
         <div>
             <label for="password">Password: </label>
             <input type="password" name="password">
@@ -28,8 +27,10 @@
         </div>
 
         <div>
-            <a href="<?php echo URLROOT; ?>/patients/login">Have an account? Login</a>
+            <a href="<?php echo URLROOT; ?>/patients/register">Want to create an account?</a>
         </div>
     </form>
+
+
 </body>
 </html>
