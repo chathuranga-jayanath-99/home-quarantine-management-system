@@ -63,7 +63,7 @@ class Doctor extends \Core\Controller{
 
                 // Register User
                 if (DoctorModel::register($data)){
-                    
+                    flash('register_success', 'You are registered. Now you can Log in');
                     header('location: '.URLROOT.'/doctor/login');
                 }
                 else {

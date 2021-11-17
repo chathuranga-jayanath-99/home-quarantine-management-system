@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <?php flash('register_success');?>
     <h2>Log In</h2>
 
     <form action="<?php echo URLROOT?>/doctor/login" method='POST'>
