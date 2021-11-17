@@ -10,7 +10,7 @@
     
     <h2>Log In</h2>
 
-    <form action="<?php echo URLROOT?>/patients/login" method='POST'>
+    <form action="<?php echo URLROOT?>/doctor/login" method='POST'>
 
         <div>
             <label for="email">Email: </label>
@@ -27,7 +27,7 @@
         </div>
 
         <div>
-            <a href="<?php echo URLROOT; ?>/patients/register">Want to create an account?</a>
+            <a href="<?php echo URLROOT; ?>/doctor/register">Want to create an account?</a>
         </div>
     </form>
 
