@@ -14,11 +14,13 @@
 
         <div>
             <label for="email">Email: </label>
-            <input type="text" name="email">
+            <input type="text" name="email" value="<?php echo $data['email']?>">
+            <span><?php echo $data['email_err']?></span>
         </div>
         <div>
             <label for="password">Password: </label>
-            <input type="password" name="password">
+            <input type="password" name="password" value="<?php echo $data['password']?>">
+            <span><?php echo $data['password_err']?></span>
         </div>
 
 
