@@ -7,7 +7,7 @@ define('URLROOT', 'http://localhost/home-isolation-system');
 class Config {
     const DB_HOST = 'localhost';
 
-    const DB_NAME = 'mvc';
+    const DB_NAME = 'quarantine_management';
 
     const DB_USER = 'root';
 

@@ -10,15 +10,17 @@
     
     <h2>Log In</h2>
 
-    <form action="<?php echo URLROOT?>/patients/login" method='POST'>
+    <form action="<?php echo URLROOT?>/doctor/login" method='POST'>
 
         <div>
             <label for="email">Email: </label>
-            <input type="text" name="email">
+            <input type="text" name="email" value="<?php echo $data['email']?>">
+            <span><?php echo $data['email_err']?></span>
         </div>
         <div>
             <label for="password">Password: </label>
-            <input type="password" name="password">
+            <input type="password" name="password" value="<?php echo $data['password']?>">
+            <span><?php echo $data['password_err']?></span>
         </div>
 
 
@@ -27,7 +29,7 @@
         </div>
 
         <div>
-            <a href="<?php echo URLROOT; ?>/patients/register">Want to create an account?</a>
+            <a href="<?php echo URLROOT; ?>/doctor/register">Want to create an account?</a>
         </div>
     </form>
 

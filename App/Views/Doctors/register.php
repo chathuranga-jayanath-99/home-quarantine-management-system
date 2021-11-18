@@ -8,24 +8,28 @@
 </head>
 <body>
     
-    <h2>Log in</h2>
+    <h2>Create an Account</h2>
 
-    <form action="<?php echo URLROOT?>/patients/register" method='POST'>
+    <form action="<?php echo URLROOT?>/doctor/register" method='POST'>
         <div>
             <label for="name">Name: </label>
-            <input type="text" name="name">
+            <input type="text" name="name" value="<?php echo $data['name']?>">
+            <span><?php echo $data['name_err']?></span>
         </div>
         <div>
             <label for="email">Email: </label>
-            <input type="text" name="email">
+            <input type="text" name="email" value="<?php echo $data['email']?>">
+            <span><?php echo $data['email_err']?></span>
         </div>
         <div>
             <label for="password">Password: </label>
-            <input type="password" name="password">
+            <input type="password" name="password" value="<?php echo $data['password']?>">
+            <span><?php echo $data['password_err']?></span>
         </div>
         <div>
             <label for="confirm_password">Confirm Password: </label>
-            <input type="password" name="confirm_password">
+            <input type="password" name="confirm_password" value="<?php echo $data['confirm_password']?>">
+            <span><?php echo $data['confirm_password_err']?></span>
         </div>
 
         <div>
@@ -33,7 +37,7 @@
         </div>
 
         <div>
-            <a href="<?php echo URLROOT; ?>/doctors/login">Have an account? Login</a>
+            <a href="<?php echo URLROOT; ?>/doctor/login">Have an account? Login</a>
         </div>
     </form>
 
