@@ -15,11 +15,13 @@ require '../App/Controllers/Doctor.php';
 require '../App/Controllers/Home.php';
 require '../App/Controllers/Admin/Users.php';
 require '../App/Controllers/PHI.php' ;    // require the controller PHI
+require '../App/Controllers/AdultPatient.php';
 
 // Require models
 require '../App/Models/Post.php';
 require '../App/Models/DoctorModel.php';
 require '../App/Models/PHIModel.php';
+require '../App/Models/AdultPatientModel.php';
 
 $router = new Core\Router();
 
