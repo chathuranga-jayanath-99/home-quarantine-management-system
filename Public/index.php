@@ -12,6 +12,7 @@ require '../Core/Model.php';
 require '../App/Controllers/Posts.php';
 require '../App/Controllers/Patients.php';
 require '../App/Controllers/Doctor.php';
+require '../App/Controllers/ChildPatient.php';
 require '../App/Controllers/Home.php';
 require '../App/Controllers/Admin/Users.php';
 
@@ -25,6 +26,7 @@ $router = new Core\Router();
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
 $router->add('posts', ['controller' => 'Posts', 'action' => 'index']);
 $router->add('doctor', ['controller' => 'Doctor', 'action' => 'index']);
+$router->add('child-patient', ['controller' => 'ChildPatient', 'action' => 'index']);
 $router->add('{controller}/{action}');
 $router->add('{controller}/{id:\d+}/{action}');
 $router->add('admin/{controller}/{action}', ['namespace' => 'Admin']);
