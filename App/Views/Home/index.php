@@ -13,5 +13,12 @@
             <li><?php echo htmlspecialchars($color); ?></li>
         <?php endforeach;?>
     </ul>
+
+
+    <ul>
+        <li><a href="<?php echo URLROOT; ?>/doctor/login">Doctor</a></li>
+        <li><a href="">Patient</a></li>
+    </ul>
+
 </body>
 </html>

@@ -15,14 +15,18 @@ class Doctor extends \Core\Controller{
                 'email' => trim($_POST['email']),
                 'password' => trim($_POST['password']),
                 'confirm_password' => trim($_POST['confirm_password']),
-                'moh_area' => '',
-                'mobile' => '',
-                'NIC' => '',
-                'slmc_reg_no' => '',
+                'moh_area' => trim($_POST['confirm_password']),
+                'mobile' => trim($_POST['confirm_password']),
+                'NIC' => trim($_POST['confirm_password']),
+                'slmc_reg_no' => trim($_POST['confirm_password']),
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
-                'confirm_password_err' => ''
+                'confirm_password_err' => '',
+                'moh_area_err' => '',
+                'mobile_err' => '',
+                'NIC_err' => '',
+                'slmc_reg_no_err' => ''
             ];
             
             if(empty($data['name'])){
@@ -198,6 +202,15 @@ class Doctor extends \Core\Controller{
         }
         else {
             return false;
+        }
+    }
+
+    private function validate($data){
+        // check empty
+        foreach ($data as $key => $value){
+            if (empty($value)){
+                
+            }
         }
     }
 }

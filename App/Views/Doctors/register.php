@@ -33,6 +33,27 @@
         </div>
 
         <div>
+            <label for="moh-area">MOH Area: </label>
+            <input type="text" name="moh_area" value="<?php echo $data['email']?>">
+            <span><?php echo $data['moh_area_err']?></span>
+        </div>
+        <div>
+            <label for="mobile">Mobile: </label>
+            <input type="text" name="mobile" value="<?php echo $data['email']?>">
+            <span><?php echo $data['mobile_err']?></span>
+        </div>
+        <div>
+            <label for="NIC">NIC: </label>
+            <input type="text" name="NIC" value="<?php echo $data['email']?>">
+            <span><?php echo $data['NIC_err']?></span>
+        </div>
+        <div>
+            <label for="slmc_reg_no">SLMS reg no: </label>
+            <input type="text" name="slmc_reg_no" value="<?php echo $data['email']?>">
+            <span><?php echo $data['slmc_reg_no_err']?></span>
+        </div>
+
+        <div>
             <input type="submit" value="register">
         </div>
 
