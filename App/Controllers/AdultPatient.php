@@ -1,6 +1,9 @@
 <?php
 
+namespace App\Controllers;
+
 use \Core\View;
+use App\Models\AdultPatientModel;
 
 class Adultpatient extends \Core\Controller{
 
