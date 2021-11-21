@@ -202,7 +202,12 @@ class ChildPatient extends Patient {
     }
 
     public function indexAction() {    
-
+        if ($this->isLoggedIn()){
+            View::render('ChildPatients/index.php', []);
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
     }
 
     private function createSession($childPatient){
