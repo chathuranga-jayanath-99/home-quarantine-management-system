@@ -18,6 +18,12 @@
             <span><?php echo $data['name_err']?></span>
         </div>
         <div>
+            <label for="NIC">Guardian NIC: </label>
+            <input type="text" name="NIC" 
+                value="<?php echo $data['NIC']?>" readonly>
+            <span><?php echo $data['nic_err']?></span>
+        </div>
+        <div>
             <label for="email">Email: </label>
             <input type="text" name="email" 
                 value="<?php echo $data['email']?>">
@@ -37,7 +43,7 @@
         </div>
 
         <div>
-            <input type="submit" value="register">
+            <input type="submit" value="Register">
         </div>
     </form>
 
