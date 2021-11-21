@@ -21,3 +21,4 @@ function flash($name = '', $message='', $class=''){
         }
     }
 }
+
