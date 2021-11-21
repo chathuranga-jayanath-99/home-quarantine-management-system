@@ -11,20 +11,20 @@ require '../Core/Model.php';
 // Require the controller classes
 require '../App/Controllers/Posts.php';
 require '../App/Controllers/Doctor.php';
+require '../App/Controllers/Patient.php';
 require '../App/Controllers/ChildPatient.php';
 require '../App/Controllers/Home.php';
 require '../App/Controllers/Admin/Users.php';
 require '../App/Controllers/PHI.php' ;    // require the controller PHI
 require '../App/Controllers/AdultPatient.php';
-require '../App/Controllers/Patient.php';
 
 // Require models
 require '../App/Models/Post.php';
 require '../App/Models/DoctorModel.php';
+require '../App/Models/PatientModel.php';
 require '../App/Models/ChildPatientModel.php';
 require '../App/Models/PHIModel.php';
 require '../App/Models/AdultPatientModel.php';
-require '../App/Models/PatientModel.php';
 
 $router = new Core\Router();
 
