@@ -96,7 +96,11 @@ class Doctor extends \Core\Controller{
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
-                'confirm_password_err' => ''
+                'confirm_password_err' => '',
+                'moh_area_err' => '',
+                'mobile_err' => '',
+                'NIC_err' => '',
+                'slmc_reg_no_err' => ''
                  
             ];
 
