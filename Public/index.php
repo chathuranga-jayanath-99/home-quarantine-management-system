@@ -19,6 +19,7 @@ require '../App/Controllers/Admin/Users.php';
 // Require models
 require '../App/Models/Post.php';
 require '../App/Models/DoctorModel.php';
+require '../App/Models/ChildPatientModel.php';
 
 $router = new Core\Router();
 
