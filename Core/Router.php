@@ -4,7 +4,10 @@ namespace Core;
 
 class Router
 {
-    protected $routes = [];
+    private $routes = [];
+
+    private $params = [];
+
 
     public function add($route, $params = [])
     {   

@@ -127,12 +127,12 @@ class PHI extends \Core\Controller{
             if (empty($data['email_err']) && empty($data['password_err'])){
                 
                 // check user exists
-                $doctor = DoctorModel::login($data['email'], $data['password']);
+                $curr_phi = PHIModel::login($data['email'], $data['password']);
                 
-                if($doctor){
+                if($curr_phi){
                     // log in success
-                    $this->createSession($doctor);
-                    header('location: '.URLROOT.'/doctor');
+                    $this->createSession($curr_phi);
+                    header('location: '.URLROOT.'/phi/register');
                 
                 }
                 else{
@@ -143,7 +143,7 @@ class PHI extends \Core\Controller{
                 }
                 
             }
-            View::render('Doctors/login.php', ['data' => $data]);
+            View::render('PHI/login.php', ['data' => $data]);
         }else {
         
             $data = [
@@ -154,7 +154,7 @@ class PHI extends \Core\Controller{
                 
             ];
             // load view
-            View::render('Doctors/login.php', ['data' => $data]);
+            View::render('PHI/login.php', ['data' => $data]);
         }
     }
 

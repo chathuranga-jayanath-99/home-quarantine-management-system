@@ -15,14 +15,18 @@ class Doctor extends \Core\Controller{
                 'email' => trim($_POST['email']),
                 'password' => trim($_POST['password']),
                 'confirm_password' => trim($_POST['confirm_password']),
-                'moh_area' => '',
-                'mobile' => '',
-                'NIC' => '',
-                'slmc_reg_no' => '',
+                'moh_area' => trim($_POST['confirm_password']),
+                'mobile' => trim($_POST['confirm_password']),
+                'NIC' => trim($_POST['confirm_password']),
+                'slmc_reg_no' => trim($_POST['confirm_password']),
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
-                'confirm_password_err' => ''
+                'confirm_password_err' => '',
+                'moh_area_err' => '',
+                'mobile_err' => '',
+                'NIC_err' => '',
+                'slmc_reg_no_err' => ''
             ];
             
             if(empty($data['name'])){
@@ -140,7 +144,8 @@ class Doctor extends \Core\Controller{
                 
             }
             View::render('Doctors/login.php', ['data' => $data]);
-        }else {
+        }
+        else {
         
             $data = [
                 'email' => '',
@@ -178,11 +183,30 @@ class Doctor extends \Core\Controller{
 
     public function checkPatientsAction(){
         if ($this->isLoggedIn()){
-            $patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);
-            View::render('Doctors/check-patients.php', ['patients' => $patients]);
+            $typed_patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);
+            View::render('Doctors/check-patients.php', ['typed_patients' => $typed_patients]);
         }
         else {
             echo 'not logged in';
+        }
+    }
+
+    public function checkPatientAction(){
+        if ($this->isLoggedIn()){
+            
+            if ($_GET['id'] && $_GET['type']){
+                $patinetId = $_GET['id'];
+                $patientType = $_GET['type'];
+                $patient = DoctorModel::getAssingedPatient($patinetId, $patientType);
+                View::render('Doctors/check-patient.php', ['patient' => $patient]);
+            }
+            else {
+
+            }
+
+        }
+        else {
+            echo "not logged in";
         }
     }
 
@@ -198,6 +222,15 @@ class Doctor extends \Core\Controller{
         }
         else {
             return false;
+        }
+    }
+
+    private function validate($data){
+        // check empty
+        foreach ($data as $key => $value){
+            if (empty($value)){
+                
+            }
         }
     }
 }
