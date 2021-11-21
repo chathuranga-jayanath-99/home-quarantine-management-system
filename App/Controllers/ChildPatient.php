@@ -141,12 +141,61 @@ class ChildPatient extends \Core\Controller{
     }
 
     public function loginAction() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $data = [
+                'email' => trim($_POST['email']),
+                'password' => trim($_POST['password']),
+                'email_err' => '',
+                'password_err' => ''
+                
+            ];
+            
+            if(empty($data['email'])){
+                $data['email_err'] = 'Please enter email';
+            }
+            if(empty($data['password'])){
+                $data['password_err'] = 'Please enter password';
+            }
+            if (empty($data['email_err']) && empty($data['password_err'])){
+                
+                // check user exists
+                $childPatient = ChildPatientModel::login($data['email'], $data['password']);
+                
+                if($childPatient){
+                    // log in success
+                    $this->createSession($childPatient);
+                    header('location: '.URLROOT.'/child-patient');
+                
+                }
+                else{
+                    // username or email is wrong
+                    $data['email_err'] = 'User not found';
+                }
+                
+            }
+            View::render('ChildPatients/login.php', ['data' => $data]);
+        }else {
         
+            $data = [
+                'email' => '',
+                'password' => '',
+                'email_err' => '',
+                'password_err' => ''
+                
+            ];
+            // load view
+            View::render('ChildPatients/login.php', ['data' => $data]);
+        }
     }
 
     public function logoutAction()
     {  
-        
+        unset($_SESSION['child_id']);
+        unset($_SESSION['guardian_nic']);
+        unset($_SESSION['child_email']);
+        unset($_SESSION['child_name']);
+        session_destroy();
+        header('location: '.URLROOT.'/child-patient/login');
     }
 
     public function indexAction() {    
@@ -154,11 +203,19 @@ class ChildPatient extends \Core\Controller{
     }
 
     private function createSession($childPatient){
-        
+        $_SESSION['child_id'] = $childPatient->id;
+        $_SESSION['guardian_nic'] = $childPatient->guardian_id;
+        $_SESSION['child_email'] = $childPatient->email;
+        $_SESSION['child_name'] = $childPatient->name;
     }
 
     public function isLoggedIn(){
-        
+        if(isset($_SESSION['child_id'])){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public function isValidNIC($data) {
