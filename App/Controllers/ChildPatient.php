@@ -8,53 +8,55 @@ use App\Models\ChildPatientModel;
 class ChildPatient extends Patient {
 
     public function registerAction() {
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        //$PHI = new PHI([]);
+        //if(isset($_SESSION['phi_id'])) {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            if(trim($_POST['id_checked']) === 'yes') {
-                if ($_POST['new'] === 'no') {
-                    $data = [
-                        'name'                  => trim($_POST['name']),
-                        'email'                 => trim($_POST['email']),
-                        'password'              => trim($_POST['password']),
-                        'confirm_password'      => trim($_POST['confirm_password']),
-                        'mobile'                => '',
-                        'NIC'                   => strtoupper(trim($_POST['NIC'])),
-                        'name_err'              => '',
-                        'email_err'             => '',
-                        'password_err'          => '',
-                        'confirm_password_err'  => '',
-                        'id_checked'            => 'yes',
-                        'nic_err'               => '',
-                    ];
+                if(trim($_POST['id_checked']) === 'yes') {
+                    if ($_POST['new'] === 'no') {
+                        $data = [
+                            'name'                  => trim($_POST['name']),
+                            'email'                 => trim($_POST['email']),
+                            'password'              => trim($_POST['password']),
+                            'confirm_password'      => trim($_POST['confirm_password']),
+                            'mobile'                => '',
+                            'NIC'                   => strtoupper(trim($_POST['NIC'])),
+                            'name_err'              => '',
+                            'email_err'             => '',
+                            'password_err'          => '',
+                            'confirm_password_err'  => '',
+                            'id_checked'            => 'yes',
+                            'nic_err'               => '',
+                        ];
 
-                    if(empty($data['name'])){
-                        $data['name_err'] = 'Please enter name';
-                    }
-
-                    if(empty($data['email'])){
-                        $data['email_err'] = 'Please enter email';
-                    }
-                    else {
-                        if (ChildPatientModel::findUserByEmail($data['email'])){
-                            $data['email_err'] = 'Email is already taken';
+                        if(empty($data['name'])){
+                            $data['name_err'] = 'Please enter name';
                         }
-                    }
-                    
-                    if(empty($data['password'])){
-                        $data['password_err'] = 'Please enter password';
-                    }
-                    else if(strlen($data['password']) < 1){
-                        $data['password_err'] = 'Password must be at least 6 characters';
-                    }
 
-                    if(empty($data['confirm_password'])){
-                        $data['confirm_password_err'] = 'Please confirm password';
-                    }
-                    else {
-                        if($data['password'] != $data['confirm_password']){
-                            $data['confirm_password_err'] = 'Passwords do not match';
+                        if(empty($data['email'])){
+                            $data['email_err'] = 'Please enter email';
                         }
-                    }
+                        else {
+                            if (ChildPatientModel::findUserByEmail($data['email'])){
+                                $data['email_err'] = 'Email is already taken';
+                            }
+                        }
+                        
+                        if(empty($data['password'])){
+                            $data['password_err'] = 'Please enter password';
+                        }
+                        else if(strlen($data['password']) < 1){
+                            $data['password_err'] = 'Password must be at least 6 characters';
+                        }
+
+                        if(empty($data['confirm_password'])){
+                            $data['confirm_password_err'] = 'Please confirm password';
+                        }
+                        else {
+                            if($data['password'] != $data['confirm_password']){
+                                $data['confirm_password_err'] = 'Passwords do not match';
+                            }
+                        }
 
                         if (empty($data['name_err']) && empty($data['email_err']) &&
                         empty($data['password_err']) && empty($data['confirm_password_err'])){
@@ -73,13 +75,27 @@ class ChildPatient extends Patient {
                             die('SUCCESS');
                         }
                         else {
-                            die('something went wrong');
+                            // load view with errors
+                            View::render('ChildPatient/post_registration.php', ['data'=> $data]);
                         }
-                        die('SUCCESS');
-                    }
-                    else {
-                        // load view with errors
-                        View::render('ChildPatient/post_registration.php', ['data'=> $data]);
+                    } else {
+                        $data = [
+                            'name'                  => '',
+                            'email'                 => '',
+                            'password'              => '',
+                            'confirm_password'      => '',
+                            'mobile'                => '',
+                            'NIC'                   => strtoupper(trim($_POST['NIC'])),
+                            'name_err'              => '',
+                            'email_err'             => '',
+                            'password_err'          => '',
+                            'confirm_password_err'  => '',
+                            'id_checked'            => 'yes',
+                            'nic_err'               => ''
+                        ];
+            
+                        // load view
+                        View::render('ChildPatients/post_registration.php', ['data'=> $data]);
                     }
                 } else {
                     $data = [
@@ -93,21 +109,30 @@ class ChildPatient extends Patient {
                         'email_err'             => '',
                         'password_err'          => '',
                         'confirm_password_err'  => '',
-                        'id_checked'            => 'yes',
+                        'id_checked'            => 'no',
                         'nic_err'               => ''
                     ];
-        
-                    // load view
-                    View::render('ChildPatients/post_registration.php', ['data'=> $data]);
+                    if (empty($data['NIC'])) {
+                        $data['id_err'] = 'Please enter guardian NIC';
+                    } else {
+                        if (parent::isValidNIC($data['NIC'])) {
+                            $childrenData = ChildPatientModel::searchByGuardianID($data['NIC']);
+                            View::render('ChildPatients/register.php', ['childrenData' => $childrenData, 'nic' => $data['NIC']]);
+                        } else {
+                            $data['nic_err'] = 'Invalid NIC';
+                            View::render('ChildPatients/pre_registration.php', ['data'=> $data]);
+                        }
+                    }
                 }
-            } else {
+            }
+            else {
                 $data = [
                     'name'                  => '',
                     'email'                 => '',
                     'password'              => '',
                     'confirm_password'      => '',
                     'mobile'                => '',
-                    'NIC'                   => strtoupper(trim($_POST['NIC'])),
+                    'NIC'                   => '',
                     'name_err'              => '',
                     'email_err'             => '',
                     'password_err'          => '',
@@ -115,38 +140,23 @@ class ChildPatient extends Patient {
                     'id_checked'            => 'no',
                     'nic_err'               => ''
                 ];
-                if (empty($data['NIC'])) {
-                    $data['id_err'] = 'Please enter guardian NIC';
-                } else {
-                    if (parent::isValidNIC($data['NIC'])) {
-                        $childrenData = ChildPatientModel::searchByGuardianID($data['NIC']);
-                        View::render('ChildPatients/register.php', ['childrenData' => $childrenData, 'nic' => $data['NIC']]);
-                    } else {
-                        $data['nic_err'] = 'Invalid NIC';
-                        View::render('ChildPatients/pre_registration.php', ['data'=> $data]);
-                    }
-                }
-            }
-        }
-        else {
-            $data = [
-                'name'                  => '',
-                'email'                 => '',
-                'password'              => '',
-                'confirm_password'      => '',
-                'mobile'                => '',
-                'NIC'                   => '',
-                'name_err'              => '',
-                'email_err'             => '',
-                'password_err'          => '',
-                'confirm_password_err'  => '',
-                'id_checked'            => 'no',
-                'nic_err'               => ''
-            ];
 
-            // load view
-            View::render('ChildPatients/pre_registration.php', ['data'=> $data]);
-        }
+                // load view
+                View::render('ChildPatients/pre_registration.php', ['data'=> $data]);
+            }
+        /*} else if (isset($_SESSION['child_id'])) {
+            header('location: '.URLROOT.'/child-patient');
+            die();
+        } else if (isset($_SESSION['doctor_id'])) {
+            header('location: '.URLROOT.'/doctor');
+            die();
+        } else if (isset($_SESSION['adPatient_id'])) {
+            header('location: '.URLROOT.'/adult-patient');
+            die();
+        } else {
+            header('location: '.URLROOT);
+            die();
+        }*/
     }
 
     public function loginAction() {
@@ -208,6 +218,12 @@ class ChildPatient extends Patient {
     }
 
     public function indexAction() {    
+        if ($this->isLoggedIn()){
+            View::render('ChildPatients/index.php', []);
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
     }
 
     private function createSession($childPatient){
