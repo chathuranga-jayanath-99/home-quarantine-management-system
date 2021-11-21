@@ -20,7 +20,8 @@ class ChildPatientModel extends PatientModel {
             'guardian_id'   =>  $data['NIC']
         ]);
         if ($res) {
-            return true;
+            $id = $db->lastInsertId();
+            return $id;
         }
         return false;
     }
@@ -63,6 +64,35 @@ class ChildPatientModel extends PatientModel {
         $stmt->execute(['guardian_id' => $guardianID]);
         $res = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $res;
+    }
+
+    public static function searchByIDAndGuardianID($id, $guardianID) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_child_patient 
+                WHERE guardian_id=:guardian_id and id=:id';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            'guardian_id' => $guardianID,
+            'id'          => $id
+        ]);
+        $res = $stmt->fetch(PDO::FETCH_OBJ);
+        return $res;
+    }
+
+    public static function changeState($id, $guardianID, $state) {
+        $db = static::getDB();
+        $sql = 'UPDATE TABLE tbl_child_patient 
+                SET state=:cur_state
+                WHERE id=:Id AND guardian_id=:guardianId';
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':cur_state', "%{$state}%");
+        $stmt->bindParam(':guardianId', "%{$guardianID}%");
+        $stmt->bindParam(':Id', $id, PDO::PARAM_INT);
+        $res = $stmt->execute();
+        if ($res) {
+            return true;
+        }
+        return false;
     }
 
 }

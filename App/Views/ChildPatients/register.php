@@ -21,14 +21,14 @@
                         <div>
                             <h6 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">You can either activate one of the following existing accounts or create a new account.</h6>
                         </div>
-                    <form action="<?php echo URLROOT?>/child-patient/activate" method="POST">
+                    <form action="<?php echo URLROOT?>/child-patient/active" method="GET">
                         <div>
                         <?php 
                         $cnt = 0;
                         foreach ($childrenData as $childData) {
                             if ($childData->state === 'inactive') {
                                 ?>
-                                    <input class="form-check-input" type="radio" name="child" value="<?php echo $childData->id ?>">
+                                    <input class="form-check-input" type="radio" name="id" value="<?php echo $childData->id ?>">
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="child"><?php echo $childData->name ?></label>
                                     </span>
@@ -36,7 +36,7 @@
                                 $cnt++;
                             } else {
                                 ?>
-                                    <input class="form-check-input" type="radio" name="child" value="<?php echo $childData->id ?> " disabled>
+                                    <input class="form-check-input" type="radio" name="id" value="<?php echo $childData->id ?> " disabled>
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="child"><?php echo $childData->name ?></label>
                                     </span>
@@ -46,7 +46,7 @@
                         
                         ?>
                         </div>
-                            <input type="hidden" name="NIC" value="<?php echo $nic ?>">
+                            <input type="hidden" name="nic" value="<?php echo $nic ?>">
                         <?php
                         if($cnt > 0) {
                             ?>

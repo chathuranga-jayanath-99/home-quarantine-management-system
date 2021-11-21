@@ -65,8 +65,9 @@ class ChildPatient extends Patient {
                             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
                             // Register User
-                            if (ChildPatientModel::register($data)){
-                                header('location: '.URLROOT.'/child-patient/login');
+                            $id = ChildPatientModel::register($data);
+                            if ($id) {
+                                header('location: '.URLROOT.'/child-patient/active?id='.$id.'&nic='.$data['NIC']);
                             }
                             else {
                                 die('something went wrong');
@@ -238,6 +239,26 @@ class ChildPatient extends Patient {
         }
         else {
             return false;
+        }
+    }
+
+    public function activeAction() {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $id = $_GET['id'];
+            $guardianID = $_GET['nic'];
+            $childObj = ChildPatientModel::searchByIDAndGuardianID($id, $guardianID);
+            View::render('ChildPatients/active.php', ['childObj' => $childObj]);
+        } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_POST['id'];
+            $guardianID = $_POST['nic'];
+            $state = $_POST['act'];
+            echo $id." ".$guardianID." ".$state;
+            if(ChildPatientModel::searchByIDAndGuardianID($id, $guardianID, $state)) {
+                echo 'Successful';
+                die();
+            } else {
+                echo 'Failed';
+            }
         }
     }
 }
