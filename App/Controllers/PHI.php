@@ -1,34 +1,30 @@
 <?php
-
 namespace App\Controllers;
 
-use \Core\View;
-use App\Models\DoctorModel;
+use \Core\View ;
+use App\Models\PHIModel;
 
-class Doctor extends \Core\Controller{
+class PHI extends \Core\Controller{
 
-    public function registerAction()
-    {
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    public function registerAction(){
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = [
-                'name' => trim($_POST['name']),
+                'name'  => trim($_POST['name']),
                 'email' => trim($_POST['email']),
                 'password' => trim($_POST['password']),
                 'confirm_password' => trim($_POST['confirm_password']),
-                'moh_area' => trim($_POST['confirm_password']),
-                'mobile' => trim($_POST['confirm_password']),
-                'NIC' => trim($_POST['confirm_password']),
-                'slmc_reg_no' => trim($_POST['confirm_password']),
+                'moh_area' => '',
+                'mobile' => '',
+                'NIC' => '',
+                //'slmc_reg_no' => '',
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
-                'confirm_password_err' => '',
-                'moh_area_err' => '',
-                'mobile_err' => '',
-                'NIC_err' => '',
-                'slmc_reg_no_err' => ''
+                'confirm_password_err' => ''
             ];
-            
+
+
             if(empty($data['name'])){
                 $data['name_err'] = 'Please enter name';
             }
@@ -37,7 +33,7 @@ class Doctor extends \Core\Controller{
                 $data['email_err'] = 'Please enter email';
             }
             else {
-                if (DoctorModel::findUserByEmail($data['email'])){
+                if (PHIModel::findUserByEmail($data['email'])){
                     $data['email_err'] = 'Email is already taken';
                 }
             }
@@ -66,9 +62,9 @@ class Doctor extends \Core\Controller{
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
                 // Register User
-                if (DoctorModel::register($data)){
+                if (PHIModel::register($data)){
                     
-                    header('location: '.URLROOT.'/doctor/login');
+                    header('location: '.URLROOT.'/PHI/login'); // check
                 }
                 else {
                     die('something went wrong');
@@ -80,9 +76,11 @@ class Doctor extends \Core\Controller{
             }
             else {
                 // load view with errors
-                View::render('Doctors/register.php', ['data'=> $data]);
+                View::render('PHI/register.php', ['data'=> $data]);
             }
+
         }
+
         else {
             $data = [
                 'name' => '',
@@ -96,16 +94,14 @@ class Doctor extends \Core\Controller{
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
-                'confirm_password_err' => '',
-                'moh_area_err' => '',
-                'mobile_err' => '',
-                'NIC_err' => '',
-                'slmc_reg_no_err' => ''
+                'confirm_password_err' => ''
                  
             ];
 
             // load view
-            View::render('Doctors/register.php', ['data'=> $data]);
+            View::render('PHI/register.php', ['data'=> $data]);
+
+
         }
     }
 
@@ -131,12 +127,12 @@ class Doctor extends \Core\Controller{
             if (empty($data['email_err']) && empty($data['password_err'])){
                 
                 // check user exists
-                $doctor = DoctorModel::login($data['email'], $data['password']);
+                $curr_phi = PHIModel::login($data['email'], $data['password']);
                 
-                if($doctor){
+                if($curr_phi){
                     // log in success
-                    $this->createSession($doctor);
-                    header('location: '.URLROOT.'/doctor');
+                    $this->createSession($curr_phi);
+                    header('location: '.URLROOT.'/phi/register');
                 
                 }
                 else{
@@ -147,9 +143,8 @@ class Doctor extends \Core\Controller{
                 }
                 
             }
-            View::render('Doctors/login.php', ['data' => $data]);
-        }
-        else {
+            View::render('PHI/login.php', ['data' => $data]);
+        }else {
         
             $data = [
                 'email' => '',
@@ -159,9 +154,10 @@ class Doctor extends \Core\Controller{
                 
             ];
             // load view
-            View::render('Doctors/login.php', ['data' => $data]);
+            View::render('PHI/login.php', ['data' => $data]);
         }
     }
+
 
     public function logoutAction()
     {  
@@ -187,30 +183,11 @@ class Doctor extends \Core\Controller{
 
     public function checkPatientsAction(){
         if ($this->isLoggedIn()){
-            $typed_patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);
-            View::render('Doctors/check-patients.php', ['typed_patients' => $typed_patients]);
+            $patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);
+            View::render('Doctors/check-patients.php', ['patients' => $patients]);
         }
         else {
             echo 'not logged in';
-        }
-    }
-
-    public function checkPatientAction(){
-        if ($this->isLoggedIn()){
-            
-            if ($_GET['id'] && $_GET['type']){
-                $patinetId = $_GET['id'];
-                $patientType = $_GET['type'];
-                $patient = DoctorModel::getAssingedPatient($patinetId, $patientType);
-                View::render('Doctors/check-patient.php', ['patient' => $patient]);
-            }
-            else {
-
-            }
-
-        }
-        else {
-            echo "not logged in";
         }
     }
 
@@ -229,12 +206,8 @@ class Doctor extends \Core\Controller{
         }
     }
 
-    private function validate($data){
-        // check empty
-        foreach ($data as $key => $value){
-            if (empty($value)){
-                
-            }
-        }
-    }
+
+
+
+    
 }
