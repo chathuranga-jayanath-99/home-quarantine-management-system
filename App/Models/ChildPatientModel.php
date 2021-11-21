@@ -81,14 +81,16 @@ class ChildPatientModel extends PatientModel {
 
     public static function changeState($id, $guardianID, $state) {
         $db = static::getDB();
-        $sql = 'UPDATE TABLE tbl_child_patient 
-                SET state=:cur_state
-                WHERE id=:Id AND guardian_id=:guardianId';
+        echo $id." ".$guardianID." ".$state;
+        $sql = 'UPDATE tbl_child_patient 
+                SET state=:state
+                WHERE guardian_id=:guardian_id and id=:id';
         $stmt = $db->prepare($sql);
-        $stmt->bindParam(':cur_state', "%{$state}%");
-        $stmt->bindParam(':guardianId', "%{$guardianID}%");
-        $stmt->bindParam(':Id', $id, PDO::PARAM_INT);
-        $res = $stmt->execute();
+        $res = $stmt->execute([
+            'state'       => $state,
+            'guardian_id' => $guardianID,
+            'id'          => $id
+        ]);
         if ($res) {
             return true;
         }

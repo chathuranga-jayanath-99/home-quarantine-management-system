@@ -252,8 +252,10 @@ class ChildPatient extends Patient {
             $id = $_POST['id'];
             $guardianID = $_POST['nic'];
             $state = $_POST['act'];
-            echo $id." ".$guardianID." ".$state;
-            if(ChildPatientModel::searchByIDAndGuardianID($id, $guardianID, $state)) {
+            $rows = ChildPatientModel::changeState($id, $guardianID, $state);
+            var_dump($rows);
+            echo $id." ".$guardianID." ".$state." rows "." bshc";
+            if($rows>0) {
                 echo 'Successful';
                 die();
             } else {
