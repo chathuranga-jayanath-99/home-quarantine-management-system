@@ -10,7 +10,9 @@ class DoctorModel extends \Core\Model{
 
         $db = static::getDB();
 
-        $sql = 'INSERT INTO tbl_doctor (name, email, password) values (:name, :email, :password)';
+        $sql = 'INSERT INTO tbl_doctor 
+        (name, email, password, moh_area) values 
+        (:name, :email, :password)';
         $stmt = $db->prepare($sql);
         $res = $stmt->execute([
             'name'=>$data['name'],

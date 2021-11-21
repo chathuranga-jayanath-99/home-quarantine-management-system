@@ -6,12 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<<<<<<< HEAD
+=======
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+>>>>>>> master
 </head>
 
 <body>
 
+<<<<<<< HEAD
+<section class="vh-100" style="background-color: #eee;">
+=======
 <section class="vh-auto" style="background-color: #eee;">
+>>>>>>> master
   <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-lg-12 col-xl-10">
@@ -25,6 +32,13 @@
                 <form class="mx-1 mx-md-4" action="<?php echo URLROOT?>/PHI/register" method='POST'>
 
                   <div class="d-flex flex-row align-items-center mb-4">
+<<<<<<< HEAD
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i> 
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" name="name" value="<?php echo $data['name']?>" class="form-control" />
+                      <label class="form-label" for="name">Name</label>
+                      <span><?php echo $data['name_err']?></span>
+=======
                     <i class="fa fa-user fa-lg me-3 fa-fw"></i>
                      
                     <div class="form-outline flex-fill mb-0">
@@ -32,19 +46,35 @@
                       <input type="text" name="name" value="<?php echo $data['name']?>" class="form-control" />
                       <span style="color:red"><?php echo $data['name_err']?></span>
                       
+>>>>>>> master
                     </div>
                   </div>
 
                   <div class="d-flex flex-row align-items-center mb-4">
+<<<<<<< HEAD
+                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" name="email" value="<?php echo $data['email']?>" class="form-control" />
+                      <label class="form-label" for="email">Email Address</label>
+                      <span><?php echo $data['email_err']?></span>
+=======
                     <i class="fa fa-envelope fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="email">Email Address</label>
                       <input type="text" name="email" value="<?php echo $data['email']?>" class="form-control" />
                       <span style="color:red"><?php echo $data['email_err']?></span>
+>>>>>>> master
                     </div>
                   </div>
 
                   <div class="d-flex flex-row align-items-center mb-4">
+<<<<<<< HEAD
+                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="password" name="password" value="<?php echo $data['password']?>" class="form-control" />
+                      <label class="form-label" for="password">Password</label>
+                      <span><?php echo $data['password_err']?></span>
+=======
                     <i class="fa fa-hospital-o fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="moh_area">MOH Area</label>
@@ -92,10 +122,32 @@
                       <input type="password" name="password" value="<?php echo $data['password']?>" class="form-control" />
                       
                       <span style="color:red"><?php echo $data['password_err']?></span>
+>>>>>>> master
                     </div>
                   </div>
 
                   <div class="d-flex flex-row align-items-center mb-4">
+<<<<<<< HEAD
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="password" name="confirm_password" value="<?php echo $data['confirm_password']?>" class="form-control" />
+                      <label class="form-label" for="confirm_password">Confirm your password</label>
+                      <span><?php echo $data['confirm_password_err']?></span>
+                    </div>
+                  </div>
+
+                  <!-- <div class="form-check d-flex justify-content-center mb-5">
+                    <input
+                      class="form-check-input me-2"
+                      type="checkbox"
+                      value=""
+                      id="form2Example3c"
+                    />
+                    <label class="form-check-label" for="form2Example3">
+                      I agree all statements in <a href="#!">Terms of service</a>
+                    </label>
+                  </div> -->
+=======
                     <i class="fa fa-lock fa-lg me-3 fa-fw"></i>
                     
                     <div class="form-outline flex-fill mb-0">
@@ -106,6 +158,7 @@
                     </div>
                   </div>
 
+>>>>>>> master
 
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                      <!-- <button type="button" class="btn btn-primary btn-lg" value="register">Register</button>  -->
@@ -119,7 +172,11 @@
 
                 
 
+<<<<<<< HEAD
+                 <img src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-registration/draw1.png" class="img-fluid" alt="Sample image"> 
+=======
                  <img src="https://cdn.dribbble.com/users/1475931/screenshots/10848109/media/cceef0db52d353328115239e84f2b7b3.png" width=700 height=700 class="img-fluid" alt="Sample image"> 
+>>>>>>> master
 
               </div>
             </div>

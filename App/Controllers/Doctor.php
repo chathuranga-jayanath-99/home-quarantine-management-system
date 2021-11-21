@@ -16,15 +16,16 @@ class Doctor extends \Core\Controller{
                 'password' => trim($_POST['password']),
                 'confirm_password' => trim($_POST['confirm_password']),
                 'moh_area' => trim($_POST['confirm_password']),
-                'mobile' => trim($_POST['confirm_password']),
+                'contact_no' => trim($_POST['confirm_password']),
                 'NIC' => trim($_POST['confirm_password']),
                 'slmc_reg_no' => trim($_POST['confirm_password']),
+                'assigned_patients' => 0,
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
                 'confirm_password_err' => '',
                 'moh_area_err' => '',
-                'mobile_err' => '',
+                'contact_no_err' => '',
                 'NIC_err' => '',
                 'slmc_reg_no_err' => ''
             ];
@@ -180,7 +181,7 @@ class Doctor extends \Core\Controller{
             View::render('Doctors/index.php', ['count' => sizeof($patients)]);
         }
         else {
-            echo 'not logged in';
+            $this->loginAction();
         }
                 
     }
@@ -191,7 +192,7 @@ class Doctor extends \Core\Controller{
             View::render('Doctors/check-patients.php', ['typed_patients' => $typed_patients]);
         }
         else {
-            echo 'not logged in';
+            $this->loginAction();
         }
     }
 
@@ -204,15 +205,16 @@ class Doctor extends \Core\Controller{
                 $patient = DoctorModel::getAssingedPatient($patinetId, $patientType);
                 View::render('Doctors/check-patient.php', ['patient' => $patient]);
             }
-            else {
-
+            else{
+                $this->loginAction();
             }
 
         }
         else {
-            echo "not logged in";
+            $this->loginAction();
         }
     }
+
 
     private function createSession($doctor){
         $_SESSION['doctor_id'] = $doctor->id;
@@ -224,6 +226,7 @@ class Doctor extends \Core\Controller{
         if(isset($_SESSION['doctor_id'])){
             return true;
         }
+
         else {
             return false;
         }
