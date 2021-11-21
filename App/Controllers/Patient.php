@@ -5,7 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\Post;
 
-abstract class Patients extends \Core\Controller {
+abstract class Patient extends \Core\Controller {
 
     public function __construct() {
         
