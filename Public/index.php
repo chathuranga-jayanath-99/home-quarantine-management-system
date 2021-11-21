@@ -13,7 +13,7 @@ require '../App/Controllers/Posts.php';
 require '../App/Controllers/Patients.php';
 require '../App/Controllers/Doctor.php';
 require '../App/Controllers/Home.php';
-require '../App/Controllers/Admin/Users.php';
+require '../App/Controllers/Admin/User.php';
 
 // Require models
 require '../App/Models/Post.php';

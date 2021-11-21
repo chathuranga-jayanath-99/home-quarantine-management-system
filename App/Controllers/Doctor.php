@@ -144,7 +144,8 @@ class Doctor extends \Core\Controller{
                 
             }
             View::render('Doctors/login.php', ['data' => $data]);
-        }else {
+        }
+        else {
         
             $data = [
                 'email' => '',
@@ -182,11 +183,30 @@ class Doctor extends \Core\Controller{
 
     public function checkPatientsAction(){
         if ($this->isLoggedIn()){
-            $patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);
-            View::render('Doctors/check-patients.php', ['patients' => $patients]);
+            $typed_patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);
+            View::render('Doctors/check-patients.php', ['typed_patients' => $typed_patients]);
         }
         else {
             echo 'not logged in';
+        }
+    }
+
+    public function checkPatientAction(){
+        if ($this->isLoggedIn()){
+            
+            if ($_GET['id'] && $_GET['type']){
+                $patinetId = $_GET['id'];
+                $patientType = $_GET['type'];
+                $patient = DoctorModel::getAssingedPatient($patinetId, $patientType);
+                View::render('Doctors/check-patient.php', ['patient' => $patient]);
+            }
+            else {
+
+            }
+
+        }
+        else {
+            echo "not logged in";
         }
     }
 
