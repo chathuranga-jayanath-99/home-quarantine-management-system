@@ -132,7 +132,7 @@ class PHI extends \Core\Controller{
                 if($curr_phi){
                     // log in success
                     $this->createSession($curr_phi);
-                    header('location: '.URLROOT.'/phi/register');
+                    header('location: '.URLROOT.'/PHI');
                 
                 }
                 else{
@@ -191,10 +191,10 @@ class PHI extends \Core\Controller{
         }
     }
 
-    private function createSession($doctor){
-        $_SESSION['doctor_id'] = $doctor->id;
-        $_SESSION['doctor_email'] = $doctor->email;
-        $_SESSION['doctor_name'] = $doctor->name;
+    private function createSession($curr_phi){
+        $_SESSION['phi_id'] = $curr_phi->id;
+        $_SESSION['phi_email'] = $curr_phi->email;
+        $_SESSION['phi_name'] = $curr_phi->name;
     }
 
     public function isLoggedIn(){
