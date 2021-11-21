@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Register - Child Patients</title>
 </head>
 <body>
     
@@ -41,7 +41,8 @@
                 value="<?php echo $data['confirm_password']?>">
             <span><?php echo $data['confirm_password_err']?></span>
         </div>
-
+        <input type="hidden" name="id_checked" value="yes">
+        <input type="hidden" name="new" value="no">
         <div>
             <input type="submit" value="Register">
         </div>

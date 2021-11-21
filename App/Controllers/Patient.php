@@ -7,10 +7,6 @@ use App\Models\Post;
 
 abstract class Patient extends \Core\Controller {
 
-    public function __construct() {
-        
-    }
-
     protected function isValidNIC($nic) {
         if (strlen($nic) == 10) {
             $year = substr($nic, 0, 2);
