@@ -10,7 +10,6 @@ require '../Core/Model.php';
 
 // Require the controller classes
 require '../App/Controllers/Posts.php';
-require '../App/Controllers/Patients.php';
 require '../App/Controllers/Doctor.php';
 require '../App/Controllers/Home.php';
 require '../App/Controllers/Admin/Users.php';
