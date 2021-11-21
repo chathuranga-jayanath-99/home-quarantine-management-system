@@ -18,6 +18,7 @@
     <ul>
         <li><a href="<?php echo URLROOT; ?>/doctor/login">Doctor</a></li>
         <li><a href="">Patient</a></li>
+        <li><a href="<?php echo URLROOT; ?>/PHI/login">PHI</a></li>
     </ul>
 
 </body>
