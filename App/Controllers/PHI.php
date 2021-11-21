@@ -14,10 +14,10 @@ class PHI extends \Core\Controller{
                 'email' => trim($_POST['email']),
                 'password' => trim($_POST['password']),
                 'confirm_password' => trim($_POST['confirm_password']),
-                'moh_area' => '',
-                'mobile' => '',
-                'NIC' => '',
-                //'slmc_reg_no' => '',
+                'moh_area' => trim($_POST['moh_area']),
+                'PHI_station' => trim($_POST['PHI_station']),
+                'NIC' => trim($_POST['NIC']),
+                'contact_number' => trim($_POST['contact_number']) ,
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
@@ -88,9 +88,9 @@ class PHI extends \Core\Controller{
                 'password' => '',
                 'confirm_password' => '',
                 'moh_area' => '',
-                'mobile' => '',
+                'PHI_station' => '',
                 'NIC' => '',
-                'slmc_reg_no' => '',
+                'contact_number' => '',
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
@@ -132,7 +132,7 @@ class PHI extends \Core\Controller{
                 if($curr_phi){
                     // log in success
                     $this->createSession($curr_phi);
-                    header('location: '.URLROOT.'/phi/register');
+                    header('location: '.URLROOT.'/PHI');
                 
                 }
                 else{
@@ -191,10 +191,10 @@ class PHI extends \Core\Controller{
         }
     }
 
-    private function createSession($doctor){
-        $_SESSION['doctor_id'] = $doctor->id;
-        $_SESSION['doctor_email'] = $doctor->email;
-        $_SESSION['doctor_name'] = $doctor->name;
+    private function createSession($curr_phi){
+        $_SESSION['phi_id'] = $curr_phi->id;
+        $_SESSION['phi_email'] = $curr_phi->email;
+        $_SESSION['phi_name'] = $curr_phi->name;
     }
 
     public function isLoggedIn(){

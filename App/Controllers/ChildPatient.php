@@ -202,7 +202,6 @@ class ChildPatient extends Patient {
     }
 
     public function indexAction() {    
-
     }
 
     private function createSession($childPatient){

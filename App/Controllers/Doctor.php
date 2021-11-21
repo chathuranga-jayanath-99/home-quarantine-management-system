@@ -215,6 +215,7 @@ class Doctor extends \Core\Controller{
         }
     }
 
+
     private function createSession($doctor){
         $_SESSION['doctor_id'] = $doctor->id;
         $_SESSION['doctor_email'] = $doctor->email;
@@ -225,6 +226,7 @@ class Doctor extends \Core\Controller{
         if(isset($_SESSION['doctor_id'])){
             return true;
         }
+
         else {
             return false;
         }

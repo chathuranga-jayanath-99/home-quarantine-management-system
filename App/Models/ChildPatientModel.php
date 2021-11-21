@@ -16,8 +16,8 @@ class ChildPatientModel extends PatientModel {
             'name'          =>  $data['name'],
             'email'         =>  $data['email'],
             'password'      =>  $data['password'],
-            'address'       =>  $data['address'],
-            'guardian_id'   =>  $data['guardian_id']
+            'address'       =>  "  ",//$data['address'],
+            'guardian_id'   =>  $data['NIC']
         ]);
         if ($res) {
             return true;
