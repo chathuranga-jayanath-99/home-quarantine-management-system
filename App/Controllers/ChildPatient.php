@@ -5,7 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\ChildPatientModel;
 
-class ChildPatient extends \Core\Controller{
+class ChildPatient extends Patient {
 
     public function registerAction() {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {

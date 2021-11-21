@@ -4,7 +4,7 @@ namespace App\Models;
 
 use PDO;
 
-class ChildPatientModel extends \Core\Model{
+class ChildPatientModel extends PatientModel {
 
     public static function register($data) {
         $db = static::getDB();
