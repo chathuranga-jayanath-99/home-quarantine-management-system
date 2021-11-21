@@ -11,13 +11,17 @@ class DoctorModel extends \Core\Model{
         $db = static::getDB();
 
         $sql = 'INSERT INTO tbl_doctor 
-        (name, email, password, moh_area) values 
-        (:name, :email, :password)';
+        (name, email, password, moh_area, contact_no, NIC, slmc_reg_no) values 
+        (:name, :email, :password, :moh_area, :contact_no, :NIC, :slmc_reg_no)';
         $stmt = $db->prepare($sql);
         $res = $stmt->execute([
             'name'=>$data['name'],
             'email'=>$data['email'],
             'password'=>$data['password'],
+            'moh_area'=>$data['moh_area'],
+            'contact_no'=>$data['contact_no'],
+            'NIC'=>$data['NIC'],
+            'slmc_reg_no'=>$data['slmc_reg_no']
         ]);
         
         if($res){
