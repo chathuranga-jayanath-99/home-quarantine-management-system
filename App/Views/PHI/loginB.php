@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<<<<<<< HEAD
 	<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,9 +14,9 @@
 			<div class="row justify-content-sm-center h-100">
 				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
 					<div class="text-center my-5">
-					<div class="bg-image" >
-						 <img src="https://www.tenethealth.com/images/global/newsroom-ccb/cardiology-heart-care-technology-doctor.jpg?sfvrsn=befe083e_1" alt="logo" width="100"> 
-				   </div> 
+					 <div class="bg-image" >
+						 <img src="https://www.tenethealth.com/images/global/newsroom-ccb/cardiology-heart-care-technology-doctor.jpg?sfvrsn=befe083e_1" alt="logo" width="200" height="200"> 
+				   	</div>  
 					<div class="card shadow-lg">
 						<div class="card-body p-5">
 							<h1 class="fs-4 card-title fw-bold mb-4">Patient Login</h1>
@@ -49,7 +48,7 @@
 						</div>
 						<div class="card-footer py-3 border-0">
 							<div class="text-center">
-								Don't have an account? <a href="<?php echo URLROOT; ?>/adPatient/register" class="text-dark">Create One</a>
+								Don't have an account? <a href="<?php echo URLROOT; ?>/PHI/register" class="text-dark">Create One</a>
 							</div>
 						</div>
 					</div>
@@ -63,40 +62,5 @@
 	</section>
 
 	<script src="js/login.js"></script>
-=======
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-    <h2>Log In</h2>
-
-    <form action="<?php echo URLROOT?>/PHI/login" method='POST'>
-
-        <div>
-            <label for="email">Email: </label>
-            <input type="text" name="email" value="<?php echo $data['email']?>">
-            <span><?php echo $data['email_err']?></span>
-        </div>
-        <div>
-            <label for="password">Password: </label>
-            <input type="password" name="password" value="<?php echo $data['password']?>">
-            <span><?php echo $data['password_err']?></span>
-        </div>
-
-
-        <div>
-            <input type="submit" value="log-in">
-        </div>
-
-        <div>
-            <a href="<?php echo URLROOT; ?>/PHI/register">Want to create an account?</a>
-        </div>
-    </form>
-
-
->>>>>>> master
 </body>
 </html>

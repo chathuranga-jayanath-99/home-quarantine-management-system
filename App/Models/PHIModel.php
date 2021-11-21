@@ -57,9 +57,11 @@ class PHIModel extends \Core\Model{
         $row = $stmt->fetch(PDO::FETCH_OBJ);
         
         if(!empty($row)){
+            
             $hashed_password = $row->password;
-
+            echo $password ;
             if(password_verify($password, $hashed_password)){
+                
                 return $row;
             }
             else {
