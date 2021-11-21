@@ -5,45 +5,78 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\Post;
 
-class Patients extends \Core\Controller
-{
-    public function __construct()
-    {
+abstract class Patients extends \Core\Controller {
+
+    public function __construct() {
         
     }
 
-    public function registerAction()
-    {
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
+    protected function isValidNIC($nic) {
+        if (strlen(nic) == 9) {
+            $year = substr($nic, 0, 2);
+            $day = substr($nic, 2, 3);
+            $serial = substr($nic, 5, 3);
+            $check = substr($nic, 8, 1);
+            $letter = substr($nic, 9, 1);
+            if ($letter !== 'V' && $letter !== 'X') {
+                return false;
+            }
+            if (!is_numeric($year)) {
+                return false;
+            }
+            if (is_numeric($day)) {
+                $day = (int) $day;
+                if ($day < 0) {
+                    return false;
+                } if ($day > 366) {
+                    if ($day < 500 || day > 866) {
+                        return false;
+                    }
+                }
+            } else {
+                return false;
+            }
+            if (!is_numeric($serial)) {
+                return false;
+            }
+            if (!is_numeric($check)) {
+                return false;
+            }
+        } else if (strlen(nic) == 12) {
+            $year = substr($nic, 0, 4);
+            $day = substr($nic, 4, 3);
+            $serial = substr($nic, 7, 4);
+            $check = substr($nic, 11, 1);
+            if (is_numeric($year)) {
+                if (!is_numeric($year)) {
+                    $year = (int) $year;
+                    if ($year < 1900 || $year > 2021) {
+                        return false;
+                    } 
+                }
+            }
+            if (is_numeric($day)) {
+                $day = (int) $day;
+                if ($day < 0) {
+                    return false;
+                } if ($day > 366) {
+                    if ($day < 500 || day > 866) {
+                        return false;
+                    }
+                }
+            } else {
+                return false;
+            }
+            if (!is_numeric($serial)) {
+                return false;
+            }
+            if (!is_numeric($check)) {
+                return false;
+            }
+        } else {
+            return false;
         }
-        else {
-            $data = [
-                'name' => '',
-                'email' => '',
-                'password' => '',
-                'confirm_password' => '',
-                
-            ];
-
-            // load view
-            View::render('Patients/register.php', $data);
-        }
+        return true;
     }
 
-    public function __login(){
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-        }
-        else {
-            $data = [
-                'email' => '',
-                'password' => '',
-                
-            ];
-
-            // load view
-            View::render('Patients/login.php', $data);
-        }
-    }
 }
