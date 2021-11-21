@@ -12,7 +12,7 @@ abstract class Patient extends \Core\Controller {
     }
 
     protected function isValidNIC($nic) {
-        if (strlen(nic) == 9) {
+        if (strlen($nic) == 10) {
             $year = substr($nic, 0, 2);
             $day = substr($nic, 2, 3);
             $serial = substr($nic, 5, 3);
@@ -42,7 +42,7 @@ abstract class Patient extends \Core\Controller {
             if (!is_numeric($check)) {
                 return false;
             }
-        } else if (strlen(nic) == 12) {
+        } else if (strlen($nic) == 12) {
             $year = substr($nic, 0, 4);
             $day = substr($nic, 4, 3);
             $serial = substr($nic, 7, 4);

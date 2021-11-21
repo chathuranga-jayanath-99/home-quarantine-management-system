@@ -15,7 +15,7 @@
             <label for="NIC">Guardian NIC: </label>
             <input type="text" name="NIC" 
                 value="<?php echo $data['NIC']?>">
-            <span><?php echo $data['name_err']?></span>
+            <span><?php echo $data['nic_err']?></span>
             <input type="hidden" name="id_checked" value="no">
         </div>
         <div>

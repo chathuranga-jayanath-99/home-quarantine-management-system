@@ -112,9 +112,12 @@ class ChildPatient extends Patient {
                 if (empty($data['NIC'])) {
                     $data['id_err'] = 'Please enter guardian NIC';
                 } else {
-                    if ($this->isValidNIC($data['NIC'])) {
+                    if (parent::isValidNIC($data['NIC'])) {
                         $childrenData = ChildPatientModel::searchByGuardianID($data['NIC']);
                         View::render('ChildPatients/register.php', ['childrenData' => $childrenData, 'nic' => $data['NIC']]);
+                    } else {
+                        $data['nic_err'] = 'Invalid NIC';
+                        View::render('ChildPatients/pre_registration.php', ['data'=> $data]);
                     }
                 }
             }
@@ -216,9 +219,5 @@ class ChildPatient extends Patient {
         else {
             return false;
         }
-    }
-
-    public function isValidNIC($data) {
-        return true;
     }
 }
