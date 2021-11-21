@@ -161,19 +161,19 @@ class PHI extends \Core\Controller{
 
     public function logoutAction()
     {  
-        unset($_SESSION['doctor_id']);
-        unset($_SESSION['doctor_email']);
-        unset($_SESSION['doctor_name']);
+        unset($_SESSION['phi_id']);
+        unset($_SESSION['phi_email']);
+        unset($_SESSION['phi_name']);
         session_destroy();
-        header('location: '.URLROOT.'/doctor/login');
+        header('location: '.URLROOT.'/PHI/login');
     }
 
     public function indexAction(){
         
         if ($this->isLoggedIn()){
             // echo $_SESSION['doctor_id'];
-            $patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);
-            View::render('Doctors/index.php', ['count' => sizeof($patients)]);
+            // $patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);
+            View::render('PHI/index.php');
         }
         else {
             echo 'not logged in';
@@ -181,15 +181,6 @@ class PHI extends \Core\Controller{
                 
     }
 
-    public function checkPatientsAction(){
-        if ($this->isLoggedIn()){
-            $patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);
-            View::render('Doctors/check-patients.php', ['patients' => $patients]);
-        }
-        else {
-            echo 'not logged in';
-        }
-    }
 
     private function createSession($curr_phi){
         $_SESSION['phi_id'] = $curr_phi->id;
@@ -198,16 +189,11 @@ class PHI extends \Core\Controller{
     }
 
     public function isLoggedIn(){
-        if(isset($_SESSION['doctor_id'])){
+        if(isset($_SESSION['phi_id'])){
             return true;
         }
         else {
             return false;
         }
     }
-
-
-
-
-    
 }

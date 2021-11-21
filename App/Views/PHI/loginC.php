@@ -14,12 +14,12 @@
 			<div class="row justify-content-sm-center h-100">
 				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
 					<div class="text-center my-5">
-					 <div class="bg-image" >
+					 <!-- <div class="bg-image" >
 						 <img src="https://www.tenethealth.com/images/global/newsroom-ccb/cardiology-heart-care-technology-doctor.jpg?sfvrsn=befe083e_1" alt="logo" width="200" height="200"> 
-				   	</div>  
+				   	</div>   -->
 					<div class="card shadow-lg">
 						<div class="card-body p-5">
-							<h1 class="fs-4 card-title fw-bold mb-4">Patient Login</h1>
+							<h1 class="fs-4 card-title fw-bold mb-4">PHI Login</h1>
 							<form action="<?php echo URLROOT?>/PHI/login" method="POST" class="needs-validation" novalidate="" autocomplete="off">
 								<div class="mb-3">
 									<label class="mb-2 text-muted" for="email">Email</label>
