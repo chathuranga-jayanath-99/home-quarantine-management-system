@@ -42,6 +42,42 @@
                   </div>
 
                   <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" name="moh_area" value="<?php echo $data['moh_area']?>" class="form-control" />
+                      <label class="form-label" for="moh_area">MOH Area</label>
+                      
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" name="PHI_station" value="<?php echo $data['PHI_station']?>" class="form-control" />
+                      <label class="form-label" for="PHI_station">PHI Range/Station</label>
+                      
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" name="NIC" value="<?php echo $data['NIC']?>" class="form-control" />
+                      <label class="form-label" for="NIC">NIC Number</label>
+                      
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" name="contact_number" value="<?php echo $data['contact_number']?>" class="form-control" />
+                      <label class="form-label" for="contact_number">Contact Number</label>
+                      
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
                       <input type="password" name="password" value="<?php echo $data['password']?>" class="form-control" />
@@ -58,6 +94,7 @@
                       <span><?php echo $data['confirm_password_err']?></span>
                     </div>
                   </div>
+
 
                   <!-- <div class="form-check d-flex justify-content-center mb-5">
                     <input
