@@ -17,6 +17,7 @@ class DoctorModel extends \Core\Model{
             'email'=>$data['email'],
             'password'=>$data['password'],
         ]);
+        
         if($res){
             // executed successfully
             return true;
@@ -89,12 +90,34 @@ class DoctorModel extends \Core\Model{
         $stmt2->execute(['doctorId' => $doctorId]);
         $res2 = $stmt2->fetchAll(PDO::FETCH_OBJ);
         
-        $res = array_merge($res1, $res2);
+        $res = ['adult' => $res1, 'child' => $res2];
         // var_dump($res1);
         // echo '<br>';
         // var_dump($res2);
         // echo '<br>';
         // var_dump($res);
         return $res;
+    }
+
+    public static function getAssingedPatient($patientId, $patientType){
+        $db = static::getDB();
+
+        if ($patientType == 'adult'){
+            $sql = 'SELECT * FROM tbl_adult_patient WHERE id=:patientId';
+        }
+        elseif($patientType == 'child'){
+            $sql = 'SELECT * FROM tbl_child_patient WHERE id=:patientId';
+        }
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['patientId' => $patientId]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if(!empty($row)){
+            return $row;
+        }
+        else {
+            return false;
+        }
     }
 }

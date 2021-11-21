@@ -14,9 +14,9 @@ require '../App/Controllers/Doctor.php';
 require '../App/Controllers/Patient.php';
 require '../App/Controllers/ChildPatient.php';
 require '../App/Controllers/Home.php';
-require '../App/Controllers/Admin/Users.php';
 require '../App/Controllers/PHI.php' ;    // require the controller PHI
 require '../App/Controllers/AdultPatient.php';
+require '../App/Controllers/Admin/User.php';
 
 // Require models
 require '../App/Models/Post.php';
@@ -30,9 +30,8 @@ $router = new Core\Router();
 
 // Add the routes
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
-$router->add('posts', ['controller' => 'Posts', 'action' => 'index']);
-$router->add('doctor', ['controller' => 'Doctor', 'action' => 'index']);
-$router->add('child-patient', ['controller' => 'ChildPatient', 'action' => 'index']);
+$router->add('{controller}', ['action' => 'index']);
+$router->add('admin/{controller}', ['namespace' => 'Admin', 'action' => 'index']);
 $router->add('{controller}/{action}');
 $router->add('{controller}/{id:\d+}/{action}');
 $router->add('admin/{controller}/{action}', ['namespace' => 'Admin']);
