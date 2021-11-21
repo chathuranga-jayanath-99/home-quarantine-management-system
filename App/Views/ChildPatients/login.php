@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login - Child Patients</title>
 </head>
 <body>
     
@@ -22,7 +22,7 @@
             <span><?php echo $data['password_err']?></span>
         </div>
         <div>
-            <input type="submit" value="log-in">
+            <input type="submit" value="Log-in">
         </div>
     </form>
 
