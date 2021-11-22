@@ -8,6 +8,9 @@ require '../Core/Controller.php';
 require '../Core/View.php';
 require '../Core/Model.php';
 
+// Require helpers
+require '../App/helpers/session_helper.php';
+
 // Require the controller classes
 
 require '../App/Controllers/Doctor.php';

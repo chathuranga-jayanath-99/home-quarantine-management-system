@@ -8,8 +8,7 @@ use App\Models\ChildPatientModel;
 class ChildPatient extends Patient {
 
     public function registerAction() {
-        //$PHI = new PHI([]);
-        //if(isset($_SESSION['phi_id'])) {
+
             if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if(trim($_POST['id_checked']) === 'yes') {

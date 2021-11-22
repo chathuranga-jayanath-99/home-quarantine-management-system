@@ -9,6 +9,10 @@
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
+              <a href="<?php echo URLROOT; ?>">Main Page</a>
+        
+              <?php flash('register_success');?>
+              
               <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Doctor Login</p>
 
                 <form  class="mx-1 mx-md-4" action="<?php echo URLROOT?>/doctor/login" method='POST'>
@@ -18,7 +22,7 @@
                         
                         <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="email">Email </label>
-                            <input class="form-control" type="text" name="email" value="<?php echo $data['email']?>">
+                            <input class="form-control" required type="text" name="email" value="<?php echo $data['email']?>">
                             
                             <span style="color: red"><?php echo $data['email_err']?></span>
                         </div>
@@ -28,7 +32,7 @@
                       <i class="fa fa-key fa-lg me-3 fa-fw"></i>                
                         <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="password">Password </label>
-                            <input class="form-control" type="password" name="password" value="<?php echo $data['password']?>">
+                            <input class="form-control" required type="password" name="password" value="<?php echo $data['password']?>">
                             <span style="color: red"><?php echo $data['password_err']?></span>
                         </div>
                     </div>
