@@ -3,6 +3,7 @@
 namespace App;
 
 define('URLROOT', 'http://localhost/home-isolation-system');
+define('APPROOT', dirname(dirname(__FILE__)));
 
 class Config {
     const DB_HOST = 'localhost';
