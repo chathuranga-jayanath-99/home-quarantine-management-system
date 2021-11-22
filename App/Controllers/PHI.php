@@ -186,6 +186,7 @@ class PHI extends \Core\Controller{
         $_SESSION['phi_id'] = $curr_phi->id;
         $_SESSION['phi_email'] = $curr_phi->email;
         $_SESSION['phi_name'] = $curr_phi->name;
+        $_SESSION['phi_area'] = $curr_phi->PHI_station;
     }
 
     public function isLoggedIn(){
@@ -198,6 +199,31 @@ class PHI extends \Core\Controller{
     }
 
     public function addpatientAction(){
-        
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            $type = $_POST['Patient_type'];
+            
+
+            
+            if($type == 'child'){
+                header('location: '.URLROOT.'/child-patient/register');
+            
+            }
+            else {
+                header('location: '.URLROOT.'/adult-patient/register');
+            }
+
+
+
+        }
+
+        else{
+
+            View::render('PHI/login.php', ['data' => $data]);
+
+        }
+
+
     }
 }

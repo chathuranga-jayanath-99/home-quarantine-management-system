@@ -15,11 +15,11 @@ class Doctor extends \Core\Controller{
                 'email' => trim($_POST['email']),
                 'password' => trim($_POST['password']),
                 'confirm_password' => trim($_POST['confirm_password']),
-                'moh_area' => trim($_POST['confirm_password']),
-                'contact_no' => trim($_POST['confirm_password']),
-                'NIC' => trim($_POST['confirm_password']),
-                'slmc_reg_no' => trim($_POST['confirm_password']),
-                'assigned_patients' => 0,
+                'moh_area' => trim($_POST['moh_area']),
+                'contact_no' => trim($_POST['contact_no']),
+                'NIC' => trim($_POST['NIC']),
+                'slmc_reg_no' => trim($_POST['slmc_reg_no']),
+                // 'assigned_patients' => 0,
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
@@ -46,7 +46,7 @@ class Doctor extends \Core\Controller{
             if(empty($data['password'])){
                 $data['password_err'] = 'Please enter password';
             }
-            else if(strlen($data['password']) < 1){
+            else if(strlen($data['password']) < 4){
                 $data['password_err'] = 'Password must be at least 6 characters';
             }
 
@@ -62,7 +62,7 @@ class Doctor extends \Core\Controller{
             if (empty($data['name_err']) && empty($data['email_err']) &&
             empty($data['password_err']) && empty($data['confirm_password_err'])){
                 // validated
-
+                
                 // Hash password
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
@@ -91,7 +91,7 @@ class Doctor extends \Core\Controller{
                 'password' => '',
                 'confirm_password' => '',
                 'moh_area' => '',
-                'mobile' => '',
+                'contact_no' => '',
                 'NIC' => '',
                 'slmc_reg_no' => '',
                 'name_err' => '',
@@ -99,7 +99,7 @@ class Doctor extends \Core\Controller{
                 'password_err' => '',
                 'confirm_password_err' => '',
                 'moh_area_err' => '',
-                'mobile_err' => '',
+                'contact_no_err' => '',
                 'NIC_err' => '',
                 'slmc_reg_no_err' => ''
                  
@@ -176,9 +176,9 @@ class Doctor extends \Core\Controller{
     public function indexAction(){
         
         if ($this->isLoggedIn()){
-            // echo $_SESSION['doctor_id'];
             $patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);
-            View::render('Doctors/index.php', ['count' => sizeof($patients)]);
+            $count = sizeof($patients['adult']) + sizeof($patients['child']);
+            View::render('Doctors/index.php', ['count' => $count]);
         }
         else {
             $this->loginAction();
@@ -206,15 +206,80 @@ class Doctor extends \Core\Controller{
                 View::render('Doctors/check-patient.php', ['patient' => $patient]);
             }
             else{
-                $this->loginAction();
+                header('location:'.URLROOT.'/doctor/login');
             }
 
         }
         else {
-            $this->loginAction();
+            header('location:'.URLROOT.'/doctor/login');
         }
     }
 
+
+    public function updateAction(){
+        if ($this->isLoggedIn()){
+            
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){ 
+                $data = [
+                    'doctor_id' => $_SESSION['doctor_id'],
+                    'name' => trim($_POST['name']),
+                    'email' => trim($_POST['email']),
+                    'moh_area' => trim($_POST['moh_area']),
+                    'contact_no' => trim($_POST['contact_no']),
+                    'NIC'=> trim($_POST['NIC']),
+                    'slmc_reg_no' => trim($_POST['slmc_reg_no']),
+                    // 'password' => trim($_POST['password']),
+                    'name_err' => '',
+                    'email_err' => '',
+                    'moh_area_err' => '',
+                    'contact_no_err' => '',
+                    'NIC_err' => '',
+                    'slmc_reg_no_err' => ''
+                ];
+
+                if($data['email'] != $_SESSION['doctor_email']){
+                    if(DoctorModel::findUserByEmail($data['email'])){
+                        $data['email_err'] = 'Email is already in use';
+                    }
+                     
+                }
+
+                if (empty($data['email_err'])){
+                    DoctorModel::updateAccount($data);
+
+                }
+                header('location: '.URLROOT.'/doctor');
+            }
+            else {
+                $doctor = DoctorModel::getDetails();
+
+                $data = [
+                    'name' => $doctor['name'],
+                    'email' => $doctor['email'],
+                    'moh_area' => $doctor['moh_area'],
+                    'contact_no' => $doctor['contact_no'],
+                    'NIC'=> $doctor['NIC'],
+                    'slmc_reg_no' => $doctor['slmc_reg_no'],
+                    // 'password' => $doctor['password'],
+                    'name_err' => '',
+                    'email_err' => '',
+                    'moh_area_err' => '',
+                    'contact_no_err' => '',
+                    'NIC_err' => '',
+                    'slmc_reg_no_err' => ''
+
+                    
+                ];
+                View::render('Doctors/update-account.php', ['data'=> $data]);
+            }
+                
+            
+
+        }
+        else {
+            header('location:'.URLROOT.'/doctor/login');
+        }
+    }
 
     private function createSession($doctor){
         $_SESSION['doctor_id'] = $doctor->id;

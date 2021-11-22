@@ -17,7 +17,8 @@
 
     <ul>
         <li><a href="<?php echo URLROOT; ?>/doctor/login">Doctor</a></li>
-        <li><a href="">Patient</a></li>
+        <li><a href="<?php echo URLROOT; ?>/child-patient/login">Child Patient</a></li>
+        <li><a href="<?php echo URLROOT; ?>/adult-patient/login">Adult Patient</a></li>
         <li><a href="<?php echo URLROOT; ?>/PHI/login">PHI</a></li>
     </ul>
 

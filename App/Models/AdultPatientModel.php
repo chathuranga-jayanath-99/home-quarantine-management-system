@@ -40,6 +40,17 @@ class AdultPatientModel extends \Core\Model{
         }
     }
 
+    public static function searchByNIC($NIC) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_adult_patient 
+                WHERE NIC=:NIC';
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['NIC' => $NIC]);
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
+
+        return $row;
+    }
+
     public static function login($email,$password)
     {
 
