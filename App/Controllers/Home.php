@@ -20,6 +20,22 @@ class Home extends \Core\Controller
 
     public function indexAction()
     {
+        if (isset($_SESSION['phi_id'])) {
+            header('location: '.URLROOT.'/phi');
+            die();
+        } else if (isset($_SESSION['child_id'])) {
+            header('location: '.URLROOT.'/child-patient');
+            die();
+        } else if (isset($_SESSION['doctor_id'])) {
+            header('location: '.URLROOT.'/doctor');
+            die();
+        } else if (isset($_SESSION['adPatient_id'])) {
+            header('location: '.URLROOT.'/adult-patient');
+            die();
+        } else {
+            header('location: '.URLROOT);
+            die();
+        }
         View::render('Home/index.php', [
             'name' => 'Chathuwa',
             'colors' => ['red', 'green', 'blue']
