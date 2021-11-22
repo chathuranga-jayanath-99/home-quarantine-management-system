@@ -27,6 +27,7 @@ class Adultpatient extends Patient{
                     'mobile_err' => '',
                     'NIC_err' => '',
                     'birthday_err'=>'',
+                    'id_checked'=> 'yes'
                 ];
                 
                 if(empty($data['name'])){
@@ -68,7 +69,7 @@ class Adultpatient extends Patient{
                     // Register User
                     $id = AdultPatientModel::register($data);
                     if ($id){
-                        header('location: '.URLROOT.'/adult-patient/activate?id='.$id.'&nic='.$data['NIC']);
+                        header('location: '.URLROOT.'/adult-patient/login');
                     }
                     else {
                         die('something went wrong');
