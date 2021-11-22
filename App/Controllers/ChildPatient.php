@@ -15,18 +15,22 @@ class ChildPatient extends Patient {
                 if(trim($_POST['id_checked']) === 'yes') {
                     if ($_POST['new'] === 'no') {
                         $data = [
-                            'name'                  => trim($_POST['name']),
-                            'email'                 => trim($_POST['email']),
+                            'name'                  => htmlspecialchars(trim($_POST['name'])),
+                            'email'                 => htmlspecialchars(trim($_POST['email'])),
                             'password'              => trim($_POST['password']),
                             'confirm_password'      => trim($_POST['confirm_password']),
-                            'mobile'                => '',
                             'NIC'                   => strtoupper(trim($_POST['NIC'])),
+                            'contact_no'            => htmlspecialchars(trim($_POST['contact_no'])),
+                            'address'               => htmlspecialchars(trim($_POST['address'])),
+                            'gender'                => trim($_POST['gender']),
                             'name_err'              => '',
                             'email_err'             => '',
                             'password_err'          => '',
                             'confirm_password_err'  => '',
                             'id_checked'            => 'yes',
                             'nic_err'               => '',
+                            'address_err'           => '',
+                            'contact_no_err'        => ''
                         ];
 
                         if(empty($data['name'])){
@@ -58,8 +62,17 @@ class ChildPatient extends Patient {
                             }
                         }
 
+                        if(empty($data['contact_no'])){
+                            $data['contact_no_err'] = 'Please enter contact no';
+                        }
+
+                        if(empty($data['address'])){
+                            $data['address_err'] = 'Please enter address';
+                        }
+
                         if (empty($data['name_err']) && empty($data['email_err']) &&
-                        empty($data['password_err']) && empty($data['confirm_password_err'])){
+                        empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['address_err']) && 
+                        empty($data['contact_no_err'])){
                             // validated
                             // Hash password
                             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
@@ -84,14 +97,18 @@ class ChildPatient extends Patient {
                             'email'                 => '',
                             'password'              => '',
                             'confirm_password'      => '',
-                            'mobile'                => '',
-                            'NIC'                   => strtoupper(trim($_POST['NIC'])),
+                            'NIC'                   => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                            'contact_no'            => '',
+                            'address'               => '',
+                            'gender'                => '',
                             'name_err'              => '',
                             'email_err'             => '',
                             'password_err'          => '',
                             'confirm_password_err'  => '',
                             'id_checked'            => 'yes',
-                            'nic_err'               => ''
+                            'nic_err'               => '',
+                            'address_err'           => '',
+                            'contact_no_err'        => ''
                         ];
             
                         // load view
@@ -103,14 +120,18 @@ class ChildPatient extends Patient {
                         'email'                 => '',
                         'password'              => '',
                         'confirm_password'      => '',
-                        'mobile'                => '',
-                        'NIC'                   => strtoupper(trim($_POST['NIC'])),
+                        'NIC'                   => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                        'contact_no'            => '',
+                        'address'               => '',
+                        'gender'                => '',
                         'name_err'              => '',
                         'email_err'             => '',
                         'password_err'          => '',
                         'confirm_password_err'  => '',
                         'id_checked'            => 'no',
-                        'nic_err'               => ''
+                        'nic_err'               => '',
+                        'address_err'           => '',
+                        'contact_no_err'        => ''
                     ];
                     if (empty($data['NIC'])) {
                         $data['id_err'] = 'Please enter guardian NIC';
@@ -131,14 +152,18 @@ class ChildPatient extends Patient {
                     'email'                 => '',
                     'password'              => '',
                     'confirm_password'      => '',
-                    'mobile'                => '',
                     'NIC'                   => '',
+                    'contact_no'            => '',
+                    'address'               => '',
+                    'gender'                => '',
                     'name_err'              => '',
                     'email_err'             => '',
                     'password_err'          => '',
                     'confirm_password_err'  => '',
                     'id_checked'            => 'no',
-                    'nic_err'               => ''
+                    'nic_err'               => '',
+                    'address_err'           => '',
+                    'contact_no_err'        => ''
                 ];
 
                 // load view
