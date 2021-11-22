@@ -11,14 +11,14 @@ class Doctor extends \Core\Controller{
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = [
-                'name' => trim($_POST['name']),
-                'email' => trim($_POST['email']),
+                'name' => htmlspecialchars(trim($_POST['name'])),
+                'email' => htmlspecialchars(trim($_POST['email'])),
                 'password' => trim($_POST['password']),
                 'confirm_password' => trim($_POST['confirm_password']),
-                'moh_area' => trim($_POST['moh_area']),
-                'contact_no' => trim($_POST['contact_no']),
-                'NIC' => trim($_POST['NIC']),
-                'slmc_reg_no' => trim($_POST['slmc_reg_no']),
+                'moh_area' => htmlspecialchars(trim($_POST['moh_area'])),
+                'contact_no' => htmlspecialchars(trim($_POST['contact_no'])),
+                'NIC' => htmlspecialchars(trim($_POST['NIC'])),
+                'slmc_reg_no' => htmlspecialchars(trim($_POST['slmc_reg_no'])),
                 // 'assigned_patients' => 0,
                 'name_err' => '',
                 'email_err' => '',
@@ -114,7 +114,7 @@ class Doctor extends \Core\Controller{
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = [
-                'email' => trim($_POST['email']),
+                'email' => htmlspecialchars(trim($_POST['email'])),
                 'password' => trim($_POST['password']),
                 'email_err' => '',
                 'password_err' => ''
@@ -143,7 +143,6 @@ class Doctor extends \Core\Controller{
                 else{
                     // username or email is wrong
                     $data['email_err'] = 'User not found';
-
                     
                 }
                 
@@ -297,12 +296,5 @@ class Doctor extends \Core\Controller{
         }
     }
 
-    private function validate($data){
-        // check empty
-        foreach ($data as $key => $value){
-            if (empty($value)){
-                
-            }
-        }
-    }
+
 }

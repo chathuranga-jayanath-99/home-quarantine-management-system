@@ -6,12 +6,12 @@
 <a href="<?php echo URLROOT;?>/doctor">Home</a>
 <a href="<?php echo URLROOT;?>/doctor/logout">Logout</a>
 
-<h1>Paitnet Details</h1>
+<h1>Patinet Details</h1>
     <br>
     <table class="table">
         <?php 
             foreach($patient as $key => $value):
-                if ($key == 'id' || $key == 'password' ||$key == 'doctor_id'){
+                if ($key == 'id' || $key == 'password' ||$key == 'doctor_id' || $key == 'phi_id'){
                     continue;
                 }
                 ?>

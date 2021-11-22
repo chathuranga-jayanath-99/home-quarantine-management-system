@@ -97,11 +97,7 @@ class DoctorModel extends \Core\Model{
         $res2 = $stmt2->fetchAll(PDO::FETCH_OBJ);
         
         $res = ['adult' => $res1, 'child' => $res2];
-        // var_dump($res1);
-        // echo '<br>';
-        // var_dump($res2);
-        // echo '<br>';
-        // var_dump($res);
+
         return $res;
     }
 
@@ -162,7 +158,6 @@ class DoctorModel extends \Core\Model{
         $res = $stmt->execute([
             'name'=>$data['name'],
             'email'=>$data['email'],
-            // 'password'=>$data['password'],
             'moh_area'=>$data['moh_area'],
             'contact_no'=>$data['contact_no'],
             'NIC'=>$data['NIC'],
@@ -172,6 +167,23 @@ class DoctorModel extends \Core\Model{
 
         if($res){
             return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static function getNameById($doctorId){
+        $db = static::getDB();
+
+        $sql = 'SELECT name FROM tbl_doctor WHERE id=:id';
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['id' => $doctorId]);
+        $name = $stmt->fetch();
+
+        if ($name){
+            
+            return $name;
         }
         else {
             return false;
