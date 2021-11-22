@@ -17,8 +17,8 @@
                                     <div class="pb-2"><h6 class="text-left h5 ">Select new state</h6></div><div></div>
                                     <?php
                                         $state = $childObj->state;
-                                        if ($state === 'active') {
-                                            $state = 'Active';
+                                        if ($state === 'positive') {
+                                            $state = 'Positive';
                                         } else if ($state === 'contact') {
                                             $state = 'Contact Person';
                                         } else if ($state === 'inactive') {

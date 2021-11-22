@@ -68,8 +68,8 @@
                         </div>
                         <?php
                             $state = $childObj->state;
-                            if ($state === 'active') {
-                                $state = 'Active';
+                            if ($state === 'positive') {
+                                $state = 'Positive';
                             } else if ($state === 'contact') {
                                 $state = 'Contact Person';
                             } else if ($state === 'inactive') {
