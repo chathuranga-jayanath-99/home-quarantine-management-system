@@ -24,7 +24,7 @@
 								<div class="mb-3">
 									<label class="mb-2 text-muted" for="email">Email</label>
 									<input id="email" type="email" class="form-control" name="email" value="<?php echo $data['email']?> " required autofocus>
-									<div class="invalid-feedback">
+									<div class="">
 										<span><?php echo $data['email_err']?></span>
 									</div>
 								</div>
@@ -34,7 +34,7 @@
 										<label class="text-muted" for="password">Password</label>
 									</div>
 									<input id="password" type="password" class="form-control" name="password" value="<?php echo $data['password']?>" required>
-								    <div class="invalid-feedback">
+								    <div class="">
 										<span><?php echo $data['password_err']?></span>
 							    	</div>
 								</div>
