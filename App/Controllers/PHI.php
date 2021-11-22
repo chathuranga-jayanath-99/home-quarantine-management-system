@@ -186,6 +186,7 @@ class PHI extends \Core\Controller{
         $_SESSION['phi_id'] = $curr_phi->id;
         $_SESSION['phi_email'] = $curr_phi->email;
         $_SESSION['phi_name'] = $curr_phi->name;
+        $_SESSION['phi_area'] = $curr_phi->PHI_station;
     }
 
     public function isLoggedIn(){

@@ -41,7 +41,7 @@
                         <a href="<?php echo URLROOT; ?>/doctor/register">Want to create an account?</a>
                     </div>
                 </form>  
-                
+                </div>
                 <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
                   <img src= "https://cdn.dribbble.com/users/1475931/screenshots/10848109/media/cceef0db52d353328115239e84f2b7b3.png" width=700 height=700 class="img-fluid" alt="Sample image"> 
