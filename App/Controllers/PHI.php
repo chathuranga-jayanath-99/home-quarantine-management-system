@@ -164,6 +164,7 @@ class PHI extends \Core\Controller{
         unset($_SESSION['phi_id']);
         unset($_SESSION['phi_email']);
         unset($_SESSION['phi_name']);
+        unset($_SESSION['phi_area']);
         session_destroy();
         header('location: '.URLROOT.'/PHI/login');
     }
