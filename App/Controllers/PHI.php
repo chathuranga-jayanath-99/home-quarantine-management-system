@@ -196,4 +196,33 @@ class PHI extends \Core\Controller{
             return false;
         }
     }
+
+    public function addpatientAction(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            $type = $_POST['Patient_type'];
+            
+
+            
+            if($type == 'child'){
+                header('location: '.URLROOT.'/child-patient/register');
+            
+            }
+            else {
+                header('location: '.URLROOT.'/adult-patient/register');
+            }
+
+
+
+        }
+
+        else{
+
+            View::render('PHI/login.php', ['data' => $data]);
+
+        }
+
+
+    }
 }
