@@ -1,18 +1,18 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body> -->
+<body>
 
-<?php include(APPROOT.'\App\Views\Includes\header.php'); ?>
+
 
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
@@ -31,8 +31,8 @@
                     <i class="fa fa-envelope fa-lg me-3 fa-fw"></i>
                      
                     <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="email">Email</label>
-                      <input type="text" name="email" value="<?php echo $data['email']?>" class="form-control" />
+                      <!-- <label class="form-label" for="email">Email</label> -->
+                      <input type="text" name="email" value="<?php echo $data['email']?>" class="form-control" placeholder="Email"/>
                       <span style="color:red"><?php echo $data['email_err']?></span>
                       
                     </div>
@@ -41,8 +41,8 @@
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fa fa-key fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="password">Password</label>
-                      <input type="password" name="password" value="<?php echo $data['password']?>" class="form-control" />
+                      <!-- <label class="form-label" for="password">Password</label> -->
+                      <input type="password" name="password" value="<?php echo $data['password']?>" class="form-control" placeholder="Password" />
                       <span style="color:red"><?php echo $data['password_err']?></span>
                     </div>
                   </div>

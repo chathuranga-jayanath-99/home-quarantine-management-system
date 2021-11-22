@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body> -->
+<body>
 
-<?php include(APPROOT.'\App\Views\Includes\header.php'); ?>
+
 
 <section class="vh-auto" style="background-color: #eee;">
   <div class="container h-100">
@@ -30,8 +30,8 @@
                     <i class="fa fa-user fa-lg me-3 fa-fw"></i>
                      
                     <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="name">Name</label>
-                      <input type="text" name="name" value="<?php echo $data['name']?>" class="form-control" />
+                      <!-- <label class="form-label" for="name">Name</label> -->
+                      <input type="text" name="name" value="<?php echo $data['name']?>" class="form-control" placeholder="Name" />
                       <span style="color:red"><?php echo $data['name_err']?></span>
                       
                     </div>
@@ -40,8 +40,8 @@
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fa fa-envelope fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="email">Email Address</label>
-                      <input type="text" name="email" value="<?php echo $data['email']?>" class="form-control" />
+                      <!-- <label class="form-label" for="email">Email Address</label> -->
+                      <input type="text" name="email" value="<?php echo $data['email']?>" class="form-control" placeholder="Email"/>
                       <span style="color:red"><?php echo $data['email_err']?></span>
                     </div>
                   </div>
@@ -49,8 +49,8 @@
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fa fa-hospital-o fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="moh_area">MOH Area</label>
-                      <input type="text" name="moh_area" value="<?php echo $data['moh_area']?>" class="form-control" />
+                      <!-- <label class="form-label" for="moh_area">MOH Area</label> -->
+                      <input type="text" name="moh_area" value="<?php echo $data['moh_area']?>" class="form-control"  placeholder="MOH Area" />
                      
                       
                     </div>
@@ -59,8 +59,8 @@
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fa fa-hospital-o fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="PHI_station">PHI Range/Station</label>
-                      <input type="text" name="PHI_station" value="<?php echo $data['PHI_station']?>" class="form-control" />
+                      <!-- <label class="form-label" for="PHI_station">PHI Range/Station</label> -->
+                      <input type="text" name="PHI_station" value="<?php echo $data['PHI_station']?>" class="form-control" placeholder="PHI Range/Station" />
                       
                       
                     </div>
@@ -69,8 +69,8 @@
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fa fa-id-card fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="NIC">NIC Number</label>
-                      <input type="text" name="NIC" value="<?php echo $data['NIC']?>" class="form-control" />
+                      <!-- <label class="form-label" for="NIC">NIC Number</label> -->
+                      <input type="text" name="NIC" value="<?php echo $data['NIC']?>" class="form-control" placeholder="NIC Number"/>
                       
                       
                     </div>
@@ -79,8 +79,8 @@
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fa fa-phone fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="contact_number">Contact Number</label>
-                      <input type="text" name="contact_number" value="<?php echo $data['contact_number']?>" class="form-control" />
+                      <!-- <label class="form-label" for="contact_number">Contact Number</label> -->
+                      <input type="text" name="contact_number" value="<?php echo $data['contact_number']?>" class="form-control" placeholder="Contact Number" />
                       
                       
                     </div>
@@ -90,8 +90,8 @@
                     <i class="fa fa-key fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
 
-                      <label class="form-label" for="password">Password</label>
-                      <input type="password" name="password" value="<?php echo $data['password']?>" class="form-control" />
+                      <!-- <label class="form-label" for="password">Password</label> -->
+                      <input type="password" name="password" value="<?php echo $data['password']?>" class="form-control" placeholder="Password" />
                       
                       <span style="color:red"><?php echo $data['password_err']?></span>
                     </div>
@@ -101,8 +101,8 @@
                     <i class="fa fa-lock fa-lg me-3 fa-fw"></i>
                     
                     <div class="form-outline flex-fill mb-0">
-                      <label class="form-label" for="confirm_password">Confirm your password</label>
-                      <input type="password" name="confirm_password" value="<?php echo $data['confirm_password']?>" class="form-control" />
+                      <!-- <label class="form-label" for="confirm_password">Confirm your password</label> -->
+                      <input type="password" name="confirm_password" value="<?php echo $data['confirm_password']?>" class="form-control" placeholder="Confirm your password" />
                       
                       <span style="color:red"><?php echo $data['confirm_password_err']?></span>
                     </div>
@@ -110,8 +110,8 @@
 
 
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                     <!-- <button type="button" class="btn btn-primary btn-lg" value="register">Register</button>  -->
-                     <input type="submit" value="Register"> 
+                     <button type="submit" class="btn btn-primary btn-lg" value="register">Register</button> 
+                     <!-- <input type="submit" value="Register">  -->
                   </div>
 
                 </form>
