@@ -82,7 +82,6 @@ class ChildPatientModel extends PatientModel {
 
     public static function changeState($id, $guardianID, $state) {
         $db = static::getDB();
-        echo $id." ".$guardianID." ".$state;
         $sql = 'UPDATE tbl_child_patient 
                 SET state=:state
                 WHERE guardian_id=:guardian_id and id=:id';
