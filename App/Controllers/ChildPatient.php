@@ -89,7 +89,7 @@ class ChildPatient extends Patient {
                         }
                         else {
                             // load view with errors
-                            View::render('ChildPatient/post_registration.php', ['data'=> $data]);
+                            View::render('ChildPatients/post_registration.php', ['data'=> $data]);
                         }
                     } else {
                         $data = [
