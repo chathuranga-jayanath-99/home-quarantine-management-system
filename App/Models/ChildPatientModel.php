@@ -88,13 +88,14 @@ class ChildPatientModel extends PatientModel {
     public static function changeState($id, $guardianID, $state) {
         $db = static::getDB();
         $sql = 'UPDATE tbl_child_patient 
-                SET state=:state
+                SET state=:state, phi_range=:phi_range
                 WHERE guardian_id=:guardian_id and id=:id';
         $stmt = $db->prepare($sql);
         $res = $stmt->execute([
             'state'       => $state,
+            'phi_range'   => $_SESSION['phi_area'],
             'guardian_id' => $guardianID,
-            'id'          => $id
+            'id'          => $id,
         ]);
         if ($res) {
             return true;
