@@ -53,7 +53,7 @@
 
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
-  <h1> Welcome! </h1>
+ 
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-lg-12 col-xl-10">
         <div class="card text-black" style="border-radius: 25px;">
@@ -61,25 +61,36 @@
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">ADD NEW ACCOUNT</p>
+                <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">ADD NEW ACCOUNT</h2>
                 <form action="<?php echo URLROOT?>/PHI/addpatient" method='POST'>
+                  
+                  <div class=" h6 text-center form-check col-md-10">
+                      <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio"  name="Patient_type"  value="child" required>Child Account</label>
+                  </div>
+                  <div class=" h6 text-center  form-check col-md-10">
+                      <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio" name="Patient_type" value="child">Adult Account</label>
+                  </div>
+                 
 
-                    <label >Child 
-                    <input type="radio"  name="Patient_type" value="child" required>
-                    </label>
-                    <label>Adult
-                    <input type="radio" name="Patient_type" value="adult">
-                    </label>
-                    <input type="submit" name="Submit" value="submit">
+                  <div class="text-center mt-4 col-md-10" >
+                      <button type="Submit" class="btn btn-primary ">Submit</button>
+                      <!-- <input type="submit" name="Submit" value="submit"> -->
+                  </div>
+                    
 
                 </form>
                 
 
               </div>
-              <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-              <a href="<?php echo URLROOT;?>/PHI/logout">Logout</a> 
-
+              <!-- <button type="Submit" class="btn btn-primary">Submit</button> -->
+              <!-- <div class="col-md-10 col-lg-6 col-xl-1 d-flex align-items-center order-1 order-lg-2"> -->
+              <div class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+              <a href="<?php echo URLROOT;?>/PHI/logout">
+              <button type="Submit" class="btn btn-danger">Log Out</button>
+              </a> 
+              </div>
               </div>
             </div>
           </div>
