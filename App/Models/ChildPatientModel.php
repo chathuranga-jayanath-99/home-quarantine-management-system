@@ -9,18 +9,20 @@ class ChildPatientModel extends PatientModel {
     public static function register($data) {
         $db = static::getDB();
         $sql = 'INSERT INTO tbl_child_patient 
-            ( name,  email,  password,  address,  guardian_id) VALUES 
-            (:name, :email, :password, :address, :guardian_id)';
+            ( name,  email,  password,  address,  guardian_id, state) VALUES 
+            (:name, :email, :password, :address, :guardian_id, :state)';
         $stmt = $db->prepare($sql);
         $res = $stmt->execute([
             'name'          =>  $data['name'],
             'email'         =>  $data['email'],
             'password'      =>  $data['password'],
             'address'       =>  "  ",//$data['address'],
-            'guardian_id'   =>  $data['NIC']
+            'guardian_id'   =>  $data['NIC'],
+            'state'         =>  'pending'
         ]);
         if ($res) {
-            return true;
+            $id = $db->lastInsertId();
+            return $id;
         }
         return false;
     }
@@ -63,6 +65,36 @@ class ChildPatientModel extends PatientModel {
         $stmt->execute(['guardian_id' => $guardianID]);
         $res = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $res;
+    }
+
+    public static function searchByIDAndGuardianID($id, $guardianID) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_child_patient 
+                WHERE guardian_id=:guardian_id and id=:id';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            'guardian_id' => $guardianID,
+            'id'          => $id
+        ]);
+        $res = $stmt->fetch(PDO::FETCH_OBJ);
+        return $res;
+    }
+
+    public static function changeState($id, $guardianID, $state) {
+        $db = static::getDB();
+        $sql = 'UPDATE tbl_child_patient 
+                SET state=:state
+                WHERE guardian_id=:guardian_id and id=:id';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute([
+            'state'       => $state,
+            'guardian_id' => $guardianID,
+            'id'          => $id
+        ]);
+        if ($res) {
+            return true;
+        }
+        return false;
     }
 
 }
