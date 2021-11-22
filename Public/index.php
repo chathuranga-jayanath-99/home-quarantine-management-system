@@ -9,7 +9,7 @@ require '../Core/View.php';
 require '../Core/Model.php';
 
 // Require the controller classes
-require '../App/Controllers/Posts.php';
+
 require '../App/Controllers/Doctor.php';
 require '../App/Controllers/Patient.php';
 require '../App/Controllers/ChildPatient.php';
@@ -19,7 +19,7 @@ require '../App/Controllers/AdultPatient.php';
 require '../App/Controllers/Admin/User.php';
 
 // Require models
-require '../App/Models/Post.php';
+
 require '../App/Models/DoctorModel.php';
 require '../App/Models/PatientModel.php';
 require '../App/Models/ChildPatientModel.php';
