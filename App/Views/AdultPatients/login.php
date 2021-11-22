@@ -18,7 +18,7 @@
 					</div>
 					<div class="card shadow-lg">
 						<div class="card-body p-5">
-							<h1 class="fs-4 card-title fw-bold mb-4">Patient Login</h1>
+							<h1 class="fs-4 card-title fw-bold mb-4">Adult-Patient Login</h1>
 							<form action="<?php echo URLROOT?>/adult-patient/login" method="POST" class="needs-validation" novalidate="" autocomplete="off">
 								
 								<div class="mb-3">
