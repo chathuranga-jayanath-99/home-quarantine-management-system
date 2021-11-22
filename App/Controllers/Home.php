@@ -33,13 +33,11 @@ class Home extends \Core\Controller
             header('location: '.URLROOT.'/adult-patient');
             die();
         } else {
-            header('location: '.URLROOT);
-            die();
+            View::render('Home/index.php', [
+                'name' => 'Chathuwa',
+                'colors' => ['red', 'green', 'blue']
+            ]);
         }
-        View::render('Home/index.php', [
-            'name' => 'Chathuwa',
-            'colors' => ['red', 'green', 'blue']
-        ]);
     }
 
 }
