@@ -16,8 +16,8 @@ class Adultpatient extends Patient{
                     'email' => trim($_POST['email']),
                     'password' => trim($_POST['password']),
                     'confirm_password' => trim($_POST['confirm_password']),
-                    'mobile' => trim($_POST['confirm_password']),
-                    'NIC' => strtoupper(trim($_POST['confirm_password'])),
+                    'mobile' => trim($_POST['mobile']),
+                    'NIC' => strtoupper(trim($_POST['NIC'])),
                     'birthday'=> trim($_POST['birthday']),
                     //'gender' => trim($_POST['gender']),
                     'name_err' => '',
@@ -27,6 +27,7 @@ class Adultpatient extends Patient{
                     'mobile_err' => '',
                     'NIC_err' => '',
                     'birthday_err'=>'',
+                    'id_checked'=> 'yes'
                 ];
                 
                 if(empty($data['name'])){
@@ -68,7 +69,7 @@ class Adultpatient extends Patient{
                     // Register User
                     $id = AdultPatientModel::register($data);
                     if ($id){
-                        header('location: '.URLROOT.'/adult-patient/activate?id='.$id.'&nic='.$data['NIC']);
+                        header('location: '.URLROOT.'/adult-patient/login');
                     }
                     else {
                         die('something went wrong');
