@@ -126,4 +126,27 @@ class DoctorModel extends \Core\Model{
             return false;
         }
     }
+
+    public static function getDetails(){
+        $db = static::getDB();
+
+        $doctorId = $_SESSION['doctor_id'];
+
+        if (!empty($doctorId)){
+            $sql = 'SELECT * FROM tbl_doctor WHERE id=:id';
+            $stmt = $db->prepare($sql);
+            $stmt->execute(['id' => $doctorId]);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if(!empty($row)){
+                return $row;
+            }
+            else {
+                return false;
+            }
+            
+        }else {
+            return false;
+        }
+    }
 }

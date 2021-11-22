@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use \Core\View;
 use App\Models\DoctorModel;
+use DOTNET;
 
 class Doctor extends \Core\Controller{
 
@@ -19,7 +20,7 @@ class Doctor extends \Core\Controller{
                 'contact_no' => trim($_POST['contact_no']),
                 'NIC' => trim($_POST['NIC']),
                 'slmc_reg_no' => trim($_POST['slmc_reg_no']),
-                'assigned_patients' => 0,
+                // 'assigned_patients' => 0,
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
@@ -176,7 +177,6 @@ class Doctor extends \Core\Controller{
     public function indexAction(){
         
         if ($this->isLoggedIn()){
-            // echo $_SESSION['doctor_id'];
             $patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);
             View::render('Doctors/index.php', ['count' => sizeof($patients)]);
         }
@@ -206,15 +206,63 @@ class Doctor extends \Core\Controller{
                 View::render('Doctors/check-patient.php', ['patient' => $patient]);
             }
             else{
-                $this->loginAction();
+                header('location:'.URLROOT.'/doctor/login');
             }
 
         }
         else {
-            $this->loginAction();
+            header('location:'.URLROOT.'/doctor/login');
         }
     }
 
+
+    public function updateAction(){
+        if ($this->isLoggedIn()){
+            $doctor = DoctorModel::getDetails();
+
+            if($doctor){
+
+                if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    $data = [
+                        'name' => trim($_POST['name']),
+                        'email' => trim($_POST['email']),
+                        'moh_area' => trim($_POST['moh_area']),
+                        'contact_no' => trim($_POST['contact_no']),
+                        'NIC'=> trim($_POST['NIC']),
+                        'slmc_reg_no' => trim($_POST['slmc_reg_no']),
+                        'name_err' => '',
+                        'email_err' => '',
+                        'moh_area_err' => '',
+                        'contact_no_err' => '',
+                        'NIC_err' => '',
+                        'slmc_reg_no_err' => ''
+                    ];
+                }
+                else {
+                    $data = [
+                        'name' => $doctor['name'],
+                        'email' => $doctor['email'],
+                        'moh_area' => $doctor['moh_area'],
+                        'contact_no' => $doctor['contact_no'],
+                        'NIC'=> $doctor['NIC'],
+                        'slmc_reg_no' => $doctor['slmc_reg_no'],
+                        'name_err' => '',
+                        'email_err' => '',
+                        'moh_area_err' => '',
+                        'contact_no_err' => '',
+                        'NIC_err' => '',
+                        'slmc_reg_no_err' => ''
+                    ];
+                    View::render('Doctors/update-account.php', ['data'=> $data]);
+                }
+                
+            }
+
+        }
+        else {
+            header('location:'.URLROOT.'/doctor/login');
+        }
+    }
 
     private function createSession($doctor){
         $_SESSION['doctor_id'] = $doctor->id;

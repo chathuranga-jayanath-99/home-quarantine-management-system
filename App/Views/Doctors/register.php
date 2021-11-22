@@ -94,7 +94,7 @@
                     </div>
 
                     <div>
-                        <a href="<?php echo URLROOT; ?>/doctor/login">Have an account? Login</a>
+                        <a class="text-align-center" href="<?php echo URLROOT; ?>/doctor/login">Have an account? Login</a>
                     </div>
 
                 </form>
