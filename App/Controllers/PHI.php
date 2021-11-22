@@ -196,4 +196,8 @@ class PHI extends \Core\Controller{
             return false;
         }
     }
+
+    public function addpatientAction(){
+        
+    }
 }
