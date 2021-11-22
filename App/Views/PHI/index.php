@@ -8,7 +8,10 @@
 </head>
 <body>
 
-    <a href="<?php echo URLROOT;?>/PHI/logout">Logout</a>
+    <a href="<?php echo URLROOT;?>/PHI/logout">Logout</a> 
+    <a href="<?php echo URLROOT;?>/PHI/addpatient"> Add Patient </a>      
+
+
     <h1> Welcome! </h1>
 
 </body>
