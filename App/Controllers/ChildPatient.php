@@ -8,7 +8,7 @@ use App\Models\ChildPatientModel;
 class ChildPatient extends Patient {
 
     public function registerAction() {
-
+        if(isset($_SESSION['phi_id'])) {
             if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if(trim($_POST['id_checked']) === 'yes') {
@@ -184,7 +184,7 @@ class ChildPatient extends Patient {
                 // load view
                 View::render('ChildPatients/pre_registration.php', ['data'=> $data]);
             }
-        /*} else if (isset($_SESSION['child_id'])) {
+        } else if (isset($_SESSION['child_id'])) {
             header('location: '.URLROOT.'/child-patient');
             die();
         } else if (isset($_SESSION['doctor_id'])) {
@@ -196,7 +196,7 @@ class ChildPatient extends Patient {
         } else {
             header('location: '.URLROOT);
             die();
-        }*/
+        }
     }
 
     public function loginAction() {
@@ -283,22 +283,36 @@ class ChildPatient extends Patient {
     }
 
     public function activeAction() {
-        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $id = $_GET['id'];
-            $guardianID = $_GET['nic'];
-            $childObj = ChildPatientModel::searchByIDAndGuardianID($id, $guardianID);
-            View::render('ChildPatients/active.php', ['childObj' => $childObj]);
-        } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $id = $_POST['id'];
-            $guardianID = $_POST['nic'];
-            $state = $_POST['act'];
-            $rows = ChildPatientModel::changeState($id, $guardianID, $state);
-            if($rows>0) {
+        if(isset($_SESSION['phi_id'])) {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                $id = $_GET['id'];
+                $guardianID = $_GET['nic'];
                 $childObj = ChildPatientModel::searchByIDAndGuardianID($id, $guardianID);
-                View::render('ChildPatients/accSuccess.php', ['childObj' => $childObj]);
-            } else {
-                echo 'Failed';
+                View::render('ChildPatients/active.php', ['childObj' => $childObj]);
+            } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $id = $_POST['id'];
+                $guardianID = $_POST['nic'];
+                $state = $_POST['act'];
+                $rows = ChildPatientModel::changeState($id, $guardianID, $state);
+                if($rows>0) {
+                    $childObj = ChildPatientModel::searchByIDAndGuardianID($id, $guardianID);
+                    View::render('ChildPatients/accSuccess.php', ['childObj' => $childObj]);
+                } else {
+                    echo 'Failed';
+                }
             }
+        } else if (isset($_SESSION['child_id'])) {
+            header('location: '.URLROOT.'/child-patient');
+            die();
+        } else if (isset($_SESSION['doctor_id'])) {
+            header('location: '.URLROOT.'/doctor');
+            die();
+        } else if (isset($_SESSION['adPatient_id'])) {
+            header('location: '.URLROOT.'/adult-patient');
+            die();
+        } else {
+            header('location: '.URLROOT);
+            die();
         }
     }
 }
