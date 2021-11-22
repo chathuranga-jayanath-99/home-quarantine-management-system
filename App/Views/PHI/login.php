@@ -49,8 +49,8 @@
 
 
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                     <!-- <button type="button" class="btn btn-primary btn-lg" value="register">Register</button>  -->
-                     <input type="submit" value="LOGIN"> 
+                      <button type="submit" class="btn btn-primary btn-lg" value="LOGIN">Register</button>  
+                     <!-- <input type="submit" value="LOGIN">  -->
                   </div>
 
                   <div class="text-center">

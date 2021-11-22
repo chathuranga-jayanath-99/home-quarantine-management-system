@@ -8,7 +8,7 @@ class PHI extends \Core\Controller{
 
     public function registerAction(){
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){      //POST method used to access the page
             $data = [
                 'name'  => trim($_POST['name']),
                 'email' => trim($_POST['email']),
@@ -64,7 +64,7 @@ class PHI extends \Core\Controller{
                 // Register User
                 if (PHIModel::register($data)){
                     
-                    header('location: '.URLROOT.'/PHI/login'); // check
+                    header('location: '.URLROOT.'/PHI/login'); 
                 }
                 else {
                     die('something went wrong');
@@ -173,7 +173,12 @@ class PHI extends \Core\Controller{
         if ($this->isLoggedIn()){
             // echo $_SESSION['doctor_id'];
             // $patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);
-            View::render('PHI/index.php');
+            //echo ($_SESSION['phi_name']);
+            $data = [
+                'name' =>  $_SESSION['phi_name']
+                
+            ];
+            View::render('PHI/index.php',['data' => $data]);  /// changed
         }
         else {
             echo 'not logged in';
@@ -204,8 +209,6 @@ class PHI extends \Core\Controller{
 
             $type = $_POST['Patient_type'];
             
-
-            
             if($type == 'child'){
                 header('location: '.URLROOT.'/child-patient/register');
             
@@ -213,9 +216,6 @@ class PHI extends \Core\Controller{
             else {
                 header('location: '.URLROOT.'/adult-patient/register');
             }
-
-
-
         }
 
         else{
@@ -223,7 +223,5 @@ class PHI extends \Core\Controller{
             View::render('PHI/login.php', ['data' => $data]);
 
         }
-
-
     }
 }

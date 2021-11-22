@@ -53,8 +53,8 @@
 
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
- 
     <div class="row d-flex justify-content-center align-items-center h-100">
+     <h3 class="text-center h2 fw-bold ">Welcome PHI <?php echo $data['name']?> !!!</h3> 
       <div class="col-lg-12 col-xl-10">
         <div class="card text-black" style="border-radius: 25px;">
           <div class="card-body p-md-5">
@@ -86,10 +86,11 @@
 
               <!-- <button type="Submit" class="btn btn-primary">Submit</button> -->
               <!-- <div class="col-md-10 col-lg-6 col-xl-1 d-flex align-items-center order-1 order-lg-2"> -->
-              <div class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+              <div class="text-center h3 fw-bold mb-3 mx-1 mx-md-4 mt-5">
               <a href="<?php echo URLROOT;?>/PHI/logout">
               <button type="Submit" class="btn btn-danger">Log Out</button>
               </a> 
+                </div>  <!-- -->
               </div>
               </div>
             </div>
