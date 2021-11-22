@@ -5,6 +5,9 @@
 <div class="container h-100">
 
     <a href="<?php echo URLROOT;?>/doctor/logout">Logout</a>
+    
+    <?php flash('update_result');?>
+
     <h1>Welcome Doctor <?php echo $_SESSION['doctor_name']?>!</h1>
 
     <a class="btn btn-primary" href="<?php echo URLROOT;?>/doctor/update">Upadate Account</a>

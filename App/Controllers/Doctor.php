@@ -68,7 +68,7 @@ class Doctor extends \Core\Controller{
 
                 // Register User
                 if (DoctorModel::register($data)){
-                    flash('register_success', 'You are registered. Now you can Log in');
+                    flash('register_success', 'You are registered. Now you can Log in', "alert alert-success");
                     header('location: '.URLROOT.'/doctor/login');
                 }
                 else {
@@ -245,7 +245,10 @@ class Doctor extends \Core\Controller{
 
                 if (empty($data['email_err'])){
                     DoctorModel::updateAccount($data);
-
+                    flash('update_result', 'Account succesfully updated.', "alert alert-success");
+    
+                }else {
+                    flash('update_result', 'Failed to update', "alert alert-success");
                 }
                 header('location: '.URLROOT.'/doctor');
             }

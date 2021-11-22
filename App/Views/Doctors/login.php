@@ -1,29 +1,4 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <?php flash('register_success');?>
-    <h2>Log In</h2>
-
-    <form action="<?php echo URLROOT?>/doctor/login" method='POST'>
-
-        <div>
-            <label for="email">Email: </label>
-            <input type="text" name="email">
-        </div>
-        <div>
-            <label for="password">Password: </label>
-            <input type="password" name="password">
-        </div>
-=======
 <?php include(APPROOT.'\App\Views\Includes\header.php'); ?>
->>>>>>> my_develop
 
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
@@ -35,7 +10,9 @@
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
               <a href="<?php echo URLROOT; ?>">Main Page</a>
-
+        
+              <?php flash('register_success');?>
+              
               <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Doctor Login</p>
 
                 <form  class="mx-1 mx-md-4" action="<?php echo URLROOT?>/doctor/login" method='POST'>
