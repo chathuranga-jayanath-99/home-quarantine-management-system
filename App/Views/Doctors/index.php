@@ -8,7 +8,7 @@
     
     <?php flash('update_result');?>
 
-    <h1>Welcome Doctor <?php echo $_SESSION['doctor_name']?>!</h1>
+    <h1>Welcome Dr <?php echo $_SESSION['doctor_name']?>!</h1>
 
     <a class="btn btn-primary" href="<?php echo URLROOT;?>/doctor/update">Upadate Account</a>
 
