@@ -68,7 +68,7 @@
                       <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio"  name="Patient_type"  value="child" required>Child Account</label>
                   </div>
                   <div class=" h6 text-center  form-check col-md-10">
-                      <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio" name="Patient_type" value="child">Adult Account</label>
+                      <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio" name="Patient_type" value="adult">Adult Account</label>
                   </div>
                  
 
