@@ -15,7 +15,7 @@
     <div class="container" >
         <h3>Total patients assigned to you</h3>
         <br>
-        <P>Count: <?php echo $count;?></P>
+        <P ><strong>Count: <?php echo $count;?></strong></P>
         <a class="" href="<?php echo URLROOT; ?>/doctor/check-patients">Check all patients</a>
     </div>
 
