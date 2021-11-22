@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body>
+<body> -->
+
+<?php include(APPROOT.'\App\Views\Includes\header.php'); ?>
 
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">

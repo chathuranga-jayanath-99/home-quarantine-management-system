@@ -8,12 +8,6 @@
     <h1>Welcome</h1>
     <p>Hello from the <?php echo htmlspecialchars($name); ?>!</p>
 
-    <ul>
-        <?php foreach ($colors as $color): ?>
-            <li><?php echo htmlspecialchars($color); ?></li>
-        <?php endforeach;?>
-    </ul>
-
 
     <ul>
         <li><a href="<?php echo URLROOT; ?>/doctor/login">Doctor</a></li>

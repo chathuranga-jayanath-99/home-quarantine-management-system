@@ -21,6 +21,11 @@
         <h1><?php echo $adultData->name ;?></h1>
         <a href="<?php echo URLROOT; ?>/patient/symptoms">Record Symptoms</a>
     </div>
+
+    <footer>
+        <p>Author: Hege Refsnes<br>
+        <a href="mailto:hege@example.com">hege@example.com</a></p>
+    </footer>
 </body>
 </html>
 
