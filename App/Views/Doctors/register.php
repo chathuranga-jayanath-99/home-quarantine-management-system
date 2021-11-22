@@ -11,6 +11,8 @@
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
+                <a href="<?php echo URLROOT; ?>">Main Page</a>
+
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Doctor Registration</p>
 
                 <form class="mx-1 mx-md-4" action="<?php echo URLROOT?>/doctor/register" method='POST'>
