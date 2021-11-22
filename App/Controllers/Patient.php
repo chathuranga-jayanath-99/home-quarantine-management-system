@@ -56,7 +56,7 @@ abstract class Patient extends \Core\Controller {
                 if ($day < 0) {
                     return false;
                 } if ($day > 366) {
-                    if ($day < 500 || day > 866) {
+                    if ($day < 500 || $day > 866) {
                         return false;
                     }
                 }

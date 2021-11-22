@@ -34,6 +34,12 @@
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fa fa-calendar fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input class="form-control" type="text" name="age" value="<?php echo $childObj->age ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fa fa-mobile fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
                                 <input class="form-control" type="text" name="contact_no" value="<?php echo $childObj->contact_no ?>" readonly>

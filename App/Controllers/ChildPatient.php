@@ -20,6 +20,7 @@ class ChildPatient extends Patient {
                             'password'              => trim($_POST['password']),
                             'confirm_password'      => trim($_POST['confirm_password']),
                             'NIC'                   => strtoupper(trim($_POST['NIC'])),
+                            'age'                   => htmlspecialchars(trim($_POST['age'])),
                             'contact_no'            => htmlspecialchars(trim($_POST['contact_no'])),
                             'address'               => htmlspecialchars(trim($_POST['address'])),
                             'gender'                => trim($_POST['gender']),
@@ -29,6 +30,7 @@ class ChildPatient extends Patient {
                             'confirm_password_err'  => '',
                             'id_checked'            => 'yes',
                             'nic_err'               => '',
+                            'age_err'               => '',
                             'address_err'           => '',
                             'contact_no_err'        => ''
                         ];
@@ -49,7 +51,7 @@ class ChildPatient extends Patient {
                         if(empty($data['password'])){
                             $data['password_err'] = 'Please enter password';
                         }
-                        else if(strlen($data['password']) < 1){
+                        else if(strlen($data['password']) < 6){
                             $data['password_err'] = 'Password must be at least 6 characters';
                         }
 
@@ -60,6 +62,14 @@ class ChildPatient extends Patient {
                             if($data['password'] != $data['confirm_password']){
                                 $data['confirm_password_err'] = 'Passwords do not match';
                             }
+                        }
+
+                        if(empty($data['age'])){
+                            $data['age_err'] = 'Please enter an age';
+                        } else if (is_numeric($data['age'])) {
+                            $data['age'] = (int) $data['age'];
+                        } else {
+                            $data['age_err'] = 'Please enter a valid age';
                         }
 
                         if(empty($data['contact_no'])){
@@ -98,6 +108,7 @@ class ChildPatient extends Patient {
                             'password'              => '',
                             'confirm_password'      => '',
                             'NIC'                   => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                            'age'                   => '',
                             'contact_no'            => '',
                             'address'               => '',
                             'gender'                => '',
@@ -107,6 +118,7 @@ class ChildPatient extends Patient {
                             'confirm_password_err'  => '',
                             'id_checked'            => 'yes',
                             'nic_err'               => '',
+                            'age_err'               => '',
                             'address_err'           => '',
                             'contact_no_err'        => ''
                         ];
@@ -121,6 +133,7 @@ class ChildPatient extends Patient {
                         'password'              => '',
                         'confirm_password'      => '',
                         'NIC'                   => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                        'age'                   => '',
                         'contact_no'            => '',
                         'address'               => '',
                         'gender'                => '',
@@ -130,6 +143,7 @@ class ChildPatient extends Patient {
                         'confirm_password_err'  => '',
                         'id_checked'            => 'no',
                         'nic_err'               => '',
+                        'age_err'               => '',
                         'address_err'           => '',
                         'contact_no_err'        => ''
                     ];
@@ -153,6 +167,7 @@ class ChildPatient extends Patient {
                     'password'              => '',
                     'confirm_password'      => '',
                     'NIC'                   => '',
+                    'age'                   => '',
                     'contact_no'            => '',
                     'address'               => '',
                     'gender'                => '',
@@ -162,6 +177,7 @@ class ChildPatient extends Patient {
                     'confirm_password_err'  => '',
                     'id_checked'            => 'no',
                     'nic_err'               => '',
+                    'age_err'               => '',
                     'address_err'           => '',
                     'contact_no_err'        => ''
                 ];

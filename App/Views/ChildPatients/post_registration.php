@@ -47,6 +47,13 @@
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fa fa-calendar fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                                <input class="form-control" type="text" name="age" value="<?php echo $data['age']?>" placeholder="Age" required>
+                                <span style="color:red;"><?php echo $data['age_err']?></span>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fa fa-mobile fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
                                 <input class="form-control" type="text" name="contact_no" value="<?php echo $data['contact_no']?>" placeholder="Contact No" required>
