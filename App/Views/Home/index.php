@@ -19,40 +19,42 @@
       <h1 class="text-center h2 fw-bold "> Home Quarantine Management System</h1> 
         <div class="card text-black mt-5" style="border-radius: 25px;">
           <div class="card-body p-md-5">
-            <div class="row justify-content-center">
+            <div class="row">
             
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">LOGIN</h2>
+              <div class="d-flex justify-content-left">
+                <h2 class="h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">LOGIN</h2>
+              </div>
                 
                   
                   <div class=" h5 text-center col-md-10">
-                  <a href="<?php echo URLROOT; ?>/doctor/login"> Doctor
-                    <!-- <button type="Submit" class="btn btn-danger btn-lg">Doctor</button> -->
+                  <a href="<?php echo URLROOT; ?>/doctor/login">
+                  <button style="width:200px;" type="Submit" class="btn btn-danger btn-lg">Doctor</button>
                   </a> 
                   
                   </div>
                   <div class=" h5 text-center   col-md-10">
 
-                  <a href="<?php echo URLROOT; ?>/PHI/login">PHI
-                  <!-- <button type="Submit" class="btn btn-primary btn-lg">PHI</button> -->
+                  <a href="<?php echo URLROOT; ?>/PHI/login">
+                  <button style="width:200px;" type="Submit" class="btn btn-primary btn-lg">PHI</button>
                   </a> 
                   </div>
                   <div class=" h5 text-center   col-md-10">
-                  <a href="<?php echo URLROOT; ?>/adult-patient/login">Adult Patient
-                  <!-- <button type="Submit" class="btn btn-secondary btn-lg">Adult Patient</button> -->
+                  <a href="<?php echo URLROOT; ?>/adult-patient/login">
+                  <button style="width:200px;" type="Submit" class="btn btn-secondary btn-lg">Adult Patient</button>
                   </a> 
                   
                   </div>
                   <div class=" h5 text-center   col-md-10">
-                  <a href="<?php echo URLROOT; ?>/child-patient/login">Child Patient
-                  <!-- <button type="Submit" class="btn btn-success btn-lg">Child Patient</button> -->
+                  <a href="<?php echo URLROOT; ?>/child-patient/login">
+                  <button style="width:200px;" type="Submit" class="btn btn-success btn-lg">Child Patient</button>
                   </a> 
                   
                   </div>
 
               </div>
-              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+              <div class="col-md-10 text-center col-lg-6 col-xl-5 order-2 order-lg-1">
               <img src= "https://image.freepik.com/free-vector/detailed-doctors-nurses_52683-60321.jpg" width=800 height=900 class="img-fluid" alt="Sample image"> 
               <!-- <button type="Submit" class="btn btn-primary">Submit</button> -->
               <!-- <div class="col-md-10 col-lg-6 col-xl-1 d-flex align-items-center order-1 order-lg-2"> -->
