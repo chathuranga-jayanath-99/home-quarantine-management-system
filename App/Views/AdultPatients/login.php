@@ -19,12 +19,13 @@
 					<div class="card shadow-lg">
 						<div class="card-body p-5">
 							<h1 class="fs-4 card-title fw-bold mb-4">Patient Login</h1>
-							<form action="<?php echo URLROOT?>/adPatient/login" method="POST" class="needs-validation" novalidate="" autocomplete="off">
+							<form action="<?php echo URLROOT?>/adult-patient/login" method="POST" class="needs-validation" novalidate="" autocomplete="off">
+								
 								<div class="mb-3">
 									<label class="mb-2 text-muted" for="email">Email</label>
-									<input id="email" type="email" class="form-control" name="email" value="" required autofocus>
+									<input id="email" type="email" class="form-control" name="email" value="<?php echo $data['email']?> " required autofocus>
 									<div class="invalid-feedback">
-										Email is invalid
+										<span><?php echo $data['email_err']?></span>
 									</div>
 								</div>
 
@@ -32,9 +33,9 @@
 									<div class="mb-2 w-100">
 										<label class="text-muted" for="password">Password</label>
 									</div>
-									<input id="password" type="password" class="form-control" name="password" required>
+									<input id="password" type="password" class="form-control" name="password" value="<?php echo $data['password']?>" required>
 								    <div class="invalid-feedback">
-								    	Password is required
+										<span><?php echo $data['password_err']?></span>
 							    	</div>
 								</div>
 
@@ -47,7 +48,7 @@
 						</div>
 						<div class="card-footer py-3 border-0">
 							<div class="text-center">
-								Don't have an account? <a href="<?php echo URLROOT; ?>/adPatient/register" class="text-dark">Create One</a>
+								Don't have an account? <a href="<?php echo URLROOT; ?>/adult-patient/register" class="text-dark">Create One</a>
 							</div>
 						</div>
 					</div>
