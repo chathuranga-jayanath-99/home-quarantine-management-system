@@ -97,13 +97,14 @@
                         <input type="hidden" name="new" value="yes">
                         <input type="hidden" name="NIC" value="<?php echo $nic ?>">
                         <div class="text-center">
-                            <input class="btn btn-success" type="submit" value="Yes">
-                            <span style="display:inline-block; width:50px"></span>
-                            <a href="<?php URLROOT.'/child-patient/register' ?>">
-                                <button class="btn btn-danger">Cancel</button>
-                            </a>
+                            <input style="width:100px;" class="btn btn-success" type="submit" value="Yes">
                         </div>
                     </form>
+                    <div class="text-center mt-3">
+                        <a href="<?php echo URLROOT.'/phi' ?>">
+                                <button style="width:100px;" class="btn btn-danger ">Cancel</button>
+                        </a>
+                    </div>
                     </div>
                     </div>
                 </div>
