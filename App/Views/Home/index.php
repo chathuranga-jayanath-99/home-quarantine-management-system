@@ -19,12 +19,12 @@
       <h1 class="text-center h2 fw-bold "> Home Quarantine Management System</h1> 
         <div class="card text-black mt-5" style="border-radius: 25px;">
           <div class="card-body p-md-5">
-            <div class="row">
+            <div class="row justify-content-center">
             
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
               <div class="d-flex justify-content-left">
-                <h2 class="h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">LOGIN</h2>
+                <h2 class="h3 text-center fw-bold mb-5 mx-1 mx-md-4 mt-4 ">LOGIN</h2>
               </div>
                 
                   
