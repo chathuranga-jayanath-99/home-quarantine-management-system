@@ -11,7 +11,7 @@
     <table class="table">
         <?php 
             foreach($patient as $key => $value):
-                if ($key == 'id' || $key == 'password' ||$key == 'doctor_id' || $key == 'phi_id'){
+                if ($key == 'id' || $key == 'password' ||$key == 'doctor_id' || $key == 'phi_id' || $key == 'guardian_id'){
                     continue;
                 }
                 ?>

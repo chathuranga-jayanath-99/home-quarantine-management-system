@@ -1,4 +1,18 @@
-<?php include(APPROOT.'\App\Views\Includes\header.php'); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppName</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"-->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
 
 <body>
     <section class="vh-100" style="background-color: #eee;">
@@ -21,18 +35,22 @@
                         foreach ($childrenData as $childData) {
                             if ($childData->state === 'inactive') {
                                 ?>
+                                <div>
                                     <input class="form-check-input" type="radio" name="id" value="<?php echo $childData->id ?>">
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="child"><?php echo $childData->name ?></label>
                                     </span>
+                                </div>
                                 <?php
                                 $cnt++;
                             } else {
                                 ?>
+                                <div>
                                     <input class="form-check-input" type="radio" name="id" value="<?php echo $childData->id ?> " disabled>
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="child"><?php echo $childData->name ?></label>
                                     </span>
+                                </div>
                                 <?php
                             }
                         }
@@ -43,8 +61,14 @@
                         <?php
                         if($cnt > 0) {
                             ?>
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center pt-3">
                                 <input class="btn btn-primary ms-auto" type="submit" value="Activate">
+                            </div>
+                            <?php
+                        } else {
+                            ?>
+                            <div class="d-flex align-items-center pt-5">
+                                No inactive account found for the given NIC.
                             </div>
                             <?php
                         }
@@ -73,13 +97,14 @@
                         <input type="hidden" name="new" value="yes">
                         <input type="hidden" name="NIC" value="<?php echo $nic ?>">
                         <div class="text-center">
-                            <input class="btn btn-success" type="submit" value="Yes">
-                            <span style="display:inline-block; width:50px"></span>
-                            <a href="<?php URLROOT.'/child-patient/register' ?>">
-                                <button class="btn btn-danger">Cancel</button>
-                            </a>
+                            <input style="width:100px;" class="btn btn-success" type="submit" value="Yes">
                         </div>
                     </form>
+                    <div class="text-center mt-3">
+                        <a href="<?php echo URLROOT.'/phi' ?>">
+                                <button style="width:100px;" class="btn btn-danger ">Cancel</button>
+                        </a>
+                    </div>
                     </div>
                     </div>
                 </div>
