@@ -35,18 +35,22 @@
                         foreach ($childrenData as $childData) {
                             if ($childData->state === 'inactive') {
                                 ?>
+                                <div>
                                     <input class="form-check-input" type="radio" name="id" value="<?php echo $childData->id ?>">
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="child"><?php echo $childData->name ?></label>
                                     </span>
+                                </div>
                                 <?php
                                 $cnt++;
                             } else {
                                 ?>
+                                <div>
                                     <input class="form-check-input" type="radio" name="id" value="<?php echo $childData->id ?> " disabled>
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="child"><?php echo $childData->name ?></label>
                                     </span>
+                                </div>
                                 <?php
                             }
                         }
@@ -57,8 +61,14 @@
                         <?php
                         if($cnt > 0) {
                             ?>
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center pt-3">
                                 <input class="btn btn-primary ms-auto" type="submit" value="Activate">
+                            </div>
+                            <?php
+                        } else {
+                            ?>
+                            <div class="d-flex align-items-center pt-5">
+                                No inactive account found for the given NIC.
                             </div>
                             <?php
                         }
