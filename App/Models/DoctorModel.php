@@ -123,6 +123,69 @@ class DoctorModel extends \Core\Model{
         }
     }
 
+    public static function getRecords($doctorId){
+        $db = static::getDB();
+        
+        $sql = 'SELECT r.id, ap.name, ap.age, r.type
+        FROM tbl_record r
+        JOIN tbl_adult_patient ap
+        ON r.patient_id = ap.id
+        WHERE r.doctor_id=:doctorId AND r.type="adult"';
+        
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['doctorId' => $doctorId]);
+        $row1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $sql = 'SELECT r.id, cp.name, cp.age, r.type
+        FROM tbl_record r
+        JOIN tbl_child_patient cp
+        ON r.patient_id = cp.id
+        WHERE r.doctor_id=:doctorId AND r.type="child"';
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['doctorId' => $doctorId]);
+        $row2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $res = ['adult' => $row1, 'child' => $row2];
+        
+        if(!empty($res['adult'] || !empty($res['child']))){
+            return $res;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+    public static function getRecord($recordId){
+        $db = static::getDB();
+
+        $sql = 'SELECT * FROM tbl_record WHERE id=:recordId';
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['recordId' => $recordId]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
+    }
+
+    public static function giveFeedback($recordId, $feedback){
+        $db = static::getDB();
+
+        $sql = 'UPDATE tbl_record SET feedback=:feedback, checked=1 WHERE id=:record_id';
+
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute(['feedback'=>$feedback, 'record_id' => $recordId]);
+
+        if ($res){
+            return true;
+        }
+        return false;
+    }
+
     public static function getDetails(){
         $db = static::getDB();
 
@@ -188,5 +251,25 @@ class DoctorModel extends \Core\Model{
         else {
             return false;
         }
+    }
+
+    public static function getMedicalHistoryId($patientId, $patientType){
+        $db = static::getDB();
+
+        // if ($patientType == 'adult'){
+        //     $sql = 'SELECT medical_history_id FROM tbl_adult_patinet WHERE id=:id';
+
+        // }
+        // else{
+        //     $sql = 'SELECT medical_history_id FROM tbl_child_patinet WHERE id=:id';
+        // }
+        // $stmt = $db->prepare($sql);
+        // $stmt->execute(['id' => $patientId]);
+        // $medical_history_id = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // if ($medical_history_id) {
+        //     return $medical_history_id;
+        // }
+        // return false;
     }
 }

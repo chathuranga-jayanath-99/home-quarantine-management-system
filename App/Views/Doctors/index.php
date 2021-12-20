@@ -17,6 +17,7 @@
         <br>
         <P ><strong>Count: <?php echo $count;?></strong></P>
         <a class="" href="<?php echo URLROOT; ?>/doctor/check-patients">Check all patients</a>
+        <a href="<?php echo URLROOT; ?>/doctor/check-records">Check Records</a>
     </div>
 
 </div>

@@ -214,6 +214,47 @@ class Doctor extends \Core\Controller{
         }
     }
 
+    public function checkRecordsAction(){
+        if ($this->isLoggedIn()){
+            $records = DoctorModel::getRecords($_SESSION['doctor_id']);
+            View::render('Doctors/check-records.php', ['records' => $records]);
+        }
+    }
+
+    public function checkRecordAction(){
+        if ($this->isLoggedIn()){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $feedback = $_POST['feedback'];
+                $recordId = $_POST['id'];
+                
+                $res = DoctorModel::giveFeedback($recordId, $feedback);
+                if ($res){
+                    flash('check_success', 'You mark a record.', "alert alert-success");
+                    header('location: '.URLROOT.'/doctor/check-records');
+                }
+                else{
+                    flash('check_fail', 'Failed to mark record.', "alert alert-danger");
+                    header('location: '.URLROOT.'/doctor/check-records');
+                }
+            }
+            else{
+                if ($_GET['id']){
+                    $recordId = $_GET['id'];
+    
+                    $record = DoctorModel::getRecord($recordId);
+                    
+                    if ($record){
+                        $medicalId = DoctorModel::getMedicalHistoryId($record['patient_id'], $record['type']);
+                        View::render('Doctors/check-record.php', ['record' => $record, 'medical_history_id' => $medicalId]);
+                    }
+                    else{
+                        echo "Record is empty.";
+                    }
+                }
+            }
+            
+        }
+    }
 
     public function updateAction(){
         if ($this->isLoggedIn()){
