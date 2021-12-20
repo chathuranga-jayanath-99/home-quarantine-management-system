@@ -200,7 +200,7 @@ class ChildPatient extends Patient {
     }
 
     public function loginAction() {
-        if (isLoggedIn()) {
+        if ($this->isLoggedIn()) {
             header('location: '.URLROOT.'/child-patient');
             die();
         }
