@@ -8,7 +8,7 @@ use App\Models\ChildPatientModel;
 class ChildPatient extends Patient {
 
     public function registerAction() {
-        if(isset($_SESSION['phi_id'])) {
+        if(parent::checkPHISession()) {
             if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 if(trim($_POST['id_checked']) === 'yes') {
@@ -200,6 +200,10 @@ class ChildPatient extends Patient {
     }
 
     public function loginAction() {
+        if ($this->isLoggedIn()) {
+            header('location: '.URLROOT.'/child-patient');
+            die();
+        }
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = [
                 'email' => trim($_POST['email']),
@@ -224,7 +228,7 @@ class ChildPatient extends Patient {
                     // log in success
                     $this->createSession($childPatient);
                     header('location: '.URLROOT.'/child-patient');
-                
+                    die();
                 }
                 else{
                     // username or email is wrong
@@ -274,16 +278,24 @@ class ChildPatient extends Patient {
     }
 
     public function isLoggedIn(){
-        if(isset($_SESSION['child_id'])){
+        if (isset($_SESSION['phi_id'])) {
+            header('location: '.URLROOT.'/phi');
+            die();
+        } else if (isset($_SESSION['child_id'])) {
             return true;
-        }
-        else {
+        } else if (isset($_SESSION['doctor_id'])) {
+            header('location: '.URLROOT.'/doctor');
+            die();
+        } else if (isset($_SESSION['adPatient_id'])) {
+            header('location: '.URLROOT.'/adult-patient');
+            die();
+        } else {
             return false;
         }
     }
 
     public function activeAction() {
-        if(isset($_SESSION['phi_id'])) {
+        if(parent::checkPHISession()) {
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 $id = $_GET['id'];
                 $guardianID = $_GET['nic'];
