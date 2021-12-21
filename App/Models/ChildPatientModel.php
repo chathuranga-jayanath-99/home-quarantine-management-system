@@ -9,7 +9,7 @@ class ChildPatientModel extends PatientModel {
     public static function register($data) {
         $db = static::getDB();
         $sql = 'INSERT INTO tbl_child_patient 
-            ( name,  email,  password,  address,  guardian_id,  age,  contact_no,  phi_range,  gender,  state,  doctor) VALUES 
+            ( name,  email,  password,  address,  guardian_id,  age,  contact_no,  phi_range,  gender,  state,  doctor_id) VALUES 
             (:name, :email, :password, :address, :guardian_id, :age, :contact_no, :phi_range, :gender, :state, :doctor)';
         $stmt = $db->prepare($sql);
         $res = $stmt->execute([
