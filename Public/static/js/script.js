@@ -19,22 +19,28 @@ function showSuggestions(){
                 // console.log(patients);
                 var output = '';
                 var res = [];
-
-                for (var i in patients['adult']){
-                    $patient = patients['adult'][i];
-                    res.push('<a href="'+URLROOT+
-                    '/doctor/check-patient?id='+ $patient.id + '&type=adult">'+
-                    $patient.name +'</a>');
+                
+                if (patients['adult'].length > 0 || patients['child'].length > 0){
+                    for (var i in patients['adult']){
+                        $patient = patients['adult'][i];
+                        res.push('<a href="'+URLROOT+
+                        '/doctor/check-patient?id='+ $patient.id + '&type=adult">'+
+                        $patient.name +'</a>');
+                    }
+                    for (var i in patients['child']){
+                        $patient = patients['child'][i];
+                        res.push('<a href="'+URLROOT+
+                        '/doctor/check-patient?id='+ $patient.id + '&type=child">'+
+                        $patient.name +'</a>');
+                    }
+    
+                    $output = res.join(',');
                 }
-                for (var i in patients['child']){
-                    $patient = patients['child'][i];
-                    res.push('<a href="'+URLROOT+
-                    '/doctor/check-patient?id='+ $patient.id + '&type=child">'+
-                    $patient.name +'</a>');
+                else{
+                    $output='No matches found.'
                 }
-
-                output = res.join(',');
-                search_output.innerHTML = output;
+                
+                search_output.innerHTML = $output;
             }
         }
         xhr.send();
