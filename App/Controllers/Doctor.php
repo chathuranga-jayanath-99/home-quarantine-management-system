@@ -326,7 +326,7 @@ class Doctor extends \Core\Controller{
 
     public function searchPatientAction(){
         if ($this->isLoggedIn()){
-            $patients = DoctorModel::getAllPatients($_REQUEST['name']);
+            $patients = DoctorModel::getPatientsMatched($_REQUEST['name']);
             echo json_encode($patients);
         }
         else{

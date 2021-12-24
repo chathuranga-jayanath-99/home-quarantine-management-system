@@ -22,12 +22,13 @@ require '../App/Controllers/AdultPatient.php';
 require '../App/Controllers/Admin/User.php';
 
 // Require models
-
+require '../App/Models/MedicalOfficerModel.php';
 require '../App/Models/DoctorModel.php';
 require '../App/Models/PatientModel.php';
 require '../App/Models/ChildPatientModel.php';
 require '../App/Models/PHIModel.php';
 require '../App/Models/AdultPatientModel.php';
+
 
 $router = new Core\Router();
 
