@@ -318,12 +318,15 @@ class ChildPatient extends Patient {
 
                 if(parent::isValidNIC($data['NIC'])){
                     $childrenData = ChildPatientModel::searchByGuardianID($data['NIC']);
+                    $contact_children = array();
                     foreach($childrenData as $child){
                         if($child->state == 'contact'){
-                            echo "hello";
+                            array_push( $contact_children , $child);
                         }
                     }
+                    View::render('ChildPatients/post_markpositive.php', ['contact_children' => $contact_children]);
                     
+                                
                 }
                 else{
                     $data['nic_err'] = 'Invalid NIC';
