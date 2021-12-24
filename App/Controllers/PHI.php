@@ -21,6 +21,7 @@ class PHI extends \Core\Controller{
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
+                'nic_err' => '',
                 'confirm_password_err' => ''
             ];
 
@@ -41,8 +42,12 @@ class PHI extends \Core\Controller{
             if(empty($data['password'])){
                 $data['password_err'] = 'Please enter password';
             }
-            else if(strlen($data['password']) < 1){
+            else if(strlen($data['password']) < 6){
                 $data['password_err'] = 'Password must be at least 6 characters';
+            }
+
+            if(!$this->isValidNIC($data['NIC'])){
+                $data['nic_err'] = 'Invalid NIC' ;
             }
 
             if(empty($data['confirm_password'])){
@@ -55,7 +60,7 @@ class PHI extends \Core\Controller{
             }
 
             if (empty($data['name_err']) && empty($data['email_err']) &&
-            empty($data['password_err']) && empty($data['confirm_password_err'])){
+            empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['nic_err'])){
                 // validated
 
                 // Hash password
@@ -94,6 +99,7 @@ class PHI extends \Core\Controller{
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
+                'nic_err' => '',
                 'confirm_password_err' => ''
                  
             ];
@@ -224,5 +230,29 @@ class PHI extends \Core\Controller{
             View::render('PHI/login.php', ['data' => $data]);
 
         }
+    }
+
+    public function markpositive(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            $type = $_POST['Patient_type'];
+            
+            if($type == 'child'){
+                header('location: '.URLROOT.'/child-patient/markpositive');
+            
+            }
+            else {
+                header('location: '.URLROOT.'/adult-patient/markpositive');
+            }
+        }
+
+        else{
+
+            View::render('PHI/login.php', ['data' => $data]);
+
+        }
+
+        
     }
 }

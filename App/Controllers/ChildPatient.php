@@ -327,4 +327,39 @@ class ChildPatient extends Patient {
             die();
         }
     }
+
+    public function markpositive(){
+        if(parent::checkPHISession()) {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = [
+                    'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                    'nic_err' => ''
+                ];
+
+                if(parent::isValidNIC($data['NIC'])){
+                    $childrenData = ChildPatientModel::searchByGuardianID($data['NIC']);
+                    foreach($childrenData as $child){
+                        if($child->state == 'contact'){
+                            echo "hello";
+                        }
+                    }
+                    
+                }
+                else{
+                    $data['nic_err'] = 'Invalid NIC';
+                     View::render('ChildPatients/pre_markpositive.php', ['data'=> $data]);
+                }
+            }
+            else {
+                $data = [
+                    'NIC' => '' ,
+                    'nic_err' => ''
+                ] ;
+                View::render('ChildPatients/pre_markpositive.php', ['data'=> $data]); 
+            }
+            
+        }
+
+
+    }
 }
