@@ -89,7 +89,7 @@ class ChildPatient extends Patient {
                             // Register User
                             $id = ChildPatientModel::register($data);
                             if ($id) {
-                                header('location: '.URLROOT.'/child-patient/active?id='.$id.'&nic='.$data['NIC']);
+                                $this->activeHelper($data["NIC"], $data["email"]);
                             }
                             else {
                                 die('something went wrong');
@@ -184,18 +184,6 @@ class ChildPatient extends Patient {
                 // load view
                 View::render('ChildPatients/pre_registration.php', ['data'=> $data]);
             }
-        } else if (isset($_SESSION['child_id'])) {
-            header('location: '.URLROOT.'/child-patient');
-            die();
-        } else if (isset($_SESSION['doctor_id'])) {
-            header('location: '.URLROOT.'/doctor');
-            die();
-        } else if (isset($_SESSION['adPatient_id'])) {
-            header('location: '.URLROOT.'/adult-patient');
-            die();
-        } else {
-            header('location: '.URLROOT);
-            die();
         }
     }
 
@@ -296,35 +284,27 @@ class ChildPatient extends Patient {
 
     public function activeAction() {
         if(parent::checkPHISession()) {
-            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                $id = $_GET['id'];
-                $guardianID = $_GET['nic'];
-                $childObj = ChildPatientModel::searchByIDAndGuardianID($id, $guardianID);
-                View::render('ChildPatients/active.php', ['childObj' => $childObj]);
-            } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $id = $_POST['id'];
-                $guardianID = $_POST['nic'];
-                $state = $_POST['act'];
-                $rows = ChildPatientModel::changeState($id, $guardianID, $state);
-                if($rows>0) {
-                    $childObj = ChildPatientModel::searchByIDAndGuardianID($id, $guardianID);
-                    View::render('ChildPatients/accSuccess.php', ['childObj' => $childObj]);
-                } else {
-                    echo 'Failed';
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $changed = false;
+                if (isset($_POST['changed'])) {
+                    if ($_POST['changed'] === 'true') {
+                        $changed = true;
+                        $this->activeHelper($_POST['nic'], $_POST['email']);
+                    }
+                }
+                if (!$changed) {
+                    $email = $_POST['email'];
+                    $guardianID = $_POST['nic'];
+                    $state = $_POST['act'];
+                    $rows = ChildPatientModel::changeState($email, $guardianID, $state);
+                    if($rows>0) {
+                        $childObj = ChildPatientModel::searchByEmailAndGuardianID($guardianID, $email);
+                        View::render('ChildPatients/accSuccess.php', ['childObj' => $childObj]);
+                    } else {
+                        echo 'Failed';
+                    }
                 }
             }
-        } else if (isset($_SESSION['child_id'])) {
-            header('location: '.URLROOT.'/child-patient');
-            die();
-        } else if (isset($_SESSION['doctor_id'])) {
-            header('location: '.URLROOT.'/doctor');
-            die();
-        } else if (isset($_SESSION['adPatient_id'])) {
-            header('location: '.URLROOT.'/adult-patient');
-            die();
-        } else {
-            header('location: '.URLROOT);
-            die();
         }
     }
 
@@ -347,7 +327,7 @@ class ChildPatient extends Patient {
                 }
                 else{
                     $data['nic_err'] = 'Invalid NIC';
-                     View::render('ChildPatients/pre_markpositive.php', ['data'=> $data]);
+                    View::render('ChildPatients/pre_markpositive.php', ['data'=> $data]);
                 }
             }
             else {
@@ -361,5 +341,10 @@ class ChildPatient extends Patient {
         }
 
 
+    }
+
+    protected function activeHelper($nic, $email) {
+        $childObj = ChildPatientModel::searchByEmailAndGuardianID($nic, $email);
+        View::render('ChildPatients/active.php', ['childObj' => $childObj]);
     }
 }

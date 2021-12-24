@@ -7,7 +7,7 @@ use App\Models\Post;
 
 abstract class Patient extends \Core\Controller {
 
-    
+    protected abstract function activeHelper($nic, $email);
 
     protected function checkPHISession() {
         if (isset($_SESSION['phi_id'])) {

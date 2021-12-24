@@ -58,7 +58,7 @@
                                     <label class="form-check-label" for="inactive">Inactive</label>
                                     </span>
                                     </div class="pb-2">
-                                    <input type="hidden" name="id" value="<?php echo $childObj->id; ?>">
+                                    <input type="hidden" name="email" value="<?php echo $childObj->email; ?>">
                                     <input type="hidden" name="nic" value="<?php echo $childObj->guardian_id; ?>">
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                     <input class="btn btn-primary ms-auto" type="submit" value="Change">

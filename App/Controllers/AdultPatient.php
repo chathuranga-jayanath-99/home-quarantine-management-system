@@ -240,4 +240,8 @@ class Adultpatient extends Patient{
             return false;
         }
     }
+    
+    protected function activeHelper($nic, $email) {
+        
+    }
 }
