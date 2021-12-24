@@ -1,6 +1,8 @@
 <?php include(APPROOT.'\App\Views\Includes\header.php'); ?>
 <body>
-
+<script>
+    // document.getElementById("search_form").addEventListener("onsubmit", event.preventDefault());
+</script>
 <section class="pt-3 vh-100" style="background-color: #eee;">
 <div class="container h-100">
 
@@ -12,6 +14,16 @@
 
     <a class="btn btn-primary" href="<?php echo URLROOT;?>/doctor/update">Upadate Account</a>
 
+    <br><br>
+
+    <div class="container">
+        <input type="text" id="search_input" class="form-control" placeholder="Search a patient">
+        <button id="seacrch_btn" onclick="showSuggestions()">Search</button>
+        <button onclick="reset()">Clear</button>
+        <p>Matches: <span id="search_result" style="font-weight:bold"></span></p>
+        <a href="#"></a>
+    </div>
+
     <div class="container" >
         <h3>Total patients assigned to you</h3>
         <br>
@@ -22,7 +34,10 @@
 
 </div>
 </section>
+    <script src="static/js/script.js">
+    // <script>
 
 
+    </script>
 </body>
 </html>

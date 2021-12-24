@@ -205,7 +205,7 @@ class Doctor extends \Core\Controller{
                 View::render('Doctors/check-patient.php', ['patient' => $patient]);
             }
             else{
-                header('location:'.URLROOT.'/doctor/login');
+                header('location:'.URLROOT.'/doctor');
             }
 
         }
@@ -324,6 +324,16 @@ class Doctor extends \Core\Controller{
         }
     }
 
+    public function searchPatientAction(){
+        if ($this->isLoggedIn()){
+            $patients = DoctorModel::getAllPatients($_REQUEST['name']);
+            echo json_encode($patients);
+        }
+        else{
+            header('location:'.URLROOT.'/doctor/login');
+        }
+    }
+
     private function createSession($doctor){
         $_SESSION['doctor_id'] = $doctor->id;
         $_SESSION['doctor_email'] = $doctor->email;
@@ -339,6 +349,5 @@ class Doctor extends \Core\Controller{
             return false;
         }
     }
-
 
 }
