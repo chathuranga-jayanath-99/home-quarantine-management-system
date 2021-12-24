@@ -28,21 +28,24 @@
                         <div>
                             <h6 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Please select the account that want to mark as positive</h6>
                         </div>
-                    <form action="<?php echo URLROOT?>/child-patient/active" method="GET">
+                    <form action="<?php echo URLROOT?>/child-patient/active " method="POST">
                         <div>
                         <?php 
                        
                         foreach ($contact_children as $childData) {
                                 ?>
                                 <div>
-                                    <input class="form-check-input" type="radio" name="id" value="<?php echo $childData->id ?>">
+                                    <input class="form-check-input" type="radio" name="email" value="<?php echo $childData->email ?>">
                                     <span class="mb-2 w-100">
-                                    <label class="form-check-label" for="child"><?php echo $childData->name ?></label>
+                                    <label class="form-check-label" for="email"><?php echo $childData->name ?></label>
                                     </span>
                                 </div>
+                                <input type="hidden" name="nic" value="<?php echo $nic ?>">
+                                <input type="hidden" name="changed" value="true">
                                 <?php
                             
-                            }
+                        }
+
 
                             
                         
