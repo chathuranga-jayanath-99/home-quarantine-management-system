@@ -9,7 +9,7 @@ class ChildPatientModel extends PatientModel {
     public static function register($data) {
         $db = static::getDB();
         $sql = 'INSERT INTO tbl_child_patient 
-            ( name,  email,  password,  address,  guardian_id,  age,  contact_no,  phi_range,  gender,  state,  doctor) VALUES 
+            ( name,  email,  password,  address,  guardian_id,  age,  contact_no,  phi_range,  gender,  state,  doctor_id) VALUES 
             (:name, :email, :password, :address, :guardian_id, :age, :contact_no, :phi_range, :gender, :state, :doctor)';
         $stmt = $db->prepare($sql);
         $res = $stmt->execute([
@@ -26,8 +26,7 @@ class ChildPatientModel extends PatientModel {
             'doctor'        =>  'null'
         ]);
         if ($res) {
-            $id = $db->lastInsertId();
-            return $id;
+            return true;
         }
         return false;
     }
@@ -72,30 +71,30 @@ class ChildPatientModel extends PatientModel {
         return $res;
     }
 
-    public static function searchByIDAndGuardianID($id, $guardianID) {
+    public static function searchByEmailAndGuardianID($guardianID, $email) {
         $db = static::getDB();
         $sql = 'SELECT * FROM tbl_child_patient 
-                WHERE guardian_id=:guardian_id and id=:id';
+                WHERE guardian_id=:guardian_id and email=:email';
         $stmt = $db->prepare($sql);
         $stmt->execute([
             'guardian_id' => $guardianID,
-            'id'          => $id
+            'email'       => $email
         ]);
         $res = $stmt->fetch(PDO::FETCH_OBJ);
         return $res;
     }
 
-    public static function changeState($id, $guardianID, $state) {
+    public static function changeState($email, $guardianID, $state) {
         $db = static::getDB();
         $sql = 'UPDATE tbl_child_patient 
                 SET state=:state, phi_range=:phi_range
-                WHERE guardian_id=:guardian_id and id=:id';
+                WHERE guardian_id=:guardian_id and email=:email';
         $stmt = $db->prepare($sql);
         $res = $stmt->execute([
             'state'       => $state,
             'phi_range'   => $_SESSION['phi_area'],
             'guardian_id' => $guardianID,
-            'id'          => $id,
+            'email'       => $email,
         ]);
         if ($res) {
             return true;

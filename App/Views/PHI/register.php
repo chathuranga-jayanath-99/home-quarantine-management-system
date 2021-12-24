@@ -71,7 +71,7 @@
                     <div class="form-outline flex-fill mb-0">
                       <!-- <label class="form-label" for="NIC">NIC Number</label> -->
                       <input type="text" name="NIC" value="<?php echo $data['NIC']?>" class="form-control" placeholder="NIC Number"/>
-                      
+                      <span style="color:red"><?php echo $data['nic_err']?></span>
                       
                     </div>
                   </div>

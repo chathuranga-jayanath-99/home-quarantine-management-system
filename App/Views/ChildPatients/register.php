@@ -28,7 +28,7 @@
                         <div>
                             <h6 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">You can either activate one of the following existing accounts or create a new account.</h6>
                         </div>
-                    <form action="<?php echo URLROOT?>/child-patient/active" method="GET">
+                    <form action="<?php echo URLROOT?>/child-patient/active" method="POST">
                         <div>
                         <?php 
                         $cnt = 0;
@@ -36,9 +36,9 @@
                             if ($childData->state === 'inactive') {
                                 ?>
                                 <div>
-                                    <input class="form-check-input" type="radio" name="id" value="<?php echo $childData->id ?>">
+                                    <input class="form-check-input" type="radio" name="email" value="<?php echo $childData->email ?>">
                                     <span class="mb-2 w-100">
-                                    <label class="form-check-label" for="child"><?php echo $childData->name ?></label>
+                                    <label class="form-check-label" for="email"><?php echo $childData->name ?></label>
                                     </span>
                                 </div>
                                 <?php
@@ -46,9 +46,9 @@
                             } else {
                                 ?>
                                 <div>
-                                    <input class="form-check-input" type="radio" name="id" value="<?php echo $childData->id ?> " disabled>
+                                    <input class="form-check-input" type="radio" name="email" value="<?php echo $childData->email ?> " disabled>
                                     <span class="mb-2 w-100">
-                                    <label class="form-check-label" for="child"><?php echo $childData->name ?></label>
+                                    <label class="form-check-label" for="email"><?php echo $childData->name ?></label>
                                     </span>
                                 </div>
                                 <?php
@@ -61,6 +61,7 @@
                         <?php
                         if($cnt > 0) {
                             ?>
+                            <input type="hidden" name="changed" value="true">
                             <div class="d-flex align-items-center pt-3">
                                 <input class="btn btn-primary ms-auto" type="submit" value="Activate">
                             </div>
