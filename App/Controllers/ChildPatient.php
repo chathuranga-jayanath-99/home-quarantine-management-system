@@ -324,7 +324,7 @@ class ChildPatient extends Patient {
                             array_push( $contact_children , $child);
                         }
                     }
-                    View::render('ChildPatients/post_markpositive.php', ['contact_children' => $contact_children]);
+                    View::render('ChildPatients/post_markpositive.php', ['contact_children' => $contact_children , 'nic' => $data['NIC']]);
                     
                                 
                 }
