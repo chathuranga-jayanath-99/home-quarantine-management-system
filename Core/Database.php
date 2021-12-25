@@ -9,16 +9,20 @@ class Database{
     private $host;
     private $user;
     private $password;
-    private $db_name;
+    private $name;
 
+    private $pdo;
     private static $instance;
 
     private function __construct()
     {
         $this->host = Config::DB_HOST;
         $this->user = Config::DB_USER;
-        $this->db_name = Config::DB_NAME;
+        $this->name = Config::DB_NAME;
+        $this->password = Config::DB_PASSWORD;
 
+        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->name;
+        $this->pdo = new PDO($dsn, $this->user, $this->password);
     }
 
     // public function connect(){
@@ -26,8 +30,7 @@ class Database{
     //     $pdo = new PDO($dsn, $this->user, $this->password);
     // }
     public function getConnection(){
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->db_name;
-        return new PDO($dsn, $this->user, $this->password);
+        return $this->pdo;
     }
 
     // public function check_out(){
