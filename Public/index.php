@@ -7,6 +7,7 @@ require '../Core/Router.php';
 require '../Core/Controller.php';
 require '../Core/View.php';
 require '../Core/Model.php';
+require '../Core/Database.php';
 
 // Require helpers
 require '../App/helpers/session_helper.php';

@@ -17,7 +17,7 @@
     <br><br>
 
     <div class="container">
-        <input type="text" id="search_input" class="form-control" placeholder="Search a patient">
+        <input type="text" id="search_input" class="form-control" placeholder="Search a patient" onkeyup="showSuggestionToEnter(event)">
         <button id="seacrch_btn" onclick="showSuggestions()">Search</button>
         <button onclick="reset()">Clear</button>
         <p>Matches: <span id="search_result" style="font-weight:bold"></span></p>
@@ -29,15 +29,15 @@
         <br>
         <P ><strong>Count: <?php echo $count;?></strong></P>
         <a class="" href="<?php echo URLROOT; ?>/doctor/check-patients">Check all patients</a>
+        <br>
         <a href="<?php echo URLROOT; ?>/doctor/check-records">Check Records</a>
+        <br>
+        <a href="<?php echo URLROOT; ?>/doctor/mark-quarantine-results">Mark Cured or Extend Quarantine</a>
     </div>
 
 </div>
 </section>
-    <script src="static/js/script.js">
-    // <script>
-
-
+    <script src="static/js/doctor-script.js">   
     </script>
 </body>
 </html>

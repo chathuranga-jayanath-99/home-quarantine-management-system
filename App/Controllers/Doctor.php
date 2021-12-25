@@ -185,6 +185,16 @@ class Doctor extends \Core\Controller{
                 
     }
 
+    public function markQuarantineResultsAction(){
+        if ($this->isLoggedIn()){
+            $typed_patients = DoctorModel::getPatientsToMarkResult($_SESSION['doctor_id']);
+            View::render('Doctors/mark-quarantine-results.php', ['typed_patients' => $typed_patients]);
+        }
+        else {
+            $this->loginAction();
+        }
+    }
+
     public function checkPatientsAction(){
         if ($this->isLoggedIn()){
             $typed_patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);

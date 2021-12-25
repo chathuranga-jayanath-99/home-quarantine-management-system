@@ -45,13 +45,19 @@ function showSuggestions(){
         }
         xhr.send();
     }
-};
+}
 
 function reset(){
     var search_input = document.getElementById('search_input');
     var search_output = document.getElementById('search_result');
     search_input.value = '';
     search_output.innerHTML = '';
-};
+}
 
+function showSuggestionToEnter(event){
+    console.log(event);
+    if (event.keyCode === 13){
+        showSuggestions();
+    }
+}
 
