@@ -37,4 +37,8 @@ class Home extends \Core\Controller
         }
     }
 
+    public function aboutAction() {
+        View::render('Home/about.php', []);
+    }
+
 }
