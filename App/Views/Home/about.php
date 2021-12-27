@@ -16,34 +16,34 @@
     <div class="row d-flex justify-content-center align-items-center h-auto">
     
       <div class="col-lg-12 col-xl-10 mt-5">
-      <h1 class="text-center h2 fw-bold ">Code Devours</h1> 
+      <h1 class="text-center h1 fw-bold ">Code Devours</h1>
         <div class="card text-black mt-5 p-3" style="border-radius: 25px;">
           <div class="card-body p-md-5">
             <div class="row justify-content-center">      
                 <div class="card-group">
                     <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                        <img class="card-img-top" src="<?php echo URLROOT ?>/image/show?img=shilpa.jpg" alt="Sasitha">
+                        <img class="card-img-top p-2" src="<?php echo URLROOT ?>/image/show?img=shilpa.jpg" alt="Shilpa">
                         <div class="card-body">
                         <h5 class="card-title">Shilpa Perera</h5>
                         <h6 class="card-subtitle mb-2 text-white">190451P</h6>
                         </div>
                     </div>
                     <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                      <img class="card-img-top" src="https://rlv.zcache.com/birdorable_elf_owl_square_sticker-re69fcd1f89184642926684d1f067f4c6_0ugmc_8byvr_640.jpg" alt="Card image cap">
+                        <img class="card-img-top p-2" src="<?php echo URLROOT ?>/image/show?img=chathuwa.jpg" alt="Chathuranga">
                         <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-white">Card Subtitle</h6>
+                        <h5 class="card-title">Chathuranga Jayanath</h5>
+                        <h6 class="card-subtitle mb-2 text-white">190585E</h6>
                         </div>
                     </div>
                     <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                        <img class="card-img-top" src="<?php echo URLROOT ?>/image/show?img=thamindu.png" alt="Thamindu">
+                        <img class="card-img-top p-2" src="<?php echo URLROOT ?>/image/show?img=thamindu.png" alt="Thamindu">
                         <div class="card-body">
                         <h5 class="card-title">Thamindu Sathruwan</h5>
                         <h6 class="card-subtitle mb-2 text-white">190257C</h6>
                         </div>
                     </div>
                     <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                        <img class="card-img-top" src="<?php echo URLROOT ?>/image/show?img=sasitha.jpg" alt="Sasitha">
+                        <img class="card-img-top p-2" src="<?php echo URLROOT ?>/image/show?img=sasitha.jpg" alt="Sasitha">
                         <div class="card-body">
                         <h5 class="card-title">Sasitha Kumarasinghe</h5>
                         <h6 class="card-subtitle mb-2 text-white">190332D</h6>
