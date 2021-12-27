@@ -240,8 +240,16 @@ class Adultpatient extends Patient{
             return false;
         }
     }
+
+    public function activeAction() {
+        // TODO
+    }
+
+    public function markpositive() {
+        // TODO
+    }
     
     protected function activeHelper($nic, $email) {
-        
+        // TODO
     }
 }
