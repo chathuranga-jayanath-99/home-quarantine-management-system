@@ -22,30 +22,24 @@
             <div class="row justify-content-center">      
                 <div class="card-group">
                     <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                        <img class="card-img-top" src="https://rlv.zcache.com/birdorable_elf_owl_square_sticker-re69fcd1f89184642926684d1f067f4c6_0ugmc_8byvr_640.jpg" alt="Card image cap">
+                        <img class="card-img-top" src="<?php echo URLROOT ?>/image/show?img=shilpa.jpg" alt="Sasitha">
                         <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-white">Card Subtitle</h6>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <h5 class="card-title">Shilpa Perera</h5>
+                        <h6 class="card-subtitle mb-2 text-white">190451P</h6>
                         </div>
                     </div>
                     <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                        <img class="card-img-top" src="https://rlv.zcache.com/birdorable_elf_owl_square_sticker-re69fcd1f89184642926684d1f067f4c6_0ugmc_8byvr_640.jpg" alt="Card image cap">
+                      <img class="card-img-top" src="https://rlv.zcache.com/birdorable_elf_owl_square_sticker-re69fcd1f89184642926684d1f067f4c6_0ugmc_8byvr_640.jpg" alt="Card image cap">
                         <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <h6 class="card-subtitle mb-2 text-white">Card Subtitle</h6>
-                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
                     </div>
                     <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                        <img class="card-img-top" src="https://rlv.zcache.com/birdorable_elf_owl_square_sticker-re69fcd1f89184642926684d1f067f4c6_0ugmc_8byvr_640.jpg" alt="Card image cap">
+                        <img class="card-img-top" src="<?php echo URLROOT ?>/image/show?img=thamindu.png" alt="Thamindu">
                         <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-white">Card Subtitle</h6>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <h5 class="card-title">Thamindu Sathruwan</h5>
+                        <h6 class="card-subtitle mb-2 text-white">190257C</h6>
                         </div>
                     </div>
                     <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
@@ -53,8 +47,6 @@
                         <div class="card-body">
                         <h5 class="card-title">Sasitha Kumarasinghe</h5>
                         <h6 class="card-subtitle mb-2 text-white">190332D</h6>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
                     </div>
                 </div>
