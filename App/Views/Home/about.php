@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
-                        <img class="card-img-top" src="<?php echo URLROOT ?>/image/show?img=sasitha.jpg" alt="Card image cap">
+                        <img class="card-img-top" src="<?php echo URLROOT ?>/image/show?img=sasitha.jpg" alt="Sasitha">
                         <div class="card-body">
                         <h5 class="card-title">Sasitha Kumarasinghe</h5>
                         <h6 class="card-subtitle mb-2 text-white">190332D</h6>
