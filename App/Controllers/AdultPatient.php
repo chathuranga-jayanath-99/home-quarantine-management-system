@@ -245,8 +245,42 @@ class Adultpatient extends Patient{
         // TODO
     }
 
-    public function markpositive() {
-        // TODO
+    public function markpositive(){
+        if(parent::checkPHISession()) {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = [
+                    'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                    'nic_err' => ''
+                ];
+
+                if(parent::isValidNIC($data['NIC'])){
+                    $adultData = AdultPatientModel::searchByNIC($data['NIC']);
+                    $contact_patient = array();
+                    foreach($adultData as $adult){
+                        if($adult->state == 'contact'){
+                            array_push( $contact_patient , $adult);
+                        }
+                    }
+                    View::render('AdultPatients/post_markpositive.php', ['contact_patient' => $contact_patient , 'nic' => $data['NIC']]);
+                    
+                                
+                }
+                else{
+                    $data['nic_err'] = 'Invalid NIC';
+                    View::render('AdultPatients/pre_markpositive.php', ['data'=> $data]);
+                }
+            }
+            else {
+                $data = [
+                    'NIC' => '' ,
+                    'nic_err' => ''
+                ] ;
+                View::render('AdultPatients/pre_markpositive.php', ['data'=> $data]); 
+            }
+            
+        }
+
+
     }
     
     protected function activeHelper($nic, $email) {
