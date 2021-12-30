@@ -13,6 +13,7 @@ abstract class Patient extends \Core\Controller {
     public abstract function isLoggedIn();
     public abstract function activeAction();
     public abstract function markpositive();
+    public abstract function recordAction();
 
     protected abstract function activeHelper($nic, $email);
 

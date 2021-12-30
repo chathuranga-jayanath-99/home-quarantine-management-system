@@ -273,6 +273,85 @@ class DoctorModel extends MedicalOfficerModel{
     }
 
     public static function getPatientsToMarkResult($doctorId){
-        return static::getAssingedPatients($doctorId);
+        $db = static::getDB();
+
+        $sql1 = 'SELECT ap.id, ap.name, ap.age, ap.end_quarantine_date
+        FROM tbl_adult_patient ap
+        WHERE ap.doctor_id=:doctorId AND ap.end_quarantine_date <= :today';
+
+        $sql2 = 'SELECT cp.id, cp.name, cp.age, cp.end_quarantine_date
+        FROM tbl_child_patient cp
+        WHERE cp.doctor_id=:doctorId AND cp.end_quarantine_date <= :today';
+
+        $stmt1 = $db->prepare($sql1);
+        $stmt1->execute(['doctorId'=>$doctorId, 'today'=>date("Y-m-d")]);
+        $res1 = $stmt1->fetchAll(PDO::FETCH_OBJ);
+        self::addType('adult', $res1);
+
+        $stmt2 = $db->prepare($sql2);
+        $stmt2->execute(['doctorId'=>$doctorId, 'today'=>date("Y-m-d")]);
+        $res2 = $stmt2->fetchAll(PDO::FETCH_OBJ);
+        self::addType('child', $res2);
+        
+        $res = array_merge($res1, $res2);
+
+        usort($res, array("App\Models\DoctorModel", "compareByQuarantineDate"));
+        return $res;
+    }
+
+    public static function endQuarantinePeriod($patientId, $patientType){
+        $db = static::getDB();
+
+        if (strcmp($patientType, 'adult') == 0){
+            $sql = 'UPDATE tbl_adult_patient SET end_quarantine_date=NULL WHERE id=:id';
+        }
+        else if(strcmp($patientType, 'child') == 0){
+            $sql = 'UPDATE tbl_child_patient SET end_quarantine_date=NULL WHERE id=:id';
+        }
+        else{
+            return false;
+        }
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute(['id'=>$patientId]);
+        return $res;
+
+    }
+
+    public static function extendQuarantineDate($patientId, $patientType, $extendedDate){
+        $db = static::getDB();
+
+        if (strcmp($patientType, 'adult') == 0){
+            $sql = 'UPDATE tbl_adult_patient SET end_quarantine_date=:extendedDate WHERE id=:id';
+        }
+        else if (strcmp($patientType, 'child') == 0){
+            $sql = 'UPDATE tbl_child_patient SET end_quarantine_date=:extendedDate WHERE id=:id';
+        }
+        else{
+            return false;
+        }
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute(['id'=>$patientId, 'extendedDate'=>$extendedDate]);
+        return $res;
+    }
+
+    public static function getPatientRecords($patientId, $patientType){
+        $db = static::getDB();
+
+        $sql = 'SELECT * FROM tbl_record WHERE patient_id=:patientId AND type=:type';
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['patientId'=>$patientId, 'type'=>$patientType]);
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $res;
+    }
+
+    private static function addType($type, $arr){
+        foreach ($arr as $ele){
+            $ele->type = $type;
+        }
+    }
+
+    private static function compareByQuarantineDate($x, $y){
+        return $x->end_quarantine_date > $y->end_quarantine_date;
     }
 }

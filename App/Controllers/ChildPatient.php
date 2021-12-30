@@ -6,6 +6,19 @@ use \Core\View;
 use App\Models\ChildPatientModel;
 
 class ChildPatient extends Patient {
+    private $id;
+    private $name;
+    private $email;
+    private $password;
+    private $address;
+    private $guardian_id;
+    private $gender;
+    private $age;
+    private $contact_no;
+    private $phi_range;
+    private $phi_id;
+    private $doctor_id;
+    private $state;
 
     public function registerAction() {
         if(parent::checkPHISession()) {
@@ -340,14 +353,139 @@ class ChildPatient extends Patient {
                 ] ;
                 View::render('ChildPatients/pre_markpositive.php', ['data'=> $data]); 
             }
-            
         }
+    }
 
-
+    public function recordAction() {
+        if ($this->isLoggedIn()) {
+            $this->initialize();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $temperature = $_POST['temperature'];
+                if (is_numeric($temperature) || is_float($temperature)) {
+                    if ($_POST['temp-unit'] === 'fahrenheit') {
+                        $temperature = ($temperature - 32) * 5 / 9;
+                    }
+                    $fever          = 0;
+                    $cough          = 0;
+                    $sore_throat    = 0;
+                    $short_breath   = 0;
+                    $runny_nose     = 0;
+                    $chills         = 0;
+                    $muscle_ache    = 0;
+                    $headache       = 0;
+                    $fatigue        = 0;
+                    $abdominal_pain = 0;
+                    $vomiting       = 0;
+                    $diarrhea       = 0;
+                    $other          = htmlspecialchars(trim($_POST['other']));
+                    $level = 0;
+                    if ($_POST['fever'] === 'yes') {
+                        $fever = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['cough'] === 'yes') {
+                        $cough = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['sore_throat'] === 'yes') {
+                        $sore_throat = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['short_breath'] === 'yes') {
+                        $short_breath = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['runny_nose'] === 'yes') {
+                        $runny_nose = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['chills'] === 'yes') {
+                        $chills = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['muscle_ache'] === 'yes') {
+                        $muscle_ache = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['headache'] === 'yes') {
+                        $headache = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['fatigue'] === 'yes') {
+                        $fatigue = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['abdominal_pain'] === 'yes') {
+                        $abdominal_pain = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['vomiting'] === 'yes') {
+                        $vomiting = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['diarrhea'] === 'yes') {
+                        $diarrhea = 1;
+                        $level += 1;
+                    }
+                    $symptoms = [
+                        "patient_id"     => $this->id,
+                        "doctor_id"      => $this->doctor_id,
+                        "phi_id"         => $this->phi_id,
+                        "type"           => "child",
+                        "feedback"       => "",
+                        "checked"        => 0,
+                        "temperature"    => $temperature,
+                        "fever"          => $fever,
+                        "cough"          => $cough,
+                        "sore_throat"    => $sore_throat,
+                        "short_breath"   => $short_breath,
+                        "runny_nose"     => $runny_nose,
+                        "chills"         => $chills,
+                        "muscle_ache"    => $muscle_ache,
+                        "headache"       => $headache,
+                        "fatigue"        => $fatigue,
+                        "abdominal_pain" => $abdominal_pain,
+                        "vomiting"       => $vomiting,
+                        "diarrhea"       => $diarrhea,
+                        "other"          => $other,
+                        "level"          => $level,
+                        "checked_count"  => 0
+                    ];
+                    if (ChildPatientModel::recordSymptoms($symptoms)) {
+                        View::render('ChildPatients/recordSuccess.php', $symptoms);
+                    }
+                }
+            } else {
+                $this->initialize();
+                View::render('ChildPatients/recordSymptoms.php', []);
+            }
+        } else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
     }
 
     protected function activeHelper($nic, $email) {
         $childObj = ChildPatientModel::searchByEmailAndGuardianID($nic, $email);
         View::render('ChildPatients/active.php', ['childObj' => $childObj]);
     }
+
+    private function initialize() {
+        $childObj = ChildPatientModel::searchByEmailAndGuardianID($_SESSION['guardian_nic'], $_SESSION['child_email']);
+        if ($childObj) {
+            $this->id          = $childObj->id;
+            $this->name        = $childObj->name;
+            $this->email       = $childObj->email;
+            $this->password    = $childObj->password;
+            $this->address     = $childObj->address;
+            $this->guardian_id = $childObj->guardian_id;
+            $this->gender      = $childObj->gender;
+            $this->age         = $childObj->age;
+            $this->contact_no  = $childObj->contact_no;
+            $this->phi_range   = $childObj->phi_range;
+            $this->phi_id      = $childObj->phi_id;
+            $this->doctor_id   = $childObj->doctor_id;
+            $this->state       = $childObj->state;
+        }
+    }
+
 }

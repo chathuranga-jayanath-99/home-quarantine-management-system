@@ -20,7 +20,7 @@
         </tr>
         <tr>
         <?php
-            if (sizeof($records['adult']) > 0 || sizeof($reocrds['child']) > 0){
+            if (sizeof($records['adult']) > 0 || sizeof($records['child']) > 0){
                 $sn = 0;
                 foreach($records['adult'] as $record):
                     ?>
@@ -37,7 +37,7 @@
                     }
                     ?>
                     <td>
-                        <a href="<?php echo URLROOT.'/doctor/check-record?id='.$record['id']; ?>" class="btn btn-primary">View</a>
+                        <a href="<?php echo URLROOT.'/doctor/check-record?id='.$record['id'].'&task=mark&name='.$record['name']; ?>" class="btn btn-primary">View</a>
                     </td>
                     </tr>
                     <?php
@@ -58,7 +58,7 @@
                     }
                     ?>
                     <td>
-                        <a href="<?php echo URLROOT.'/doctor/check-record?id='.$record['id']; ?>" class="btn btn-primary">View</a>
+                        <a href="<?php echo URLROOT.'/doctor/check-record?id='.$record['id'].'&task=mark&name='.$record['name']; ?>" class="btn btn-primary">View</a>
                     </td>
                     </tr>
                     <?php
