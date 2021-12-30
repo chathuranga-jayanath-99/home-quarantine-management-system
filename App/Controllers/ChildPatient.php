@@ -340,14 +340,20 @@ class ChildPatient extends Patient {
                 ] ;
                 View::render('ChildPatients/pre_markpositive.php', ['data'=> $data]); 
             }
-            
         }
+    }
 
-
+    public function recordAction() {
+        if ($this->isLoggedIn()) {
+            View::render('ChildPatients/recordSymptoms.php', []);
+        } else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
     }
 
     protected function activeHelper($nic, $email) {
         $childObj = ChildPatientModel::searchByEmailAndGuardianID($nic, $email);
         View::render('ChildPatients/active.php', ['childObj' => $childObj]);
     }
+
 }

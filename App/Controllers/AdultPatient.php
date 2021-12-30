@@ -249,6 +249,10 @@ class Adultpatient extends Patient{
         // TODO
     }
     
+    public function recordAction() {
+        // TODO
+    }
+
     protected function activeHelper($nic, $email) {
         // TODO
     }
