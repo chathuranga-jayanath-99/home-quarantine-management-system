@@ -102,4 +102,8 @@ class ChildPatientModel extends PatientModel {
         return false;
     }
 
+    public static function recordSymptoms($symptoms) {
+
+    }
+
 }
