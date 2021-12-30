@@ -21,6 +21,7 @@ require '../App/Controllers/Home.php';
 require '../App/Controllers/PHI.php' ;    // require the controller PHI
 require '../App/Controllers/AdultPatient.php';
 require '../App/Controllers/Admin/User.php';
+require '../App/Controllers/Image.php';
 
 // Require models
 require '../App/Models/MedicalOfficerModel.php';

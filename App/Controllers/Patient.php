@@ -6,6 +6,14 @@ use \Core\View;
 use App\Models\Post;
 
 abstract class Patient extends \Core\Controller {
+    public abstract function registerAction();
+    public abstract function loginAction();
+    public abstract function logoutAction();
+    public abstract function indexAction();
+    public abstract function isLoggedIn();
+    public abstract function activeAction();
+    public abstract function markpositive();
+    public abstract function recordAction();
 
     protected abstract function activeHelper($nic, $email);
 

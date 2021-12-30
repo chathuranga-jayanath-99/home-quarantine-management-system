@@ -102,4 +102,17 @@ class ChildPatientModel extends PatientModel {
         return false;
     }
 
+    public static function recordSymptoms($symptoms) {
+        $db = static::getDB();
+        $sql = 'INSERT INTO tbl_record
+            () VALUES 
+            ()';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute($symptoms);
+        if ($res) {
+            return true;
+        }
+        return false;
+    }
+
 }
