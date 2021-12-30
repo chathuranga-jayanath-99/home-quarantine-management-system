@@ -61,3 +61,39 @@ function showSuggestionToEnter(event){
     }
 }
 
+function endQuarantinePeriod(patinetId, patinetType){
+    var xhr = new XMLHttpRequest();
+
+    var params = "id="+patinetId+"&type="+patinetType;
+
+    xhr.open("POST", URLROOT+"/doctor/end-quarantine-period?id="+patinetId, true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    xhr.onload = function (){
+        if (this.status == 200){
+            console.log(this.responseText);
+        }
+        
+    }
+
+    xhr.send(params);
+}
+
+function extendQuarantineDate(extended_date, patinetId, patinetType){
+    var xhr = new XMLHttpRequest();
+
+    var params = "id="+patinetId+"&type="+patinetType+"&extended_date="+extended_date;
+
+    xhr.open("POST", URLROOT+"/doctor/extend-quarantine-date", true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    xhr.onload = function(){
+        if (this.status == 200){
+            console.log(this.responseText);
+            
+        }
+    }
+
+    xhr.send(params);
+}
+

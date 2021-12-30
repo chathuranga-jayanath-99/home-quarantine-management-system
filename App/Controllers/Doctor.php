@@ -187,8 +187,8 @@ class Doctor extends \Core\Controller{
 
     public function markQuarantineResultsAction(){
         if ($this->isLoggedIn()){
-            $typed_patients = DoctorModel::getPatientsToMarkResult($_SESSION['doctor_id']);
-            View::render('Doctors/mark-quarantine-results.php', ['typed_patients' => $typed_patients]);
+            $sorted_patients = DoctorModel::getPatientsToMarkResult($_SESSION['doctor_id']);
+            View::render('Doctors/mark-quarantine-results.php', ['sorted_patients' => $sorted_patients]);
         }
         else {
             $this->loginAction();
@@ -338,6 +338,45 @@ class Doctor extends \Core\Controller{
         if ($this->isLoggedIn()){
             $patients = DoctorModel::getPatientsMatched($_REQUEST['name']);
             echo json_encode($patients);
+        }
+        else{
+            header('location:'.URLROOT.'/doctor/login');
+        }
+    }
+
+    public function endQuarantinePeriodAction(){
+        if ($this->isLoggedIn()){
+            $patientId = $_POST['id'];
+            $patientType = $_POST['type'];
+            
+            echo DoctorModel::endQuarantinePeriod($patientId, $patientType);
+        }
+        else{
+            header('location:'.URLROOT.'/doctor/login');
+        }
+    }
+
+    public function extendQuarantineDateAction(){
+        if ($this->isLoggedIn()){
+            $patientId = $_REQUEST['id'];
+            $patientType = $_REQUEST['type'];
+            $extendedDate = $_REQUEST['extended_date'];
+            
+            echo DoctorModel::extendQuarantineDate($patientId, $patientType, $extendedDate);
+        }
+        else{
+            header('location:'.URLROOT.'/doctor/login');
+        }
+    }
+
+    public function viewPatientRecordsAction(){
+        if ($this->isLoggedIn()){
+            $patientId = $_REQUEST['id'];
+            $patientType = $_REQUEST['type'];
+
+            $records = DoctorModel::getPatientRecords($patientId, $patientType);
+            View::render('Doctors/view-patient-records.php', ['records'=>$records]);
+
         }
         else{
             header('location:'.URLROOT.'/doctor/login');
