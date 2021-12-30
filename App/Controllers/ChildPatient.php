@@ -6,6 +6,18 @@ use \Core\View;
 use App\Models\ChildPatientModel;
 
 class ChildPatient extends Patient {
+    private $id;
+    private $name;
+    private $email;
+    private $password;
+    private $address;
+    private $guardian_id;
+    private $gender;
+    private $age;
+    private $contact_no;
+    private $phi_range;
+    private $doctor_id;
+    private $state;
 
     public function registerAction() {
         if(parent::checkPHISession()) {
@@ -345,7 +357,12 @@ class ChildPatient extends Patient {
 
     public function recordAction() {
         if ($this->isLoggedIn()) {
-            View::render('ChildPatients/recordSymptoms.php', []);
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                // TODO
+            } else {
+                $this->initialize();
+                View::render('ChildPatients/recordSymptoms.php', []);
+            }
         } else {
             View::render('ChildPatients/notLoggedIn.php', []);
         }
@@ -354,6 +371,24 @@ class ChildPatient extends Patient {
     protected function activeHelper($nic, $email) {
         $childObj = ChildPatientModel::searchByEmailAndGuardianID($nic, $email);
         View::render('ChildPatients/active.php', ['childObj' => $childObj]);
+    }
+
+    private function initialize() {
+        $childObj = ChildPatientModel::searchByEmailAndGuardianID($_SESSION['guardian_nic'], $_SESSION['child_email']);
+        if ($childObj) {
+            $this->id          = $childObj->id;
+            $this->name        = $childObj->name;
+            $this->email       = $childObj->email;
+            $this->password    = $childObj->password;
+            $this->address     = $childObj->address;
+            $this->guardian_id = $childObj->guardian_id;
+            $this->gender      = $childObj->gender;
+            $this->age         = $childObj->age;
+            $this->contact_no  = $childObj->contact_no;
+            $this->phi_range   = $childObj->phi_range;
+            $this->doctor_id   = $childObj->doctor_id;
+            $this->state       = $childObj->state;
+        }
     }
 
 }
