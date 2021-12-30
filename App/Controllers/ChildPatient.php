@@ -364,6 +364,7 @@ class ChildPatient extends Patient {
                 if (is_numeric($temperature) || is_float($temperature)) {
                     if ($_POST['temp-unit'] === 'fahrenheit') {
                         $temperature = ($temperature - 32) * 5 / 9;
+                        $temperature = round($temperature, 2);
                     }
                     $fever          = 0;
                     $cough          = 0;

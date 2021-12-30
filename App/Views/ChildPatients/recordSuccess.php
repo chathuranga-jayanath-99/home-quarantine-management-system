@@ -32,6 +32,7 @@
                                 <div class="col-auto">
                                     <?php
                                     $temp_f = $temperature * 9 / 5 + 32;
+                                    $temp_f = round($temp_f, 2);
                                     echo $temperature."&#176C (".$temp_f."&#176F)";
                                     ?>
                                 </div>
