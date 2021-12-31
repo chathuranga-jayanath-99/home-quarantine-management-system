@@ -27,7 +27,6 @@
 							<h1 class="fs-4 card-title fw-bold mb-4">Change State</h1>
                             <form action="<?php echo URLROOT?>/child-patient/active" method='POST'>
                                 <div>
-                                    <?php $childObj = $args['childObj']; ?>
                                     <div class="pb-2"><h6 class="text-left h5 ">Select new state</h6></div><div></div>
                                     <?php
                                         $state = $childObj->stateToString();

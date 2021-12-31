@@ -108,7 +108,8 @@ class ChildPatient extends Patient {
                             // Register User
                             $id = ChildPatientModel::register($data);
                             if ($id) {
-                                $this->activeHelper($data["NIC"], $data["email"]);
+                                $this->initialize($data['NIC'], $data['email']);
+                                $this->activeHelper($this);
                             }
                             else {
                                 die('something went wrong');
