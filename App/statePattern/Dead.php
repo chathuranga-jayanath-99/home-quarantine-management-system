@@ -14,10 +14,15 @@ class Dead extends State {
         if (!isset($instance)) {
             $instance = new Dead();
         }
+        return $instance;
     }
 
     public function nextState($patient) {
         //TODO
+    }
+
+    public function toString() {
+        return "Dead";
     }
 
 }

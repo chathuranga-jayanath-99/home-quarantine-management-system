@@ -14,10 +14,15 @@ class Positive extends State {
         if (!isset($instance)) {
             $instance = new Positive();
         }
+        return $instance;
     }
 
     public function nextState($patient) {
         //TODO
+    }
+
+    public function toString() {
+        return "Positive";
     }
 
 }

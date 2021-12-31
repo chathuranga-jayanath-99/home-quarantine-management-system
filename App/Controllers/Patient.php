@@ -24,7 +24,16 @@ abstract class Patient extends \Core\Controller {
     public abstract function markpositive();
     public abstract function recordAction();
 
-    protected abstract function activeHelper($nic, $email);
+    public abstract function getEmail();
+    public abstract function getNIC();
+    public abstract function getName();
+    public abstract function getAge();
+    public abstract function getContactNo();
+    public abstract function getAddress();
+    public abstract function getGender();
+    public abstract function getPHIRange();
+
+    protected abstract function activeHelper($patient);
 
     protected function checkPHISession() {
         if (isset($_SESSION['phi_id'])) {
@@ -66,6 +75,10 @@ abstract class Patient extends \Core\Controller {
 
     public function markDead() {
         //TODO
+    }
+
+    public function stateToString() {
+        return $this->state->toString();
     }
 
 }

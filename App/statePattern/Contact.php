@@ -14,10 +14,15 @@ class Contact extends State {
         if (!isset($instance)) {
             $instance = new Contact();
         }
+        return $instance;
     }
 
     public function nextState($patient) {
         //TODO
+    }
+
+    public function toString() {
+        return "Contact Person";
     }
 
 }

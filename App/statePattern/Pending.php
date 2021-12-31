@@ -14,10 +14,15 @@ class Pending extends State {
         if (!isset($instance)) {
             $instance = new Pending();
         }
+        return $instance;
     }
 
     public function nextState($patient) {
         //TODO
+    }
+
+    public function toString() {
+        return "Pending";
     }
 
 }

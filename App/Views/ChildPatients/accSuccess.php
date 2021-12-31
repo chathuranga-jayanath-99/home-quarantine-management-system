@@ -25,49 +25,46 @@
                 <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                     <h2 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Success</h2>
-                    <?php
-                        $childObj = $args['childObj'];
-                    ?>
                     <form>
                         <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fa fa-user fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="name" value="<?php echo $childObj->name ?>" placeholder="Name" readonly>
+                                <input class="form-control" type="text" name="name" value="<?php echo $childObj->getName() ?>" placeholder="Name" readonly>
                             </div>
                         </div>                   
                         <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fa fa-id-card fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="NIC" value="<?php echo $childObj->guardian_id ?>" readonly>
+                                <input class="form-control" type="text" name="NIC" value="<?php echo $childObj->getNIC() ?>" readonly>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fa fa-envelope fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="email" value="<?php echo $childObj->email ?>" readonly>
+                                <input class="form-control" type="text" name="email" value="<?php echo $childObj->getEmail() ?>" readonly>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fa fa-calendar fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="age" value="<?php echo $childObj->age ?>" readonly>
+                                <input class="form-control" type="text" name="age" value="<?php echo $childObj->getAge() ?>" readonly>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fa fa-mobile fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="contact_no" value="<?php echo $childObj->contact_no ?>" readonly>
+                                <input class="form-control" type="text" name="contact_no" value="<?php echo $childObj->getContactNo() ?>" readonly>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fa fa-home fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="address" value="<?php echo $childObj->address ?>" readonly>
+                                <input class="form-control" type="text" name="address" value="<?php echo $childObj->getAddress() ?>" readonly>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
                             <?php 
-                            $gender = $childObj->gender;
+                            $gender = $childObj->getGender();
                             $Gender;
                             if ($gender === 'male') {
                                 $Gender = 'Male';
@@ -81,14 +78,7 @@
                             </div>
                         </div>
                         <?php
-                            $state = $childObj->state;
-                            if ($state === 'positive') {
-                                $state = 'Positive';
-                            } else if ($state === 'contact') {
-                                $state = 'Contact Person';
-                            } else if ($state === 'inactive') {
-                                $state = 'Inactive';
-                            }
+                            $state = $childObj->stateToString();
                         ?>
                         <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fa fa-check fa-lg me-3 fa-fw"></i>
@@ -99,7 +89,7 @@
                         <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fa fa-hospital-o fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="phi_range" value="<?php echo $childObj->phi_range ?>" readonly>
+                                <input class="form-control" type="text" name="phi_range" value="<?php echo $childObj->getPHIRange() ?>" readonly>
                             </div>
                         </div>
                     </form>

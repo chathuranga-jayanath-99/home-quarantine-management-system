@@ -277,17 +277,50 @@ class Adultpatient extends Patient{
                 ] ;
                 View::render('AdultPatients/pre_markpositive.php', ['data'=> $data]); 
             }
-            
+
         }
 
 
     }
-    
+
     public function recordAction() {
         // TODO
     }
 
-    protected function activeHelper($nic, $email) {
+    protected function activeHelper($patient) {
         // TODO
     }
+
+    public function getEmail() {
+        //TODO
+    }
+
+    public function getNIC() {
+        //TODO
+    }
+
+    public function getName() {
+        //TODO
+    }
+
+    public function getAge() {
+        //TODO
+    }
+
+    public function getContactNo() {
+        //TODO
+    }
+
+    public function getAddress() {
+        //TODO
+    }
+
+    public function getGender() {
+        //TODO
+    }
+
+    public function getPHIRange() {
+        //TODO
+    }
+
 }

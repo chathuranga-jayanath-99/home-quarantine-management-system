@@ -304,21 +304,25 @@ class ChildPatient extends Patient {
     public function activeAction() {
         if(parent::checkPHISession()) {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->initialize($_POST['nic'], $_POST['email']);
                 $changed = false;
                 if (isset($_POST['changed'])) {
                     if ($_POST['changed'] === 'true') {
                         $changed = true;
-                        $this->activeHelper($_POST['nic'], $_POST['email']);
+                        $this->activeHelper($this);
                     }
                 }
                 if (!$changed) {
-                    $email = $_POST['email'];
-                    $guardianID = $_POST['nic'];
-                    $state = $_POST['act'];
-                    $rows = ChildPatientModel::changeState($email, $guardianID, $state);
-                    if($rows>0) {
-                        $childObj = ChildPatientModel::searchByEmailAndGuardianID($guardianID, $email);
-                        View::render('ChildPatients/accSuccess.php', ['childObj' => $childObj]);
+                    $state = ucfirst($_POST['act']);
+                    $state = 'set'.$state;
+                    if (is_callable([$this, $state])) {
+                        $this->$state();
+                        $rows = ChildPatientModel::changeState($this->email, $this->guardian_id, $_POST['act']);
+                        if($rows>0) {
+                            View::render('ChildPatients/accSuccess.php', ['childObj' => $this]);
+                        } else {
+                            echo 'Failed';
+                        }
                     } else {
                         echo 'Failed';
                     }
@@ -470,9 +474,8 @@ class ChildPatient extends Patient {
         }
     }
 
-    protected function activeHelper($nic, $email) {
-        $childObj = ChildPatientModel::searchByEmailAndGuardianID($nic, $email);
-        View::render('ChildPatients/active.php', ['childObj' => $childObj]);
+    protected function activeHelper($patient) {
+        View::render('ChildPatients/active.php', ['childObj' => $patient]);
     }
 
     private function initializeFromSession() {
@@ -496,6 +499,38 @@ class ChildPatient extends Patient {
             $this->doctor_id   = $childObj->doctor_id;
             parent::transitionTo(State::objFromName($childObj->state));
         }
+    }
+
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function getNIC() {
+        return $this->guardian_id;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function getAge() {
+        return $this->age;
+    }
+
+    public function getContactNo() {
+        return $this->contact_no;
+    }
+
+    public function getAddress() {
+        return $this->address;
+    }
+
+    public function getGender() {
+        return $this->gender;
+    }
+
+    public function getPHIRange() {
+        return $this->phi_range;
     }
 
 }

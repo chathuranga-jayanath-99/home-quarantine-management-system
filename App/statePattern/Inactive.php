@@ -15,10 +15,15 @@ class Inactive extends State {
         if (!isset($instance)) {
             $instance = new Inactive();
         }
+        return $instance;
     }
 
     public function nextState($patient) {
         //TODO
+    }
+
+    public function toString() {
+        return "Inactive";
     }
 
 }
