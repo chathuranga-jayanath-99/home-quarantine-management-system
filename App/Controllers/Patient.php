@@ -48,4 +48,24 @@ abstract class Patient extends \Core\Controller {
         $this->state = $state;
     }
 
+    public function setPositive() {
+        //TODO
+    }
+
+    public function setContact() {
+        //TODO
+    }
+
+    public function setInactive() {
+        //TODO
+    }
+
+    public function setActive() {
+        //TODO
+    }
+
+    public function markDead() {
+        //TODO
+    }
+
 }
