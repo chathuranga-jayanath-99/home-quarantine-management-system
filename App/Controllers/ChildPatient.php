@@ -5,6 +5,13 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\ChildPatientModel;
 
+use App\statePattern\State;
+use App\statePattern\Pending;
+use App\statePattern\Inactive;
+use App\statePattern\Contact;
+use App\statePattern\Positive;
+use App\statePattern\Dead;
+
 class ChildPatient extends Patient {
     private $id;
     private $name;
@@ -18,7 +25,6 @@ class ChildPatient extends Patient {
     private $phi_range;
     private $phi_id;
     private $doctor_id;
-    private $state;
 
     public function registerAction() {
         if(parent::checkPHISession()) {
@@ -358,7 +364,7 @@ class ChildPatient extends Patient {
 
     public function recordAction() {
         if ($this->isLoggedIn()) {
-            $this->initialize();
+            $this->initializeFromSession();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $temperature = $_POST['temperature'];
                 if (is_numeric($temperature) || is_float($temperature)) {
@@ -457,7 +463,6 @@ class ChildPatient extends Patient {
                     }
                 }
             } else {
-                $this->initialize();
                 View::render('ChildPatients/recordSymptoms.php', []);
             }
         } else {
@@ -470,8 +475,12 @@ class ChildPatient extends Patient {
         View::render('ChildPatients/active.php', ['childObj' => $childObj]);
     }
 
-    private function initialize() {
-        $childObj = ChildPatientModel::searchByEmailAndGuardianID($_SESSION['guardian_nic'], $_SESSION['child_email']);
+    private function initializeFromSession() {
+        this->initialize($_SESSION['guardian_nic'], $_SESSION['child_email']);
+    }
+
+    public function initialize($guardianNIC, $email) {
+        $childObj = ChildPatientModel::searchByEmailAndGuardianID($guardianNIC, $email);
         if ($childObj) {
             $this->id          = $childObj->id;
             $this->name        = $childObj->name;
@@ -485,7 +494,7 @@ class ChildPatient extends Patient {
             $this->phi_range   = $childObj->phi_range;
             $this->phi_id      = $childObj->phi_id;
             $this->doctor_id   = $childObj->doctor_id;
-            $this->state       = $childObj->state;
+            parent::transitionTo(State::objFromName($childObj->state));
         }
     }
 

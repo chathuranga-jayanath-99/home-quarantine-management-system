@@ -5,7 +5,16 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\Post;
 
+use App\statePattern\State;
+use App\statePattern\Pending;
+use App\statePattern\Inactive;
+use App\statePattern\Contact;
+use App\statePattern\Positive;
+use App\statePattern\Dead;
+
 abstract class Patient extends \Core\Controller {
+    protected $state;
+
     public abstract function registerAction();
     public abstract function loginAction();
     public abstract function logoutAction();
@@ -33,6 +42,10 @@ abstract class Patient extends \Core\Controller {
             header('location: '.URLROOT);
             die();
         }
+    }
+
+    public function transitionTo($state) {
+        $this->state = $state;
     }
 
 }
