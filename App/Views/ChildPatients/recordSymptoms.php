@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<a href="<?php echo URLROOT;?>/child-patient/logout"><button class="btn-danger">Logout</button></a>
+<?php include_once 'navbar.php'; ?>
 <section class="vh-100" style="background-color: #eee;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -30,7 +30,7 @@
                                     <i class="fa fa-thermometer-half fa-lg me-3 fa-fw"></i>
                                 </div>
                                 <div class="col-auto">
-                                    <input type="number" step="0.01" class="col-form-control" name="temperature" min=0 max=50 placeholder="Temperature" style="width: 112px;">
+                                    <input type="number" step="0.01" class="col-form-control" name="temperature" min=0 max=120 placeholder="Temperature" style="width: 112px;">
                                 </div>
                                 <div class="col-auto">
                                     <fieldset id="temp-unit">

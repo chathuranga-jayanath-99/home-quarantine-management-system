@@ -5,7 +5,16 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\Post;
 
+use App\statePattern\State;
+use App\statePattern\Pending;
+use App\statePattern\Inactive;
+use App\statePattern\Contact;
+use App\statePattern\Positive;
+use App\statePattern\Dead;
+
 abstract class Patient extends \Core\Controller {
+    protected $state;
+
     public abstract function registerAction();
     public abstract function loginAction();
     public abstract function logoutAction();
@@ -15,7 +24,16 @@ abstract class Patient extends \Core\Controller {
     public abstract function markpositive();
     public abstract function recordAction();
 
-    protected abstract function activeHelper($nic, $email);
+    public abstract function getEmail();
+    public abstract function getNIC();
+    public abstract function getName();
+    public abstract function getAge();
+    public abstract function getContactNo();
+    public abstract function getAddress();
+    public abstract function getGender();
+    public abstract function getPHIRange();
+
+    protected abstract function activeHelper($patient);
 
     protected function checkPHISession() {
         if (isset($_SESSION['phi_id'])) {
@@ -33,6 +51,34 @@ abstract class Patient extends \Core\Controller {
             header('location: '.URLROOT);
             die();
         }
+    }
+
+    public function transitionTo($state) {
+        $this->state = $state;
+    }
+
+    public function setPositive() {
+        //TODO
+    }
+
+    public function setContact() {
+        //TODO
+    }
+
+    public function setInactive() {
+        //TODO
+    }
+
+    public function setActive() {
+        //TODO
+    }
+
+    public function markDead() {
+        //TODO
+    }
+
+    public function stateToString() {
+        return $this->state->toString();
     }
 
 }

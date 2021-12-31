@@ -5,6 +5,13 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\ChildPatientModel;
 
+use App\statePattern\State;
+use App\statePattern\Pending;
+use App\statePattern\Inactive;
+use App\statePattern\Contact;
+use App\statePattern\Positive;
+use App\statePattern\Dead;
+
 class ChildPatient extends Patient {
     private $id;
     private $name;
@@ -18,7 +25,6 @@ class ChildPatient extends Patient {
     private $phi_range;
     private $phi_id;
     private $doctor_id;
-    private $state;
 
     public function registerAction() {
         if(parent::checkPHISession()) {
@@ -102,7 +108,8 @@ class ChildPatient extends Patient {
                             // Register User
                             $id = ChildPatientModel::register($data);
                             if ($id) {
-                                $this->activeHelper($data["NIC"], $data["email"]);
+                                $this->initialize($data['NIC'], $data['email']);
+                                $this->activeHelper($this);
                             }
                             else {
                                 die('something went wrong');
@@ -298,21 +305,25 @@ class ChildPatient extends Patient {
     public function activeAction() {
         if(parent::checkPHISession()) {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->initialize($_POST['nic'], $_POST['email']);
                 $changed = false;
                 if (isset($_POST['changed'])) {
                     if ($_POST['changed'] === 'true') {
                         $changed = true;
-                        $this->activeHelper($_POST['nic'], $_POST['email']);
+                        $this->activeHelper($this);
                     }
                 }
                 if (!$changed) {
-                    $email = $_POST['email'];
-                    $guardianID = $_POST['nic'];
-                    $state = $_POST['act'];
-                    $rows = ChildPatientModel::changeState($email, $guardianID, $state);
-                    if($rows>0) {
-                        $childObj = ChildPatientModel::searchByEmailAndGuardianID($guardianID, $email);
-                        View::render('ChildPatients/accSuccess.php', ['childObj' => $childObj]);
+                    $state = ucfirst($_POST['act']);
+                    $state = 'set'.$state;
+                    if (is_callable([$this, $state])) {
+                        $this->$state();
+                        $rows = ChildPatientModel::changeState($this->email, $this->guardian_id, $_POST['act']);
+                        if($rows>0) {
+                            View::render('ChildPatients/accSuccess.php', ['childObj' => $this]);
+                        } else {
+                            echo 'Failed';
+                        }
                     } else {
                         echo 'Failed';
                     }
@@ -358,12 +369,13 @@ class ChildPatient extends Patient {
 
     public function recordAction() {
         if ($this->isLoggedIn()) {
-            $this->initialize();
+            $this->initializeFromSession();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $temperature = $_POST['temperature'];
                 if (is_numeric($temperature) || is_float($temperature)) {
                     if ($_POST['temp-unit'] === 'fahrenheit') {
                         $temperature = ($temperature - 32) * 5 / 9;
+                        $temperature = round($temperature, 2);
                     }
                     $fever          = 0;
                     $cough          = 0;
@@ -456,7 +468,6 @@ class ChildPatient extends Patient {
                     }
                 }
             } else {
-                $this->initialize();
                 View::render('ChildPatients/recordSymptoms.php', []);
             }
         } else {
@@ -464,13 +475,16 @@ class ChildPatient extends Patient {
         }
     }
 
-    protected function activeHelper($nic, $email) {
-        $childObj = ChildPatientModel::searchByEmailAndGuardianID($nic, $email);
-        View::render('ChildPatients/active.php', ['childObj' => $childObj]);
+    protected function activeHelper($patient) {
+        View::render('ChildPatients/active.php', ['childObj' => $patient]);
     }
 
-    private function initialize() {
-        $childObj = ChildPatientModel::searchByEmailAndGuardianID($_SESSION['guardian_nic'], $_SESSION['child_email']);
+    private function initializeFromSession() {
+        $this->initialize($_SESSION['guardian_nic'], $_SESSION['child_email']);
+    }
+
+    public function initialize($guardianNIC, $email) {
+        $childObj = ChildPatientModel::searchByEmailAndGuardianID($guardianNIC, $email);
         if ($childObj) {
             $this->id          = $childObj->id;
             $this->name        = $childObj->name;
@@ -484,8 +498,40 @@ class ChildPatient extends Patient {
             $this->phi_range   = $childObj->phi_range;
             $this->phi_id      = $childObj->phi_id;
             $this->doctor_id   = $childObj->doctor_id;
-            $this->state       = $childObj->state;
+            parent::transitionTo(State::objFromName($childObj->state));
         }
+    }
+
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function getNIC() {
+        return $this->guardian_id;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function getAge() {
+        return $this->age;
+    }
+
+    public function getContactNo() {
+        return $this->contact_no;
+    }
+
+    public function getAddress() {
+        return $this->address;
+    }
+
+    public function getGender() {
+        return $this->gender;
+    }
+
+    public function getPHIRange() {
+        return $this->phi_range;
     }
 
 }

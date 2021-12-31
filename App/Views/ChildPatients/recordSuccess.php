@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<a href="<?php echo URLROOT;?>/child-patient/logout"><button class="btn-danger">Logout</button></a>
+<?php include_once 'navbar.php'; ?>
 <section class="vh-100" style="background-color: #eee;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -32,6 +32,7 @@
                                 <div class="col-auto">
                                     <?php
                                     $temp_f = $temperature * 9 / 5 + 32;
+                                    $temp_f = round($temp_f, 2);
                                     echo $temperature."&#176C (".$temp_f."&#176F)";
                                     ?>
                                 </div>

@@ -9,15 +9,21 @@ class AdultPatientModel extends \Core\Model{
     public static function register($data) {
         $db = static::getDB();
         $sql = 'INSERT INTO tbl_adult_patient 
-            ( name,  email,  password,  mobile, NIC) VALUES (:name, :email, :password, :mobile, :NIC)';
+            ( name,  email,  password,  address,  NIC,  age,  contact_no,  phi_range,  phi_id,  gender,  state,  doctor_id) VALUES 
+            (:name, :email, :password, :address, :NIC, :age, :contact_no, :phi_range, :phi_id, :gender, :state, :doctor)';
         $stmt = $db->prepare($sql);
         $res = $stmt->execute([
             'name'          =>  $data['name'],
             'email'         =>  $data['email'],
             'password'      =>  $data['password'],
-            'mobile'       =>  $data['mobile'],
             'NIC'   =>  $data['NIC'],
-            //'birthday'       =>  $data['birthday'],
+            'age'           =>  $data['age'],
+            'contact_no'    =>  $data['contact_no'],
+            'phi_range'     =>  'null',
+            'phi_id'        =>  0,
+            'gender'        =>  $data['gender'],
+            'state'         =>  'pending',
+            'doctor_id'        =>  'null'
         ]);
         if ($res) {
             return true;
@@ -46,9 +52,8 @@ class AdultPatientModel extends \Core\Model{
                 WHERE NIC=:NIC';
         $stmt = $db->prepare($sql);
         $stmt->execute(['NIC' => $NIC]);
-        $row = $stmt->fetch(PDO::FETCH_OBJ);
-
-        return $row;
+        $res = $stmt->fetch(PDO::FETCH_OBJ);
+        return $res;
     }
 
     public static function login($email,$password)
@@ -72,6 +77,38 @@ class AdultPatientModel extends \Core\Model{
             }
         }
         return false;
+    }
+
+    public static function changeState($email, $NIC, $state) {
+        $db = static::getDB();
+        $sql = 'UPDATE tbl_adult_patient 
+                SET state=:state, phi_range=:phi_range, phi_id=:phi_id
+                WHERE NIC=:NIC and email=:email';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute([
+            'state'       => $state,
+            'phi_range'   => $_SESSION['phi_area'],
+            'phi_id'      => $_SESSION['phi_id'],
+            'NIC' => $NIC,
+            'email'       => $email,
+        ]);
+        if ($res) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function searchByEmailAndNIC($NIC, $email) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_adult_patient 
+                WHERE NIC=:NIC and email=:email';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            'NIC' => $NIC,
+            'email'       => $email
+        ]);
+        $res = $stmt->fetch(PDO::FETCH_OBJ);
+        return $res;
     }
 
     public static function getPatientName($adult_id)

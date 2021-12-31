@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<a href="<?php echo URLROOT;?>/child-patient/logout"><button class="btn-danger">Logout</button></a>
+    <?php include_once 'navbar.php'; ?>
     <section class="vh-100" style="background-color: #eee;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
