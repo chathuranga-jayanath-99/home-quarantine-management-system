@@ -16,4 +16,8 @@ class Dead extends State {
         }
     }
 
+    public function nextState($patient) {
+        //TODO
+    }
+
 }

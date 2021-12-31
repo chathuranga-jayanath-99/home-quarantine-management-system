@@ -16,4 +16,8 @@ class Pending extends State {
         }
     }
 
+    public function nextState($patient) {
+        //TODO
+    }
+
 }

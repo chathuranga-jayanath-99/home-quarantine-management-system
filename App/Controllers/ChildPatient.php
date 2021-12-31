@@ -476,7 +476,7 @@ class ChildPatient extends Patient {
     }
 
     private function initializeFromSession() {
-        this->initialize($_SESSION['guardian_nic'], $_SESSION['child_email']);
+        $this->initialize($_SESSION['guardian_nic'], $_SESSION['child_email']);
     }
 
     public function initialize($guardianNIC, $email) {

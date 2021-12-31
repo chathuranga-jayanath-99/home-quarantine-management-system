@@ -16,4 +16,8 @@ class Positive extends State {
         }
     }
 
+    public function nextState($patient) {
+        //TODO
+    }
+
 }

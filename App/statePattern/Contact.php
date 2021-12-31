@@ -16,4 +16,8 @@ class Contact extends State {
         }
     }
 
+    public function nextState($patient) {
+        //TODO
+    }
+
 }
