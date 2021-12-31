@@ -375,14 +375,10 @@ class Adultpatient extends Patient{
         // TODO
     }
 
-<<<<<<< HEAD
-    protected function activeHelper($NIC, $email) {
-        $adultObj = AdultPatientModel::searchByEmailAndNIC($NIC, $email);
-        View::render('AdultPatients/active.php', ['adultObj' => $adultObj]);
-=======
+
     protected function activeHelper($patient) {
-        // TODO
->>>>>>> fc768a88226fafff6dbfc0d3e40146281d8c48ce
+        $adultObj = AdultPatientModel::searchByNIC($patient->NIC);
+        View::render('AdultPatients/active.php', ['adultObj' => $adultObj]);
     }
 
     public function getEmail() {
