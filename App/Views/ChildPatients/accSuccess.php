@@ -95,7 +95,12 @@
                     </form>
                     </div>
                         <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                            <div>
                             <img src="https://img.freepik.com/free-vector/set-doctor-nurse-team-cartoon-hand-drawn-cartoon-art-illustration_56104-753.jpg" width=700 height=700 class="img-fluid" alt="Sample image"> 
+                            <div class="text-center">
+                            <div>
+                                <a href="<?php echo URLROOT; ?>/phi"><button class="btn btn-warning">Home</button></a>
+                            </div>
                         </div>
                     </div>
                 </div>
