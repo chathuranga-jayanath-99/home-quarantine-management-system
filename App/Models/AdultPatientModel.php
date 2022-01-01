@@ -16,14 +16,15 @@ class AdultPatientModel extends \Core\Model{
             'name'          =>  $data['name'],
             'email'         =>  $data['email'],
             'password'      =>  $data['password'],
-            'NIC'   =>  $data['NIC'],
+            'address'       =>  $data['address'],
+            'NIC'           =>  $data['NIC'],
             'age'           =>  $data['age'],
             'contact_no'    =>  $data['contact_no'],
             'phi_range'     =>  'null',
             'phi_id'        =>  0,
             'gender'        =>  $data['gender'],
             'state'         =>  'pending',
-            'doctor_id'        =>  'null'
+            'doctor'        =>  'null'
         ]);
         if ($res) {
             return true;
@@ -52,7 +53,7 @@ class AdultPatientModel extends \Core\Model{
                 WHERE NIC=:NIC';
         $stmt = $db->prepare($sql);
         $stmt->execute(['NIC' => $NIC]);
-        $res = $stmt->fetch(PDO::FETCH_OBJ);
+        $res = $stmt->fetchAll(PDO::FETCH_OBJ);
         return $res;
     }
 
@@ -104,7 +105,7 @@ class AdultPatientModel extends \Core\Model{
                 WHERE NIC=:NIC and email=:email';
         $stmt = $db->prepare($sql);
         $stmt->execute([
-            'NIC' => $NIC,
+            'NIC'         => $NIC,
             'email'       => $email
         ]);
         $res = $stmt->fetch(PDO::FETCH_OBJ);

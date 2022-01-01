@@ -5,10 +5,17 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\AdultPatientModel;
 
+use App\statePattern\State;
+use App\statePattern\Pending;
+use App\statePattern\Inactive;
+use App\statePattern\Contact;
+use App\statePattern\Positive;
+use App\statePattern\Dead;
+
 class Adultpatient extends Patient{
+    private $id;
     private $name;
     private $email;
-    private $password;
     private $address;
     private $NIC;
     private $gender;
@@ -17,7 +24,6 @@ class Adultpatient extends Patient{
     private $phi_range;
     private $phi_id;
     private $doctor_id;
-    private $state;
 
     public function registerAction(){
         if(parent::checkPHISession()){
@@ -100,7 +106,8 @@ class Adultpatient extends Patient{
                             // Register User
                             $id = AdultPatientModel::register($data);
                             if ($id) {
-                                $this->activeHelper($data["NIC"], $data["email"]);
+                                $this->initialize($data['NIC'], $data['email']);
+                                $this->activeHelper($this);
                             }
                             else {
                                 die('something went wrong');
@@ -310,21 +317,25 @@ class Adultpatient extends Patient{
     public function activeAction() {
         if(parent::checkPHISession()) {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->initialize($_POST['nic'], $_POST['email']);
                 $changed = false;
                 if (isset($_POST['changed'])) {
                     if ($_POST['changed'] === 'true') {
                         $changed = true;
-                        $this->activeHelper($_POST['NIC'], $_POST['email']);
+                        $this->activeHelper($this);
                     }
                 }
                 if (!$changed) {
-                    $email = $_POST['email'];
-                    $NIC = $_POST['NIC'];
-                    $state = $_POST['act'];
-                    $rows = AdultPatientModel::changeState($email, $NIC, $state);
-                    if($rows>0) {
-                        $adultObj = AdultPatientModel::searchByEmailAndNIC($NIC, $email);
-                        View::render('AdultPatients/accSuccess.php', ['adultObj' => $adultObj]);
+                    $state = ucfirst($_POST['act']);
+                    $state = 'set'.$state;
+                    if (is_callable([$this, $state])) {
+                        $this->$state();
+                        $rows = AdultPatientModel::changeState($this->email, $this->NIC, $_POST['act']);
+                        if($rows>0) {
+                            View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
+                        } else {
+                            echo 'Failed';
+                        }
                     } else {
                         echo 'Failed';
                     }
@@ -377,40 +388,57 @@ class Adultpatient extends Patient{
 
 
     protected function activeHelper($patient) {
-        $adultObj = AdultPatientModel::searchByNIC($patient->NIC);
-        View::render('AdultPatients/active.php', ['adultObj' => $adultObj]);
+        View::render('AdultPatients/active.php', ['adultObj' => $patient]);
+    }
+
+    public function initialize($NIC, $email) {
+        $adultObj = AdultPatientModel::searchByEmailAndNIC($NIC, $email);
+        if ($adultObj) {
+            $this->id          = $adultObj->id;
+            $this->name        = $adultObj->name;
+            $this->email       = $adultObj->email;
+            $this->address     = $adultObj->address;
+            $this->NIC         = $adultObj->NIC;
+            $this->gender      = $adultObj->gender;
+            $this->age         = $adultObj->age;
+            $this->contact_no  = $adultObj->contact_no;
+            $this->phi_range   = $adultObj->phi_range;
+            $this->phi_id      = $adultObj->phi_id;
+            $this->doctor_id   = $adultObj->doctor_id;
+            parent::transitionTo(State::objFromName($adultObj->state));
+        }
     }
 
     public function getEmail() {
-        //TODO
+        return $this->email;
     }
 
     public function getNIC() {
-        //TODO
+        return $this->NIC;
     }
 
     public function getName() {
-        //TODO
+        return $this->name;
     }
 
     public function getAge() {
-        //TODO
+        return $this->age;
     }
 
     public function getContactNo() {
-        //TODO
+        return $this->contact_no;
     }
 
     public function getAddress() {
-        //TODO
+        return $this->address;
     }
 
     public function getGender() {
-        //TODO
+        return $this->gender;
     }
 
     public function getPHIRange() {
-        //TODO
+        return $this->phi_range;
     }
 
 }
