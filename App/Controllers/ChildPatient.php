@@ -16,7 +16,6 @@ class ChildPatient extends Patient {
     private $id;
     private $name;
     private $email;
-    private $password;
     private $address;
     private $guardian_id;
     private $gender;
@@ -489,7 +488,6 @@ class ChildPatient extends Patient {
             $this->id          = $childObj->id;
             $this->name        = $childObj->name;
             $this->email       = $childObj->email;
-            $this->password    = $childObj->password;
             $this->address     = $childObj->address;
             $this->guardian_id = $childObj->guardian_id;
             $this->gender      = $childObj->gender;
