@@ -18,10 +18,10 @@
                                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                                     <h2 class="text-center h fw-bold mb-5 mx-1 mx-md-4 mt-4">This NIC Already Have an Acoount</h2>  
                                 <div>
-                                        <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">NIC : <?php echo $adultData->NIC ;?></h4>
-                                        <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Patient Name : <?php echo $adultData->name ;?></h4>
+                                        <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">NIC : <?php echo $adultData[0]->NIC ;?></h4>
+                                        <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Patient Name : <?php echo $adultData[0]->name ;?></h4>
                                     </div>
-                                    <form action="<?php echo URLROOT?>/adult-patient/active" method="GET">
+                                    <form action="<?php echo URLROOT?>/adult-patient/active" method="POST">
                                         <div>
                                         
                                         </div>
