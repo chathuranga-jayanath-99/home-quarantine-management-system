@@ -5,6 +5,17 @@ namespace App\Models;
 use PDO;
 
 class PHIModel extends \Core\Model{
+    protected $mediator;
+    protected $name;
+
+    public function __construct($chatMediator, $name){
+        $this->mediator = $chatMediator;
+        $this->name = $name;
+    }
+
+    public function send($msg){
+        $this->mediator->sendMessage($msg);
+    }
 
     public static function register($data){
 

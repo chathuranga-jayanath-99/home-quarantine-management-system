@@ -474,6 +474,91 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function passwordResetAction() {
+        if (parent::checkPHISession()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = [
+                    'NIC'     => '',
+                    'nic_err' => ''
+                ];
+                if ($_POST['id_checked'] === 'no') {
+                    if(empty($_POST['NIC'])){
+                        View::render('ChildPatients/pwdReset1.php', ['NIC' => '', 'nic_err' => 'Please enter NIC']);
+                    } else {
+                        $data['NIC'] = htmlspecialchars(strtoupper(trim($_POST['NIC'])));
+                        if (parent::isValidNIC($data['NIC'])) {
+                            $childrenData = ChildPatientModel::searchByGuardianID($data['NIC']);
+                            View::render('ChildPatients/pwdReset2.php', ['childrenData' => $childrenData, 'nic' => $data['NIC']]);
+                        } else {
+                            $data['nic_err'] = 'Enter a valid NIC';
+                            View::render('ChildPatients/pwdReset1.php', ['data' => $data]);
+                        }
+                    }
+                } else {
+                    if ($_POST['entered'] === 'yes') {
+                        $nic = $_POST['nic'];
+                        $email = $_POST['email'];
+                        $this->initialize($nic, $email);
+                        $data = [
+                            'password'          => $_POST['password'],
+                            'conf_password'     => $_POST['conf_password'],
+                            'password_err'      => '',
+                            'conf_password_err' => ''
+                        ];
+                        if(empty($data['password'])){
+                            $data['password_err'] = 'Please enter password';
+                        }
+                        else if(strlen($data['password']) < 6){
+                            $data['password_err'] = 'Password must be at least 6 characters';
+                        }
+
+                        if(empty($data['conf_password'])){
+                            $data['conf_password_err'] = 'Please confirm password';
+                        }
+                        else {
+                            if($data['password'] != $data['conf_password']){
+                                $data['conf_password_err'] = 'Passwords do not match';
+                            }
+                        }
+
+                        if (empty($data['password_err']) && empty($data['conf_password_err'])){
+                            // validated
+                            // Hash password
+                            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+                            // Register User
+                            $id = ChildPatientModel::changePassword($email, $nic, $data['password']);
+                            if ($id) {
+                                $this->initialize($nic, $email);
+                                View::render('ChildPatients/accSuccess.php', ['childObj' => $this]);
+                            }
+                            else {
+                                die('something went wrong');
+                            }
+                            die('SUCCESS');
+                        } else {
+                            View::render('ChildPatients/pwdReset3.php', ['nic' => $_POST['nic'], 'email' => $_POST['email'], 'name' => $this->name, 'data' => $data]);
+                        }
+
+                    } else {
+                        $nic = $_POST['nic'];
+                        $email = $_POST['email'];
+                        $this->initialize($nic, $email);
+                        $data = [
+                            'password'          => '',
+                            'conf_password'     => '',
+                            'password_err'      => '',
+                            'conf_password_err' => ''
+                        ];
+                        View::render('ChildPatients/pwdReset3.php', ['nic' => $nic, 'email' => $email, 'name' => $this->name, 'data' => $data]);
+                    }
+                }
+            } else {
+                View::render('ChildPatients/pwdReset1.php', ['data' => ['NIC' => '', 'nic_err' => '']]);
+            }
+        }
+    }
+
     protected function activeHelper($patient) {
         View::render('ChildPatients/active.php', ['childObj' => $patient]);
     }
