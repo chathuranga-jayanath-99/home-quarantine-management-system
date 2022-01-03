@@ -23,19 +23,19 @@
             <div class="card-body p-md-5">
                 <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                    <h2 class="text-center h fw-bold mb-5 mx-1 mx-md-4 mt-4">Accounts - Password Reset</h2>  
+                    <h2 class="text-center h fw-bold mb-5 mx-1 mx-md-4 mt-4">Child-Patient<br />Password Reset</h2>  
                     <?php if (sizeof($childrenData) > 0) { ?>
                         <div>
-                            <h6 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Choose an account to reset the password.</h6>
+                            <h6 class="text-left h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Choose an account to reset the password.</h6>
                         </div>
-                    <form action="<?php echo URLROOT?>/child-patient/active" method="POST">
+                    <form action="<?php echo URLROOT?>/child-patient/password-reset" method="POST">
                         <div>
                         <?php 
                         $cnt = 0;
                         foreach ($childrenData as $childData) {
                             ?>
                             <div>
-                                <input class="form-check-input" type="radio" name="email" value="<?php echo $childData->email ?>">
+                                <input class="form-check-input" type="radio" name="email" value="<?php echo $childData->email ?>" required>
                                 <span class="mb-2 w-100">
                                 <label class="form-check-label" for="email"><?php echo $childData->name ?></label>
                                 </span>
@@ -44,10 +44,13 @@
                             $cnt++;
                         }
                         ?>
-                        <input type="hidden" name="changed" value="true">
+                        <input type="hidden" name="nic" value="<?php echo $nic; ?>">
+                        <input type="hidden" name="id_checked" value="yes">
+                        <input type="hidden" name="entered" value="no">
                             <div class="d-flex align-items-center pt-3">
-                                <input class="btn btn-primary ms-auto" type="submit" value="Activate">
+                                <input class="btn btn-primary ms-auto" type="submit" value="Reset">
                             </div>
+                        </div>
                     </form>
                     <?php
                     } else {
@@ -58,8 +61,6 @@
                         <?php
                     }
                     ?>
-
-                    </div>
                 </div>
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                     <img src="https://img.freepik.com/free-vector/set-doctor-nurse-team-cartoon-hand-drawn-cartoon-art-illustration_56104-753.jpg" width=700 height=700 class="img-fluid" alt="Sample image"> 

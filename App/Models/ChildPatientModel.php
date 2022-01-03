@@ -104,6 +104,23 @@ class ChildPatientModel extends PatientModel {
         return false;
     }
 
+    public static function changePassword($email, $guardianID, $password) {
+        $db = static::getDB();
+        $sql = 'UPDATE tbl_child_patient 
+                SET password=:password
+                WHERE guardian_id=:guardian_id and email=:email';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute([
+            'password'    => $password,
+            'guardian_id' => $guardianID,
+            'email'       => $email,
+        ]);
+        if ($res) {
+            return true;
+        }
+        return false;
+    }
+
     public static function recordSymptoms($symptoms) {
         $db = static::getDB();
         $sql = 'INSERT INTO tbl_record

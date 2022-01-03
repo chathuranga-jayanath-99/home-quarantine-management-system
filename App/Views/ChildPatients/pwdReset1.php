@@ -23,7 +23,10 @@
             <div class="card-body p-md-5">
                 <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                    <h2 class="text-center h fw-bold mb-5 mx-1 mx-md-4 mt-4">Enter Guardian NIC</h2>
+                    <h2 class="text-center h fw-bold mb-5 mx-1 mx-md-4 mt-4">Child-Patient<br />Password Reset</h2>
+                    <div>
+                        <h6 class="text-left h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Enter Guardian NIC</h6>
+                    </div>
                     <form action="<?php echo URLROOT?>/child-patient/password-reset" method='POST'>
                         <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fa fa-id-card fa-lg me-3 fa-fw"></i>
