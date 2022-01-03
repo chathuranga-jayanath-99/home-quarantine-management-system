@@ -474,6 +474,33 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function passwordResetAction() {
+        if (parent::checkPHISession()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = [
+                    'NIC'     => '',
+                    'nic_err' => ''
+                ];
+                if ($_POST['id_checked'] === 'no') {
+                    if(empty($_POST['NIC'])){
+                        View::render('ChildPatients/pwdReset1.php', ['NIC' => '', 'nic_err' => 'Please enter NIC']);
+                    } else {
+                        $data['NIC'] = htmlspecialchars(strtoupper(trim($_POST['NIC'])));
+                        if (parent::isValidNIC($data['NIC'])) {
+                            $childrenData = ChildPatientModel::searchByGuardianID($data['NIC']);
+                            View::render('ChildPatients/pwdReset2.php', ['childrenData' => $childrenData, 'nic' => $data['NIC']]);
+                        } else {
+                            $data['nic_err'] = 'Enter a valid NIC';
+                            View::render('ChildPatients/pwdReset1.php', ['data' => $data]);
+                        }
+                    }
+                }
+            } else {
+                View::render('ChildPatients/pwdReset1.php', ['data' => ['NIC' => '', 'nic_err' => '']]);
+            }
+        }
+    }
+
     protected function activeHelper($patient) {
         View::render('ChildPatients/active.php', ['childObj' => $patient]);
     }
