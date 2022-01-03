@@ -7,7 +7,5 @@ use App\Models\DoctorModel;
 
 abstract class Doctor extends \Core\Controller{
 
-    public function searchPatientAction(){
-
-    }
+    public abstract function searchPatientAction();
 }

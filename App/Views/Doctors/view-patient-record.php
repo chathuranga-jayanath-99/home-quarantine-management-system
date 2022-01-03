@@ -16,7 +16,7 @@
         <td>Headache</td>
         <td>Fatigue</td>
         <td>Abdominal Pain</td>
-        <td>Vomittin</td>
+        <td>Vomitting</td>
         <td>Diarrhea</td>
         <td>Other</td>
     </tr>
