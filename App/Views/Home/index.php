@@ -52,6 +52,12 @@
                   </a> 
                   
                   </div>
+                  <div class=" h5 text-center   col-md-10">
+                  <a href="<?php echo URLROOT; ?>/Home/contact">
+                  <button style="width:200px;" type="Submit" class="btn btn-success btn-lg">Emergency Contact</button>
+                  </a> 
+                  
+                  </div>
 
               </div>
               <div class="col-md-10 text-center col-lg-6 col-xl-5 order-2 order-lg-1">

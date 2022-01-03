@@ -41,4 +41,8 @@ class Home extends \Core\Controller
         View::render('Home/about.php', []);
     }
 
+    public function contactAction(){
+        View::render('Home/contact_details.php', []);
+    }
+
 }

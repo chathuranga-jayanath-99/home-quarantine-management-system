@@ -282,7 +282,9 @@ class Adultpatient extends Patient{
 
     public function indexAction(){
         if ($this->isLoggedIn()){
-            View::render('AdultPatients/index.php', []);
+            $adultData = AdultPatientModel::getPatientName($_SESSION['adult_id']);
+            View::render('AdultPatients/index.php', ['adultData' => $adultData]);
+            //View::render('AdultPatients/index.php', []);
         }
         else {
             View::render('AdultPatients/notLoggedIn.php', []);
@@ -383,7 +385,111 @@ class Adultpatient extends Patient{
     }
 
     public function recordAction() {
-        // TODO
+        if ($this->isLoggedIn()) {
+            $this->initializeFromSession();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $temperature = $_POST['temperature'];
+                if (is_numeric($temperature) || is_float($temperature)) {
+                    if ($_POST['temp-unit'] === 'fahrenheit') {
+                        $temperature = ($temperature - 32) * 5 / 9;
+                        $temperature = round($temperature, 2);
+                    }
+                    $fever          = 0;
+                    $cough          = 0;
+                    $sore_throat    = 0;
+                    $short_breath   = 0;
+                    $runny_nose     = 0;
+                    $chills         = 0;
+                    $muscle_ache    = 0;
+                    $headache       = 0;
+                    $fatigue        = 0;
+                    $abdominal_pain = 0;
+                    $vomiting       = 0;
+                    $diarrhea       = 0;
+                    $other          = htmlspecialchars(trim($_POST['other']));
+                    $level = 0;
+                    if ($_POST['fever'] === 'yes') {
+                        $fever = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['cough'] === 'yes') {
+                        $cough = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['sore_throat'] === 'yes') {
+                        $sore_throat = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['short_breath'] === 'yes') {
+                        $short_breath = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['runny_nose'] === 'yes') {
+                        $runny_nose = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['chills'] === 'yes') {
+                        $chills = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['muscle_ache'] === 'yes') {
+                        $muscle_ache = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['headache'] === 'yes') {
+                        $headache = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['fatigue'] === 'yes') {
+                        $fatigue = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['abdominal_pain'] === 'yes') {
+                        $abdominal_pain = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['vomiting'] === 'yes') {
+                        $vomiting = 1;
+                        $level += 1;
+                    }
+                    if ($_POST['diarrhea'] === 'yes') {
+                        $diarrhea = 1;
+                        $level += 1;
+                    }
+                    $symptoms = [
+                        "patient_id"     => $this->id,
+                        "doctor_id"      => $this->doctor_id,
+                        "phi_id"         => $this->phi_id,
+                        "type"           => "adult",
+                        "feedback"       => "",
+                        "checked"        => 0,
+                        "temperature"    => $temperature,
+                        "fever"          => $fever,
+                        "cough"          => $cough,
+                        "sore_throat"    => $sore_throat,
+                        "short_breath"   => $short_breath,
+                        "runny_nose"     => $runny_nose,
+                        "chills"         => $chills,
+                        "muscle_ache"    => $muscle_ache,
+                        "headache"       => $headache,
+                        "fatigue"        => $fatigue,
+                        "abdominal_pain" => $abdominal_pain,
+                        "vomiting"       => $vomiting,
+                        "diarrhea"       => $diarrhea,
+                        "other"          => $other,
+                        "level"          => $level,
+                        "checked_count"  => 0
+                    ];
+                    if (AdultPatientModel::recordSymptoms($symptoms)) {
+                        View::render('AdultPatients/recordSuccess.php', $symptoms);
+                    }
+                }
+            } else {
+                View::render('AdultPatients/recordSymptoms.php', []);
+            }
+        } else {
+            View::render('AdultPatients/notLoggedIn.php', []);
+        }
     }
 
 

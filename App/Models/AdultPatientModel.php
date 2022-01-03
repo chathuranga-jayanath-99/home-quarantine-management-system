@@ -124,4 +124,26 @@ class AdultPatientModel extends \Core\Model{
         return $row;
 
     }
+
+    public static function recordSymptoms($symptoms) {
+        $db = static::getDB();
+        $sql = 'INSERT INTO tbl_record
+            (
+                  patient_id,    doctor_id,       phi_id,          type,         feedback,      checked,
+                 temperature,        fever,        cough,   sore_throat,     short_breath,   runny_nose,
+                      chills,  muscle_ache,     headache,       fatigue,   abdominal_pain,
+                    vomiting,     diarrhea,        other,         level,     checked_count
+            ) VALUES  (
+                 :patient_id,   :doctor_id,      :phi_id,          :type,       :feedback,     :checked,
+                :temperature,       :fever,       :cough,   :sore_throat,   :short_breath,  :runny_nose,
+                     :chills, :muscle_ache,    :headache,       :fatigue, :abdominal_pain,
+                   :vomiting,    :diarrhea,       :other,         :level,   :checked_count
+            )';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute($symptoms);
+        if ($res) {
+            return true;
+        }
+        return false;
+    }
 }
