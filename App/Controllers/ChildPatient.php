@@ -559,6 +559,80 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function passwordChangeAction() {
+        if ($this->isLoggedIn()) {
+            $this->initializeFromSession();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = [
+                    'password'     => '',
+                    'password_err' => ''
+                ];
+                if ($_POST['entered'] === 'no') {
+                    if(empty($_POST['password'])){
+                        View::render('ChildPatients/pwdChange1.php', ['data' => ['password' => '', 'password_err' => 'Please enter password']]);
+                    } else {
+                        $data['password'] = trim($_POST['password']);
+                        if (empty($data['password_err'])) {
+                            $childPatient = ChildPatientModel::login($_SESSION['child_email'], $data['password']);
+                            if($childPatient){
+                                $data = [
+                                    'password'          => '',
+                                    'conf_password'     => '',
+                                    'password_err'      => '',
+                                    'conf_password_err' => ''
+                                ];
+                                View::render('ChildPatients/pwdChange2.php', ['data' => $data]);
+                            }
+                            else{
+                                $data['password_err'] = 'Invalid password';
+                                View::render('ChildPatients/pwdChange1.php', ['data' => $data]);
+                            }
+                        }
+                    }
+                } else {
+                    $data = [
+                        'password'          => $_POST['password'],
+                        'conf_password'     => $_POST['conf_password'],
+                        'password_err'      => '',
+                        'conf_password_err' => ''
+                    ];
+                    if(empty($data['password'])){
+                        $data['password_err'] = 'Please enter password';
+                    }
+                    else if(strlen($data['password']) < 6){
+                        $data['password_err'] = 'Password must be at least 6 characters';
+                    }
+
+                    if(empty($data['conf_password'])){
+                        $data['conf_password_err'] = 'Please confirm password';
+                    }
+                    else {
+                        if($data['password'] != $data['conf_password']){
+                            $data['conf_password_err'] = 'Passwords do not match';
+                        }
+                    }
+
+                    if (empty($data['password_err']) && empty($data['conf_password_err'])){
+                        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                        $id = ChildPatientModel::changePassword($this->email, $this->guardian_id, $data['password']);
+                        if ($id) {
+                            View::render('ChildPatients/pwdChangeSuccess.php', []);
+                        }
+                        else {
+                            echo 'Failed';
+                        }
+                    } else {
+                        View::render('ChildPatients/pwdChange2.php', ['data' => $data]);
+                    }
+                }
+            } else {
+                View::render('ChildPatients/pwdChange1.php', ['data' => ['password' => '', 'password_err' => '']]);
+            }
+        } else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
     protected function activeHelper($patient) {
         View::render('ChildPatients/active.php', ['childObj' => $patient]);
     }
