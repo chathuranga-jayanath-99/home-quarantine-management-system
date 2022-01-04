@@ -19,7 +19,11 @@
                 <div class="row">
                     <div class="col-md-4 border-right">
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                            <?php if(ucfirst($adultData->gender) === 'Male') { ?>
                             <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                            <?php } elseif(ucfirst($adultData->gender) === 'Female') { ?>
+                            <img class="rounded-circle mt-5" width="150px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqTjHOCWWdu_PhEoiAWJeEMZ2lecPS8WksQw&usqp=CAU">
+                            <?php }  ?>
                             <span class="font-weight-bold"><?php echo $_SESSION['adult_name']; ?></span>
                             <span class="text-black-50"><?php echo $_SESSION['adult_email']; ?></span>
                             <span><div class="mt-5 text-center"><a href="https://www.google.com/" class="btn btn-primary">Edit Profile</a></div></span>
