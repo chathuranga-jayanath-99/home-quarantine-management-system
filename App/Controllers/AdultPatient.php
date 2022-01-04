@@ -172,7 +172,7 @@ class Adultpatient extends Patient{
                         if (parent::isValidNIC($data['NIC'])) {
                             $adultData = AdultPatientModel::searchByNIC($data['NIC']);
                             if($adultData){
-                                View::render('AdultPatients/register.php', ['adultData' => $adultData]);
+                                View::render('AdultPatients/register.php', ['adultData' => $adultData, 'nic' => $data['NIC']]);
                             }else{
                                 View::render('AdultPatients/post_register.php', ['data'=> $data]);
                             }
@@ -282,7 +282,7 @@ class Adultpatient extends Patient{
 
     public function indexAction(){
         if ($this->isLoggedIn()){
-            $adultData = AdultPatientModel::getPatientName($_SESSION['adult_id']);
+            $adultData = AdultPatientModel::getPatientData($_SESSION['adult_id']);
             View::render('AdultPatients/index.php', ['adultData' => $adultData]);
             //View::render('AdultPatients/index.php', []);
         }
@@ -497,6 +497,10 @@ class Adultpatient extends Patient{
         View::render('AdultPatients/active.php', ['adultObj' => $patient]);
     }
 
+    private function initializeFromSession() {
+        $this->initialize($_SESSION['NIC'], $_SESSION['adult_email']);
+    }
+
     public function initialize($NIC, $email) {
         $adultObj = AdultPatientModel::searchByEmailAndNIC($NIC, $email);
         if ($adultObj) {
@@ -512,6 +516,26 @@ class Adultpatient extends Patient{
             $this->phi_id      = $adultObj->phi_id;
             $this->doctor_id   = $adultObj->doctor_id;
             parent::transitionTo(State::objFromName($adultObj->state));
+        }
+    }
+
+    public function medHistoryAction(){
+        if ($this->isLoggedIn()){
+            View::render('AdultPatients/medicalHistory.php', []);
+        }
+        else {
+            View::render('AdultPatients/notLoggedIn.php', []);
+        }
+        
+    }
+
+    public function profileAction(){
+        if ($this->isLoggedIn()){
+            $adultData = AdultPatientModel::getPatientData($_SESSION['adult_id']);
+            View::render('AdultPatients/profile.php', ['adultData' => $adultData]);
+        }
+        else {
+            View::render('AdultPatients/notLoggedIn.php', []);
         }
     }
 

@@ -112,7 +112,7 @@ class AdultPatientModel extends \Core\Model{
         return $res;
     }
 
-    public static function getPatientName($adult_id)
+    public static function getPatientData($adult_id)
     {
         $db = static::getDB();
 

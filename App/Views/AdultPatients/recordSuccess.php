@@ -6,37 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AppName</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
 <?php include_once 'navbar.php'; ?>
-<section class="vh-auto" style="background-color: #eee;">
-    <div class="container h-100 pt-5">
+<section class="vh-100" style="background-color: #eee;">
+    <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-12 col-xl-10">
             <div class="card text-black" style="border-radius: 25px;">
                 <div class="card-body p-md-5">
-                    <form class="mx-1 mx-md-4" action="<?php echo URLROOT?>/adult-patient/record" method='POST'>
+                    <form class="mx-1 mx-md-4" action="<?php echo URLROOT?>/adult-patient/login" method='POST'>
                         <div class="row justify-content-center">
-                            <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Adult-Patient <br /> Record Symptoms</h1>
-                            <div class="row g-3 justify-content-center">
+                            <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Successfully Recorded!</h1>
+                            <div class="row g-2 justify-content-center">
                                 <div class="col-auto align-items-center">
                                     <i class="fa fa-thermometer-half fa-lg me-3 fa-fw"></i>
                                 </div>
                                 <div class="col-auto">
-                                    <input type="number" step="0.01" class="col-form-control" name="temperature" min=0 max=120 placeholder="Temperature" style="width: 112px;">
-                                </div>
-                                <div class="col-auto">
-                                    <fieldset id="temp-unit">
-                                        <input type="radio" value="celsius" id="celsius" class="form-check-input" name="temp-unit" checked>
-                                        <label for="celsius" class="form-check-label">&#176C</label>
-                                        &nbsp;
-                                        <input type="radio" value="fahrenheit" id="fahrenheit" class="form-check-input" name="temp-unit">
-                                        <label for="fahrenheit" class="form-check-label">&#176F</label>
-                                    </fieldset>
+                                    <?php
+                                    $temp_f = $temperature * 9 / 5 + 32;
+                                    $temp_f = round($temp_f, 2);
+                                    echo $temperature."&#176C (".$temp_f."&#176F)";
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -47,8 +42,7 @@
                                     <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Symptom</th>
-                                    <th scope="col">Yes</th>
-                                    <th scope="col">No</th>
+                                    <th scope="col">State</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,10 +51,13 @@
                                             <th scope="row">1</th>
                                             <td><div class="form-check-label">Fever</div></th>
                                             <td>
-                                                <input type="radio" value="yes" name="fever" class="form-check-input">
-                                            </td>
-                                            <td>
-                                                <input type="radio" value="no" name="fever" class="form-check-input" checked>
+                                                <?php
+                                                if($fever) {
+                                                ?> 
+                                                <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
+                                                <?php
+                                                }
+                                                ?>
                                             </td>
                                         </fieldset>
                                     </tr>
@@ -69,10 +66,13 @@
                                             <th scope="row">2</th>
                                             <td><div class="form-check-label">Cough</div></th>
                                             <td>
-                                                <input type="radio" value="yes" name="cough" class="form-check-input">
-                                            </td>
-                                            <td>
-                                                <input type="radio" value="no" name="cough" class="form-check-input" checked>
+                                            <?php
+                                                if($cough) {
+                                                ?> 
+                                                <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
+                                                <?php
+                                                }
+                                            ?>
                                             </td>
                                         </fieldset>
                                     </tr>
@@ -81,10 +81,13 @@
                                             <th scope="row">3</th>
                                             <td><div class="form-check-label">Sore throat</div></th>
                                             <td>
-                                                <input type="radio" value="yes" name="sore_throat" class="form-check-input">
-                                            </td>
-                                            <td>
-                                                <input type="radio" value="no" name="sore_throat" class="form-check-input" checked>
+                                            <?php
+                                                if($sore_throat) {
+                                                ?> 
+                                                <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
+                                                <?php
+                                                }
+                                            ?>
                                             </td>
                                         </fieldset>
                                     </tr>
@@ -93,10 +96,13 @@
                                             <th scope="row">4</th>
                                             <td><div class="form-check-label">Shortness of breath</div></th>
                                             <td>
-                                                <input type="radio" value="yes" name="short_breath" class="form-check-input">
-                                            </td>
-                                            <td>
-                                                <input type="radio" value="no" name="short_breath" class="form-check-input" checked>
+                                            <?php
+                                                if($short_breath) {
+                                                ?> 
+                                                <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
+                                                <?php
+                                                }
+                                            ?>
                                             </td>
                                         </fieldset>
                                     </tr>
@@ -105,10 +111,13 @@
                                             <th scope="row">5</th>
                                             <td><div class="form-check-label">Runny nose</div></th>
                                             <td>
-                                                <input type="radio" value="yes" name="runny_nose" class="form-check-input">
-                                            </td>
-                                            <td>
-                                                <input type="radio" value="no" name="runny_nose" class="form-check-input" checked>
+                                            <?php
+                                                if($runny_nose) {
+                                                ?> 
+                                                <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
+                                                <?php
+                                                }
+                                            ?>
                                             </td>
                                         </fieldset>
                                     </tr>
@@ -117,10 +126,13 @@
                                             <th scope="row">6</th>
                                             <td><div class="form-check-label">Chills</div></th>
                                             <td>
-                                                <input type="radio" value="yes" name="chills" class="form-check-input">
-                                            </td>
-                                            <td>
-                                                <input type="radio" value="no" name="chills" class="form-check-input" checked>
+                                            <?php
+                                                if($chills) {
+                                                ?> 
+                                                <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
+                                                <?php
+                                                }
+                                            ?>
                                             </td>
                                         </fieldset>
                                     </tr>
@@ -133,8 +145,7 @@
                                     <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Symptom</th>
-                                    <th scope="col">Yes</th>
-                                    <th scope="col">No</th>
+                                    <th scope="col">State</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -143,10 +154,13 @@
                                             <th scope="row">7</th>
                                             <td><div class="form-check-label">Muscle-aches</div></th>
                                             <td>
-                                                <input type="radio" value="yes" name="muscle_ache" class="form-check-input">
-                                            </td>
-                                            <td>
-                                                <input type="radio" value="no" name="muscle_ache" class="form-check-input" checked>
+                                            <?php
+                                                if($muscle_ache) {
+                                                ?> 
+                                                <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
+                                                <?php
+                                                }
+                                            ?>
                                             </td>
                                         </fieldset>
                                     </tr>
@@ -155,10 +169,13 @@
                                             <th scope="row">8</th>
                                             <td><div class="form-check-label">Headache</div></th>
                                             <td>
-                                                <input type="radio" value="yes" name="headache" class="form-check-input">
-                                            </td>
-                                            <td>
-                                                <input type="radio" value="no" name="headache" class="form-check-input" checked>
+                                            <?php
+                                                if($headache) {
+                                                ?> 
+                                                <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
+                                                <?php
+                                                }
+                                            ?>
                                             </td>
                                         </fieldset>
                                     </tr>
@@ -167,10 +184,13 @@
                                             <th scope="row">9</th>
                                             <td><div class="form-check-label">Fatigue</div></th>
                                             <td>
-                                                <input type="radio" value="yes" name="fatigue" class="form-check-input">
-                                            </td>
-                                            <td>
-                                                <input type="radio" value="no" name="fatigue" class="form-check-input" checked>
+                                            <?php
+                                                if($fatigue) {
+                                                ?> 
+                                                <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
+                                                <?php
+                                                }
+                                            ?>
                                             </td>
                                         </fieldset>
                                     </tr>
@@ -179,10 +199,13 @@
                                             <th scope="row">10</th>
                                             <td><div class="form-check-label">Abdominal pain</div></th>
                                             <td>
-                                                <input type="radio" value="yes" name="abdominal_pain" class="form-check-input">
-                                            </td>
-                                            <td>
-                                                <input type="radio" value="no" name="abdominal_pain" class="form-check-input" checked>
+                                            <?php
+                                                if($abdominal_pain) {
+                                                ?> 
+                                                <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
+                                                <?php
+                                                }
+                                            ?>
                                             </td>
                                         </fieldset>
                                     </tr>
@@ -191,10 +214,13 @@
                                             <th scope="row">11</th>
                                             <td><div class="form-check-label">Vomiting</div></th>
                                             <td>
-                                                <input type="radio" value="yes" name="vomiting" class="form-check-input">
-                                            </td>
-                                            <td>
-                                                <input type="radio" value="no" name="vomiting" class="form-check-input" checked>
+                                            <?php
+                                                if($vomiting) {
+                                                ?> 
+                                                <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
+                                                <?php
+                                                }
+                                            ?>
                                             </td>
                                         </fieldset>
                                     </tr>
@@ -203,10 +229,13 @@
                                             <th scope="row">12</th>
                                             <td><div class="form-check-label">Diarrhea</div></th>
                                             <td>
-                                                <input type="radio" value="yes" name="diarrhea" class="form-check-input">
-                                            </td>
-                                            <td>
-                                                <input type="radio" value="no" name="diarrhea" class="form-check-input" checked>
+                                            <?php
+                                                if($diarrhea) {
+                                                ?> 
+                                                <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
+                                                <?php
+                                                }
+                                            ?>
                                             </td>
                                         </fieldset>
                                     </tr>
@@ -217,12 +246,7 @@
                         <div class="row justify-content-center">
                             <div class="mb-3">
                                 <label for="other" class="form-label"><i class="fa fa-puzzle-piece fa-lg me-3 fa-fw"></i>Other</label>
-                                <textarea class="form-control" id="other" name="other" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="mb-3">
-                                <input type="submit" class="btn btn-success" value="Submit">
+                                <textarea class="form-control" id="other" name="other" rows="3" disabled><?php echo htmlspecialchars(trim($other)); ?></textarea>
                             </div>
                         </div>
                     </form>
@@ -235,6 +259,5 @@
         </div>
     </div>
     </section>
-
 </body>
 </html>

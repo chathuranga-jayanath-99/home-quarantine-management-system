@@ -23,12 +23,19 @@
                                     </div>
                                     <form action="<?php echo URLROOT?>/adult-patient/active" method="POST">
                                         <div>
-                                        
+                                            <input class="form-check-input" type="hidden" name="email" value="<?php echo $adultData[0]->email ?>">
+                                            <!-- <span class="mb-2 w-100">
+                                                <label class="form-check-label" for="email"><?php echo $adultData[0]->name ?></label>
+                                            </span> -->
                                         </div>
-                                            <input type="hidden" name="nic" value="<?php echo $nic ?>">
+                                          
+                                        <input type="hidden" name="nic" value="<?php echo $nic ?>">
+                                        <input type="hidden" name="changed" value="true">
                                         <div class="d-flex align-items-center">
                                             <input class="btn btn-primary ms-auto" type="submit" value="Activate">
-                                        </div>
+                                        </div> 
+                        
+                                        
                                     </form>
                                 </div>
                             </div>
