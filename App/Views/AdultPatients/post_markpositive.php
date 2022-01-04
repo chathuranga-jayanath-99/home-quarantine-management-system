@@ -25,9 +25,10 @@
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                     <h2 class="text-center h fw-bold mb-5 mx-1 mx-md-4 mt-4">Active-Conatact Patients</h2>  
                     <?php if (sizeof($contact_patient) > 0) { ?>
-                        <div>
-                            <h6 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Please select the account that want to mark as positive</h6>
-                        </div>
+                    <div>
+                        <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">NIC : <?php echo $contact_patient[0]->NIC ;?></h4>
+                        <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Patient Name : <?php echo $contact_patient[0]->name ;?></h4>
+                    </div>
                     <form action="<?php echo URLROOT?>/adult-patient/active " method="POST">
                         <div>
                         <?php 
@@ -35,10 +36,10 @@
                         foreach ($contact_patient as $adultData) {
                                 ?>
                                 <div>
-                                    <input class="form-check-input" type="radio" name="email" value="<?php echo $adultData->email ?>">
-                                    <span class="mb-2 w-100">
+                                    <input class="form-check-input" type="hidden" name="email" value="<?php echo $adultData->email ?>">
+                                    <!-- <span class="mb-2 w-100">
                                     <label class="form-check-label" for="email"><?php echo $adultData->name ?></label>
-                                    </span>
+                                    </span> -->
                                 </div>
                                 <input type="hidden" name="nic" value="<?php echo $nic ?>">
                                 <input type="hidden" name="changed" value="true">
@@ -70,10 +71,10 @@
                 </div>
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                    <h4 class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">Do you want to continue marking positive child patients?</h4>
+                    <h4 class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">Do you want to continue marking positive adult patients?</h4>
                     
                     <div class="text-center mt-3">
-                        <a href="<?php echo URLROOT.'/child-patient/markpositive' ?>">
+                        <a href="<?php echo URLROOT.'/adult-patient/markpositive' ?>">
                                 <button style="width:100px;" class="btn btn-success ">Yes</button>
                         </a>
                     </div>
