@@ -633,6 +633,55 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function medHistoryAction() {
+        if ($this->isLoggedIn()){
+            View::render('ChildPatients/medicalHistory.php', []);
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function profileAction() {
+        if ($this->isLoggedIn()){
+            $this->initializeFromSession();
+            View::render('ChildPatients/profile.php', ['childData' => $this]);
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function editProfileAction() {
+        if ($this->isLoggedIn()){
+            $this->initializeFromSession();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                //TODO
+                View::render('ChildPatients/editProfileSuccess.php', []);
+            } else {
+                $data = [
+                    'name'                  => $this->name,
+                    'email'                 => $this->email,
+                    'NIC'                   => $this->guardian_id,
+                    'age'                   => $this->age,
+                    'contact_no'            => $this->contact_no,
+                    'address'               => $this->address,
+                    'gender'                => $this->gender,
+                    'name_err'              => '',
+                    'email_err'             => '',
+                    'nic_err'               => '',
+                    'age_err'               => '',
+                    'address_err'           => '',
+                    'contact_no_err'        => ''
+                ];
+                View::render('ChildPatients/editProfile.php', ['data' => $data]);
+            }
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
     protected function activeHelper($patient) {
         View::render('ChildPatients/active.php', ['childObj' => $patient]);
     }

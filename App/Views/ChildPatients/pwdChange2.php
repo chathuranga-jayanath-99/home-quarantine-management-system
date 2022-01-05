@@ -27,7 +27,7 @@
                 <div class="card-body p-md-5">
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-							<h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Child-Patient<br />Password Change</h1>
+							<h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Password Change</h1>
                             <form class="mx-1 mx-md-4" action="<?php echo URLROOT?>/child-patient/password-change" method='POST'>
                                 <div class="d-flex flex-row align-items-center mb-4">
                                 <i class="fa fa-envelope fa-lg me-3 fa-fw"></i>

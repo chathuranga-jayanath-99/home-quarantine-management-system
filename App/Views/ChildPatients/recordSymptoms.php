@@ -27,7 +27,7 @@
                 <div class="card-body p-md-5">
                     <form class="mx-1 mx-md-4" action="<?php echo URLROOT?>/child-patient/record" method='POST'>
                         <div class="row justify-content-center">
-                            <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Child-Patient <br /> Record Symptoms</h1>
+                            <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Record Symptoms</h1>
                             <div class="row g-3 justify-content-center">
                                 <div class="col-auto align-items-center">
                                     <i class="fa fa-thermometer-half fa-lg me-3 fa-fw"></i>

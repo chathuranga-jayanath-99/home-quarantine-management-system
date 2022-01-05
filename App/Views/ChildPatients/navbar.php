@@ -10,7 +10,13 @@
           <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/child-patient"><button class="btn <?php if ($page === 'home') {echo 'btn-success';} ?>">Home</button></a>
         </li>
         <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/child-patient/profile"><button class="btn <?php if ($page === 'profile') {echo 'btn-success';} ?>">Profile</button></a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/record"><button class="btn <?php if ($page === 'record') {echo 'btn-success';} ?>">Record Symptoms</button></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/child-patient/med-history"><button class="btn <?php if ($page === 'history') {echo 'btn-success';} ?>">Medical History</button></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/password-change"><button class="btn <?php if ($page === 'pwd_change') {echo 'btn-success';} ?>">Change Password</button></a>

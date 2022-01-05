@@ -27,7 +27,7 @@
             <div class="card-body p-md-5">
                 <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                    <h2 class="text-center h fw-bold mb-5 mx-1 mx-md-4 mt-4">Child-Patient<br />Password Change</h2>
+                    <h2 class="text-center h fw-bold mb-5 mx-1 mx-md-4 mt-4">Password Change</h2>
                     <div>
                         <h6 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Password changed successfully</h6>
                     </div>
