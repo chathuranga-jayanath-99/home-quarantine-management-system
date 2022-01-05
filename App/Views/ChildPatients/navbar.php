@@ -27,6 +27,20 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/child-patient/med-history"><button class="btn <?php if ($page === 'history') {echo 'btn-success';} ?>">Medical History</button></a>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn <?php if ($page === 'update') {echo 'btn-success';} ?>">Update Account</button>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/child-patient/edit-profile" <?php if ($subPage === 'profile') {echo 'style="color: green;"';} ?> >
+              Update profile
+            </a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/child-patient/edit-med-history"  <?php if ($subPage === 'history') {echo 'style="color: green;"';} ?>>
+              Update Medical History
+            </a></li>
+          </ul>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/password-change"><button class="btn <?php if ($page === 'pwd_change') {echo 'btn-success';} ?>">Change Password</button></a>
         </li>

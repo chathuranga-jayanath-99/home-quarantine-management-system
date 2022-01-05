@@ -18,6 +18,7 @@
 <body>
     <?php 
     $page = 'pwd_change';
+    $subPage = '';
     include_once 'navbar.php'; 
     ?>
     <section class="vh-100" style="background-color: #eee;">

@@ -18,6 +18,7 @@
 <body>
     <?php
     $page = 'home';
+    $subPage = '';
     include_once 'navbar.php';
     ?>
     <section class="vh-100" style="background-color: #eee;">

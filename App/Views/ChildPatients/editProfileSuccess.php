@@ -10,7 +10,8 @@
 </head>
 <body>
     <?php
-    $page = 'history';
+    $page = 'update';
+    $subPage = 'profile';
     include_once 'navbar.php';
     ?>
     <section class="vh-100" style="background-color: #eee;">

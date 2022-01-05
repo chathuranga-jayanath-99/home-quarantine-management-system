@@ -11,6 +11,7 @@
 <body>
     <?php
     $page = 'profile';
+    $subPage = '';
     include_once 'navbar.php';
     ?>
     <section class="vh-auto" style="background-color: #eee;">

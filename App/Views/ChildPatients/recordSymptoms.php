@@ -18,6 +18,7 @@
 <body>
 <?php
     $page = 'record';
+    $subPage = '';
     include_once 'navbar.php';
 ?>
 <section class="vh-auto" style="background-color: #eee;">
