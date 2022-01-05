@@ -253,6 +253,17 @@ class PHI extends \Core\Controller{
 
         }
 
-        
     }
+
+    public function searchPatientAction(){
+        if ($this->isLoggedIn()){
+            $patients = PHIModel::getPatientsMatched($_REQUEST['name']);
+            echo json_encode($patients);
+        }
+        else{
+            header('location:'.URLROOT.'/PHI/login');
+        }
+    }
+
+
 }
