@@ -23,9 +23,9 @@
                     <div class="col-md-4 border-right">
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                             <?php if(ucfirst($childData->getGender()) === 'Male') { ?>
-                            <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                            <img class="rounded-circle mt-5" width="100px" src="https://image.flaticon.com/icons/png/512/146/146007.png">
                             <?php } elseif(ucfirst($childData->getGender()) === 'Female') { ?>
-                            <img class="rounded-circle mt-5" width="150px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqTjHOCWWdu_PhEoiAWJeEMZ2lecPS8WksQw&usqp=CAU">
+                            <img class="rounded-circle mt-5" width="100px" src="https://cdn-icons-png.flaticon.com/512/146/146005.png">
                             <?php }  ?>
                             <span class="font-weight-bold"><?php echo $childData->getName(); ?></span>
                             <span class="text-black-50"><?php echo $childData->getEmail(); ?></span>

@@ -1,6 +1,15 @@
 <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="<?php echo URLROOT; ?>/child-patient"><?php echo $_SESSION['child_name']; ?></a>
+    <a class="navbar-brand" href="<?php echo URLROOT; ?>/child-patient">
+      <img src="<?php
+      if ($_SESSION['child_gender'] === 'male') {
+        echo "https://image.flaticon.com/icons/png/512/146/146007.png";
+      } else {
+        echo "https://cdn-icons-png.flaticon.com/512/146/146005.png";
+      }
+      ?>" alt="" height="24" class="d-inline-block align-text-top">
+      <?php echo $_SESSION['child_name']; ?>
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -21,6 +30,8 @@
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/password-change"><button class="btn <?php if ($page === 'pwd_change') {echo 'btn-success';} ?>">Change Password</button></a>
         </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/logout"><button class="btn btn-danger">Logout</button></a>
         </li>

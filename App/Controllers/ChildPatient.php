@@ -278,10 +278,11 @@ class ChildPatient extends Patient {
     }
 
     private function createSession($childPatient){
-        $_SESSION['child_id'] = $childPatient->id;
+        $_SESSION['child_id']     = $childPatient->id;
         $_SESSION['guardian_nic'] = $childPatient->guardian_id;
-        $_SESSION['child_email'] = $childPatient->email;
-        $_SESSION['child_name'] = $childPatient->name;
+        $_SESSION['child_email']  = $childPatient->email;
+        $_SESSION['child_name']   = $childPatient->name;
+        $_SESSION['child_gender'] = $childPatient->gender;
     }
 
     public function isLoggedIn(){
