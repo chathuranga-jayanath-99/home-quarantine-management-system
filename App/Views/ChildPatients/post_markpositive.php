@@ -31,7 +31,7 @@
                     <form action="<?php echo URLROOT?>/child-patient/active " method="POST">
                         <div>
                         <?php 
-                       
+
                         foreach ($contact_children as $childData) {
                                 ?>
                                 <div>

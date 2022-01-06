@@ -83,12 +83,12 @@
                         </div>
                         <div>
                             <div>
-                                <input type="radio" name="gender" id="male" value="male" checked>
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="male" checked>
                                 <i class="fa fa-male fa-lg fa-fw"></i>
                                 <label class="form-check-label" for="male">Male</label>
                             </div>
                             <div>
-                                <input type="radio" name="gender" value="female" id="female">
+                                <input class="form-check-input" type="radio" name="gender" value="female" id="female">
                                 <i class="fa fa-female fa-lg fa-fw"></i>
                                 <label class="form-check-label" for="female">Female</label>
                             </div>

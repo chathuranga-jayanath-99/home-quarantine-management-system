@@ -74,12 +74,12 @@
                         </div>
                         <div>
                             <div>
-                                <input type="radio" name="gender" id="male" value="male" <?php if($data['gender'] == 'male') {echo 'checked';} ?> >
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="male" <?php if($data['gender'] == 'male') {echo 'checked';} ?> >
                                 <i class="fa fa-male fa-lg fa-fw"></i>
                                 <label class="form-check-label" for="male">Male</label>
                             </div>
                             <div>
-                                <input type="radio" name="gender" value="female" id="female" <?php if($data['gender'] == 'female') {echo 'checked';} ?> >
+                                <input class="form-check-input" type="radio" name="gender" value="female" id="female" <?php if($data['gender'] == 'female') {echo 'checked';} ?> >
                                 <i class="fa fa-female fa-lg fa-fw"></i>
                                 <label class="form-check-label" for="female">Female</label>
                             </div>
