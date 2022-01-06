@@ -14,8 +14,8 @@
     $subPage = '';
     include_once 'navbar.php';
     ?>
-    <section class="vh-auto" style="background-color: #eee;">
-        <div class="container h-100 pt-5">
+    <section class="vh-auto pt-5 pb-5" style="background-color: #eee;">
+        <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-lg-12 col-xl-10">
                 <div class="card text-black" style="border-radius: 25px;">
