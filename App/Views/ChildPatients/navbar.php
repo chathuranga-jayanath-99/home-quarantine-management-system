@@ -42,6 +42,9 @@
           </ul>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/contact"><button class="btn <?php if ($page === 'contact') {echo 'btn-success';} ?>">Emergency Contact</button></a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/password-change"><button class="btn <?php if ($page === 'pwd_change') {echo 'btn-success';} ?>">Change Password</button></a>
         </li>
       </ul>

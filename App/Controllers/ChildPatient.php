@@ -699,6 +699,10 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function contactAction() {
+        View::render('ChildPatients/contact.php', []);
+    }
+
     protected function activeHelper($patient) {
         View::render('ChildPatients/active.php', ['childObj' => $patient]);
     }
