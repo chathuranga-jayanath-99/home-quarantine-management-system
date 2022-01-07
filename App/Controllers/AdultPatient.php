@@ -297,6 +297,7 @@ class Adultpatient extends Patient{
         $_SESSION['NIC'] = $adultPatient->NIC;
         $_SESSION['adult_email'] = $adultPatient->email;
         $_SESSION['adult_name'] = $adultPatient->name;
+        $_SESSION['adult_gender'] = $adultPatient->gender;
     }
 
     public function isLoggedIn(){
@@ -533,6 +534,54 @@ class Adultpatient extends Patient{
         if ($this->isLoggedIn()){
             $adultData = AdultPatientModel::getPatientData($_SESSION['adult_id']);
             View::render('AdultPatients/profile.php', ['adultData' => $adultData]);
+        }
+        else {
+            View::render('AdultPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function editProfileAction() {
+        if ($this->isLoggedIn()){
+            $this->initializeFromSession();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                //TODO
+                View::render('AdultPatients/editProfileSuccess.php', []);
+            } else {
+                $data = [
+                    'name'                  => $this->name,
+                    'email'                 => $this->email,
+                    'NIC'                   => $this->NIC,
+                    'age'                   => $this->age,
+                    'contact_no'            => $this->contact_no,
+                    'address'               => $this->address,
+                    'gender'                => $this->gender,
+                    'name_err'              => '',
+                    'email_err'             => '',
+                    'nic_err'               => '',
+                    'age_err'               => '',
+                    'address_err'           => '',
+                    'contact_no_err'        => ''
+                ];
+                View::render('AdultPatients/editProfile.php', ['data' => $data]);
+            }
+        }
+        else {
+            View::render('AdultPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function contactAction() {
+        if ($this->isLoggedIn()){
+            View::render('AdultPatients/contact.php', []);
+        }
+        else {
+            View::render('AdultPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function aboutUsAction() {
+        if ($this->isLoggedIn()){
+            View::render('AdultPatients/aboutUs.php', []);
         }
         else {
             View::render('AdultPatients/notLoggedIn.php', []);
