@@ -23,7 +23,7 @@ require '../App/Controllers/Admin/User.php';
 require '../App/Controllers/Image.php';
 
 //Require state pattern classes
-require '../App/statePattern/State.php';
+require '../App/statePattern/PatientState.php';
 require '../App/statePattern/Pending.php';
 require '../App/statePattern/Inactive.php';
 require '../App/statePattern/Contact.php';

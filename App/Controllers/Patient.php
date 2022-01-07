@@ -5,12 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\Post;
 
-use App\statePattern\State;
-use App\statePattern\Pending;
-use App\statePattern\Inactive;
-use App\statePattern\Contact;
-use App\statePattern\Positive;
-use App\statePattern\Dead;
+use App\statePattern\PatientState;
 
 abstract class Patient extends \Core\Controller {
     protected $state;
@@ -58,23 +53,49 @@ abstract class Patient extends \Core\Controller {
     }
 
     public function setPositive() {
-        //TODO
+        $state_str = $this->stateToString();
+        if ($state_str === 'Contact Person') {
+            $this->state->nextState($this);
+        } else if ($state_str === 'Pending' || $state_str === 'Inactive') {
+            $this->setActive();
+            $this->state->nextState($this);
+        } else {
+            echo "Invalid operation: Changing state from ".$state_str." to Positive is not allowed";
+        }
     }
 
     public function setContact() {
-        //TODO
+        $state_str = $this->stateToString();
+        if ($state_str === 'Pending' || $state_str === 'Inactive') {
+            $this->state->nextState($this);
+        } else {
+            echo "Invalid operation: Changing state from ".$state_str." to Contact Person is not allowed";
+        }
     }
 
     public function setInactive() {
-        //TODO
+        $state_str = $this->stateToString();
+        if ($state_str === 'Contact Person') {
+            $this->setActive();
+            $this->state->nextState($this);
+        } else if ($state_str === 'Positive') {
+            $this->state->nextState($this);
+        } else {
+            echo "Invalid operation: Changing state from ".$state_str." to Inactive is not allowed";
+        }
     }
 
     public function setActive() {
-        //TODO
+        $state_str = $this->stateToString();
+        if ($state_str === 'Pending' || $state_str === 'Inactive') {
+            $this->state->nextState($this);
+        } else {
+            echo "Invalid operation: Changing state from ".$state_str." to Contact Person is not allowed";
+        }
     }
 
     public function markDead() {
-        //TODO
+        $this->state->markDead();
     }
 
     public function stateToString() {

@@ -4,7 +4,7 @@ namespace App\statePattern;
 
 use App\Controllers\Patient;
 
-class Dead extends State {
+class Dead extends PatientState {
     private static $instance;
 
     private function __construct() {
@@ -19,7 +19,7 @@ class Dead extends State {
     }
 
     public function nextState($patient) {
-        //TODO
+        echo "Invalid operation: Changing state from Dead is not allowed";
     }
 
     public function toString() {

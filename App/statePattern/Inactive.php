@@ -4,7 +4,7 @@ namespace App\statePattern;
 
 use App\Controllers\Patient;
 
-class Inactive extends State {
+class Inactive extends PatientState {
     private static $instance;
 
     private function __construct() {
@@ -19,7 +19,7 @@ class Inactive extends State {
     }
 
     public function nextState($patient) {
-        //TODO
+        $patient->transitionTo(Contact::getInstance());
     }
 
     public function toString() {

@@ -4,7 +4,7 @@ namespace App\statePattern;
 
 use App\Controllers\Patient;
 
-class Pending extends State {
+class Pending extends PatientState {
     private static $instance;
 
     private function __construct() {
@@ -19,7 +19,7 @@ class Pending extends State {
     }
 
     public function nextState($patient) {
-        //TODO
+        $patient->transitionTo(Contact::getInstance());
     }
 
     public function toString() {

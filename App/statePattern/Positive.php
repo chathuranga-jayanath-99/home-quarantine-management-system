@@ -4,7 +4,7 @@ namespace App\statePattern;
 
 use App\Controllers\Patient;
 
-class Positive extends State {
+class Positive extends PatientState {
     private static $instance;
 
     private function __construct() {
@@ -19,7 +19,7 @@ class Positive extends State {
     }
 
     public function nextState($patient) {
-        //TODO
+        $patient->transitionTo(Inactive::getInstance());
     }
 
     public function toString() {

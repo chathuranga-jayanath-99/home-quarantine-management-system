@@ -5,7 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\ChildPatientModel;
 
-use App\statePattern\State;
+use App\statePattern\PatientState;
 use App\statePattern\Pending;
 use App\statePattern\Inactive;
 use App\statePattern\Contact;
@@ -745,7 +745,7 @@ class ChildPatient extends Patient {
             $this->phi_range   = $childObj->phi_range;
             $this->phi_id      = $childObj->phi_id;
             $this->doctor_id   = $childObj->doctor_id;
-            parent::transitionTo(State::objFromName($childObj->state));
+            parent::transitionTo(PatientState::objFromName($childObj->state));
         }
     }
 

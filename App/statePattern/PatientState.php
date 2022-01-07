@@ -4,7 +4,7 @@ namespace App\statePattern;
 
 use App\Controllers\Patient;
 
-abstract class State {
+abstract class PatientState {
     public abstract function nextState($patient);
     public abstract function toString();
 
