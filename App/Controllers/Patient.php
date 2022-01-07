@@ -58,7 +58,7 @@ abstract class Patient extends \Core\Controller {
             $this->state->nextState($this);
         } else if ($state_str === 'Pending' || $state_str === 'Inactive') {
             $this->setActive();
-            $this->state->nextState($this);
+            $this->setPositive($this);
         } else {
             echo "Invalid operation: Changing state from ".$state_str." to Positive is not allowed";
         }
@@ -71,8 +71,8 @@ abstract class Patient extends \Core\Controller {
     public function setInactive() {
         $state_str = $this->stateToString();
         if ($state_str === 'Contact Person') {
-            $this->setActive();
-            $this->state->nextState($this);
+            $this->setPositive();
+            $this->setInactive($this);
         } else if ($state_str === 'Positive') {
             $this->state->nextState($this);
         } else {
