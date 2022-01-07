@@ -54,13 +54,14 @@
             </tr>
             </tbody>
         </table>
+    <?php if (($page !== 'contact-logged')) { ?>
         <div>
         <a href="<?php echo URLROOT; ?>">Main Page</a>
         </div>
+    <?php } ?>
     </div>
     <div class="text-center mt-5 text-muted">
 		Copyright &copy; Code Devours 
 	</div>
-    
 </body>
 </html>
