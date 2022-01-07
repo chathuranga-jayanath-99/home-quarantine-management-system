@@ -33,25 +33,25 @@
                                     ?>
                                     <div class="pb-3"><h6 class="text-left h6 ">Current state: <?php echo $state ?> </h6></div>
                                     <div class="pb-2">
-                                    <input class="form-check-input" type="radio" name="act" id="positive" value="positive" <?php if ($state === 'Positive' || $state === 'Dead') {echo 'disabled';}?> >
+                                    <input class="form-check-input" type="radio" name="act" id="positive" value="positive" <?php if ($state === 'Positive' || $state === 'Dead') {echo 'disabled';}?> required>
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="active">Positive</label>
                                     </span>
                                     </div>
                                     <div class="pb-2">
-                                    <input class="form-check-input" type="radio" name="act" id="contact" value="contact" <?php if ($state === 'Contact Person' || $state === 'Dead') {echo 'disabled';}?> >
+                                    <input class="form-check-input" type="radio" name="act" id="contact" value="contact" <?php if ($state === 'Contact Person' || $state === 'Dead' || $state === 'Positive') {echo 'disabled';}?> required>
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="contact">Contact Person</label>
                                     </span>
                                     </div>
                                     <div class="pb-2">
-                                    <input class="form-check-input" type="radio" name="act" id="inactive" value="inactive" <?php if ($state === 'Inactive' || $state === 'Dead') {echo 'disabled';}?> >
+                                    <input class="form-check-input" type="radio" name="act" id="inactive" value="inactive" <?php if ($state === 'Inactive' || $state === 'Dead' || $state === 'Pending') {echo 'disabled';}?> required>
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="inactive">Inactive</label>
                                     </span>
                                     </div>
                                     <div class="pb-2">
-                                    <input class="form-check-input" type="radio" name="act" id="dead" value="dead" <?php if ($state === 'Dead') {echo 'disabled';}?> >
+                                    <input class="form-check-input" type="radio" name="act" id="dead" value="dead" <?php if ($state === 'Dead') {echo 'disabled';}?> required>
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="inactive">Dead</label>
                                     </span>

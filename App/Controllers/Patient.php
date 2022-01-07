@@ -65,12 +65,7 @@ abstract class Patient extends \Core\Controller {
     }
 
     public function setContact() {
-        $state_str = $this->stateToString();
-        if ($state_str === 'Pending' || $state_str === 'Inactive') {
-            $this->state->nextState($this);
-        } else {
-            echo "Invalid operation: Changing state from ".$state_str." to Contact Person is not allowed";
-        }
+        $this->setActive();
     }
 
     public function setInactive() {

@@ -33,7 +33,7 @@
                         <?php 
                         $cnt = 0;
                         foreach ($childrenData as $childData) {
-                            if ($childData->state === 'inactive') {
+                            if ($childData->state === 'inactive' || $childData->state === 'pending') {
                                 ?>
                                 <div>
                                     <input class="form-check-input" type="radio" name="email" value="<?php echo $childData->email ?>">
