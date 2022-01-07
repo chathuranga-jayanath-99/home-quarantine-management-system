@@ -42,7 +42,7 @@
                         <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fa fa-envelope fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="email" value="<?php echo $data['email']?>" placeholder="Email" required>
+                                <input class="form-control" type="email" name="email" value="<?php echo $data['email']?>" placeholder="Email" required>
                                 <span style="color:red;"><?php echo $data['email_err']?></span>
                             </div>
                         </div>
@@ -83,12 +83,12 @@
                         </div>
                         <div>
                             <div>
-                                <input class="form-check-input" type="radio" name="gender" id="male" value="male" checked>
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="male" required>
                                 <i class="fa fa-male fa-lg fa-fw"></i>
                                 <label class="form-check-label" for="male">Male</label>
                             </div>
                             <div>
-                                <input class="form-check-input" type="radio" name="gender" value="female" id="female">
+                                <input class="form-check-input" type="radio" name="gender" value="female" id="female" required>
                                 <i class="fa fa-female fa-lg fa-fw"></i>
                                 <label class="form-check-label" for="female">Female</label>
                             </div>
