@@ -55,7 +55,7 @@
         </tr>
         <tr>
             <td>Chills</td>
-            <td><?php echo $record['chils']; ?></td>
+            <td><?php echo $record['chills']; ?></td>
         </tr>
         <tr>
             <td>Muscle Ache</td>
@@ -74,8 +74,8 @@
             <td><?php echo $record['abdominal_pain']; ?></td>
         </tr>
         <tr>
-            <td>Vomitting</td>
-            <td><?php echo $record['vomitting']; ?></td>
+            <td>Vomiting</td>
+            <td><?php echo $record['vomiting']; ?></td>
         </tr>
         <tr>
             <td>Diarrhea</td>
