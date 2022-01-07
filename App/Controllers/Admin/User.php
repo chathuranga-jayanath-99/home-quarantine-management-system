@@ -22,7 +22,7 @@ class User extends \Core\Controller
 
     public function indexAction()
     {
-        echo "Hello from index in Admin/Users";
+        View::render('Admins/index.php');
     }
 
     public function addNewAction()
@@ -37,16 +37,12 @@ class User extends \Core\Controller
                 'email' => htmlspecialchars(trim($_POST['email'])),
                 'password' => htmlspecialchars($_POST['password']),
                 'confirm_password' => htmlspecialchars($_POST['confirm_password']),
-                'name_err' => '',
-                'email_err' => '',
-                'password_err' => '',
-                'confirm_password_err' => ''
             ];
 
             if ($data['password'] == $data['confirm_password']){
                 // register user
                 if (AdminUserModel::register($data)){
-                    header('location:'.URLROOT.'/admin/user/login');
+                    // header('location:'.URLROOT.'/admin/user/login');
                 }
                 else{
                     //error occured

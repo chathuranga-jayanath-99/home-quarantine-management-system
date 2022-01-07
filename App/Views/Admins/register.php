@@ -4,14 +4,18 @@
     <h1>Add New Admin</h1>
     <form id="form" action="#" method="POST" class="mx-1 mx-md-4">
         <div class="form-outline">
-            <input type="text" id="name" placeholder="Enter Name" required>
+            <input type="text" id="name" name="name" placeholder="Enter Name" required>
             <span id="name_err" style="color: red"></span>
         </div>
         <div class="form-outline">
-            <input type="password" id="pass" placeholder="password" required>
+            <input type="text" id="email" name="email" placeholder="Enter email" required>
+            <span id="email_err" style="color: red"></span>
         </div>
         <div class="form-outline">
-            <input type="password" id="confirm_pass" placeholder="confirm password" required>
+            <input type="password" id="pass" name="password" placeholder="password" required>
+        </div>
+        <div class="form-outline">
+            <input type="password" id="confirm_pass" name="confirm_password" placeholder="confirm password" required>
             <span id="pass_err" style="color: red"></span>
         </div>
         
