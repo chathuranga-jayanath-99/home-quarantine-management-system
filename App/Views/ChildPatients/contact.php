@@ -23,7 +23,7 @@
 ?>
     <section>
     <div class="text-center">
-        <iframe class="responsive-iframe" src="<?php echo URLROOT; ?>/home/contact" style="width: 80vw; height: 100vh"></iframe>
+        <iframe class="responsive-iframe" src="<?php echo URLROOT; ?>/home/contact" style="width: 80vw; height: 100vh;"></iframe>
     </div>
     </section>
 </body>

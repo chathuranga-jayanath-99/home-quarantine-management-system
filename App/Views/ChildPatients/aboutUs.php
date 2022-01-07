@@ -21,9 +21,9 @@
     $subPage = '';
     include_once 'navbar.php'; 
 ?>
-    <section>
+    <section style="background-color: #eee;">
     <div class="text-center">
-        <iframe class="responsive-iframe" src="<?php echo URLROOT; ?>/home/about?logged=yes" style="width: 100vw; height: 100vh"></iframe>
+        <iframe class="responsive-iframe" src="<?php echo URLROOT; ?>/home/about?logged=yes" style="width: 95vw; height: 90vh;"></iframe>
     </div>
     </section>
 </body>
