@@ -5,12 +5,12 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\ChildPatientModel;
 
-use App\statePattern\PatientState;
-use App\statePattern\Pending;
-use App\statePattern\Inactive;
-use App\statePattern\Contact;
-use App\statePattern\Positive;
-use App\statePattern\Dead;
+use App\PatientStatePattern\PatientState;
+use App\PatientStatePattern\Pending;
+use App\PatientStatePattern\Inactive;
+use App\PatientStatePattern\Contact;
+use App\PatientStatePattern\Positive;
+use App\PatientStatePattern\Dead;
 
 class ChildPatient extends Patient {
     private $id;

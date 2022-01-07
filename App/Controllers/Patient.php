@@ -5,7 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\Post;
 
-use App\statePattern\PatientState;
+use App\PatientStatePattern\PatientState;
 
 abstract class Patient extends \Core\Controller {
     protected $state;

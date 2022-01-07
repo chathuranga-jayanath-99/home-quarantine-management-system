@@ -1,6 +1,6 @@
 <?php
 
-namespace App\statePattern;
+namespace App\PatientStatePattern;
 
 use App\Controllers\Patient;
 
@@ -21,7 +21,7 @@ abstract class PatientState {
     }
 
     public static function objFromName($stateName) {
-        $stateName = 'App\statePattern\\'.ucfirst($stateName);
+        $stateName = 'App\PatientStatePattern\\'.ucfirst($stateName);
         if (class_exists($stateName)) {
             return $stateName::getInstance();
         } else {

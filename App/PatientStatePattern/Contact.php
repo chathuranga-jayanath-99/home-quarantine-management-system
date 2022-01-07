@@ -1,10 +1,10 @@
 <?php
 
-namespace App\statePattern;
+namespace App\PatientStatePattern;
 
 use App\Controllers\Patient;
 
-class Pending extends PatientState {
+class Contact extends PatientState {
     private static $instance;
 
     private function __construct() {
@@ -13,17 +13,17 @@ class Pending extends PatientState {
 
     public static function getInstance() {
         if (!isset(static::$instance)) {
-            static::$instance = new Pending();
+            static::$instance = new Contact();
         }
         return static::$instance;
     }
 
     public function nextState($patient) {
-        $patient->transitionTo(Contact::getInstance());
+        $patient->transitionTo(Positive::getInstance());
     }
 
     public function toString() {
-        return "Pending";
+        return "Contact Person";
     }
 
 }

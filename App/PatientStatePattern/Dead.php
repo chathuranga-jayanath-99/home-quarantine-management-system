@@ -1,10 +1,10 @@
 <?php
 
-namespace App\statePattern;
+namespace App\PatientStatePattern;
 
 use App\Controllers\Patient;
 
-class Inactive extends PatientState {
+class Dead extends PatientState {
     private static $instance;
 
     private function __construct() {
@@ -13,17 +13,17 @@ class Inactive extends PatientState {
 
     public static function getInstance() {
         if (!isset(static::$instance)) {
-            static::$instance = new Inactive();
+            static::$instance = new Dead();
         }
         return static::$instance;
     }
 
     public function nextState($patient) {
-        $patient->transitionTo(Contact::getInstance());
+        echo "Invalid operation: Changing state from Dead is not allowed";
     }
 
     public function toString() {
-        return "Inactive";
+        return "Dead";
     }
 
 }
