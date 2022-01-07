@@ -390,54 +390,60 @@ class ChildPatient extends Patient {
                     $vomiting       = 0;
                     $diarrhea       = 0;
                     $other          = htmlspecialchars(trim($_POST['other']));
-                    $level = 0;
+                    $checked_count  = 0;
+                    $level          = 'normal';
                     if ($_POST['fever'] === 'yes') {
                         $fever = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['cough'] === 'yes') {
                         $cough = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['sore_throat'] === 'yes') {
                         $sore_throat = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['short_breath'] === 'yes') {
                         $short_breath = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['runny_nose'] === 'yes') {
                         $runny_nose = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['chills'] === 'yes') {
                         $chills = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['muscle_ache'] === 'yes') {
                         $muscle_ache = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['headache'] === 'yes') {
                         $headache = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['fatigue'] === 'yes') {
                         $fatigue = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['abdominal_pain'] === 'yes') {
                         $abdominal_pain = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['vomiting'] === 'yes') {
                         $vomiting = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['diarrhea'] === 'yes') {
                         $diarrhea = 1;
-                        $level += 1;
+                        $checked_count += 1;
+                    }
+                    if ($checked_count > 7) {
+                        $level = 'critical';
+                    } else if ($checked_count > 4) {
+                        $level = 'serious';
                     }
                     $symptoms = [
                         "patient_id"     => $this->id,
@@ -461,7 +467,7 @@ class ChildPatient extends Patient {
                         "diarrhea"       => $diarrhea,
                         "other"          => $other,
                         "level"          => $level,
-                        "checked_count"  => 0
+                        "checked_count"  => $checked_count
                     ];
                     if (ChildPatientModel::recordSymptoms($symptoms)) {
                         View::render('ChildPatients/recordSuccess.php', $symptoms);
