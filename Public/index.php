@@ -13,7 +13,6 @@ require '../Core/Database.php';
 require '../App/helpers/session_helper.php';
 
 // Require the controller classes
-
 require '../App/Controllers/Doctor.php';
 require '../App/Controllers/Patient.php';
 require '../App/Controllers/ChildPatient.php';
@@ -38,7 +37,7 @@ require '../App/Models/PatientModel.php';
 require '../App/Models/ChildPatientModel.php';
 require '../App/Models/PHIModel.php';
 require '../App/Models/AdultPatientModel.php';
-
+require '../App/Models/AdminUserModel.php';
 
 $router = new Core\Router();
 
