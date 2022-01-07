@@ -700,7 +700,21 @@ class ChildPatient extends Patient {
     }
 
     public function contactAction() {
-        View::render('ChildPatients/contact.php', []);
+        if ($this->isLoggedIn()){
+            View::render('ChildPatients/contact.php', []);
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function aboutUsAction() {
+        if ($this->isLoggedIn()){
+            View::render('ChildPatients/aboutUs.php', []);
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
     }
 
     protected function activeHelper($patient) {

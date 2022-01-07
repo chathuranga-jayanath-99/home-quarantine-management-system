@@ -38,7 +38,15 @@ class Home extends \Core\Controller
     }
 
     public function aboutAction() {
-        View::render('Home/about.php', []);
+        if (isset($_GET['logged'])) {
+            if ($_GET['logged'] === 'yes') {
+                View::render('Home/about.php', ['page' => 'about-logged']);
+            } else {
+                View::render('Home/about.php', ['page' => '']);
+            }
+        }else {
+            View::render('Home/about.php', ['page' => '']);
+        }
     }
 
     public function contactAction(){

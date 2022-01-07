@@ -19,7 +19,8 @@
       <h1 class="text-center h1 fw-bold ">Code Devours</h1>
         <div class="card text-black mt-5 p-3" style="border-radius: 25px;">
           <div class="card-body p-md-5">
-            <div class="row justify-content-center">      
+            <div class="row justify-content-center">
+              <h1 class="text-center h2 fw-bold mb-2">About Us</h1>
                 <div class="card-group">
                     <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
                         <img class="card-img-top p-2" src="<?php echo URLROOT ?>/image/show?img=shilpa.jpg" alt="Shilpa">
@@ -50,6 +51,13 @@
                         </div>
                     </div>
                 </div>
+                <?php if (($page !== 'about-logged')) { ?>
+                <div class="text-center">
+                  <div>
+                      <a href="<?php echo URLROOT; ?>"><button class="btn btn-warning">Main Page</button></a>
+                  </div>
+                </div>
+                <?php } ?>
             </div>
           </div>
           

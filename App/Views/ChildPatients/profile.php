@@ -85,8 +85,8 @@
                 </div>
                 </div>
                 <div class="text-center mt-5 text-muted pt-auto">
-				    Copyright &copy; Code Devours 
-			    </div>
+                    <a href="<?php echo URLROOT?>/child-patient/about-us" class="text-muted" style="text-decoration: none;">Copyright &copy; Code Devours</a>
+                </div>
                 </div>
             </div>
         </div>
