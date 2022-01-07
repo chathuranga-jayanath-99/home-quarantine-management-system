@@ -643,6 +643,22 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function editMedHistoryAction() {
+        if ($this->isLoggedIn()){
+            $this->initializeFromSession();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                //TODO
+                View::render('ChildPatients/editMedHistorySuccess.php', []);
+            } else {
+                //TODO
+                View::render('ChildPatients/editMedHistory.php', []);
+            }
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
     public function profileAction() {
         if ($this->isLoggedIn()){
             $this->initializeFromSession();
@@ -677,6 +693,24 @@ class ChildPatient extends Patient {
                 ];
                 View::render('ChildPatients/editProfile.php', ['data' => $data]);
             }
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function contactAction() {
+        if ($this->isLoggedIn()){
+            View::render('ChildPatients/contact.php', []);
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function aboutUsAction() {
+        if ($this->isLoggedIn()){
+            View::render('ChildPatients/aboutUs.php', []);
         }
         else {
             View::render('ChildPatients/notLoggedIn.php', []);

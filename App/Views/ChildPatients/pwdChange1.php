@@ -18,6 +18,7 @@
 <body>
     <?php 
     $page = 'pwd_change';
+    $subPage = '';
     include_once 'navbar.php'; 
     ?>
     <section class="vh-100" style="background-color: #eee;">
@@ -54,7 +55,7 @@
             </div>
             </div>
             <div class="text-center mt-5 text-muted">
-				Copyright &copy; Code Devours 
+                <a href="<?php echo URLROOT?>/child-patient/about-us" class="text-muted" style="text-decoration: none;">Copyright &copy; Code Devours</a>
 			</div>
         </div>
         </div>

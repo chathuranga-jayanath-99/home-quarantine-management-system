@@ -17,10 +17,11 @@
 
 <body>
     <?php
-    $page = 'profile';
+    $page = 'update';
+    $subPage = 'profile';
     include_once 'navbar.php'; 
     ?>
-    <section class="vh-100" style="background-color: #eee;">    
+    <section class="vh-auto pt-5 pb-5" style="background-color: #eee;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-12 col-xl-10">
@@ -73,12 +74,12 @@
                         </div>
                         <div>
                             <div>
-                                <input type="radio" name="gender" id="male" value="male" <?php if($data['gender'] == 'male') {echo 'checked';} ?> >
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="male" <?php if($data['gender'] == 'male') {echo 'checked';} ?> >
                                 <i class="fa fa-male fa-lg fa-fw"></i>
                                 <label class="form-check-label" for="male">Male</label>
                             </div>
                             <div>
-                                <input type="radio" name="gender" value="female" id="female" <?php if($data['gender'] == 'female') {echo 'checked';} ?> >
+                                <input class="form-check-input" type="radio" name="gender" value="female" id="female" <?php if($data['gender'] == 'female') {echo 'checked';} ?> >
                                 <i class="fa fa-female fa-lg fa-fw"></i>
                                 <label class="form-check-label" for="female">Female</label>
                             </div>
@@ -95,7 +96,7 @@
                 </div>
             </div>
             <div class="text-center mt-5 text-muted">
-				Copyright &copy; Code Devours 
+                <a href="<?php echo URLROOT?>/child-patient/about-us" class="text-muted" style="text-decoration: none;">Copyright &copy; Code Devours</a>
 			</div>
         </div>
         </div>
