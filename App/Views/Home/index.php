@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-  	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -52,12 +52,6 @@
                   </a> 
                   
                   </div>
-                  <div class=" h5 text-center   col-md-10">
-                  <a href="<?php echo URLROOT; ?>/Home/contact">
-                  <button style="width:200px;" type="Submit" class="btn btn-success btn-lg">Emergency Contact</button>
-                  </a> 
-                  
-                  </div>
 
               </div>
               <div class="col-md-10 text-center col-lg-6 col-xl-5 order-2 order-lg-1">
@@ -67,8 +61,24 @@
               
               </div>
               </div>
+            <div class="row justify-content-center pt-5">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                <div class=" h5 text-center   col-md-10">
+                  <a href="<?php echo URLROOT; ?>/Home/contact">
+                  <button style="width: 220px;" type="Submit" class="btn btn-warning btn-lg">Emergency Contact</button>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                <div class=" h5 text-center   col-md-10">
+                  <a href="<?php echo URLROOT; ?>/Home/about">
+                  <button style="width:200px;" type="Submit" class="btn btn-info btn-lg">About Us</button>
+                  </a>
+                </div>
+              </div>
             </div>
-          </div>
+            </div>
+          <!--/div-->
           
         </div>
         <div class="text-center mt-5 text-muted">

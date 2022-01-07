@@ -2,10 +2,13 @@
 
 namespace App\Controllers\Admin;
 
+use App\Models\AdminUserModel;
+use \Core\View;
+
 class User extends \Core\Controller
 {   
     protected function before(){
-        return $this->isLoggedIn();
+        return true;
     }
 
     public function isLoggedIn(){
@@ -30,24 +33,36 @@ class User extends \Core\Controller
     public function registerAction(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = [
-                'name' => trim($_POST['name']),
-                'email' => trim($_POST['email']),
-                'password' => trim($_POST['password']),
-                'confirm_password' => trim($_POST['confirm_password']),
+                'name' => htmlspecialchars(trim($_POST['name'])),
+                'email' => htmlspecialchars(trim($_POST['email'])),
+                'password' => htmlspecialchars($_POST['password']),
+                'confirm_password' => htmlspecialchars($_POST['confirm_password']),
                 'name_err' => '',
                 'email_err' => '',
                 'password_err' => '',
                 'confirm_password_err' => ''
             ];
 
-            if(empty($data['name'])){
-                $data['name_err'] = 'Please enter name';
-            }
-
-            if(empty($data['email'])){
-                $data['email_err'] = 'Please enter email';
+            if ($data['password'] == $data['confirm_password']){
+                // register user
+                if (AdminUserModel::register($data)){
+                    header('location:'.URLROOT.'/admin/user/login');
+                }
+                else{
+                    //error occured
+                }
             }
             
+        }
+        else{
+            $data = [
+                'name' => '',
+                'email' => '',
+                'password' => '',
+                'confirm_password' => ''
+            ];
+
+            View::render('Admins/register.php', ['data' => $data]);
         }
     }
 }

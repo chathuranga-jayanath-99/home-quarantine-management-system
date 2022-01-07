@@ -1,10 +1,10 @@
 <?php
 
-namespace App\statePattern;
+namespace App\PatientStatePattern;
 
 use App\Controllers\Patient;
 
-class Inactive extends State {
+class Positive extends PatientState {
     private static $instance;
 
     private function __construct() {
@@ -13,17 +13,17 @@ class Inactive extends State {
 
     public static function getInstance() {
         if (!isset(static::$instance)) {
-            static::$instance = new Inactive();
+            static::$instance = new Positive();
         }
         return static::$instance;
     }
 
     public function nextState($patient) {
-        //TODO
+        $patient->transitionTo(Inactive::getInstance());
     }
 
     public function toString() {
-        return "Inactive";
+        return "Positive";
     }
 
 }

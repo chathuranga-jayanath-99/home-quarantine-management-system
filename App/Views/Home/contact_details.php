@@ -10,10 +10,10 @@
 </head>
 <body>
     <div class="container mt-3">
-        <div class="jumbotron">
+        <div class="jumbotron pt-5">
             <h2>Emergency Contact Details</h2>
         </div>
-        <p >Ambulance (Suwaseriya) : 1990 </p>            
+        <p class="h5 pt-3 pb-3"><span style="color:green;">Ambulance (Suwaseriya) :</span><span style="color:red;"> 1990 </span></p>
         <table class="table table-dark">
             <tbody>
             <tr>
@@ -54,13 +54,14 @@
             </tr>
             </tbody>
         </table>
+    <?php if (($page !== 'contact-logged')) { ?>
         <div>
         <a href="<?php echo URLROOT; ?>">Main Page</a>
         </div>
+    <?php } ?>
     </div>
     <div class="text-center mt-5 text-muted">
 		Copyright &copy; Code Devours 
 	</div>
-    
 </body>
 </html>

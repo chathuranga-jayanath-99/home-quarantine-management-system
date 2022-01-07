@@ -11,10 +11,11 @@
 <body>
     <?php
     $page = 'profile';
+    $subPage = '';
     include_once 'navbar.php';
     ?>
-    <section class="vh-auto" style="background-color: #eee;">
-        <div class="container h-100 pt-5">
+    <section class="vh-auto pt-5 pb-5" style="background-color: #eee;">
+        <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-lg-12 col-xl-10">
                 <div class="card text-black" style="border-radius: 25px;">
@@ -84,8 +85,8 @@
                 </div>
                 </div>
                 <div class="text-center mt-5 text-muted pt-auto">
-				    Copyright &copy; Code Devours 
-			    </div>
+                    <a href="<?php echo URLROOT?>/child-patient/about-us" class="text-muted" style="text-decoration: none;">Copyright &copy; Code Devours</a>
+                </div>
                 </div>
             </div>
         </div>

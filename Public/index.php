@@ -13,7 +13,6 @@ require '../Core/Database.php';
 require '../App/helpers/session_helper.php';
 
 // Require the controller classes
-
 require '../App/Controllers/Doctor.php';
 require '../App/Controllers/Patient.php';
 require '../App/Controllers/ChildPatient.php';
@@ -23,13 +22,13 @@ require '../App/Controllers/AdultPatient.php';
 require '../App/Controllers/Admin/User.php';
 require '../App/Controllers/Image.php';
 
-//Require state pattern classes
-require '../App/statePattern/State.php';
-require '../App/statePattern/Pending.php';
-require '../App/statePattern/Inactive.php';
-require '../App/statePattern/Contact.php';
-require '../App/statePattern/Positive.php';
-require '../App/statePattern/Dead.php';
+//Require patient state pattern classes
+require '../App/PatientStatePattern/PatientState.php';
+require '../App/PatientStatePattern/Pending.php';
+require '../App/PatientStatePattern/Inactive.php';
+require '../App/PatientStatePattern/Contact.php';
+require '../App/PatientStatePattern/Positive.php';
+require '../App/PatientStatePattern/Dead.php';
 
 // Require models
 require '../App/Models/MedicalOfficerModel.php';
@@ -38,7 +37,7 @@ require '../App/Models/PatientModel.php';
 require '../App/Models/ChildPatientModel.php';
 require '../App/Models/PHIModel.php';
 require '../App/Models/AdultPatientModel.php';
-
+require '../App/Models/AdminUserModel.php';
 
 $router = new Core\Router();
 

@@ -5,12 +5,12 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\ChildPatientModel;
 
-use App\statePattern\State;
-use App\statePattern\Pending;
-use App\statePattern\Inactive;
-use App\statePattern\Contact;
-use App\statePattern\Positive;
-use App\statePattern\Dead;
+use App\PatientStatePattern\PatientState;
+use App\PatientStatePattern\Pending;
+use App\PatientStatePattern\Inactive;
+use App\PatientStatePattern\Contact;
+use App\PatientStatePattern\Positive;
+use App\PatientStatePattern\Dead;
 
 class ChildPatient extends Patient {
     private $id;
@@ -390,54 +390,60 @@ class ChildPatient extends Patient {
                     $vomiting       = 0;
                     $diarrhea       = 0;
                     $other          = htmlspecialchars(trim($_POST['other']));
-                    $level = 0;
+                    $checked_count  = 0;
+                    $level          = 'normal';
                     if ($_POST['fever'] === 'yes') {
                         $fever = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['cough'] === 'yes') {
                         $cough = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['sore_throat'] === 'yes') {
                         $sore_throat = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['short_breath'] === 'yes') {
                         $short_breath = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['runny_nose'] === 'yes') {
                         $runny_nose = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['chills'] === 'yes') {
                         $chills = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['muscle_ache'] === 'yes') {
                         $muscle_ache = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['headache'] === 'yes') {
                         $headache = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['fatigue'] === 'yes') {
                         $fatigue = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['abdominal_pain'] === 'yes') {
                         $abdominal_pain = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['vomiting'] === 'yes') {
                         $vomiting = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['diarrhea'] === 'yes') {
                         $diarrhea = 1;
-                        $level += 1;
+                        $checked_count += 1;
+                    }
+                    if ($checked_count > 7) {
+                        $level = 'critical';
+                    } else if ($checked_count > 4) {
+                        $level = 'serious';
                     }
                     $symptoms = [
                         "patient_id"     => $this->id,
@@ -461,7 +467,7 @@ class ChildPatient extends Patient {
                         "diarrhea"       => $diarrhea,
                         "other"          => $other,
                         "level"          => $level,
-                        "checked_count"  => 0
+                        "checked_count"  => $checked_count
                     ];
                     if (ChildPatientModel::recordSymptoms($symptoms)) {
                         View::render('ChildPatients/recordSuccess.php', $symptoms);
@@ -643,6 +649,22 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function editMedHistoryAction() {
+        if ($this->isLoggedIn()){
+            $this->initializeFromSession();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                //TODO
+                View::render('ChildPatients/editMedHistorySuccess.php', []);
+            } else {
+                //TODO
+                View::render('ChildPatients/editMedHistory.php', []);
+            }
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
     public function profileAction() {
         if ($this->isLoggedIn()){
             $this->initializeFromSession();
@@ -683,6 +705,24 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function contactAction() {
+        if ($this->isLoggedIn()){
+            View::render('ChildPatients/contact.php', []);
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function aboutUsAction() {
+        if ($this->isLoggedIn()){
+            View::render('ChildPatients/aboutUs.php', []);
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
     protected function activeHelper($patient) {
         View::render('ChildPatients/active.php', ['childObj' => $patient]);
     }
@@ -705,7 +745,7 @@ class ChildPatient extends Patient {
             $this->phi_range   = $childObj->phi_range;
             $this->phi_id      = $childObj->phi_id;
             $this->doctor_id   = $childObj->doctor_id;
-            parent::transitionTo(State::objFromName($childObj->state));
+            parent::transitionTo(PatientState::objFromName($childObj->state));
         }
     }
 

@@ -33,7 +33,7 @@
                         <?php 
                         $cnt = 0;
                         foreach ($childrenData as $childData) {
-                            if ($childData->state === 'inactive') {
+                            if ($childData->state === 'inactive' || $childData->state === 'pending') {
                                 ?>
                                 <div>
                                     <input class="form-check-input" type="radio" name="email" value="<?php echo $childData->email ?>">
@@ -111,7 +111,7 @@
                 </div>
             </div>
             <div class="text-center mt-5 text-muted">
-				Copyright &copy; Code Devours 
+                <a href="<?php echo URLROOT?>/child-patient/about-us" class="text-muted" style="text-decoration: none;">Copyright &copy; Code Devours</a>
 			</div>
         </div>
         </div>
