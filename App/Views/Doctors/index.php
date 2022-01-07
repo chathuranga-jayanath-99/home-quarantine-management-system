@@ -1,4 +1,4 @@
-<?php include(APPROOT.'\App\Views\Includes\header.php'); ?>
+<?php include(APPROOT.'/App/Views/Includes/header.php'); ?>
 <body>
 <script>
     // document.getElementById("search_form").addEventListener("onsubmit", event.preventDefault());
