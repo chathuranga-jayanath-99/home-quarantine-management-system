@@ -2,7 +2,7 @@
 
 namespace App\RecordStatePattern;
 
-class Unfilled extends RecordState {
+class NotFilled extends RecordState {
     private static $instance;
 
     private function __construct() {
@@ -11,7 +11,7 @@ class Unfilled extends RecordState {
 
     public static function getInstance() {
         if (!isset(static::$instance)) {
-            static::$instance = new Unfilled();
+            static::$instance = new NotFilled();
         }
         return static::$instance;
     }
@@ -21,7 +21,7 @@ class Unfilled extends RecordState {
     }
 
     public function toString() {
-        return "Unfilled";
+        return "Not-Filled";
     }
 
 }
