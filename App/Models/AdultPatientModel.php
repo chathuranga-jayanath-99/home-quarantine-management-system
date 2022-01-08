@@ -4,7 +4,7 @@ namespace App\Models;
 
 use PDO;
 
-class AdultPatientModel extends \Core\Model{
+class AdultPatientModel extends PatientModel{
 
     public static function register($data) {
         $db = static::getDB();
@@ -145,5 +145,32 @@ class AdultPatientModel extends \Core\Model{
             return true;
         }
         return false;
+    }
+
+    public function receive($msg){
+        // write msg to db 
+        if (isset($_SESSION['phi_id'])){
+            $db = static::getDB();
+
+            $data = [
+                'sender_id' => $_SESSION['phi_id'],
+                'sender_type' => 'phi',
+            ];
+
+            $sql = 'INSERT INTO tbl_msg 
+            (content, sender_id, sender_type, receiver_id, receiver_type, msg_read)
+            values
+            (:content, :sender_id, :sender_type, :receiver_id, :receiver_type, 0)';
+            
+            $stmt = $db->prepare($sql);
+            $res = $stmt->execute([
+                'content' => $msg,
+                'sender_id' => $data['sender_id'],
+                'sender_type' => $data['sender_type'],
+                'receiver_id' => $this->id,
+                'receiver_type' => 'adult_patient'
+            ]);
+
+        }
     }
 }

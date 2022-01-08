@@ -30,6 +30,10 @@ require '../App/statePattern/Contact.php';
 require '../App/statePattern/Positive.php';
 require '../App/statePattern/Dead.php';
 
+require '../App/Models/User.php';
+require '../App/Models/ChatMediator.php';
+require '../App/Models/ChatMediatorImpl.php';
+
 // Require models
 require '../App/Models/MedicalOfficerModel.php';
 require '../App/Models/DoctorModel.php';

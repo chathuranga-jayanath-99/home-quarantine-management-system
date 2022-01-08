@@ -3,6 +3,9 @@ namespace App\Controllers;
 
 use \Core\View ;
 use App\Models\PHIModel;
+use App\Models\ChatMediatorImpl;
+use App\Models\ChildPatientModel;
+use App\Models\AdultPatientModel;
 
 class PHI extends \Core\Controller{
 
@@ -254,5 +257,30 @@ class PHI extends \Core\Controller{
         }
 
         
+    }
+
+    public function sendMsgToMyPatientsAction(){
+        // send-msg-to-my-patients
+        $msg = $_REQUEST['msg'];
+
+        $myPatients = PHIModel::getPatientsOfPHI($_SESSION['phi_id']);
+
+        $mediator = new ChatMediatorImpl;
+        
+        $phi = new PHIModel($mediator, $_SESSION['phi_name']);
+
+        foreach ($myPatients['adult'] as $adultPatient){
+            $patient = new AdultPatientModel($adultPatient->id, $mediator, $adultPatient->name);
+
+            $mediator->addUser($patient);
+        }
+
+        foreach ($myPatients['child'] as $childPatient){
+            $patient = new ChildPatientModel($childPatient->id, $mediator, $childPatient->name);
+
+            $mediator->addUser($patient);
+        }
+
+        $mediator->sendMessage($msg, $phi);
     }
 }

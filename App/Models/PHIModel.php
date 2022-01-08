@@ -4,7 +4,7 @@ namespace App\Models;
 
 use PDO;
 
-class PHIModel extends \Core\Model{
+class PHIModel extends User{
     protected $mediator;
     protected $name;
 
@@ -15,6 +15,10 @@ class PHIModel extends \Core\Model{
 
     public function send($msg){
         $this->mediator->sendMessage($msg);
+    }
+
+    public function receive($msg){
+        // no need of this.
     }
 
     public static function register($data){
@@ -83,4 +87,24 @@ class PHIModel extends \Core\Model{
 
     }
 
+    public static function getPatientsOfPHI($phiId){
+        $db = static::getDB();
+
+        $sql1 = 'SELECT ap.id, ap.name
+        FROM tbl_adult_patient ap WHERE ap.phi_id=:phiId';
+        $stmt1 = $db->prepare($sql1);
+        $stmt1->execute(['phiId'=>$phiId]);
+        $res1 = $stmt1->fetchAll(PDO::FETCH_OBJ);
+
+        $sql2 = 'SELECT cp.id, cp.name
+        FROM tbl_child_patient cp WHERE cp.phi_id=:phiId';
+        $stmt2 = $db->prepare($sql2);
+        $stmt2->execute(['phiId'=>$phiId]);
+        $res2 = $stmt2->fetchAll(PDO::FETCH_OBJ);
+
+        $res = ['adult' => $res1, 'child' => $res2];
+
+        return $res;
+
+    }
 }
