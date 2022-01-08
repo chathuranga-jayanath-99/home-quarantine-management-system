@@ -731,6 +731,76 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function viewRecordAction() {
+        if ($this->isLoggedIn()){
+            if (isset($_GET['recordID'])) {
+                $record_id = $_GET['recordID'];
+                if (is_numeric($record_id)) {
+                    $record = ChildPatientModel::getRecord($_SESSION['child_id'], $record_id);
+                    if ($record) {
+                        $symptoms = new Record();
+                        $symptoms->initialize($record);
+                        $record = null;
+                        View::render('ChildPatients/symptomRecordView.php', ['symptoms' => $symptoms]);
+                    }
+                } else {
+                    echo "Not Found";
+                }
+            } else {
+                echo "Not Found";
+            }
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function recordsAction() {
+        if ($this->isLoggedIn()){
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if (isset($_POST['record_cnt'])) {
+                    $rec_cnt = $_POST['record_cnt'];
+                    if (is_numeric($rec_cnt)) {
+                        $records = ChildPatientModel::getRecordsCnt($_SESSION['child_id'], $rec_cnt);
+                        if ($records) {
+                            $data = [
+                                'records'  => $records,
+                                'rec_cnt'  => $rec_cnt,
+                                'has_more' => true
+                            ];
+                            if (count($records) < $rec_cnt) {
+                                $data['has_more'] = false;
+                            }
+                            View::render('ChildPatients/recordsAllView.php', $data);
+                        }
+                    } else {
+                        echo "Not Found";
+                    }
+                } else {
+                    echo "Not Found";
+                }
+            } else {
+                $records = ChildPatientModel::getRecordsCnt($_SESSION['child_id'], 10);
+                if ($records) {
+                    $data = [
+                        'records'  => $records,
+                        'rec_cnt'  => 10,
+                        'has_more' => true
+                    ];
+                    if (count($records) < 10) {
+                        $data['has_more'] = false;
+                    }
+                    View::render('ChildPatients/recordsAllView.php', $data);
+                } else {
+                    echo 'Not found';
+                }
+            }
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
     protected function activeHelper($patient) {
         View::render('ChildPatients/active.php', ['childObj' => $patient]);
     }
