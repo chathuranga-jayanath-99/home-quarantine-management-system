@@ -381,9 +381,30 @@ class Adultpatient extends Patient{
             }
 
         }
+     }
+
+     public function markpositiveHelper(){
+        if(parent::checkPHISession()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->initialize($_POST['nic'], $_POST['email']);
+                $state = 'Positive' ;
+                $state = 'set'.$state;
+                if (is_callable([$this, $state])) {
+                    $this->$state();
+                    $rows = AdultPatientModel::changeState($this->email, $this->NIC, 'positive');
+                    if($rows>0) {
+                        View::render('AdultPatients/accSuccess.php', ['childObj' => $this]);
+                    } else {
+                        echo 'Failed';
+                    }
+                } else {
+                    echo 'Failed';
+                }
+            }
+            }
+        }
 
 
-    }
 
     public function recordAction() {
         if ($this->isLoggedIn()) {
