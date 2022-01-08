@@ -158,4 +158,25 @@ class PHIModel extends User{
         return $res;
 
     }
+
+
+    public static function getMedicalHistoryId($patientId, $patientType){
+        $db = static::getDB();
+
+        // if ($patientType == 'adult'){
+        //     $sql = 'SELECT medical_history_id FROM tbl_adult_patinet WHERE id=:id';
+
+        // }
+        // else{
+        //     $sql = 'SELECT medical_history_id FROM tbl_child_patinet WHERE id=:id';
+        // }
+        // $stmt = $db->prepare($sql);
+        // $stmt->execute(['id' => $patientId]);
+        // $medical_history_id = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // if ($medical_history_id) {
+        //     return $medical_history_id;
+        // }
+        // return false;
+    }
 }

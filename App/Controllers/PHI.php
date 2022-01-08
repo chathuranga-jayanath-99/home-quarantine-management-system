@@ -314,18 +314,18 @@ class PHI extends \Core\Controller{
     public function checkRecordAction(){
         if ($this->isLoggedIn()){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                $feedback = $_POST['feedback'];
-                $recordId = $_POST['id'];
+                // $feedback = $_POST['feedback'];
+                // $recordId = $_POST['id'];
                 
-                $res = DoctorModel::giveFeedback($recordId, $feedback);
-                if ($res){
-                    flash('check_success', 'You mark a record.', "alert alert-success");
-                    header('location: '.URLROOT.'/doctor/check-records');
-                }
-                else{
-                    flash('check_fail', 'Failed to mark record.', "alert alert-danger");
-                    header('location: '.URLROOT.'/doctor/check-records');
-                }
+                // $res = PHIModel::giveFeedback($recordId, $feedback);
+                // if ($res){
+                //     flash('check_success', 'You mark a record.', "alert alert-success");
+                //     header('location: '.URLROOT.'/doctor/check-records');
+                // }
+                // else{
+                //     flash('check_fail', 'Failed to mark record.', "alert alert-danger");
+                //     header('location: '.URLROOT.'/doctor/check-records');
+                // }
             }
             else{
                 if ($_GET['id']){
@@ -335,7 +335,7 @@ class PHI extends \Core\Controller{
                     
                     if ($record){
                         $medicalId = PHIModel::getMedicalHistoryId($record['patient_id'], $record['type']);
-                        View::render('Doctors/check-record.php', ['record' => $record, 'medical_history_id' => $medicalId]);
+                        View::render('PHI/check-record.php', ['record' => $record, 'medical_history_id' => $medicalId]);
                     }
                     else{
                         echo "Record is empty.";
@@ -344,6 +344,29 @@ class PHI extends \Core\Controller{
             }
             
         }
+    }
+
+    public function activeExistingAccAction(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            $type = $_POST['Patient_type'];
+            
+            if($type == 'child'){
+                header('location: '.URLROOT.'/child-patient/activate-existing-acc');
+            
+            }
+            else {
+                header('location: '.URLROOT.'/adult-patient/markdead');
+            }
+        }
+
+        else{
+
+            View::render('PHI/active_existing_acc_view.php');
+
+        }
+        
     }
     public function sendMsgToMyPatientsAction(){
         // send-msg-to-my-patients

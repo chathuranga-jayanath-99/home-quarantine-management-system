@@ -485,6 +485,37 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function activateExistingAccAction(){
+
+        if(parent::checkPHISession()) {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = [
+                    'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                    'nic_err' => ''
+                ];
+
+                if(parent::isValidNIC($data['NIC'])){
+                    $childrenData = ChildPatientModel::searchByGuardianID($data['NIC']);
+                    View::render('ChildPatients/register.php', ['childrenData' => $childrenData , 'nic' => $data['NIC']]);
+                    
+                                
+                }
+                else{
+                    $data['nic_err'] = 'Invalid NIC';
+                    View::render('ChildPatients/pre_search.php', ['data'=> $data]);
+                }
+            }
+            else {
+                $data = [
+                    'NIC' => '' ,
+                    'nic_err' => ''
+                ] ;
+                View::render('ChildPatients/pre_activate.php', ['data'=> $data]); 
+            }
+        }
+
+    }
+
     public function recordAction() {
         if ($this->isLoggedIn()) {
             $this->initializeFromSession();
