@@ -4,6 +4,12 @@ namespace App\Models;
 
 use PDO;
 
+use App\RecordStatePattern\Record;
+use App\RecordStatePattern\RecordState;
+use App\RecordStatePattern\NotFilled;
+use App\RecordStatePattern\Unchecked;
+use App\RecordStatePattern\Checked;
+
 class ChildPatientModel extends PatientModel {
 
     public static function register($data) {
@@ -143,6 +149,7 @@ class ChildPatientModel extends PatientModel {
         return false;
     }
 
+<<<<<<< HEAD
     public function receive($msg){
 
         // write msg to db 
@@ -171,4 +178,45 @@ class ChildPatientModel extends PatientModel {
         }
        
     }
+=======
+    public static function getRecord($patient_id, $record_id) {
+        $db = static::getDB();
+        $data = [
+            'patient_id' => $patient_id,
+            'record_id'  => $record_id,
+            'type'       => 'child'
+        ];
+        $sql = 'SELECT * FROM tbl_record WHERE
+                id=:record_id AND patient_id=:patient_id AND type=:type';
+        $stmt = $db->prepare($sql);
+        $stmt->execute($data);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
+    }
+
+    public static function getRecordsCnt($patient_id, $rec_cnt) {
+        $db = static::getDB();
+        $data = [
+            'patient_id' => $patient_id,
+            'rec_cnt'    => 2,
+        ];
+        $sql = 'SELECT id, datetime FROM tbl_record
+                WHERE patient_id=:patient_id
+                ORDER BY id DESC
+                LIMIT :rec_cnt;';
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":patient_id", $patient_id, PDO::PARAM_INT);
+        $stmt->bindValue(":rec_cnt", $rec_cnt, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
+    }
+
+>>>>>>> master
 }

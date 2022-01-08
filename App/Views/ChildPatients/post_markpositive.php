@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AppName</title>
+    <title>Mark Positive - Child Patient - Home Isolation System</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"-->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -28,7 +28,7 @@
                         <div>
                             <h6 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Please select the account that want to mark as positive</h6>
                         </div>
-                    <form action="<?php echo URLROOT?>/child-patient/active " method="POST">
+                    <form action="<?php echo URLROOT?>/child-patient/markpositiveHelper " method="POST">
                         <div>
                         <?php 
 

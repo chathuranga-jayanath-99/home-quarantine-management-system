@@ -24,9 +24,19 @@
           <div class="card-body p-md-5">
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                
+                <a href="<?php echo URLROOT?>/PHI/addpatient">ADD NEW ACCOUNT</a>
+                <br>
+                <a href="<?php echo URLROOT?>/PHI/markpositive">MARK POSITIVE</a>
+                <br>
+                <a href="<?php echo URLROOT?>/PHI/markdead">MARK DEATHS</a>
+                <br>
+                <a href="<?php echo URLROOT?>/PHI/searchPatient">SEARCH PATIENT</a>
+                <br>
+                <a href="<?php echo URLROOT?>/PHI/viewrecords">VIEW PATIENT RECORDS</a>
 
-                <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">ADD NEW ACCOUNT</h2>
-                <form action="<?php echo URLROOT?>/PHI/addpatient" method='POST'>
+                <!-- <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4"></h2> -->
+                <!-- <form action="<?php echo URLROOT?>/PHI/addpatient" method='POST'>
                   
                   <div class=" h6 text-center form-check col-md-10">
                       <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio"  name="Patient_type"  value="child" required>Child Account</label>
@@ -38,14 +48,14 @@
 
                   <div class="text-center mt-4 col-md-10" >
                       <button type="Submit" class="btn btn-primary ">Submit</button>
-                      <!-- <input type="submit" name="Submit" value="submit"> -->
+                      
                   </div>
                     
 
-                </form>
+                </form> -->
                 
 
-              </div>
+              <!-- </div>
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
               <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">MARK POSITIVE</h2>
@@ -61,16 +71,15 @@
 
                   <div class="text-center mt-4 col-md-10" >
                       <button type="Submit" class="btn btn-primary ">Submit</button>
-                      <!-- <input type="submit" name="Submit" value="submit"> -->
+                      <input type="submit" name="Submit" value="submit">
                   </div>
                     
 
                 </form>
 
-              <!-- <button type="Submit" class="btn btn-primary">Submit</button> -->
-              <!-- <div class="col-md-10 col-lg-6 col-xl-1 d-flex align-items-center order-1 order-lg-2"> -->
+              
              
-              </div>  <!-- -->
+              </div>   -->
               <div class="text-center h3 fw-bold mb-3 mx-1 mx-md-4 mt-5">
               <a href="<?php echo URLROOT;?>/PHI/logout">
               <button type="Submit" class="btn btn-danger">Log Out</button>

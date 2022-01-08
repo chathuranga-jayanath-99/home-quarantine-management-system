@@ -5,12 +5,18 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\ChildPatientModel;
 
-use App\statePattern\State;
-use App\statePattern\Pending;
-use App\statePattern\Inactive;
-use App\statePattern\Contact;
-use App\statePattern\Positive;
-use App\statePattern\Dead;
+use App\PatientStatePattern\PatientState;
+use App\PatientStatePattern\Pending;
+use App\PatientStatePattern\Inactive;
+use App\PatientStatePattern\Contact;
+use App\PatientStatePattern\Positive;
+use App\PatientStatePattern\Dead;
+
+use App\RecordStatePattern\Record;
+use App\RecordStatePattern\RecordState;
+use App\RecordStatePattern\NotFilled;
+use App\RecordStatePattern\Unchecked;
+use App\RecordStatePattern\Checked;
 
 class ChildPatient extends Patient {
     private $id;
@@ -332,6 +338,28 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function markpositiveHelper(){
+        if(parent::checkPHISession()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->initialize($_POST['nic'], $_POST['email']);
+                $state = 'Positive' ;
+                $state = 'set'.$state;
+                if (is_callable([$this, $state])) {
+                    $this->$state();
+                    $rows = ChildPatientModel::changeState($this->email, $this->guardian_id, 'positive');
+                    if($rows>0) {
+                        View::render('ChildPatients/accSuccess.php', ['childObj' => $this]);
+                    } else {
+                        echo 'Failed';
+                    }
+                } else {
+                    echo 'Failed';
+                }
+            }
+            }
+        }
+        
+
     public function markpositive(){
         if(parent::checkPHISession()) {
             if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -339,7 +367,6 @@ class ChildPatient extends Patient {
                     'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
                     'nic_err' => ''
                 ];
-
                 if(parent::isValidNIC($data['NIC'])){
                     $childrenData = ChildPatientModel::searchByGuardianID($data['NIC']);
                     $contact_children = array();
@@ -350,7 +377,6 @@ class ChildPatient extends Patient {
                     }
                     View::render('ChildPatients/post_markpositive.php', ['contact_children' => $contact_children , 'nic' => $data['NIC']]);
                     
-                                
                 }
                 else{
                     $data['nic_err'] = 'Invalid NIC';
@@ -367,9 +393,102 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function markdead(){
+
+        if(parent::checkPHISession()) {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = [
+                    'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                    'nic_err' => ''
+                ];
+
+                if(parent::isValidNIC($data['NIC'])){
+                    $childrenData = ChildPatientModel::searchByGuardianID($data['NIC']);
+                    $contact_children = array();
+                    View::render('ChildPatients/post_markdead.php', ['childrenData' => $childrenData , 'nic' => $data['NIC']]);
+                    
+                                
+                }
+                else{
+                    $data['nic_err'] = 'Invalid NIC';
+                    View::render('ChildPatients/pre_markdead.php', ['data'=> $data]);
+                }
+            }
+            else {
+                $data = [
+                    'NIC' => '' ,
+                    'nic_err' => ''
+                ] ;
+                View::render('ChildPatients/pre_markdead.php', ['data'=> $data]); 
+            }
+        }
+
+    }
+
+    public function markdeadHelper(){
+        if(parent::checkPHISession()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->initialize($_POST['nic'], $_POST['email']);
+                // if (is_callable([$this, $state])) {
+                //  $this->$state();
+                    parent::markDead();
+                    $rows = ChildPatientModel::changeState($this->email, $this->guardian_id, 'dead');
+                    if($rows>0) {
+                        View::render('ChildPatients/accSuccess.php', ['childObj' => $this]);
+                    } else {
+                        echo 'Failed';
+                    }
+                // } else {
+                //     echo 'Failed';
+                // }
+              }
+            }
+        }
+
+    public function searchAction(){
+        if(parent::checkPHISession()) {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = [
+                    'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                    'nic_err' => ''
+                ];
+
+                if(parent::isValidNIC($data['NIC'])){
+                    $childrenData = ChildPatientModel::searchByGuardianID($data['NIC']);
+                    View::render('ChildPatients/post_search.php', ['childrenData' => $childrenData , 'nic' => $data['NIC']]);
+                    
+                                
+                }
+                else{
+                    $data['nic_err'] = 'Invalid NIC';
+                    View::render('ChildPatients/pre_search.php', ['data'=> $data]);
+                }
+            }
+            else {
+                $data = [
+                    'NIC' => '' ,
+                    'nic_err' => ''
+                ] ;
+                View::render('ChildPatients/pre_search.php', ['data'=> $data]); 
+            }
+        }
+    }
+
+    public function searchHelper(){
+
+        if(parent::checkPHISession()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->initialize($_POST['nic'], $_POST['email']);
+                View::render('ChildPatients/accSuccess.php', ['childObj' => $this]);
+                   
+            }
+        }
+    }
+
     public function recordAction() {
         if ($this->isLoggedIn()) {
             $this->initializeFromSession();
+            $record = new Record();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $temperature = $_POST['temperature'];
                 if (is_numeric($temperature) || is_float($temperature)) {
@@ -390,54 +509,60 @@ class ChildPatient extends Patient {
                     $vomiting       = 0;
                     $diarrhea       = 0;
                     $other          = htmlspecialchars(trim($_POST['other']));
-                    $level = 0;
+                    $checked_count  = 0;
+                    $level          = 'normal';
                     if ($_POST['fever'] === 'yes') {
                         $fever = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['cough'] === 'yes') {
                         $cough = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['sore_throat'] === 'yes') {
                         $sore_throat = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['short_breath'] === 'yes') {
                         $short_breath = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['runny_nose'] === 'yes') {
                         $runny_nose = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['chills'] === 'yes') {
                         $chills = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['muscle_ache'] === 'yes') {
                         $muscle_ache = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['headache'] === 'yes') {
                         $headache = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['fatigue'] === 'yes') {
                         $fatigue = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['abdominal_pain'] === 'yes') {
                         $abdominal_pain = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['vomiting'] === 'yes') {
                         $vomiting = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['diarrhea'] === 'yes') {
                         $diarrhea = 1;
-                        $level += 1;
+                        $checked_count += 1;
+                    }
+                    if ($checked_count > 7) {
+                        $level = 'critical';
+                    } else if ($checked_count > 4) {
+                        $level = 'serious';
                     }
                     $symptoms = [
                         "patient_id"     => $this->id,
@@ -461,10 +586,11 @@ class ChildPatient extends Patient {
                         "diarrhea"       => $diarrhea,
                         "other"          => $other,
                         "level"          => $level,
-                        "checked_count"  => 0
+                        "checked_count"  => $checked_count
                     ];
                     if (ChildPatientModel::recordSymptoms($symptoms)) {
-                        View::render('ChildPatients/recordSuccess.php', $symptoms);
+                        $record->initialize($symptoms);
+                        View::render('ChildPatients/recordSuccess.php', ['symptoms' => $record]);
                     }
                 }
             } else {
@@ -717,6 +843,88 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function noRecordSelectedAction() {
+        if ($this->isLoggedIn()){
+            View::render('ChildPatients/recordNotSelected.php', []);
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function viewRecordAction() {
+        if ($this->isLoggedIn()){
+            if (isset($_GET['recordID'])) {
+                $record_id = $_GET['recordID'];
+                if (is_numeric($record_id)) {
+                    $record = ChildPatientModel::getRecord($_SESSION['child_id'], $record_id);
+                    if ($record) {
+                        $symptoms = new Record();
+                        $symptoms->initialize($record);
+                        View::render('ChildPatients/symptomRecordView.php', ['symptoms' => $symptoms]);
+                    }
+                } else {
+                    echo "Not Found";
+                }
+            } else {
+                echo "Not Found";
+            }
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function recordsHistoryAction() {
+        if ($this->isLoggedIn()){
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if (isset($_POST['record_cnt'])) {
+                    $rec_cnt = $_POST['record_cnt'];
+                    if (is_numeric($rec_cnt)) {
+                        $records = ChildPatientModel::getRecordsCnt($_SESSION['child_id'], $rec_cnt);
+                        if ($records) {
+                            $cnt = count($records);
+                            $data = [
+                                'records'  => $records,
+                                'rec_cnt'  => $rec_cnt,
+                                'has_more' => true,
+                                'cnt'      => $cnt
+                            ];
+                            if ($cnt < $rec_cnt) {
+                                $data['has_more'] = false;
+                            }
+                            View::render('ChildPatients/recordsAllView.php', $data);
+                        }
+                    } else {
+                        View::render('ChildPatients/noRecord.php', []);
+                    }
+                } else {
+                    View::render('ChildPatients/noRecord.php', []);
+                }
+            } else {
+                $records = ChildPatientModel::getRecordsCnt($_SESSION['child_id'], 10);
+                if ($records) {
+                    $cnt = count($records);
+                    $data = [
+                        'records'  => $records,
+                        'rec_cnt'  => 10,
+                        'has_more' => true,
+                        'cnt'      => $cnt
+                    ];
+                    if ($cnt < 10) {
+                        $data['has_more'] = false;
+                    }
+                    View::render('ChildPatients/recordsAllView.php', $data);
+                } else {
+                    View::render('ChildPatients/noRecord.php', []);
+                }
+            }
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
     protected function activeHelper($patient) {
         View::render('ChildPatients/active.php', ['childObj' => $patient]);
     }
@@ -739,7 +947,7 @@ class ChildPatient extends Patient {
             $this->phi_range   = $childObj->phi_range;
             $this->phi_id      = $childObj->phi_id;
             $this->doctor_id   = $childObj->doctor_id;
-            parent::transitionTo(State::objFromName($childObj->state));
+            parent::transitionTo(PatientState::objFromName($childObj->state));
         }
     }
 

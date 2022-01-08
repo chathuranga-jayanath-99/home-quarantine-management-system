@@ -1,10 +1,8 @@
 <?php
 
-namespace App\statePattern;
+namespace App\RecordStatePattern;
 
-use App\Controllers\Patient;
-
-class Inactive extends State {
+class NotFilled extends RecordState {
     private static $instance;
 
     private function __construct() {
@@ -13,17 +11,17 @@ class Inactive extends State {
 
     public static function getInstance() {
         if (!isset(static::$instance)) {
-            static::$instance = new Inactive();
+            static::$instance = new NotFilled();
         }
         return static::$instance;
     }
 
-    public function nextState($patient) {
-        //TODO
+    public function nextState($record) {
+        $record->transitionTo(Unchecked::getInstance());
     }
 
     public function toString() {
-        return "Inactive";
+        return "Not-Filled";
     }
 
 }

@@ -1,4 +1,4 @@
-<?php include(APPROOT.'\App\Views\Includes\header.php'); ?>
+<?php include(APPROOT.'/App/Views/Includes/header.php'); ?>
 
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
