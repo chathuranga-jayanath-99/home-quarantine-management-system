@@ -7,6 +7,11 @@ use App\Models\DoctorModel;
 
 class Doctor extends \Core\Controller{
 
+    protected function before()
+    {
+        return $this->isLoggedIn();
+    }
+
     public function registerAction()
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -110,7 +115,7 @@ class Doctor extends \Core\Controller{
         }
     }
 
-    public function loginAction()
+    public function login()
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = [

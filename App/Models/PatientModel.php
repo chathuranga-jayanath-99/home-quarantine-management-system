@@ -4,17 +4,19 @@ namespace App\Models;
 
 use PDO;
 
-abstract class PatientModel extends \Core\Model {
-    protected $mediator;
-    protected $name;
+abstract class PatientModel extends User {
+    protected $id;
 
-    public function __construct($chatMediator, $name){
-        $this->mediator = $chatMediator;
-        $this->name = $name;
+    public function __construct($id, $mediator, $name)
+    {
+        parent::__construct($mediator, $name);
+        $this->id = $id;
     }
 
     public function receive($msg){
         // write msg to db 
     }
-
+    public function send($msg){
+        // no need of this.
+    }
 }

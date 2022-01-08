@@ -3,19 +3,19 @@
 namespace App\Models;
 
 class ChatMediatorImpl implements ChatMediator{
-    private $patients;
+    private $users;
 
     public function __construct(){
-        $this->patients = array();
+        $this->users = array();
     }
 
-    public function addPatient($patient){
-        array_push($this->patients, $patient);
+    public function addUser($user){
+        array_push($this->users, $user);
     }
 
     public function sendMessage($msg, $officer){
-        foreach ($this->patients as $patient){
-            $patient->receive($msg);
+        foreach ($this->users as $user){
+            $user->receive($msg);
         }
     }
 }

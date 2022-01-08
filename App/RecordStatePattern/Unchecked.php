@@ -21,7 +21,7 @@ class Unchecked extends RecordState {
     }
 
     public function toString() {
-        return "Unhecked";
+        return "Unchecked";
     }
 
 }

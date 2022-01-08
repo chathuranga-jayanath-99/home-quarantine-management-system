@@ -76,7 +76,7 @@ class Record {
     }
     
     public function get_feedback() {
-        return $this->feedback;
+        return (string) $this->feedback;
     }
     
     public function get_temperature() {
