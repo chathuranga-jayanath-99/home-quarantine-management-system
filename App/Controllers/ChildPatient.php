@@ -12,6 +12,12 @@ use App\PatientStatePattern\Contact;
 use App\PatientStatePattern\Positive;
 use App\PatientStatePattern\Dead;
 
+use App\RecordStatePattern\Record;
+use App\RecordStatePattern\RecordState;
+use App\RecordStatePattern\NotFilled;
+use App\RecordStatePattern\Unchecked;
+use App\RecordStatePattern\Checked;
+
 class ChildPatient extends Patient {
     private $id;
     private $name;
@@ -474,6 +480,7 @@ class ChildPatient extends Patient {
     public function recordAction() {
         if ($this->isLoggedIn()) {
             $this->initializeFromSession();
+            $record = new Record();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $temperature = $_POST['temperature'];
                 if (is_numeric($temperature) || is_float($temperature)) {
@@ -574,7 +581,8 @@ class ChildPatient extends Patient {
                         "checked_count"  => $checked_count
                     ];
                     if (ChildPatientModel::recordSymptoms($symptoms)) {
-                        View::render('ChildPatients/recordSuccess.php', $symptoms);
+                        $record->initialize($symptoms);
+                        View::render('ChildPatients/recordSuccess.php', ['symptoms' => $record]);
                     }
                 }
             } else {

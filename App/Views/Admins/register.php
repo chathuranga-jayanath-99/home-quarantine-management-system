@@ -1,4 +1,4 @@
-<?php include(APPROOT.'\App\Views\Includes\header.php'); ?>
+<?php include(APPROOT.'/App/Views/Includes/header.php'); ?>
 
 <body>
     <h1>Add New Admin</h1>

@@ -27,7 +27,7 @@ class Record {
     private $state;
 
     public function __construct() {
-        $this->state = Unfilled::getInstance();
+        $this->state = NotFilled::getInstance();
     }
 
     public function initialize($record_data) {
@@ -197,7 +197,7 @@ class Record {
 
     public function fill() {
         $state_str = $this->stateToString();
-        if ($state_str == 'Unfilled') {
+        if ($state_str == 'Not-Filled') {
             $this->state->nextState($this);
         } else {
             echo "Invalid operation: Changing state from ".$state_str." to Unchecked is not allowed";
@@ -206,11 +206,11 @@ class Record {
 
     public function check() {
         $state_str = $this->stateToString();
-        if ($state_str == 'Unfilled') {
+        if ($state_str == 'Not-Filled') {
             $this->fill();
             $this->check();
         } else {
-            $this->check();
+            $this->state->nextState($this);
         }
     }
 

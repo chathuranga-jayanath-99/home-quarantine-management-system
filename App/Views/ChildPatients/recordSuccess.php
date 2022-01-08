@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AppName</title>
+    <title>Record Symptoms - Child Patient - Home Isolation System</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"-->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -36,9 +36,9 @@
                                 </div>
                                 <div class="col-auto">
                                     <?php
-                                    $temp_f = $temperature * 9 / 5 + 32;
+                                    $temp_f = $symptoms->get_temperature() * 9 / 5 + 32;
                                     $temp_f = round($temp_f, 2);
-                                    echo $temperature."&#176C (".$temp_f."&#176F)";
+                                    echo $symptoms->get_temperature()."&#176C (".$temp_f."&#176F)";
                                     ?>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                                             <td><div class="form-check-label">Fever</div></th>
                                             <td>
                                                 <?php
-                                                if($fever) {
+                                                if($symptoms->get_fever()) {
                                                 ?> 
                                                 <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
                                                 <?php
@@ -75,7 +75,7 @@
                                             <td><div class="form-check-label">Cough</div></th>
                                             <td>
                                             <?php
-                                                if($cough) {
+                                                if($symptoms->get_cough()) {
                                                 ?> 
                                                 <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
                                                 <?php
@@ -90,7 +90,7 @@
                                             <td><div class="form-check-label">Sore throat</div></th>
                                             <td>
                                             <?php
-                                                if($sore_throat) {
+                                                if($symptoms->get_sore_throat()) {
                                                 ?> 
                                                 <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
                                                 <?php
@@ -105,7 +105,7 @@
                                             <td><div class="form-check-label">Shortness of breath</div></th>
                                             <td>
                                             <?php
-                                                if($short_breath) {
+                                                if($symptoms->get_short_breath()) {
                                                 ?> 
                                                 <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
                                                 <?php
@@ -120,7 +120,7 @@
                                             <td><div class="form-check-label">Runny nose</div></th>
                                             <td>
                                             <?php
-                                                if($runny_nose) {
+                                                if($symptoms->get_runny_nose()) {
                                                 ?> 
                                                 <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
                                                 <?php
@@ -135,7 +135,7 @@
                                             <td><div class="form-check-label">Chills</div></th>
                                             <td>
                                             <?php
-                                                if($chills) {
+                                                if($symptoms->get_chills()) {
                                                 ?> 
                                                 <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
                                                 <?php
@@ -163,7 +163,7 @@
                                             <td><div class="form-check-label">Muscle-aches</div></th>
                                             <td>
                                             <?php
-                                                if($muscle_ache) {
+                                                if($symptoms->get_muscle_ache()) {
                                                 ?> 
                                                 <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
                                                 <?php
@@ -178,7 +178,7 @@
                                             <td><div class="form-check-label">Headache</div></th>
                                             <td>
                                             <?php
-                                                if($headache) {
+                                                if($symptoms->get_headache()) {
                                                 ?> 
                                                 <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
                                                 <?php
@@ -193,7 +193,7 @@
                                             <td><div class="form-check-label">Fatigue</div></th>
                                             <td>
                                             <?php
-                                                if($fatigue) {
+                                                if($symptoms->get_fatigue()) {
                                                 ?> 
                                                 <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
                                                 <?php
@@ -208,7 +208,7 @@
                                             <td><div class="form-check-label">Abdominal pain</div></th>
                                             <td>
                                             <?php
-                                                if($abdominal_pain) {
+                                                if($symptoms->get_abdominal_pain()) {
                                                 ?> 
                                                 <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
                                                 <?php
@@ -223,7 +223,7 @@
                                             <td><div class="form-check-label">Vomiting</div></th>
                                             <td>
                                             <?php
-                                                if($vomiting) {
+                                                if($symptoms->get_vomiting()) {
                                                 ?> 
                                                 <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
                                                 <?php
@@ -238,7 +238,7 @@
                                             <td><div class="form-check-label">Diarrhea</div></th>
                                             <td>
                                             <?php
-                                                if($diarrhea) {
+                                                if($symptoms->get_diarrhea()) {
                                                 ?> 
                                                 <i class="fa fa-check fa-lg me-3 fa-fw"></i> 
                                                 <?php
@@ -254,7 +254,7 @@
                         <div class="row justify-content-center">
                             <div class="mb-3">
                                 <label for="other" class="form-label"><i class="fa fa-puzzle-piece fa-lg me-3 fa-fw"></i>Other</label>
-                                <textarea class="form-control" id="other" name="other" rows="3" disabled><?php echo htmlspecialchars(trim($other)); ?></textarea>
+                                <textarea class="form-control" id="other" name="other" rows="3" disabled><?php echo htmlspecialchars(trim($symptoms->get_other())); ?></textarea>
                             </div>
                         </div>
                     </form>

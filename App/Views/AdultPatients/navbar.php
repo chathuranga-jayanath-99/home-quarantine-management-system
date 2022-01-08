@@ -1,34 +1,54 @@
-
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+<nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
+  <div class="container-fluid">
+  <a class="navbar-brand" href="#">
             <img src="https://www.w3schools.com/bootstrap5/img_avatar1.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill"> 
         </a>
-        <a class="navbar-brand" href="<?php echo URLROOT; ?>/adult-patient"><?php echo $_SESSION['adult_name']; ?></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mynavbar">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/record">Record Symptoms</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/medhistory">Medical History</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/profile">My Profile</a>
-                </li>
-            </ul>
-            <ul class="nav justify-content-end">
-                <li class="nav-item ">
-                    <a class="nav-link" href="<?php echo URLROOT;?>/adult-patient/logout">Logout</a>
-                </li>
-            </ul>
-            <!-- <form class="d-flex">
-                <input class="form-control me-2" type="text" placeholder="Search">
-                <button class="btn btn-primary" type="button">Search</button>
-            </form> -->
-        </div>
+    <a class="navbar-brand" href="<?php echo URLROOT; ?>/adult-patient">
+      <?php echo $_SESSION['adult_name']; ?>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/adult-patient"><button class="btn <?php if ($page === 'home') {echo 'btn-success';} ?>">Home</button></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/adult-patient/profile"><button class="btn <?php if ($page === 'profile') {echo 'btn-success';} ?>">Profile</button></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/record"><button class="btn <?php if ($page === 'record') {echo 'btn-success';} ?>">Record Symptoms</button></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/adult-patient/med-history"><button class="btn <?php if ($page === 'history') {echo 'btn-success';} ?>">Medical History</button></a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn <?php if ($page === 'update') {echo 'btn-success';} ?>">Update Account</button>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/adult-patient/edit-profile" <?php if ($subPage === 'profile') {echo 'style="color: green;"';} ?> >
+              Update profile
+            </a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/adult-patient/edit-med-history"  <?php if ($subPage === 'history') {echo 'style="color: green;"';} ?>>
+              Update Medical History
+            </a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/contact"><button class="btn <?php if ($page === 'contact') {echo 'btn-success';} ?>">Emergency Contact</button></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/password-change"><button class="btn <?php if ($page === 'pwd_change') {echo 'btn-success';} ?>">Change Password</button></a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/logout"><button class="btn btn-danger">Logout</button></a>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>
