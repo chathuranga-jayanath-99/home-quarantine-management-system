@@ -404,6 +404,101 @@ class Adultpatient extends Patient{
             }
         }
 
+    public function markdead(){
+
+            if(parent::checkPHISession()) {
+                if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $data = [
+                        'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                        'nic_err' => ''
+                    ];
+    
+                    if(parent::isValidNIC($data['NIC'])){
+                        $adultData = AdultPatientModel::searchByNIC($data['NIC']);
+                        // $contact_children = array();
+                        View::render('AdultPatients/post_markdead.php', ['adultData' => $adultData , 'nic' => $data['NIC']]);
+                        
+                                    
+                    }
+                    else{
+                        $data['nic_err'] = 'Invalid NIC';
+                        View::render('AdultPatients/pre_markdead.php', ['data'=> $data]);
+                    }
+                }
+                else {
+                    $data = [
+                        'NIC' => '' ,
+                        'nic_err' => ''
+                    ] ;
+                    View::render('AdultPatients/pre_markdead.php', ['data'=> $data]); 
+                }
+            }
+    
+        }
+    
+        public function markdeadHelper(){
+            if(parent::checkPHISession()) {
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $this->initialize($_POST['nic'], $_POST['email']);
+                    // if (is_callable([$this, $state])) {
+                    //  $this->$state();
+                        parent::markDead();
+                        $rows = AdultPatientModel::changeState($this->email, $this->NIC, 'dead');
+                        if($rows>0) {
+                            View::render('AdultPatients/accSuccess.php', ['childObj' => $this]);
+                        } else {
+                            echo 'Failed';
+                        }
+                    // } else {
+                    //     echo 'Failed';
+                    // }
+                  }
+                }
+            }
+
+            public function searchAction(){
+                if(parent::checkPHISession()) {
+                    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        $data = [
+                            'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                            'nic_err' => ''
+                        ];
+        
+                        if(parent::isValidNIC($data['NIC'])){
+                            $adultData = AdultPatientModel::searchByNIC($data['NIC']);
+                            if($adultData){
+                            $this->initialize($adultData[0]->NIC,$adultData[0]->email);
+                            View::render('AdultPatients/accSuccess.php', ['childObj' => $this]);
+                            }
+                            
+                                        
+                        }
+                        else{
+                            $data['nic_err'] = 'Invalid NIC';
+                            View::render('ChildPatients/pre_search.php', ['data'=> $data]);
+                        }
+                    }
+                    else {
+                        $data = [
+                            'NIC' => '' ,
+                            'nic_err' => ''
+                        ] ;
+                        View::render('AdultPatients/pre_search.php', ['data'=> $data]); 
+                    }
+                }
+            }
+        
+            public function searchHelper(){
+        
+                if(parent::checkPHISession()) {
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        $this->initialize($_POST['nic'], $_POST['email']);
+                        View::render('ChildPatients/accSuccess.php', ['childObj' => $this]);
+                           
+                    }
+                }
+            }
+
 
 
     public function recordAction() {
