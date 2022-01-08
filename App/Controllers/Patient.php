@@ -90,7 +90,7 @@ abstract class Patient extends \Core\Controller {
     }
 
     public function markDead() {
-        $this->state->markDead();
+        $this->state->markDead($this);
     }
 
     public function stateToString() {
