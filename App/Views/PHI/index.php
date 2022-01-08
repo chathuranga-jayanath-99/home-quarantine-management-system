@@ -13,7 +13,10 @@
 
 <body>
 
-
+<?php 
+$page = 'home';
+include_once 'navbar.php';
+?>
 
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
