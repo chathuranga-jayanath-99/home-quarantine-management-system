@@ -429,10 +429,9 @@ class ChildPatient extends Patient {
         if(parent::checkPHISession()) {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $this->initialize($_POST['nic'], $_POST['email']);
-                $state = 'Dead' ;
-                $state = 'set'.$state;
                 // if (is_callable([$this, $state])) {
                 //  $this->$state();
+                    parent::markDead();
                     $rows = ChildPatientModel::changeState($this->email, $this->guardian_id, 'dead');
                     if($rows>0) {
                         View::render('ChildPatients/accSuccess.php', ['childObj' => $this]);
