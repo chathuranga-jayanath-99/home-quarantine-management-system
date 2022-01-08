@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,25 +17,15 @@
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
-     <h3 class="text-center h2 fw-bold ">Welcome PHI <?php echo $data['name']?> !!!</h3> 
+     <!-- <h3 class="text-center h2 fw-bold ">Welcome PHI <?php echo $data['name']?> !!!</h3>  -->
       <div class="col-lg-12 col-xl-10">
         <div class="card text-black" style="border-radius: 25px;">
           <div class="card-body p-md-5">
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                
-                <a href="<?php echo URLROOT?>/PHI/addpatient">ADD NEW ACCOUNT</a>
-                <br>
-                <a href="<?php echo URLROOT?>/PHI/markpositive">MARK POSITIVE</a>
-                <br>
-                <a href="<?php echo URLROOT?>/PHI/markdead">MARK DEATHS</a>
-                <br>
-                <a href="<?php echo URLROOT?>/PHI/search">SEARCH PATIENT</a>
-                <br>
-                <a href="<?php echo URLROOT?>/PHI/viewrecords">VIEW PATIENT RECORDS</a>
 
-                <!-- <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4"></h2> -->
-                <!-- <form action="<?php echo URLROOT?>/PHI/addpatient" method='POST'>
+                <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">SEARCH PATIENT</h2>
+                <form action="<?php echo URLROOT?>/PHI/search" method='POST'>
                   
                   <div class=" h6 text-center form-check col-md-10">
                       <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio"  name="Patient_type"  value="child" required>Child Account</label>
@@ -52,11 +41,11 @@
                   </div>
                     
 
-                </form> -->
+                </form>
                 
 
-              <!-- </div>
-              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+              </div>
+              <!-- <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
               <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">MARK POSITIVE</h2>
                 <form action="<?php echo URLROOT?>/PHI/markpositive" method='POST'>
@@ -71,19 +60,19 @@
 
                   <div class="text-center mt-4 col-md-10" >
                       <button type="Submit" class="btn btn-primary ">Submit</button>
-                      <input type="submit" name="Submit" value="submit">
+                      
                   </div>
                     
 
                 </form>
 
-              
+
              
               </div>   -->
-              <div class="text-center h3 fw-bold mb-3 mx-1 mx-md-4 mt-5">
+              <!-- <div class="text-center h3 fw-bold mb-3 mx-1 mx-md-4 mt-5">
               <a href="<?php echo URLROOT;?>/PHI/logout">
               <button type="Submit" class="btn btn-danger">Log Out</button>
-              </div>
+              </div> -->
               </div>
             </div>
           </div>

@@ -210,7 +210,7 @@ class Record {
             $this->fill();
             $this->check();
         } else {
-            $this->check();
+            $this->state->nextState($this);
         }
     }
 
