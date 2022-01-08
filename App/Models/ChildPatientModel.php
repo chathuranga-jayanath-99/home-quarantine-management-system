@@ -149,7 +149,6 @@ class ChildPatientModel extends PatientModel {
         return false;
     }
 
-<<<<<<< HEAD
     public function receive($msg){
 
         // write msg to db 
@@ -178,7 +177,6 @@ class ChildPatientModel extends PatientModel {
         }
        
     }
-=======
     public static function getRecord($patient_id, $record_id) {
         $db = static::getDB();
         $data = [
@@ -218,5 +216,4 @@ class ChildPatientModel extends PatientModel {
         return false;
     }
 
->>>>>>> master
 }
