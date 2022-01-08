@@ -50,7 +50,15 @@ class Home extends \Core\Controller
     }
 
     public function contactAction(){
-        View::render('Home/contact_details.php', []);
+        if (isset($_GET['logged'])) {
+            if ($_GET['logged'] === 'yes') {
+                View::render('Home/contact_details.php', ['page' => 'contact-logged']);
+            } else {
+                View::render('Home/contact_details.php', ['page' => '']);
+            }
+        }else {
+            View::render('Home/contact_details.php', ['page' => '']);
+        }
     }
 
 }

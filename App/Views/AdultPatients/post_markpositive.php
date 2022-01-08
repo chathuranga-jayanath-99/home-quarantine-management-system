@@ -29,7 +29,7 @@
                         <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">NIC : <?php echo $contact_patient[0]->NIC ;?></h4>
                         <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Patient Name : <?php echo $contact_patient[0]->name ;?></h4>
                     </div>
-                    <form action="<?php echo URLROOT?>/adult-patient/active " method="POST">
+                    <form action="<?php echo URLROOT?>/adult-patient/markpositiveHelper " method="POST">
                         <div>
                         <?php 
                        

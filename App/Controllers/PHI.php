@@ -227,7 +227,7 @@ class PHI extends \Core\Controller{
 
         else{
 
-            View::render('PHI/login.php', ['data' => $data]);
+            View::render('PHI/add_account.php');
 
         }
     }
@@ -249,10 +249,57 @@ class PHI extends \Core\Controller{
 
         else{
 
-            View::render('PHI/login.php', ['data' => $data]);
+            View::render('PHI/mark_positive_view.php');
+
+        }
+    }
+
+    public function markdead(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            $type = $_POST['Patient_type'];
+            
+            if($type == 'child'){
+                header('location: '.URLROOT.'/child-patient/markdead');
+            
+            }
+            else {
+                header('location: '.URLROOT.'/adult-patient/markdead');
+            }
+        }
+
+        else{
+
+            View::render('PHI/mark_dead_view.php');
+
+        }
+
+    }
+
+    public function searchPatientAction(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            $type = $_POST['Patient_type'];
+            
+            if($type == 'child'){
+                header('location: '.URLROOT.'/child-patient/search');
+            
+            }
+            else {
+                header('location: '.URLROOT.'/adult-patient/search');
+            }
+        }
+
+        else{
+
+            View::render('PHI/search_view.php');
 
         }
 
         
     }
+
+
 }

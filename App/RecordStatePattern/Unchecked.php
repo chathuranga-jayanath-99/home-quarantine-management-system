@@ -1,10 +1,8 @@
 <?php
 
-namespace App\statePattern;
+namespace App\RecordStatePattern;
 
-use App\Controllers\Patient;
-
-class Positive extends State {
+class Unchecked extends RecordState {
     private static $instance;
 
     private function __construct() {
@@ -13,17 +11,17 @@ class Positive extends State {
 
     public static function getInstance() {
         if (!isset(static::$instance)) {
-            static::$instance = new Positive();
+            static::$instance = new Unchecked();
         }
         return static::$instance;
     }
 
-    public function nextState($patient) {
-        //TODO
+    public function nextState($record) {
+        $record->transitionTo(Checked::getInstance());
     }
 
     public function toString() {
-        return "Positive";
+        return "Unchecked";
     }
 
 }
