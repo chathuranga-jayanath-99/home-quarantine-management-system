@@ -1,4 +1,18 @@
-<?php include(APPROOT.'/App/Views/Includes/header.php'); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Adult Patient - Home Isolation System</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"-->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
 
 <body>
 
@@ -10,7 +24,6 @@
                 <div class="card-body p-md-5">
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                        <a href="<?php echo URLROOT; ?>">Main Page</a>
 							<h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Adult-Patient Login</h1>
                             <form class="mx-1 mx-md-4" action="<?php echo URLROOT?>/adult-patient/login" method='POST'>
                                 <div class="d-flex flex-row align-items-center mb-4">
@@ -33,13 +46,20 @@
                             </form>
                         </div>
                         <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                            <img src="https://i.pinimg.com/originals/ce/ce/88/cece88244f0eec936f250ba1dc67be67.jpg" width=700 height=700 class="img-fluid" alt="Sample image"> 
+                        <div><div>    
+                        <img src="https://image.freepik.com/free-vector/people-wearing-medical-mask_52683-35467.jpg" width=700 height=700 class="img-fluid" alt="Sample image" style="border-radius: 50px;"> 
+                        </div>
+                        <div class="text-center pt-3">
+                            <div>
+                                <a href="<?php echo URLROOT; ?>"><button class="btn btn-warning">Main Page</button></a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div></div>
             <div class="text-center mt-5 text-muted">
-				Copyright &copy; Code Devours 
+                <a href="<?php echo URLROOT?>/adult-patient/about-us" class="text-muted" style="text-decoration: none;">Copyright &copy; Code Devours</a>
 			</div>
         </div>
         </div>

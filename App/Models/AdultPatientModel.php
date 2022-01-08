@@ -4,6 +4,12 @@ namespace App\Models;
 
 use PDO;
 
+use App\RecordStatePattern\Record;
+use App\RecordStatePattern\RecordState;
+use App\RecordStatePattern\NotFilled;
+use App\RecordStatePattern\Unchecked;
+use App\RecordStatePattern\Checked;
+
 class AdultPatientModel extends PatientModel{
 
     public static function register($data) {
@@ -47,21 +53,9 @@ class AdultPatientModel extends PatientModel{
         }
     }
 
-    public static function searchByNIC($NIC) {
-        $db = static::getDB();
-        $sql = 'SELECT * FROM tbl_adult_patient 
-                WHERE NIC=:NIC';
-        $stmt = $db->prepare($sql);
-        $stmt->execute(['NIC' => $NIC]);
-        $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-        return $res;
-    }
-
     public static function login($email,$password)
     {
-
         $db = static::getDB();
-
         $sql = 'SELECT * FROM tbl_adult_patient WHERE email=:email';
         $stmt = $db->prepare($sql);
         $stmt->execute(['email' => $email]);
@@ -73,11 +67,31 @@ class AdultPatientModel extends PatientModel{
             if(password_verify($password, $hashed_password)){
                 return $row;
             }
-            else {
-                return false;
-            }
         }
         return false;
+    }
+
+    public static function searchByNIC($NIC) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_adult_patient 
+                WHERE NIC=:NIC';
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['NIC' => $NIC]);
+        $res = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $res;
+    }
+
+    public static function searchByEmailAndNIC($NIC, $email) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_adult_patient 
+                WHERE NIC=:NIC and email=:email';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            'NIC'         => $NIC,
+            'email'       => $email
+        ]);
+        $res = $stmt->fetch(PDO::FETCH_OBJ);
+        return $res;
     }
 
     public static function changeState($email, $NIC, $state) {
@@ -90,7 +104,7 @@ class AdultPatientModel extends PatientModel{
             'state'       => $state,
             'phi_range'   => $_SESSION['phi_area'],
             'phi_id'      => $_SESSION['phi_id'],
-            'NIC' => $NIC,
+            'NIC'         => $NIC,
             'email'       => $email,
         ]);
         if ($res) {
@@ -114,32 +128,6 @@ class AdultPatientModel extends PatientModel{
             return true;
         }
         return false;
-    }
-
-    public static function searchByEmailAndNIC($NIC, $email) {
-        $db = static::getDB();
-        $sql = 'SELECT * FROM tbl_adult_patient 
-                WHERE NIC=:NIC and email=:email';
-        $stmt = $db->prepare($sql);
-        $stmt->execute([
-            'NIC'         => $NIC,
-            'email'       => $email
-        ]);
-        $res = $stmt->fetch(PDO::FETCH_OBJ);
-        return $res;
-    }
-
-    public static function getPatientData($adult_id)
-    {
-        $db = static::getDB();
-
-        $sql = 'SELECT * FROM tbl_adult_patient WHERE id=:adult_id';
-        $stmt = $db->prepare($sql);
-        $stmt->execute(['adult_id' => $adult_id]);
-        $row = $stmt->fetch(PDO::FETCH_OBJ);
-
-        return $row;
-
     }
 
     public static function recordSymptoms($symptoms) {
@@ -189,5 +177,44 @@ class AdultPatientModel extends PatientModel{
             ]);
 
         }
+    }
+
+    public static function getRecord($patient_id, $record_id) {
+        $db = static::getDB();
+        $data = [
+            'patient_id' => $patient_id,
+            'record_id'  => $record_id,
+            'type'       => 'adult'
+        ];
+        $sql = 'SELECT * FROM tbl_record WHERE
+                id=:record_id AND patient_id=:patient_id AND type=:type';
+        $stmt = $db->prepare($sql);
+        $stmt->execute($data);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
+    }
+
+    public static function getRecordsCnt($patient_id, $rec_cnt) {
+        $db = static::getDB();
+        $data = [
+            'patient_id' => $patient_id,
+            'rec_cnt'    => 2,
+        ];
+        $sql = 'SELECT id, datetime FROM tbl_record
+                WHERE patient_id=:patient_id
+                ORDER BY id DESC
+                LIMIT :rec_cnt;';
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":patient_id", $patient_id, PDO::PARAM_INT);
+        $stmt->bindValue(":rec_cnt", $rec_cnt, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
     }
 }

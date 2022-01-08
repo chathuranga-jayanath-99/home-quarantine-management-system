@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <div class="text-center mt-5 text-muted">
-						Copyright &copy; Code Devours 
+                        <a href="<?php echo URLROOT?>/adult-patient/about-us" class="text-muted" style="text-decoration: none;">Copyright &copy; Code Devours</a>
 					</div>
                 </div>
             </div>

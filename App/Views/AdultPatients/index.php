@@ -1,27 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOME QURANTINE</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Dashboard - Adult Patient - Home Isolation System</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"-->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+
 <body>
-        
-<?php include_once 'navbar.php'; ?>
-    <div class="container">
-        <div class="jumbotron">
-            <h1>WELCOME !</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia quibusdam sequi eos consectetur culpa, id quia est natus, fugiat perspiciatis, repudiandae minus animi. Quaerat quam iure sint minima laudantium fugit!</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid minima eum, dolor repellendus voluptate beatae laborum eligendi voluptatibus in reprehenderit ut soluta nisi blanditiis cupiditate quasi id? Officia, maiores odio.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora excepturi atque vel consectetur enim, similique nulla molestias, odit minus nobis aspernatur sint nisi sed eligendi error ex rem, incidunt maiores?</p>
+    <?php
+    $page = 'home';
+    $subPage = '';
+    include_once 'navbar.php';
+    ?>
+    <section class="vh-100" style="background-color: #eee;">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-12 col-xl-10">
+            <div class="card text-black" style="border-radius: 25px;">
+                <div class="card-body p-md-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                            <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Welcome!</h1>
+                        </div>
+                        <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae atque distinctio quam, repellat quae ipsum esse. Impedit, sequi iure temporibus, inventore, ratione maxime fugit corporis consectetur ad odio earum sed!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5 text-muted">
+                <a href="<?php echo URLROOT?>/Adult-patient/about-us" class="text-muted" style="text-decoration: none;">Copyright &copy; Code Devours</a>
+			</div>
+        </div>
         </div>
     </div>
-
-    
-
+    </section>
 </body>
 </html>
-
