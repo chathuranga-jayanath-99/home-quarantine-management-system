@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <title>My Profile - Child Patient - Home Isolation System</title>
+    <title>Record History - Child Patient - Home Isolation System</title>
     <script type="text/javascript">
         function loadRecordPage(id) {
             document.getElementById('record-frame').src = "<?php echo URLROOT; ?>/child-patient/view-record?recordID=" + id;
@@ -20,7 +20,7 @@
 </head>
 <body>
     <?php
-    $page = 'profile';
+    $page = 'rec-history';
     $subPage = '';
     include_once 'navbar.php';
     ?>
@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-md-10 border-right">
                         <div>
-                            <iframe id="record-frame" class="responsive-iframe" src="about:blank" style="width: 100%;" onload="resizeRecordPage()"></iframe>
+                            <iframe id="record-frame" class="responsive-iframe" src="<?php echo URLROOT; ?>/child-patient/no-record-selected" style="width: 100%;" onload="resizeRecordPage()"></iframe>
                         </div>
                     </div>
                 </div>

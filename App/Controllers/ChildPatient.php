@@ -843,6 +843,15 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function noRecordSelectedAction() {
+        if ($this->isLoggedIn()){
+            View::render('ChildPatients/recordNotSelected.php', []);
+        }
+        else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
     public function viewRecordAction() {
         if ($this->isLoggedIn()){
             if (isset($_GET['recordID'])) {
