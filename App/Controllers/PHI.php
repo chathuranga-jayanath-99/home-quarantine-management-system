@@ -277,7 +277,7 @@ class PHI extends \Core\Controller{
 
     }
 
-    public function searchAction(){
+    public function searchPatientAction(){
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 

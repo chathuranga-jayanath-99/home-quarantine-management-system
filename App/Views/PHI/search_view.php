@@ -25,7 +25,7 @@
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
                 <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">SEARCH PATIENT</h2>
-                <form action="<?php echo URLROOT?>/PHI/search" method='POST'>
+                <form action="<?php echo URLROOT?>/PHI/searchPatient" method='POST'>
                   
                   <div class=" h6 text-center form-check col-md-10">
                       <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio"  name="Patient_type"  value="child" required>Child Account</label>

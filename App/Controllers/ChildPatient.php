@@ -456,14 +456,13 @@ class ChildPatient extends Patient {
 
                 if(parent::isValidNIC($data['NIC'])){
                     $childrenData = ChildPatientModel::searchByGuardianID($data['NIC']);
-                    $contact_children = array();
-                    View::render('ChildPatients/post_markdead.php', ['childrenData' => $childrenData , 'nic' => $data['NIC']]);
+                    View::render('ChildPatients/post_search.php', ['childrenData' => $childrenData , 'nic' => $data['NIC']]);
                     
                                 
                 }
                 else{
                     $data['nic_err'] = 'Invalid NIC';
-                    View::render('ChildPatients/pre_markdead.php', ['data'=> $data]);
+                    View::render('ChildPatients/pre_search.php', ['data'=> $data]);
                 }
             }
             else {
@@ -471,10 +470,20 @@ class ChildPatient extends Patient {
                     'NIC' => '' ,
                     'nic_err' => ''
                 ] ;
-                View::render('ChildPatients/pre_markdead.php', ['data'=> $data]); 
+                View::render('ChildPatients/pre_search.php', ['data'=> $data]); 
             }
         }
+    }
 
+    public function searchHelper(){
+
+        if(parent::checkPHISession()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->initialize($_POST['nic'], $_POST['email']);
+                View::render('ChildPatients/accSuccess.php', ['childObj' => $this]);
+                   
+            }
+        }
     }
 
     public function recordAction() {

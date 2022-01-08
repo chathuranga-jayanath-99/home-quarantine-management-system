@@ -31,7 +31,7 @@
                 <br>
                 <a href="<?php echo URLROOT?>/PHI/markdead">MARK DEATHS</a>
                 <br>
-                <a href="<?php echo URLROOT?>/PHI/search">SEARCH PATIENT</a>
+                <a href="<?php echo URLROOT?>/PHI/searchPatient">SEARCH PATIENT</a>
                 <br>
                 <a href="<?php echo URLROOT?>/PHI/viewrecords">VIEW PATIENT RECORDS</a>
 
