@@ -99,6 +99,23 @@ class AdultPatientModel extends \Core\Model{
         return false;
     }
 
+    public static function changePassword($email, $NIC, $password) {
+        $db = static::getDB();
+        $sql = 'UPDATE tbl_adult_patient 
+                SET password=:password
+                WHERE NIC=:NIC and email=:email';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute([
+            'password'    => $password,
+            'NIC' => $NIC,
+            'email'       => $email,
+        ]);
+        if ($res) {
+            return true;
+        }
+        return false;
+    }
+
     public static function searchByEmailAndNIC($NIC, $email) {
         $db = static::getDB();
         $sql = 'SELECT * FROM tbl_adult_patient 
