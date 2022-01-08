@@ -25,6 +25,9 @@
           <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/record"><button class="btn <?php if ($page === 'record') {echo 'btn-success';} ?>">Record Symptoms</button></a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/records-history"><button class="btn <?php if ($page === 'rec-history') {echo 'btn-success';} ?>">Record History</button></a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/child-patient/med-history"><button class="btn <?php if ($page === 'history') {echo 'btn-success';} ?>">Medical History</button></a>
         </li>
         <li class="nav-item dropdown">
