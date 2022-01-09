@@ -1056,11 +1056,9 @@ class ChildPatient extends Patient {
     public function endQuarantinePeriod(){
         if (isset($_SESSION['doctor_id'])){
             $patientId = $_POST['id'];
-
-            // ChildPatientModel::endQuarantinePeriod($patientId);
-
             $this->initializeById($patientId);
             $this->setInactive();
+            ChildPatientModel::markInactiveOrDead($patientId, $_SESSION['doctor_id'], 'inactive');
         }
     }
 

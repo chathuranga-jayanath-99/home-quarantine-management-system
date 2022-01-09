@@ -139,6 +139,31 @@ class ChildPatientModel extends PatientModel {
         return false;
     }
 
+    public static function markInactiveOrDead($patientID, $doctor_id, $state) {
+        $db = static::getDB();
+        $sql_1 = 'UPDATE tbl_child_patient
+                SET state=:state, doctor_id=:doctor_id, end_quarantine_date = NULL
+                WHERE id=:id';
+        $stmt_1 = $db->prepare($sql_1);
+        $res_1 = $stmt_1->execute([
+            'state'       => $state,
+            'doctor_id'   => 0,
+            'id'          => $patientID
+        ]);
+        if ($res_1) {
+            $sql_2 = 'UPDATE tbl_doctor
+                        SET patient_count = patient_count - 1
+                        WHERE id=:doctor_id;';
+            $stmt_2 = $db->prepare($sql_2);
+            $stmt_2->bindValue(":doctor_id", $doctor_id, PDO::PARAM_INT);
+            $res_2 = $stmt_2->execute();
+            if ($res_2) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static function changePassword($email, $guardianID, $password) {
         $db = static::getDB();
         $sql = 'UPDATE tbl_child_patient 
