@@ -291,10 +291,11 @@ class AdultPatientModel extends PatientModel{
             ) VALUES  (
                  :patient_id,        :patient_type,     :description
             )';
+            $stmt = $db->prepare($sql);
             $res = $stmt->execute([
                 'patient_id'    =>  $data['patient_id'],
                 'patient_type'  =>  $data['patient_type'],
-                'description'   =>  $data['description']
+                'description'   =>  $medHistory['description']
             ]);
             if ($res) {
                 return true;
