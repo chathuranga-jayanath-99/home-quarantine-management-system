@@ -296,4 +296,61 @@ class AdultPatientModel extends PatientModel{
         }
         return false;
     }
+    public static function recordMedHistory($patient_id, $medHistory){
+
+        $db = static::getDB();
+        $data = [
+            'patient_id'    => $patient_id,
+            'patient_type'  => 'adult'
+        ];
+        $sql = 'SELECT * FROM tbl_medical_history WHERE
+                patient_id=:patient_id AND Patient_type=:patient_type';
+        $stmt = $db->prepare($sql);
+        $stmt->execute($data);
+
+        if($stmt->rowCount() > 0){
+            $sql = 'UPDATE tbl_medical_history 
+                SET description=:description
+                WHERE patient_id=:patient_id and patient_type=:patient_type';
+            $stmt = $db->prepare($sql);
+            $res = $stmt->execute($medHistory);
+            if ($res) {
+                return true;
+            }
+            return false;
+
+        }else {
+            $sql = 'INSERT INTO tbl_medical_history
+                (
+                  patient_id,         patient_type,      description 
+            ) VALUES  (
+                 :patient_id,        :patient_type,     :description
+            )';
+            $stmt = $db->prepare($sql);
+            $res = $stmt->execute([
+                'patient_id'    =>  $data['patient_id'],
+                'patient_type'  =>  $data['patient_type'],
+                'description'   =>  $medHistory['description']
+            ]);
+            if ($res) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public static function getMedHistory($patient_id) {
+        $db = static::getDB();
+        $data = [
+            'patient_id'    => $patient_id,
+            'patient_type'  => 'adult'
+        ];
+        $sql = 'SELECT * FROM tbl_medical_history WHERE
+                patient_id=:patient_id AND Patient_type=:patient_type';
+        $stmt = $db->prepare($sql);
+        $stmt->execute($data);
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
+        return $row;
+    }
+
 }

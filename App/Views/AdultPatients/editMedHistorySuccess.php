@@ -23,10 +23,8 @@
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 							<h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Edit Medical History Success</h1>
-                            <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Not implemented</h1>
-                        </div>
-                        <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                            <img src="https://image.freepik.com/free-vector/people-wearing-medical-mask_52683-35467.jpg" width=700 height=700 class="img-fluid" alt="Sample image" style="border-radius: 50px;"> 
+                            <label for="description" class="form-label"><i class="fa fa-puzzle-piece fa-lg me-3 fa-fw"></i>Medical History</label>
+                                <textarea class="form-control" id="description" name="description" rows="5" style="align-content:left" disabled><?php echo $description ?></textarea>
                         </div>
                     </div>
                 </div>
