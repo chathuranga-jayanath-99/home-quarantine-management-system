@@ -327,6 +327,8 @@ class ChildPatient extends Patient {
                         $id_arr = ChildPatientModel::getDoctorToAssign();
                         $doctor_id = ($id_arr[0])->id;
                         $rows = ChildPatientModel::changeStateAndDoctor($this->email, $this->guardian_id, $_POST['act'], $doctor_id);
+                        $this->phi_id = $_SESSION['phi_id'];
+                        $this->phi_range = $_SESSION['phi_area'];
                         if($rows>0) {
                             View::render('ChildPatients/accSuccess.php', ['childObj' => $this]);
                         } else {
@@ -958,6 +960,56 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function showNotificationsAction() {
+        if ($this->isLoggedIn()) {
+            $page = 'unread';
+            $notifications = [];
+            if (isset($_GET['page'])) {
+                $page = $_GET['page'];
+                if ($page === 'all') {
+                    $notifications = ChildPatientModel::getNotificationsAll($_SESSION['child_id']);
+                } else if ($page === 'read') {
+                    $notifications = ChildPatientModel::getNotificationsRead($_SESSION['child_id']);
+                } else if ($page === 'unread') {
+                    $notifications = ChildPatientModel::getNotificationsUnread($_SESSION['child_id']);
+                } else {
+                    echo '<h1>Not found</h1>';
+                    die();
+                }
+            } else {
+                $notifications = ChildPatientModel::getNotificationsUnread($_SESSION['child_id']);
+            }
+            $cnt = 0;
+            if ($notifications) {
+                $cnt = count($notifications);
+            }
+            View::render('ChildPatients/notifications.php', ['page' => $page, 'notifications' => $notifications, 'cnt' => $cnt]);
+        } else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function notificationReadAction() {
+        if ($this->isLoggedIn()) {
+            $msg_id = $_POST['msg_id'];
+            $receive_type = 'child_patient';
+            $receiver_id = $_SESSION['child_id'];
+            ChildPatientModel::readNotification($msg_id, $receive_type, $receiver_id);
+        } else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function notificationReadAllAction() {
+        if ($this->isLoggedIn()) {
+            $receive_type = 'child_patient';
+            $receiver_id = $_SESSION['child_id'];
+            ChildPatientModel::readNotificationAll($receive_type, $receiver_id);
+        } else {
+            View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
     protected function activeHelper($patient) {
         View::render('ChildPatients/active.php', ['childObj' => $patient]);
     }
@@ -981,6 +1033,34 @@ class ChildPatient extends Patient {
             $this->phi_id      = $childObj->phi_id;
             $this->doctor_id   = $childObj->doctor_id;
             parent::transitionTo(PatientState::objFromName($childObj->state));
+        }
+    }
+
+    public function initializeById($id){
+        $childObj = ChildPatientModel::getChildById($id);
+        print_r($childObj);
+        if ($childObj) {
+            $this->id          = $childObj->id;
+            $this->name        = $childObj->name;
+            $this->email       = $childObj->email;
+            $this->address     = $childObj->address;
+            $this->guardian_id = $childObj->guardian_id;
+            $this->gender      = $childObj->gender;
+            $this->age         = $childObj->age;
+            $this->contact_no  = $childObj->contact_no;
+            $this->phi_range   = $childObj->phi_range;
+            $this->phi_id      = $childObj->phi_id;
+            $this->doctor_id   = $childObj->doctor_id;
+            parent::transitionTo(PatientState::objFromName($childObj->state));
+        }
+    }
+
+    public function endQuarantinePeriod(){
+        if (isset($_SESSION['doctor_id'])){
+            $patientId = $_POST['id'];
+            $this->initializeById($patientId);
+            $this->setInactive();
+            ChildPatientModel::markInactiveOrDead($patientId, $_SESSION['doctor_id'], 'inactive');
         }
     }
 

@@ -255,12 +255,14 @@ class Doctor extends \Core\Controller{
             else{
                 if ($_GET['id']){
                     $recordId = $_GET['id'];
-    
+                    $patientName = $_GET['name']; 
+
                     $record = DoctorModel::getRecord($recordId);
                     
                     if ($record){
-                        $medicalId = DoctorModel::getMedicalHistoryId($record['patient_id'], $record['type']);
-                        View::render('Doctors/check-record.php', ['record' => $record, 'medical_history_id' => $medicalId]);
+                        $medicalHistory = DoctorModel::getMedicalHistory($record['patient_id'], $record['type']);
+                        
+                        View::render('Doctors/check-record.php', ['record' => $record, 'medical_history' => $medicalHistory]);
                     }
                     else{
                         echo "Record is empty.";
@@ -349,17 +351,17 @@ class Doctor extends \Core\Controller{
         }
     }
 
-    public function endQuarantinePeriodAction(){
-        if ($this->isLoggedIn()){
-            $patientId = $_POST['id'];
-            $patientType = $_POST['type'];
+    // public function endQuarantinePeriodAction(){
+    //     if ($this->isLoggedIn()){
+    //         $patientId = $_POST['id'];
+    //         $patientType = $_POST['type'];
             
-            echo DoctorModel::endQuarantinePeriod($patientId, $patientType);
-        }
-        else{
-            header('location:'.URLROOT.'/doctor/login');
-        }
-    }
+    //         echo DoctorModel::endQuarantinePeriod($patientId, $patientType);
+    //     }
+    //     else{
+    //         header('location:'.URLROOT.'/doctor/login');
+    //     }
+    // }
 
     public function extendQuarantineDateAction(){
         if ($this->isLoggedIn()){

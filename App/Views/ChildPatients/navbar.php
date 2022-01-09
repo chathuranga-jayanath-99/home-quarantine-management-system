@@ -47,9 +47,6 @@
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/contact"><button class="btn <?php if ($page === 'contact') {echo 'btn-success';} ?>">Emergency Contact</button></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/password-change"><button class="btn <?php if ($page === 'pwd_change') {echo 'btn-success';} ?>">Change Password</button></a>
-        </li>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
@@ -57,5 +54,24 @@
         </li>
       </ul>
     </div>
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <li class= "nav-item">
+        <a class="nav-link">
+          <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
+            <i class="fa fa-bell-o fa-lg me-3 fa-fw"></i>
+          </button>
+        </a>
+      </li>
+    </ul>
   </div>
 </nav>
+
+<div class="offcanvas offcanvas-end" id="demo">
+  <div class="offcanvas-header">
+    <h1 class="offcanvas-title">Notifications</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <iframe src="<?php echo URLROOT; ?>/child-patient/show-notifications" frameborder="0" height=95% width=95%></iframe>
+  </div>
+</div>

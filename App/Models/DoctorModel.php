@@ -122,6 +122,7 @@ class DoctorModel extends MedicalOfficerModel{
         }
     }
 
+    // get all unchecked records
     public static function getRecords($doctorId){
         $db = static::getDB();
         
@@ -129,7 +130,7 @@ class DoctorModel extends MedicalOfficerModel{
         FROM tbl_record r
         JOIN tbl_adult_patient ap
         ON r.patient_id = ap.id
-        WHERE r.doctor_id=:doctorId AND r.type="adult"';
+        WHERE r.doctor_id=:doctorId AND r.type="adult" AND r.checked=0';
         
         $stmt = $db->prepare($sql);
         $stmt->execute(['doctorId' => $doctorId]);
@@ -139,7 +140,7 @@ class DoctorModel extends MedicalOfficerModel{
         FROM tbl_record r
         JOIN tbl_child_patient cp
         ON r.patient_id = cp.id
-        WHERE r.doctor_id=:doctorId AND r.type="child"';
+        WHERE r.doctor_id=:doctorId AND r.type="child" AND r.checked=0';
 
         $stmt = $db->prepare($sql);
         $stmt->execute(['doctorId' => $doctorId]);
@@ -147,13 +148,13 @@ class DoctorModel extends MedicalOfficerModel{
         
         $res = ['adult' => $row1, 'child' => $row2];
         
-        if(!empty($res['adult'] || !empty($res['child']))){
-            return $res;
-        }
-        else {
-            return false;
-        }
-
+        // if(!empty($res['adult'] || !empty($res['child']))){
+        //     return $res;
+        // }
+        // else {
+        //     return false;
+        // }
+        return $res;
     }
 
     public static function getRecord($recordId){
@@ -252,8 +253,21 @@ class DoctorModel extends MedicalOfficerModel{
         }
     }
 
-    public static function getMedicalHistoryId($patientId, $patientType){
+    public static function getMedicalHistory($patientId, $patientType){
         $db = static::getDB();
+        
+        $sql = 'SELECT description FROM tbl_medical_history WHERE patient_id=:patientId AND patient_type=:patientType';
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['patientId'=>$patientId, 'patientType'=>$patientType]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row){
+            return $row['description'];
+        }
+        else{
+            return 'No medical history provided.';
+        }
+
 
         // if ($patientType == 'adult'){
         //     $sql = 'SELECT medical_history_id FROM tbl_adult_patinet WHERE id=:id';
@@ -299,22 +313,74 @@ class DoctorModel extends MedicalOfficerModel{
         return $res;
     }
 
-    public static function endQuarantinePeriod($patientId, $patientType){
+    // public static function endQuarantinePeriod($patientId, $patientType){
+    //     $db = static::getDB();
+
+    //     if (strcmp($patientType, 'adult') == 0){
+    //         $sql = 'UPDATE tbl_adult_patient SET end_quarantine_date=NULL, doctor_id=NULL WHERE id=:id';
+    //     }
+    //     else if(strcmp($patientType, 'child') == 0){
+    //         $sql = 'UPDATE tbl_child_patient SET end_quarantine_date=NULL, doctor_id=NULL WHERE id=:id';
+    //     }
+    //     else{
+    //         return false;
+    //     }
+    //     $stmt = $db->prepare($sql);
+    //     // $res = $stmt->execute(['id'=>$patientId]);
+        
+    //     // reduce doctor's count
+    //     // self::reduceDoctorPatientCount();
+
+    //     // make patinet inactive        
+    //     self::changePatientStateToInactive($patientId, $patientType);
+    //     // return $res;
+
+    // }
+
+    // private static function reduceDoctorPatientCount(){
+    //     $db = static::getDB();
+    //     $doctorId = $_SESSION['doctor_id'];
+
+    //     $sql = 'UPDATE tbl_doctor SET patient_count=patient_count-1 WHERE id=:doctorId';
+    //     $stmt = $db->prepare($sql);
+    //     $res = $stmt->execute(['doctorId' => $doctorId]);
+        
+    //     return $res;
+    // }
+
+    public static function changePatientStateToInactive($patientId, $patientType){
         $db = static::getDB();
 
         if (strcmp($patientType, 'adult') == 0){
-            $sql = 'UPDATE tbl_adult_patient SET end_quarantine_date=NULL WHERE id=:id';
+            $sql = 'SELECT * FROM tbl_adult_patient WHERE id=:patientId';
         }
         else if(strcmp($patientType, 'child') == 0){
-            $sql = 'UPDATE tbl_child_patient SET end_quarantine_date=NULL WHERE id=:id';
+            $sql = 'SELECT * FROM tbl_child_patient WHERE id=:patientId';
         }
         else{
             return false;
         }
-        $stmt = $db->prepare($sql);
-        $res = $stmt->execute(['id'=>$patientId]);
-        return $res;
 
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['patientId' => $patientId]);
+        $patientObj = $stmt->fetch(PDO::FETCH_OBJ);
+
+        // if (class_exists())
+        $controllerClass = 'App\Controllers\\'.ucfirst($patientType).'Patient';
+        if (class_exists($controllerClass)){
+            echo 'stop2';
+            echo $controllerClass;
+            die();
+            $patientController = new $controllerClass();
+            $patientController->initializeByObj($patientObj);
+            echo 'set inactive';
+            $patientController->setInactive();
+
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public static function extendQuarantineDate($patientId, $patientType, $extendedDate){
@@ -331,6 +397,29 @@ class DoctorModel extends MedicalOfficerModel{
         }
         $stmt = $db->prepare($sql);
         $res = $stmt->execute(['id'=>$patientId, 'extendedDate'=>$extendedDate]);
+
+        // notify patinet
+        self::sendMessageToPatient($patientId, $patientType, $extendedDate);
+
+        return $res;
+    }
+
+    private static function sendMessageToPatient($patientId, $patientType, $extendedDate){
+        $db = static::getDB();
+
+        $doctorId = $_SESSION['doctor_id'];
+
+        $sql = 'INSERT INTO tbl_msg (content, sender_id, sender_type, receiver_id, receiver_type)
+        values (:content, :senderId, :senderType, :receiverId, :receiverType)';
+
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute([
+            'content' => 'Your quarantine period has been extended to '.$extendedDate,
+            'senderId' => $doctorId,
+            'senderType' => 'doctor',
+            'receiverId' => $patientId,
+            'receiverType' => $patientType
+        ]);
         return $res;
     }
 

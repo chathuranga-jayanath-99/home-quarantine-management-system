@@ -139,6 +139,31 @@ class ChildPatientModel extends PatientModel {
         return false;
     }
 
+    public static function markInactiveOrDead($patientID, $doctor_id, $state) {
+        $db = static::getDB();
+        $sql_1 = 'UPDATE tbl_child_patient
+                SET state=:state, doctor_id=:doctor_id, end_quarantine_date = NULL
+                WHERE id=:id';
+        $stmt_1 = $db->prepare($sql_1);
+        $res_1 = $stmt_1->execute([
+            'state'       => $state,
+            'doctor_id'   => 0,
+            'id'          => $patientID
+        ]);
+        if ($res_1) {
+            $sql_2 = 'UPDATE tbl_doctor
+                        SET patient_count = patient_count - 1
+                        WHERE id=:doctor_id;';
+            $stmt_2 = $db->prepare($sql_2);
+            $stmt_2->bindValue(":doctor_id", $doctor_id, PDO::PARAM_INT);
+            $res_2 = $stmt_2->execute();
+            if ($res_2) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static function changePassword($email, $guardianID, $password) {
         $db = static::getDB();
         $sql = 'UPDATE tbl_child_patient 
@@ -200,7 +225,7 @@ class ChildPatientModel extends PatientModel {
                 'sender_id' => $data['sender_id'],
                 'sender_type' => $data['sender_type'],
                 'receiver_id' => $this->id,
-                'receiver_type' => 'child_patient'
+                'receiver_type' => 'child'
             ]);
 
         }
@@ -245,6 +270,40 @@ class ChildPatientModel extends PatientModel {
         return false;
     }
 
+    public static function endQuarantinePeriod($patientId){
+        $db = static::getDB();
+
+        $sql = 'UPDATE tbl_child_patient SET end_quarantine_date=NULL, doctor_id=NULL WHERE id=:id';
+        $stmt = $db->prepare($sql);
+
+        $res = $stmt->execute(['id'=>$patientId]);
+        
+        // reduce doctor's count
+        self::reduceDoctorPatientCount();
+        return $res;
+    }
+
+    private static function reduceDoctorPatientCount(){
+        $db = static::getDB();
+        $doctorId = $_SESSION['doctor_id'];
+
+        $sql = 'UPDATE tbl_doctor SET patient_count=patient_count-1 WHERE id=:doctorId';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute(['doctorId' => $doctorId]);
+        
+        return $res;
+    }
+
+    public static function getChildById($id){
+        $db = static::getDB();
+
+        $sql = 'SELECT * FROM tbl_child_patient WHERE id=:id';
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['id' => $id]);
+
+        $obj = $stmt->fetch(PDO::FETCH_OBJ);
+        return $obj;
+    }
     public static function getDoctorToAssign() {
         $db = static::getDB();
         $sql = 'SELECT id FROM tbl_doctor
@@ -255,6 +314,95 @@ class ChildPatientModel extends PatientModel {
         $row = $stmt->fetchAll(PDO::FETCH_OBJ);
         if(!empty($row)){
             return $row;
+        }
+        return false;
+    }
+
+    public static function getNotificationsAll($child_id) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_msg
+                WHERE receiver_id=:receiver_id AND receiver_type=:receiver_type
+                ORDER BY id DESC;';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            'receiver_id'   => $child_id,
+            'receiver_type' => 'child_patient'
+        ]);
+        $row = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
+    }
+
+    public static function getNotificationsUnread($child_id) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_msg
+                WHERE receiver_id=:receiver_id AND receiver_type=:receiver_type AND msg_read=:msg_read
+                ORDER BY id DESC;';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            'receiver_id'   => $child_id,
+            'receiver_type' => 'child_patient',
+            'msg_read'      => 0
+        ]);
+        $row = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
+    }
+
+    public static function getNotificationsRead($child_id) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_msg
+                WHERE receiver_id=:receiver_id AND receiver_type=:receiver_type AND msg_read=:msg_read
+                ORDER BY id DESC;';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            'receiver_id'   => $child_id,
+            'receiver_type' => 'child_patient',
+            'msg_read'      => 1
+        ]);
+        $row = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
+    }
+
+    public static function readNotification($msg_id, $receiver_type, $receiver_id) {
+        $db = static::getDB();
+        $sql = 'UPDATE tbl_msg
+                SET msg_read=:msg_read
+                WHERE id=:msg_id AND receiver_type=:receiver_type AND receiver_id=:receiver_id;';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute([
+            'msg_read'      => 1,
+            'msg_id'        => (int) $msg_id,
+            'receiver_type' => $receiver_type,
+            'receiver_id'   => $receiver_id
+        ]);
+        if ($res) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function readNotificationAll($receiver_type, $receiver_id) {
+        $db = static::getDB();
+        $sql = 'UPDATE tbl_msg
+                SET msg_read=:msg_read_1
+                WHERE msg_read=:msg_read_0 AND receiver_type=:receiver_type AND receiver_id=:receiver_id;';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute([
+            'msg_read_1'    => 1,
+            'msg_read_0'    => 0,
+            'receiver_type' => $receiver_type,
+            'receiver_id'   => $receiver_id
+        ]);
+        if ($res) {
+            return true;
         }
         return false;
     }
