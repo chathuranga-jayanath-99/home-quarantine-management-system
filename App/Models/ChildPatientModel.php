@@ -326,7 +326,7 @@ class ChildPatientModel extends PatientModel {
         $stmt = $db->prepare($sql);
         $stmt->execute([
             'receiver_id'   => $child_id,
-            'receiver_type' => 'child_patient'
+            'receiver_type' => 'child'
         ]);
         $row = $stmt->fetchAll(PDO::FETCH_OBJ);
         if(!empty($row)){
@@ -343,7 +343,7 @@ class ChildPatientModel extends PatientModel {
         $stmt = $db->prepare($sql);
         $stmt->execute([
             'receiver_id'   => $child_id,
-            'receiver_type' => 'child_patient',
+            'receiver_type' => 'child',
             'msg_read'      => 0
         ]);
         $row = $stmt->fetchAll(PDO::FETCH_OBJ);
