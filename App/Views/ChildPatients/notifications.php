@@ -14,7 +14,7 @@
 <body>
     <section class="vh-auto pb-5">
         <div class="container h-100">
-            <div>
+            <div class="sticky-top bg-white">
                 <ul class="nav nav-pills nav-justified mb-4">
                     <li class="nav-item">
                         <a class="nav-link <?php if ($page === 'unread') {echo 'active';} ?>" href="<?php 

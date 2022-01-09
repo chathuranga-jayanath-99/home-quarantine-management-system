@@ -71,7 +71,7 @@
     <h1 class="offcanvas-title">Notifications</h1>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
   </div>
-  <div class="offcanvas-body">
+  <div class="offcanvas-body text-center">
     <iframe src="<?php echo URLROOT; ?>/child-patient/show-notifications" frameborder="0" height=95% width=95%></iframe>
   </div>
 </div>
