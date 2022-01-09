@@ -982,6 +982,34 @@ class Adultpatient extends Patient{
         }
     }
 
+    public function initializeById($id) {
+        $adultObj = AdultPatientModel::getAdultById($id);
+        if ($adultObj) {
+            $this->id          = $adultObj->id;
+            $this->name        = $adultObj->name;
+            $this->email       = $adultObj->email;
+            $this->address     = $adultObj->address;
+            $this->NIC         = $adultObj->NIC;
+            $this->gender      = $adultObj->gender;
+            $this->age         = $adultObj->age;
+            $this->contact_no  = $adultObj->contact_no;
+            $this->phi_range   = $adultObj->phi_range;
+            $this->phi_id      = $adultObj->phi_id;
+            $this->doctor_id   = $adultObj->doctor_id;
+            parent::transitionTo(PatientState::objFromName($adultObj->state));
+        }
+    }
+    
+    public function endQuarantinePeriod(){
+        if (isset($_SESSION['doctor_id'])){
+            $patientId = $_POST['id'];
+            $this->initializeById($patientId);
+            $this->setInactive();
+            AdultPatientModel::markInactiveOrDead($patientId, $_SESSION['doctor_id'], 'inactive');
+            
+        }
+    }
+
     public function getEmail() {
         return $this->email;
     }

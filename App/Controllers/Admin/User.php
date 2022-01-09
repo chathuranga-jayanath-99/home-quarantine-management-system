@@ -61,4 +61,33 @@ class User extends \Core\Controller
             View::render('Admins/register.php', ['data' => $data]);
         }
     }
+
+    public function login(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $data = [
+                'email' => htmlspecialchars(trim($_POST['email'])),
+                'password' => htmlspecialchars($_POST['password']),
+            ];
+
+            $admin = AdminUserModel::login($data['email'], $data['password']);
+
+            if ($admin){
+                // login success
+                $this->createSession($admin);
+                header('location: '.URLROOT.'/admin/user');
+            }
+            else{
+                echo 'admin couldn\'t log in';
+            }
+        }
+        else{
+            View::render('Admins/login.php');
+        }
+    }
+
+    public function createSession($admin){
+        $_SESSION['admin_id'] = $admin->id;
+        $_SESSION['admin_email'] = $admin->email;
+        $_SESSION['admin_name'] = $admin->name;
+    }
 }

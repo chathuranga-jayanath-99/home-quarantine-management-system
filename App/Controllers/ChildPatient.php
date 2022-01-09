@@ -1038,7 +1038,7 @@ class ChildPatient extends Patient {
 
     public function initializeById($id){
         $childObj = ChildPatientModel::getChildById($id);
-        print_r($childObj);
+        
         if ($childObj) {
             $this->id          = $childObj->id;
             $this->name        = $childObj->name;
@@ -1061,6 +1061,7 @@ class ChildPatient extends Patient {
             $this->initializeById($patientId);
             $this->setInactive();
             ChildPatientModel::markInactiveOrDead($patientId, $_SESSION['doctor_id'], 'inactive');
+
         }
     }
 
