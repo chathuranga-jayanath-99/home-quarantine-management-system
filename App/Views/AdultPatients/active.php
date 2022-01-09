@@ -45,13 +45,13 @@
                                     </span>
                                     </div>
                                     <div class="pb-2">
-                                    <input class="form-check-input" type="radio" name="act" id="inactive" value="inactive" <?php if ($state === 'Inactive' || $state === 'Dead') {echo 'disabled';}?> >
+                                    <input class="form-check-input" type="radio" name="act" id="inactive" value="inactive" disabled>
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="inactive">Inactive</label>
                                     </span>
                                     </div>
                                     <div class="pb-2">
-                                    <input class="form-check-input" type="radio" name="act" id="dead" value="dead" <?php if ($state === 'Dead') {echo 'disabled';}?> >
+                                    <input class="form-check-input" type="radio" name="act" id="dead" value="dead" disabled>
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="inactive">Dead</label>
                                     </span>
