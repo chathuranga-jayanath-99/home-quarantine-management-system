@@ -324,7 +324,9 @@ class ChildPatient extends Patient {
                     $state = 'set'.$state;
                     if (is_callable([$this, $state])) {
                         $this->$state();
-                        $rows = ChildPatientModel::changeState($this->email, $this->guardian_id, $_POST['act']);
+                        $id_arr = ChildPatientModel::getDoctorToAssign();
+                        $doctor_id = ($id_arr[0])->id;
+                        $rows = ChildPatientModel::changeStateAndDoctor($this->email, $this->guardian_id, $_POST['act'], $doctor_id);
                         if($rows>0) {
                             View::render('ChildPatients/accSuccess.php', ['childObj' => $this]);
                         } else {
