@@ -185,7 +185,7 @@ class AdultPatientModel extends PatientModel{
                 'sender_id' => $data['sender_id'],
                 'sender_type' => $data['sender_type'],
                 'receiver_id' => $this->id,
-                'receiver_type' => 'adult_patient'
+                'receiver_type' => 'adult'
             ]);
 
         }

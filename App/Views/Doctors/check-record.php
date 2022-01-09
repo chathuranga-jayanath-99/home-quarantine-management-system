@@ -5,6 +5,7 @@
 
 <a href="<?php echo URLROOT;?>/doctor">Home</a>
 <a href="<?php echo URLROOT;?>/doctor/logout">Logout</a>
+<button id="goBackBtn">Go back</button>
 
 <h1>
 <?php 
@@ -21,10 +22,20 @@
 
 
     <br>
-    <a href="<?php echo URLROOT.'/doctor/view-medical-history?id='.$medical_history_id?>" class="btn btn-primary">View Medical History</a>
+    
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        View Medical History
+    </button>
+
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+            <?php echo $medical_history; ?>
+        </div>
+    </div>
+
     <br>
     <br>
-    <table class="table">
+    <table id="table" class="table">
         <tr>
             <td>Date</td>
             <td><?php echo $record['datetime']; ?></td>
@@ -100,16 +111,23 @@
             }
             else if (strcmp($_GET['task'], 'mark') == 0){
                 ?>
+                    <tr>
+                        <td>
+                            <button class="btn btn-secondary" onclick="enterFeedback(this)">Enter Feedback</button>
+                        </td>
+                    </tr>
+                
                 <form action="<?php echo URLROOT?>/doctor/check-record" method="post">
-                    <!-- <table> -->
-                        <tr>
+
+                        <tr id="feedbackRow" style="display: none;">
                             <td>Feedback : </td>
                             <td>
                                 <textarea name="feedback" cols="30" rows="10"><?php echo $record['feedback']; ?></textarea>
                             </td>
                         </tr>
+
     
-                    <!-- </table> -->
+                    
                     <tr>
                     <input type="hidden" name="id" value="<?php echo $record['id']; ?>">
                     <td>
@@ -129,5 +147,25 @@
 
 </section>
 
+<script>
+    document.getElementById("goBackBtn").addEventListener('click', ()=> {
+        window.history.back();
+    });
+
+    function enterFeedback(element){
+
+        var feedbackRowStyle = document.getElementById('feedbackRow').style;
+        if (feedbackRowStyle.display == 'none'){
+            feedbackRowStyle.display = 'table-row';
+        }
+        else{
+            feedbackRowStyle.display = 'none';
+        }
+
+    }
+    // function goBack(){
+    //     window.history.back();
+    // }
+</script>
 </body>
 </html>
