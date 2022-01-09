@@ -792,7 +792,8 @@ class Adultpatient extends Patient{
 
     public function medHistoryAction(){
         if ($this->isLoggedIn()){
-            View::render('AdultPatients/medicalHistory.php', []);
+            $medHistory = AdultPatientModel::getMedHistory($_SESSION['adult_id']);
+            View::render('AdultPatients/medicalHistory.php', ['medHistory' => $medHistory]);
         }
         else {
             View::render('AdultPatients/notLoggedIn.php', []);
@@ -804,16 +805,34 @@ class Adultpatient extends Patient{
         if ($this->isLoggedIn()){
             $this->initializeFromSession();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                //TODO
-                View::render('AdultPatients/editMedHistorySuccess.php', []);
+                $description          = htmlspecialchars(trim($_POST['description']));
+                    
+                $medicalHistory = [
+                    "patient_id"     => $this->id,
+                    "patient_type"   => "adult",
+                    "description"    => $description
+                ];
+                if (AdultPatientModel::recordMedHistory($this->id, $medicalHistory)) {
+                    View::render('AdultPatients/editMedHistorySuccess.php', ['description' => $description]);
+                }
             } else {
-                //TODO
-                View::render('AdultPatients/editMedHistory.php', []);
+                $medHistory = AdultPatientModel::getMedHistory($_SESSION['adult_id']);
+                View::render('AdultPatients/editMedHistory.php', ['medHistory' => $medHistory]);
             }
-        }
-        else {
+        } else {
             View::render('AdultPatients/notLoggedIn.php', []);
         }
+        //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        //         //TODO
+        //         View::render('AdultPatients/editMedHistorySuccess.php', []);
+        //     } else {
+        //         //TODO
+        //         View::render('AdultPatients/editMedHistory.php', []);
+        //     }
+        // }
+        // else {
+        //     View::render('AdultPatients/notLoggedIn.php', []);
+        // }
     }
 
     public function profileAction() {
