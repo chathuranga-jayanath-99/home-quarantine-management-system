@@ -200,7 +200,7 @@ class ChildPatientModel extends PatientModel {
                 'sender_id' => $data['sender_id'],
                 'sender_type' => $data['sender_type'],
                 'receiver_id' => $this->id,
-                'receiver_type' => 'child_patient'
+                'receiver_type' => 'child'
             ]);
 
         }
@@ -245,6 +245,40 @@ class ChildPatientModel extends PatientModel {
         return false;
     }
 
+    public static function endQuarantinePeriod($patientId){
+        $db = static::getDB();
+
+        $sql = 'UPDATE tbl_child_patient SET end_quarantine_date=NULL, doctor_id=NULL WHERE id=:id';
+        $stmt = $db->prepare($sql);
+
+        $res = $stmt->execute(['id'=>$patientId]);
+        
+        // reduce doctor's count
+        self::reduceDoctorPatientCount();
+        return $res;
+    }
+
+    private static function reduceDoctorPatientCount(){
+        $db = static::getDB();
+        $doctorId = $_SESSION['doctor_id'];
+
+        $sql = 'UPDATE tbl_doctor SET patient_count=patient_count-1 WHERE id=:doctorId';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute(['doctorId' => $doctorId]);
+        
+        return $res;
+    }
+
+    public static function getChildById($id){
+        $db = static::getDB();
+
+        $sql = 'SELECT * FROM tbl_child_patient WHERE id=:id';
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['id' => $id]);
+
+        $obj = $stmt->fetch(PDO::FETCH_OBJ);
+        return $obj;
+    }
     public static function getDoctorToAssign() {
         $db = static::getDB();
         $sql = 'SELECT id FROM tbl_doctor

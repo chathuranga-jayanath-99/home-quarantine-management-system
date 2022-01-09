@@ -341,7 +341,9 @@ class Adultpatient extends Patient{
                     $state = 'set'.$state;
                     if (is_callable([$this, $state])) {
                         $this->$state();
-                        $rows = AdultPatientModel::changeState($this->email, $this->NIC, $_POST['act']);
+                        $id_arr = AdultPatientModel::getDoctorToAssign();
+                        $doctor_id = ($id_arr[0])->id;
+                        $rows = AdultPatientModel::changeStateAndDoctor($this->email, $this->NIC, $_POST['act'], $doctor_id);
                         if($rows>0) {
                             View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
                         } else {

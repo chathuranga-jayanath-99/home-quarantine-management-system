@@ -113,6 +113,35 @@ class AdultPatientModel extends PatientModel{
         return false;
     }
 
+    public static function changeStateAndDoctor($email, $NIC, $state, $doctor_id) {
+        $db = static::getDB();
+        $sql_1 = 'UPDATE tbl_adult_patient
+                SET state=:state, phi_range=:phi_range, phi_id=:phi_id, doctor_id=:doctor_id,
+                end_quarantine_date = date_add(NOW(), INTERVAL 2 WEEK)
+                WHERE NIC=:NIC and email=:email';
+        $stmt_1 = $db->prepare($sql_1);
+        $res_1 = $stmt_1->execute([
+            'state'       => $state,
+            'phi_range'   => $_SESSION['phi_area'],
+            'phi_id'      => $_SESSION['phi_id'],
+            'doctor_id'   => $doctor_id,
+            'NIC' => $NIC,
+            'email'       => $email,
+        ]);
+        if ($res_1) {
+            $sql_2 = 'UPDATE tbl_doctor
+                        SET patient_count = patient_count + 1
+                        WHERE id=:doctor_id;';
+            $stmt_2 = $db->prepare($sql_2);
+            $stmt_2->bindValue(":doctor_id", $doctor_id, PDO::PARAM_INT);
+            $res_2 = $stmt_2->execute();
+            if ($res_2) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static function changePassword($email, $NIC, $password) {
         $db = static::getDB();
         $sql = 'UPDATE tbl_adult_patient 
@@ -173,7 +202,7 @@ class AdultPatientModel extends PatientModel{
                 'sender_id' => $data['sender_id'],
                 'sender_type' => $data['sender_type'],
                 'receiver_id' => $this->id,
-                'receiver_type' => 'adult_patient'
+                'receiver_type' => 'adult'
             ]);
 
         }
@@ -217,4 +246,19 @@ class AdultPatientModel extends PatientModel{
         }
         return false;
     }
+
+    public static function getDoctorToAssign() {
+        $db = static::getDB();
+        $sql = 'SELECT id FROM tbl_doctor
+                ORDER BY patient_count ASC
+                LIMIT 1;';
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $row = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
+    }
+
 }

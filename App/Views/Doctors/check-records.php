@@ -67,7 +67,7 @@
             else{
                 ?>
                 <tr>
-                    <td>No records yet.</td>
+                    <td>No records to mark.</td>
                 </tr>
                 <?php
             }

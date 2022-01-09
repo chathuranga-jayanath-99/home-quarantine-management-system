@@ -25,17 +25,24 @@
                         <td><?php echo $patient->name; ?></td>
                         <td><?php echo $patient->age; ?></td>
                         <td><?php echo $patient->end_quarantine_date; ?></td>
+                        
                         <td>
                             <a href="<?php echo URLROOT.'/doctor/view-patient-records?id='.$patient->id.'&type='.$patient->type.'&name='.$patient->name; ?>" class="btn btn-primary">View Records</a>
+                                                      
+                            <button class="btn btn-secondary" 
+                            onclick="removeRoutine(this.parentElement.parentElement.rowIndex, 
+                            <?php echo $patient->id.',\''.$patient->type.'\'';?>)">End Period</button>
+
+                            <button class="btn btn-secondary" onclick="extendPopUp(this)">Want to extend?</button>
+                        </td>
+
+                        <td style="display: none;" >
                             <input type="date" placeholder="Extended Date" id="extended_date">
 
                             <button class="btn btn-primary" onclick="extendRoutine(this,
                             <?php echo $patient->id.',\''.$patient->type.'\'';?>)">Extend Period</button>
-                            
-                            <button class="btn btn-secondary" 
-                            onclick="removeRoutine(this.parentElement.parentElement.rowIndex, 
-                            <?php echo $patient->id.',\''.$patient->type.'\'';?>)">End Period</button>
                         </td>
+
                     </tr>
                     <?php
                 }
@@ -49,28 +56,6 @@
            }
         ?>
     </table>
-    
-           <div class="container">
-               <div class="row">
-                   <div class="col-md-12">
-
-                       <div class="modal fade" id="myModal">
-                           <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1>Title</h1>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input type="text" value="Close">
-                                    </div>
-                                </div>
-                           </div>
-                       </div>
-
-                       <a href="#" data-toggle="modal" data-target="#myModal">Open Model</a>
-                   </div>
-               </div>
-           </div>
 
 </section>
 <script src="../static/js/doctor-script.js"></script>
@@ -88,9 +73,15 @@
         var extendedDate = row.getElementsByTagName('input')[0].value;
         
         var date = new Date();
-        var today = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
-        var res = false;
 
+        var dd = String(date.getDate()).padStart(2, '0');
+        var mm = String(date.getMonth() + 1).padStart(2, '0');
+        var yy = date.getFullYear();
+        var today = yy+'-'+mm+'-'+dd;
+
+        var res = false;
+        console.log(today);
+        console.log(extendedDate);
         if (today < extendedDate){
             res = extendQuarantineDate(extendedDate, patientId, patientType);
             table.deleteRow(row.rowIndex);
@@ -101,6 +92,16 @@
         }
     }
     
+    function extendPopUp(element){
+
+        var row = element.parentElement.parentElement;
+        if (row.cells[4].style.display == 'table-row'){
+            row.cells[4].style.display = 'none';
+        }
+        else{
+            row.cells[4].style.display = 'table-row'
+        }
+    }
 </script>
 
 </body>

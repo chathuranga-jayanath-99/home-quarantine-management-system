@@ -1034,6 +1034,36 @@ class ChildPatient extends Patient {
         }
     }
 
+    public function initializeById($id){
+        $childObj = ChildPatientModel::getChildById($id);
+        print_r($childObj);
+        if ($childObj) {
+            $this->id          = $childObj->id;
+            $this->name        = $childObj->name;
+            $this->email       = $childObj->email;
+            $this->address     = $childObj->address;
+            $this->guardian_id = $childObj->guardian_id;
+            $this->gender      = $childObj->gender;
+            $this->age         = $childObj->age;
+            $this->contact_no  = $childObj->contact_no;
+            $this->phi_range   = $childObj->phi_range;
+            $this->phi_id      = $childObj->phi_id;
+            $this->doctor_id   = $childObj->doctor_id;
+            parent::transitionTo(PatientState::objFromName($childObj->state));
+        }
+    }
+
+    public function endQuarantinePeriod(){
+        if (isset($_SESSION['doctor_id'])){
+            $patientId = $_POST['id'];
+
+            // ChildPatientModel::endQuarantinePeriod($patientId);
+
+            $this->initializeById($patientId);
+            $this->setInactive();
+        }
+    }
+
     public function getEmail() {
         return $this->email;
     }
