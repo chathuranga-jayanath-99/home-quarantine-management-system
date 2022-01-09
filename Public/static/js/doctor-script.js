@@ -80,7 +80,7 @@ function endQuarantinePeriod(patinetId, patinetType){
         xhr.send(params);
     }
     else if (patinetType == 'adult'){
-        xhr.open("POST", URLROOT+"/adult-patinet/end-quarantine-period?id="+patinetId, true);
+        xhr.open("POST", URLROOT+"/adult-patient/end-quarantine-period?id="+patinetId, true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     
         xhr.onload = function (){

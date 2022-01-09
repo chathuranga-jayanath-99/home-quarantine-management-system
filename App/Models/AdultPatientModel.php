@@ -261,4 +261,96 @@ class AdultPatientModel extends PatientModel{
         return false;
     }
 
+    public static function getAdultById($id){
+        $db = static::getDB();
+
+        $sql = 'SELECT * FROM tbl_adult_patient WHERE id=:id';
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['id' => $id]);
+
+        $obj = $stmt->fetch(PDO::FETCH_OBJ);
+        return $obj;
+    }
+
+    public static function markInactiveOrDead($patientID, $doctor_id, $state) {
+        $db = static::getDB();
+        $sql_1 = 'UPDATE tbl_adult_patient
+                SET state=:state, doctor_id=:doctor_id, end_quarantine_date = NULL
+                WHERE id=:id';
+        $stmt_1 = $db->prepare($sql_1);
+        $res_1 = $stmt_1->execute([
+            'state'       => $state,
+            'doctor_id'   => 0,
+            'id'          => $patientID
+        ]);
+        if ($res_1) {
+            $sql_2 = 'UPDATE tbl_doctor
+                        SET patient_count = patient_count - 1
+                        WHERE id=:doctor_id;';
+            $stmt_2 = $db->prepare($sql_2);
+            $stmt_2->bindValue(":doctor_id", $doctor_id, PDO::PARAM_INT);
+            $res_2 = $stmt_2->execute();
+            if ($res_2) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static function recordMedHistory($patient_id, $medHistory){
+
+        $db = static::getDB();
+        $data = [
+            'patient_id'    => $patient_id,
+            'patient_type'  => 'adult'
+        ];
+        $sql = 'SELECT * FROM tbl_medical_history WHERE
+                patient_id=:patient_id AND Patient_type=:patient_type';
+        $stmt = $db->prepare($sql);
+        $stmt->execute($data);
+
+        if($stmt->rowCount() > 0){
+            $sql = 'UPDATE tbl_medical_history 
+                SET description=:description
+                WHERE patient_id=:patient_id and patient_type=:patient_type';
+            $stmt = $db->prepare($sql);
+            $res = $stmt->execute($medHistory);
+            if ($res) {
+                return true;
+            }
+            return false;
+
+        }else {
+            $sql = 'INSERT INTO tbl_medical_history
+                (
+                  patient_id,         patient_type,      description 
+            ) VALUES  (
+                 :patient_id,        :patient_type,     :description
+            )';
+            $stmt = $db->prepare($sql);
+            $res = $stmt->execute([
+                'patient_id'    =>  $data['patient_id'],
+                'patient_type'  =>  $data['patient_type'],
+                'description'   =>  $medHistory['description']
+            ]);
+            if ($res) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public static function getMedHistory($patient_id) {
+        $db = static::getDB();
+        $data = [
+            'patient_id'    => $patient_id,
+            'patient_type'  => 'adult'
+        ];
+        $sql = 'SELECT * FROM tbl_medical_history WHERE
+                patient_id=:patient_id AND Patient_type=:patient_type';
+        $stmt = $db->prepare($sql);
+        $stmt->execute($data);
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
+        return $row;
+    }
+
 }

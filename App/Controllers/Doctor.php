@@ -120,7 +120,7 @@ class Doctor extends \Core\Controller{
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = [
                 'email' => htmlspecialchars(trim($_POST['email'])),
-                'password' => trim($_POST['password']),
+                'password' => htmlspecialchars($_POST['password']),
                 'email_err' => '',
                 'password_err' => ''
                 
@@ -185,7 +185,7 @@ class Doctor extends \Core\Controller{
             View::render('Doctors/index.php', ['count' => $count]);
         }
         else {
-            $this->loginAction();
+            $this->login();
         }
                 
     }
@@ -196,7 +196,7 @@ class Doctor extends \Core\Controller{
             View::render('Doctors/mark-quarantine-results.php', ['sorted_patients' => $sorted_patients]);
         }
         else {
-            $this->loginAction();
+            $this->login();
         }
     }
 
@@ -206,7 +206,7 @@ class Doctor extends \Core\Controller{
             View::render('Doctors/check-patients.php', ['typed_patients' => $typed_patients]);
         }
         else {
-            $this->loginAction();
+            $this->login();
         }
     }
 
