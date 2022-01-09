@@ -113,7 +113,8 @@ class ChildPatientModel extends PatientModel {
     public static function changeStateAndDoctor($email, $guardianID, $state, $doctor_id) {
         $db = static::getDB();
         $sql_1 = 'UPDATE tbl_child_patient
-                SET state=:state, phi_range=:phi_range, phi_id=:phi_id, doctor_id=:doctor_id
+                SET state=:state, phi_range=:phi_range, phi_id=:phi_id, doctor_id=:doctor_id,
+                end_quarantine_date = date_add(NOW(), INTERVAL 2 WEEK)
                 WHERE guardian_id=:guardian_id and email=:email';
         $stmt_1 = $db->prepare($sql_1);
         $res_1 = $stmt_1->execute([
