@@ -39,6 +39,9 @@ include_once 'navbar.php';
                 <a href="<?php echo URLROOT?>/PHI/checkRecords">VIEW PATIENT RECORDS</a>
                 <br>
                 <a href="<?php echo URLROOT?>/PHI/active-existing-acc">ACTIVE ACCOUNT</a>
+                <br>
+                <a href="<?php echo URLROOT?>/PHI/form-not-filled">VIEW FORM NOT FILLED PATIENTS</a>
+                
 
                 <!-- <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4"></h2> -->
                 <!-- <form action="<?php echo URLROOT?>/PHI/addpatient" method='POST'>

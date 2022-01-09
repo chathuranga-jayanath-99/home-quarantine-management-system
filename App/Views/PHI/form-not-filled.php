@@ -1,10 +1,16 @@
 <?php include(APPROOT.'/App/Views/Includes/header.php'); ?>
 
 <body>
+
+<?php 
+$page = 'view-record';
+include_once 'navbar.php';
+?>
+
 <section class="container pt-3">
 
-<a href="<?php echo URLROOT;?>/doctor">Home</a>
-<a href="<?php echo URLROOT;?>/doctor/logout">Logout</a>
+<!-- <a href="<?php echo URLROOT;?>/doctor">Home</a>
+<a href="<?php echo URLROOT;?>/doctor/logout">Logout</a> -->
 
 <h1>Records</h1>
     <br>
@@ -16,7 +22,8 @@
             <td>Name</td>
             <td>Age</td>
             <td>Type</td>
-            <td>Actions</td>
+            <td>Contact No</td>
+            <!-- <td>Action</td> -->
         </tr>
         <tr>
         <?php
@@ -36,9 +43,9 @@
                         <?php
                     }
                     ?>
-                    <td>
-                        <a href="<?php echo URLROOT.'/doctor/check-record?id='.$record['id'].'&task=mark&name='.$record['name']; ?>" class="btn btn-primary">View</a>
-                    </td>
+                    <!-- <td>
+                        <a href="<?php echo URLROOT.'/PHI/check-record?id='.$record['id'].'&task=mark&name='.$record['name']; ?>" class="btn btn-primary">View</a>
+                    </td> -->
                     </tr>
                     <?php
                 endforeach;
@@ -57,9 +64,9 @@
                         <?php
                     }
                     ?>
-                    <td>
-                        <a href="<?php echo URLROOT.'/doctor/check-record?id='.$record['id'].'&task=mark&name='.$record['name']; ?>" class="btn btn-primary">View</a>
-                    </td>
+                    <!-- <td>
+                        <a href="<?php echo URLROOT.'/PHI/check-record?id='.$record['id'].'&task=mark&name='.$record['name']; ?>" class="btn btn-primary">View</a>
+                    </td> -->
                     </tr>
                     <?php
                 endforeach;
@@ -67,7 +74,7 @@
             else{
                 ?>
                 <tr>
-                    <td>No records to mark.</td>
+                    <td>No records yet.</td>
                 </tr>
                 <?php
             }

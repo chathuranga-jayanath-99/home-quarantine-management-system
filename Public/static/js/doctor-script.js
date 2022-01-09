@@ -66,17 +66,34 @@ function endQuarantinePeriod(patinetId, patinetType){
 
     var params = "id="+patinetId+"&type="+patinetType;
 
-    xhr.open("POST", URLROOT+"/doctor/end-quarantine-period?id="+patinetId, true);
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-    xhr.onload = function (){
-        if (this.status == 200){
-            console.log(this.responseText);
+    if (patinetType == 'child'){
+        xhr.open("POST", URLROOT+"/child-patient/end-quarantine-period?id="+patinetId, true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    
+        xhr.onload = function (){
+            if (this.status == 200){
+                console.log(this.responseText);
+            }
+            
         }
-        
+    
+        xhr.send(params);
+    }
+    else if (patinetType == 'adult'){
+        xhr.open("POST", URLROOT+"/adult-patinet/end-quarantine-period?id="+patinetId, true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    
+        xhr.onload = function (){
+            if (this.status == 200){
+                console.log(this.responseText);
+            }
+            
+        }
+    
+        xhr.send(params);
     }
 
-    xhr.send(params);
+
 }
 
 function extendQuarantineDate(extended_date, patinetId, patinetType){

@@ -25,14 +25,18 @@
     </div>
 
     <div class="container" >
-        <h3>Total patients assigned to you</h3>
+        <h3>Total patients assigned to you: <?php echo $count;?></h3>
         <br>
-        <P ><strong>Count: <?php echo $count;?></strong></P>
-        <a class="" href="<?php echo URLROOT; ?>/doctor/check-patients">Check all patients</a>
-        <br>
-        <a href="<?php echo URLROOT; ?>/doctor/check-records">Check Records</a>
-        <br>
-        <a href="<?php echo URLROOT; ?>/doctor/mark-quarantine-results">Mark Cured or Extend Quarantine</a>
+        <!-- <P ><strong>Count: </strong></P> -->
+
+        <div style="padding: 50px;        display: flex;        justify-content:  space-between;">
+            <a class="btn btn-dark" href="<?php echo URLROOT; ?>/doctor/check-patients">Check all patients</a>
+            <!-- <br> -->
+            <a class="btn btn-dark" href="<?php echo URLROOT; ?>/doctor/check-records">Check Records</a>
+            <!-- <br> -->
+            <a class="btn btn-dark" href="<?php echo URLROOT; ?>/doctor/mark-quarantine-results">Mark Cured or Extend Quarantine</a>
+        </div>
+        
     </div>
 
 </div>
