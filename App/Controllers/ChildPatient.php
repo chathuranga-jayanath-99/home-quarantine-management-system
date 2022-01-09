@@ -324,7 +324,9 @@ class ChildPatient extends Patient {
                     $state = 'set'.$state;
                     if (is_callable([$this, $state])) {
                         $this->$state();
-                        $rows = ChildPatientModel::changeState($this->email, $this->guardian_id, $_POST['act']);
+                        $id_arr = ChildPatientModel::getDoctorToAssign();
+                        $doctor_id = ($id_arr[0])->id;
+                        $rows = ChildPatientModel::changeStateAndDoctor($this->email, $this->guardian_id, $_POST['act'], $doctor_id);
                         if($rows>0) {
                             View::render('ChildPatients/accSuccess.php', ['childObj' => $this]);
                         } else {
@@ -483,6 +485,37 @@ class ChildPatient extends Patient {
                    
             }
         }
+    }
+
+    public function activateExistingAccAction(){
+
+        if(parent::checkPHISession()) {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = [
+                    'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                    'nic_err' => ''
+                ];
+
+                if(parent::isValidNIC($data['NIC'])){
+                    $childrenData = ChildPatientModel::searchByGuardianID($data['NIC']);
+                    View::render('ChildPatients/register.php', ['childrenData' => $childrenData , 'nic' => $data['NIC']]);
+                    
+                                
+                }
+                else{
+                    $data['nic_err'] = 'Invalid NIC';
+                    View::render('ChildPatients/pre_search.php', ['data'=> $data]);
+                }
+            }
+            else {
+                $data = [
+                    'NIC' => '' ,
+                    'nic_err' => ''
+                ] ;
+                View::render('ChildPatients/pre_activate.php', ['data'=> $data]); 
+            }
+        }
+
     }
 
     public function recordAction() {

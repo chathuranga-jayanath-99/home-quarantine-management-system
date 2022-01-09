@@ -16,8 +16,8 @@
 
 <body>
 
-    <section class="vh-100" style="background-color: #eee;">    
-    <div class="container h-100">
+    <section class="vh-auto" style="background-color: #eee;">    
+    <div class="container h-100 pt-5">
         <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-12 col-xl-10">
             <div class="card text-black" style="border-radius: 25px;">
@@ -94,19 +94,21 @@
                         </div>
                     </form>
                     </div>
-                        <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                            <div>
-                            <img src="https://img.freepik.com/free-vector/set-doctor-nurse-team-cartoon-hand-drawn-cartoon-art-illustration_56104-753.jpg" width=700 height=700 class="img-fluid" alt="Sample image"> 
-                            <div class="text-center">
-                            <div>
-                                <a href="<?php echo URLROOT; ?>/phi"><button class="btn btn-warning">Home</button></a>
-                            </div>
+                    <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                        <div>
+                        <img src="https://image.freepik.com/free-vector/doctor-examining-patient-clinic-illustrated_23-2148856559.jpg" width=700 height=700 class="img-fluid" alt="Sample image"> 
+                        <div class="text-center">
+                        <div>
+                            <a href="<?php echo URLROOT; ?>/phi"><button class="btn btn-warning">Home</button></a>
+                        </div>
+                        </div>
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
-            <div class="text-center mt-5 text-muted">
-				Copyright &copy; Code Devours 
+            <div class="text-center mt-5 text-muted ">
+                <a href="<?php echo URLROOT?>/adult-patient/about-us" class="text-muted" style="text-decoration: none;">Copyright &copy; Code Devours</a>
 			</div>
         </div>
         </div>

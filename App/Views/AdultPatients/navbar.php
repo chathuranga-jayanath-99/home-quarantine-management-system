@@ -1,9 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
   <div class="container-fluid">
-  <a class="navbar-brand" href="#">
-            <img src="https://www.w3schools.com/bootstrap5/img_avatar1.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill"> 
-        </a>
     <a class="navbar-brand" href="<?php echo URLROOT; ?>/adult-patient">
+      <img src="<?php
+      if ($_SESSION['adult_gender'] === 'male') {
+        echo "https://www.pngitem.com/pimgs/m/10-106042_male-professional-avatar-icon-hd-png-download.png";
+      } else {
+        echo "https://www.pinclipart.com/picdir/middle/105-1057269_author-avatar-woman-doctor-icon-png-clipart.png";
+      }
+      ?>" alt="" height="24" class="d-inline-block align-text-top">
       <?php echo $_SESSION['adult_name']; ?>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,6 +23,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/record"><button class="btn <?php if ($page === 'record') {echo 'btn-success';} ?>">Record Symptoms</button></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/records-history"><button class="btn <?php if ($page === 'rec-history') {echo 'btn-success';} ?>">Record History</button></a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/adult-patient/med-history"><button class="btn <?php if ($page === 'history') {echo 'btn-success';} ?>">Medical History</button></a>

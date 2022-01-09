@@ -45,13 +45,13 @@
                                     </span>
                                     </div>
                                     <div class="pb-2">
-                                    <input class="form-check-input" type="radio" name="act" id="inactive" value="inactive" <?php if ($state === 'Inactive' || $state === 'Dead') {echo 'disabled';}?> >
+                                    <input class="form-check-input" type="radio" name="act" id="inactive" value="inactive" disabled>
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="inactive">Inactive</label>
                                     </span>
                                     </div>
                                     <div class="pb-2">
-                                    <input class="form-check-input" type="radio" name="act" id="dead" value="dead" <?php if ($state === 'Dead') {echo 'disabled';}?> >
+                                    <input class="form-check-input" type="radio" name="act" id="dead" value="dead" disabled>
                                     <span class="mb-2 w-100">
                                     <label class="form-check-label" for="inactive">Dead</label>
                                     </span>
@@ -65,13 +65,13 @@
                             </form>
                         </div>
                         <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                            <img src="https://img.freepik.com/free-vector/set-doctor-nurse-team-cartoon-hand-drawn-cartoon-art-illustration_56104-753.jpg" width=700 height=700 class="img-fluid" alt="Sample image"> 
+                            <img src="https://image.freepik.com/free-vector/doctor-examining-patient-clinic-illustrated_23-2148856559.jpg" width=700 height=700 class="img-fluid" alt="Sample image"> 
                         </div>
                     </div>
                 </div>
             </div>
             <div class="text-center mt-5 text-muted">
-				Copyright &copy; Code Devours 
+                <a href="<?php echo URLROOT?>/adult-patient/about-us" class="text-muted" style="text-decoration: none;">Copyright &copy; Code Devours</a>
 			</div>
         </div>
         </div>

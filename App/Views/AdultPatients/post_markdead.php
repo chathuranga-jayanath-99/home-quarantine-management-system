@@ -23,20 +23,23 @@
             <div class="card-body p-md-5">
                 <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                    <h2 class="text-center h fw-bold mb-5 mx-1 mx-md-4 mt-4">Active-Conatact Patients</h2>  
-                    <?php if (sizeof($contact_patient) > 0) { ?>
+                    <h2 class="text-center h fw-bold mb-5 mx-1 mx-md-4 mt-4">Mark Deaths</h2>  
+                    <?php if (sizeof($adultData) > 0) { ?>
                     <div>
-                        <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">NIC : <?php echo $contact_patient[0]->NIC ;?></h4>
-                        <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Patient Name : <?php echo $contact_patient[0]->name ;?></h4>
+                        <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">NIC : <?php echo $adultData[0]->NIC ;?></h4>
+                        <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Patient Name : <?php echo $adultData[0]->name ;?></h4>
                     </div>
-                    <form action="<?php echo URLROOT?>/adult-patient/markpositiveHelper " method="POST">
+                    <form action="<?php echo URLROOT?>/adult-patient/markdeadHelper " method="POST">
                         <div>
                         <?php 
                        
-                        foreach ($contact_patient as $adultData) {
+                        foreach ($adultData as $adult) {
                                 ?>
                                 <div>
-                                    <input class="form-check-input" type="hidden" name="email" value="<?php echo $adultData->email ?>">
+                                    <input class="form-check-input" type="hidden" name="email" value="<?php echo $adult->email ?>">
+                                    <!-- <span class="mb-2 w-100">
+                                    <label class="form-check-label" for="email"><?php echo $adult->name ?></label>
+                                    </span> -->
                                 </div>
                                 <input type="hidden" name="nic" value="<?php echo $nic ?>">
                                 <input type="hidden" name="changed" value="true">
@@ -48,7 +51,7 @@
                         </div>
         
                             <div class="d-flex align-items-center pt-3">
-                                <input class="btn btn-primary ms-auto" type="submit" value="Make Positive">
+                                <input class="btn btn-primary ms-auto" type="submit" value="Mark as Dead">
                             </div>
 
                     </form>
@@ -56,7 +59,7 @@
                     } else {
                         ?>
                         <div>
-                            No contact accounts found
+                            No account found
                         </div>
                         <?php
                     }
@@ -65,10 +68,10 @@
                 </div>
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                    <h4 class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">Do you want to continue marking positive adult patients?</h4>
+                    <h4 class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">Do you want to continue marking adult patient deadths?</h4>
                     
                     <div class="text-center mt-3">
-                        <a href="<?php echo URLROOT.'/adult-patient/markpositive' ?>">
+                        <a href="<?php echo URLROOT.'/adult-patient/markdead' ?>">
                                 <button style="width:100px;" class="btn btn-success ">Yes</button>
                         </a>
                     </div>

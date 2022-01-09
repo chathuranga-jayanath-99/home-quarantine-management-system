@@ -13,7 +13,10 @@
 
 <body>
 
-
+<?php 
+$page = 'home';
+include_once 'navbar.php';
+?>
 
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
@@ -33,7 +36,9 @@
                 <br>
                 <a href="<?php echo URLROOT?>/PHI/searchPatient">SEARCH PATIENT</a>
                 <br>
-                <a href="<?php echo URLROOT?>/PHI/viewrecords">VIEW PATIENT RECORDS</a>
+                <a href="<?php echo URLROOT?>/PHI/checkRecords">VIEW PATIENT RECORDS</a>
+                <br>
+                <a href="<?php echo URLROOT?>/PHI/active-existing-acc">ACTIVE ACCOUNT</a>
 
                 <!-- <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4"></h2> -->
                 <!-- <form action="<?php echo URLROOT?>/PHI/addpatient" method='POST'>

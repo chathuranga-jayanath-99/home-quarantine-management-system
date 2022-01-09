@@ -12,6 +12,12 @@ use App\PatientStatePattern\Contact;
 use App\PatientStatePattern\Positive;
 use App\PatientStatePattern\Dead;
 
+use App\RecordStatePattern\Record;
+use App\RecordStatePattern\RecordState;
+use App\RecordStatePattern\NotFilled;
+use App\RecordStatePattern\Unchecked;
+use App\RecordStatePattern\Checked;
+
 class Adultpatient extends Patient{
     private $id;
     private $name;
@@ -28,6 +34,7 @@ class Adultpatient extends Patient{
     public function registerAction(){
         if(parent::checkPHISession()){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
                 if(trim($_POST['id_checked']) === 'yes'){
                     if($_POST['new']==='no'){
                         $data = [
@@ -245,6 +252,7 @@ class Adultpatient extends Patient{
                     // log in success
                     $this->createSession($adultPatient);
                     header('location: '.URLROOT.'/adult-patient');
+                    die();
                 
                 }
                 else{
@@ -282,9 +290,9 @@ class Adultpatient extends Patient{
 
     public function indexAction(){
         if ($this->isLoggedIn()){
-            $adultData = AdultPatientModel::getPatientData($_SESSION['adult_id']);
-            View::render('AdultPatients/index.php', ['adultData' => $adultData]);
-            //View::render('AdultPatients/index.php', []);
+            //$adultData = AdultPatientModel::getPatientData($_SESSION['adult_id']);
+            //View::render('AdultPatients/index.php', ['adultData' => $adultData]);
+            View::render('AdultPatients/index.php', []);
         }
         else {
             View::render('AdultPatients/notLoggedIn.php', []);
@@ -333,7 +341,9 @@ class Adultpatient extends Patient{
                     $state = 'set'.$state;
                     if (is_callable([$this, $state])) {
                         $this->$state();
-                        $rows = AdultPatientModel::changeState($this->email, $this->NIC, $_POST['act']);
+                        $id_arr = AdultPatientModel::getDoctorToAssign();
+                        $doctor_id = ($id_arr[0])->id;
+                        $rows = AdultPatientModel::changeStateAndDoctor($this->email, $this->NIC, $_POST['act'], $doctor_id);
                         if($rows>0) {
                             View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
                         } else {
@@ -393,7 +403,7 @@ class Adultpatient extends Patient{
                     $this->$state();
                     $rows = AdultPatientModel::changeState($this->email, $this->NIC, 'positive');
                     if($rows>0) {
-                        View::render('AdultPatients/accSuccess.php', ['childObj' => $this]);
+                        View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
                     } else {
                         echo 'Failed';
                     }
@@ -404,11 +414,111 @@ class Adultpatient extends Patient{
             }
         }
 
+    public function markdead(){
+
+            if(parent::checkPHISession()) {
+                if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $data = [
+                        'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                        'nic_err' => ''
+                    ];
+    
+                    if(parent::isValidNIC($data['NIC'])){
+                        $adultData = AdultPatientModel::searchByNIC($data['NIC']);
+                        // $contact_children = array();
+                        View::render('AdultPatients/post_markdead.php', ['adultData' => $adultData , 'nic' => $data['NIC']]);
+                        
+                                    
+                    }
+                    else{
+                        $data['nic_err'] = 'Invalid NIC';
+                        View::render('AdultPatients/pre_markdead.php', ['data'=> $data]);
+                    }
+                }
+                else {
+                    $data = [
+                        'NIC' => '' ,
+                        'nic_err' => ''
+                    ] ;
+                    View::render('AdultPatients/pre_markdead.php', ['data'=> $data]); 
+                }
+            }
+    
+        }
+    
+        public function markdeadHelper(){
+            if(parent::checkPHISession()) {
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $this->initialize($_POST['nic'], $_POST['email']);
+                    // if (is_callable([$this, $state])) {
+                    //  $this->$state();
+                        parent::markDead();
+                        $rows = AdultPatientModel::changeState($this->email, $this->NIC, 'dead');
+                        if($rows>0) {
+                            View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
+                        } else {
+                            echo 'Failed';
+                        }
+                    // } else {
+                    //     echo 'Failed';
+                    // }
+                  }
+                }
+            }
+
+            public function searchAction(){
+                if(parent::checkPHISession()) {
+                    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        $data = [
+                            'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                            'nic_err' => ''
+                        ];
+
+                        if(parent::isValidNIC($data['NIC'])){
+                            $adultData = AdultPatientModel::searchByNIC($data['NIC']);
+                            View::render('AdultPatients/post_search.php', ['adultData' => $adultData , 'nic' => $data['NIC']]);
+        
+                        // if(parent::isValidNIC($data['NIC'])){
+                        //     $adultData = AdultPatientModel::searchByNIC($data['NIC']);
+                        //     if($adultData){
+                        //     $this->initialize($adultData[0]->NIC,$adultData[0]->email);
+                        //     View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
+                        //     }
+                            
+                                        
+                        }
+                        else{
+                            $data['nic_err'] = 'Invalid NIC';
+                            View::render('AdultPatients/pre_search.php', ['data'=> $data]);
+                        }
+                    }
+                    else {
+                        $data = [
+                            'NIC' => '' ,
+                            'nic_err' => ''
+                        ] ;
+                        View::render('AdultPatients/pre_search.php', ['data'=> $data]); 
+                    }
+                }
+            }
+        
+            public function searchHelper(){
+        
+                if(parent::checkPHISession()) {
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                        $this->initialize($_POST['nic'], $_POST['email']);
+                        View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
+                           
+                    }
+                }
+            }
+
 
 
     public function recordAction() {
         if ($this->isLoggedIn()) {
             $this->initializeFromSession();
+            $record = new Record();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $temperature = $_POST['temperature'];
                 if (is_numeric($temperature) || is_float($temperature)) {
@@ -429,54 +539,60 @@ class Adultpatient extends Patient{
                     $vomiting       = 0;
                     $diarrhea       = 0;
                     $other          = htmlspecialchars(trim($_POST['other']));
-                    $level = 0;
+                    $checked_count  = 0;
+                    $level = 'normal';
                     if ($_POST['fever'] === 'yes') {
                         $fever = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['cough'] === 'yes') {
                         $cough = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['sore_throat'] === 'yes') {
                         $sore_throat = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['short_breath'] === 'yes') {
                         $short_breath = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['runny_nose'] === 'yes') {
                         $runny_nose = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['chills'] === 'yes') {
                         $chills = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['muscle_ache'] === 'yes') {
                         $muscle_ache = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['headache'] === 'yes') {
                         $headache = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['fatigue'] === 'yes') {
                         $fatigue = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['abdominal_pain'] === 'yes') {
                         $abdominal_pain = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['vomiting'] === 'yes') {
                         $vomiting = 1;
-                        $level += 1;
+                        $checked_count += 1;
                     }
                     if ($_POST['diarrhea'] === 'yes') {
                         $diarrhea = 1;
-                        $level += 1;
+                        $checked_count += 1;
+                    }
+                    if ($checked_count > 7) {
+                        $level = 'critical';
+                    } else if ($checked_count > 4) {
+                        $level = 'serious';
                     }
                     $symptoms = [
                         "patient_id"     => $this->id,
@@ -500,10 +616,11 @@ class Adultpatient extends Patient{
                         "diarrhea"       => $diarrhea,
                         "other"          => $other,
                         "level"          => $level,
-                        "checked_count"  => 0
+                        "checked_count"  => $checked_count
                     ];
                     if (AdultPatientModel::recordSymptoms($symptoms)) {
-                        View::render('AdultPatients/recordSuccess.php', $symptoms);
+                        $record->initialize($symptoms);
+                        View::render('AdultPatients/recordSuccess.php', ['symptoms' => $record]);
                     }
                 }
             } else {
@@ -673,32 +790,6 @@ class Adultpatient extends Patient{
         }
     }
 
-    protected function activeHelper($patient) {
-        View::render('AdultPatients/active.php', ['adultObj' => $patient]);
-    }
-
-    private function initializeFromSession() {
-        $this->initialize($_SESSION['NIC'], $_SESSION['adult_email']);
-    }
-
-    public function initialize($NIC, $email) {
-        $adultObj = AdultPatientModel::searchByEmailAndNIC($NIC, $email);
-        if ($adultObj) {
-            $this->id          = $adultObj->id;
-            $this->name        = $adultObj->name;
-            $this->email       = $adultObj->email;
-            $this->address     = $adultObj->address;
-            $this->NIC         = $adultObj->NIC;
-            $this->gender      = $adultObj->gender;
-            $this->age         = $adultObj->age;
-            $this->contact_no  = $adultObj->contact_no;
-            $this->phi_range   = $adultObj->phi_range;
-            $this->phi_id      = $adultObj->phi_id;
-            $this->doctor_id   = $adultObj->doctor_id;
-            parent::transitionTo(PatientState::objFromName($adultObj->state));
-        }
-    }
-
     public function medHistoryAction(){
         if ($this->isLoggedIn()){
             View::render('AdultPatients/medicalHistory.php', []);
@@ -709,10 +800,26 @@ class Adultpatient extends Patient{
         
     }
 
-    public function profileAction(){
+    public function editMedHistoryAction() {
         if ($this->isLoggedIn()){
-            $adultData = AdultPatientModel::getPatientData($_SESSION['adult_id']);
-            View::render('AdultPatients/profile.php', ['adultData' => $adultData]);
+            $this->initializeFromSession();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                //TODO
+                View::render('AdultPatients/editMedHistorySuccess.php', []);
+            } else {
+                //TODO
+                View::render('AdultPatients/editMedHistory.php', []);
+            }
+        }
+        else {
+            View::render('AdultPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function profileAction() {
+        if ($this->isLoggedIn()){
+            $this->initializeFromSession();
+            View::render('AdultPatients/profile.php', ['adultData' => $this]);
         }
         else {
             View::render('AdultPatients/notLoggedIn.php', []);
@@ -764,6 +871,114 @@ class Adultpatient extends Patient{
         }
         else {
             View::render('AdultPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function noRecordSelectedAction() {
+        if ($this->isLoggedIn()){
+            View::render('AdultPatients/recordNotSelected.php', []);
+        }
+        else {
+            View::render('AdultPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function viewRecordAction() {
+        if ($this->isLoggedIn()){
+            if (isset($_GET['recordID'])) {
+                $record_id = $_GET['recordID'];
+                if (is_numeric($record_id)) {
+                    $record = AdultPatientModel::getRecord($_SESSION['adult_id'], $record_id);
+                    if ($record) {
+                        $symptoms = new Record();
+                        $symptoms->initialize($record);
+                        View::render('AdultPatients/symptomRecordView.php', ['symptoms' => $symptoms]);
+                    }
+                } else {
+                    echo "Not Found";
+                }
+            } else {
+                echo "Not Found";
+            }
+        }
+        else {
+            View::render('AdultPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function recordsHistoryAction() {
+        if ($this->isLoggedIn()){
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if (isset($_POST['record_cnt'])) {
+                    $rec_cnt = $_POST['record_cnt'];
+                    if (is_numeric($rec_cnt)) {
+                        $records = AdultPatientModel::getRecordsCnt($_SESSION['adult_id'], $rec_cnt);
+                        if ($records) {
+                            $cnt = count($records);
+                            $data = [
+                                'records'  => $records,
+                                'rec_cnt'  => $rec_cnt,
+                                'has_more' => true,
+                                'cnt'      => $cnt
+                            ];
+                            if ($cnt < $rec_cnt) {
+                                $data['has_more'] = false;
+                            }
+                            View::render('AdultPatients/recordsAllView.php', $data);
+                        }
+                    } else {
+                        View::render('AdultPatients/noRecord.php', []);
+                    }
+                } else {
+                    View::render('AdultPatients/noRecord.php', []);
+                }
+            } else {
+                $records = AdultPatientModel::getRecordsCnt($_SESSION['adult_id'], 10);
+                if ($records) {
+                    $cnt = count($records);
+                    $data = [
+                        'records'  => $records,
+                        'rec_cnt'  => 10,
+                        'has_more' => true,
+                        'cnt'      => $cnt
+                    ];
+                    if ($cnt < 10) {
+                        $data['has_more'] = false;
+                    }
+                    View::render('AdultPatients/recordsAllView.php', $data);
+                } else {
+                    View::render('AdultPatients/noRecord.php', []);
+                }
+            }
+        }
+        else {
+            View::render('AdultPatients/notLoggedIn.php', []);
+        }
+    }
+
+    protected function activeHelper($patient) {
+        View::render('AdultPatients/active.php', ['adultObj' => $patient]);
+    }
+
+    private function initializeFromSession() {
+        $this->initialize($_SESSION['NIC'], $_SESSION['adult_email']);
+    }
+
+    public function initialize($NIC, $email) {
+        $adultObj = AdultPatientModel::searchByEmailAndNIC($NIC, $email);
+        if ($adultObj) {
+            $this->id          = $adultObj->id;
+            $this->name        = $adultObj->name;
+            $this->email       = $adultObj->email;
+            $this->address     = $adultObj->address;
+            $this->NIC         = $adultObj->NIC;
+            $this->gender      = $adultObj->gender;
+            $this->age         = $adultObj->age;
+            $this->contact_no  = $adultObj->contact_no;
+            $this->phi_range   = $adultObj->phi_range;
+            $this->phi_id      = $adultObj->phi_id;
+            $this->doctor_id   = $adultObj->doctor_id;
+            parent::transitionTo(PatientState::objFromName($adultObj->state));
         }
     }
 

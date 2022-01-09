@@ -198,7 +198,7 @@ class PHI extends \Core\Controller{
 
 
     private function createSession($curr_phi){
-        $_SESSION['phi_id'] = $curr_phi->id;
+        $_SESSION['phi_id'] =   $curr_phi->id;
         $_SESSION['phi_email'] = $curr_phi->email;
         $_SESSION['phi_name'] = $curr_phi->name;
         $_SESSION['phi_area'] = $curr_phi->PHI_station;
@@ -300,10 +300,74 @@ class PHI extends \Core\Controller{
             View::render('PHI/search_view.php');
 
         }
-
-        
     }
 
+
+    public function checkRecordsAction(){
+
+        if ($this->isLoggedIn()){
+            $records = PHIModel::getRecords($_SESSION['phi_id']);
+            View::render('PHI/check-records.php', ['records' => $records]);
+        }
+    }
+
+    public function checkRecordAction(){
+        if ($this->isLoggedIn()){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // $feedback = $_POST['feedback'];
+                // $recordId = $_POST['id'];
+                
+                // $res = PHIModel::giveFeedback($recordId, $feedback);
+                // if ($res){
+                //     flash('check_success', 'You mark a record.', "alert alert-success");
+                //     header('location: '.URLROOT.'/doctor/check-records');
+                // }
+                // else{
+                //     flash('check_fail', 'Failed to mark record.', "alert alert-danger");
+                //     header('location: '.URLROOT.'/doctor/check-records');
+                // }
+            }
+            else{
+                if ($_GET['id']){
+                    $recordId = $_GET['id'];
+    
+                    $record = PHIModel::getRecord($recordId);
+                    
+                    if ($record){
+                        $medicalId = PHIModel::getMedicalHistoryId($record['patient_id'], $record['type']);
+                        View::render('PHI/check-record.php', ['record' => $record, 'medical_history_id' => $medicalId]);
+                    }
+                    else{
+                        echo "Record is empty.";
+                    }
+                }
+            }
+            
+        }
+    }
+
+    public function activeExistingAccAction(){
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            $type = $_POST['Patient_type'];
+            
+            if($type == 'child'){
+                header('location: '.URLROOT.'/child-patient/activate-existing-acc');
+            
+            }
+            else {
+                header('location: '.URLROOT.'/adult-patient/markdead');
+            }
+        }
+
+        else{
+
+            View::render('PHI/active_existing_acc_view.php');
+
+        }
+        
+    }
     public function sendMsgToMyPatientsAction(){
         // send-msg-to-my-patients
         $msg = $_REQUEST['msg'];
