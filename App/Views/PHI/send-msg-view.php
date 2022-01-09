@@ -33,7 +33,7 @@ include_once 'navbar.php';
                 <div class="form-group">
                 <label for="comment">Message:</label>
                 <br>
-                <textarea class="form-control" rows="5" id="msg"></textarea>
+                <textarea class="form-control" rows="5" id="msg" name="msg"></textarea>
                 </div>
 
                 <div class="text-center mt-4 col-md-10" >
