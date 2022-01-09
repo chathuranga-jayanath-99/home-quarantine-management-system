@@ -31,6 +31,7 @@
                             <span class="font-weight-bold"><?php echo $childData->getName(); ?></span>
                             <span class="text-black-50"><?php echo $childData->getEmail(); ?></span>
                             <span><div class="mt-5 text-center"><a href="<?php echo URLROOT?>/child-patient/edit-profile" class="btn btn-primary">Edit Profile</a></div></span>
+                            <span><div class="mt-3 text-center"><a href="<?php echo URLROOT?>/child-patient/password-change" class="btn btn-warning">Change Password</a></div></span>
                         </div>
                     </div>
                     <div class="col-md-6 border-right">

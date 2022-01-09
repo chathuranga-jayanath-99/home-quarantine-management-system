@@ -259,4 +259,93 @@ class ChildPatientModel extends PatientModel {
         return false;
     }
 
+    public static function getNotificationsAll($child_id) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_msg
+                WHERE receiver_id=:receiver_id AND receiver_type=:receiver_type
+                ORDER BY id DESC;';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            'receiver_id'   => $child_id,
+            'receiver_type' => 'child_patient'
+        ]);
+        $row = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
+    }
+
+    public static function getNotificationsUnread($child_id) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_msg
+                WHERE receiver_id=:receiver_id AND receiver_type=:receiver_type AND msg_read=:msg_read
+                ORDER BY id DESC;';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            'receiver_id'   => $child_id,
+            'receiver_type' => 'child_patient',
+            'msg_read'      => 0
+        ]);
+        $row = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
+    }
+
+    public static function getNotificationsRead($child_id) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_msg
+                WHERE receiver_id=:receiver_id AND receiver_type=:receiver_type AND msg_read=:msg_read
+                ORDER BY id DESC;';
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            'receiver_id'   => $child_id,
+            'receiver_type' => 'child_patient',
+            'msg_read'      => 1
+        ]);
+        $row = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
+    }
+
+    public static function readNotification($msg_id, $receiver_type, $receiver_id) {
+        $db = static::getDB();
+        $sql = 'UPDATE tbl_msg
+                SET msg_read=:msg_read
+                WHERE id=:msg_id AND receiver_type=:receiver_type AND receiver_id=:receiver_id;';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute([
+            'msg_read'      => 1,
+            'msg_id'        => (int) $msg_id,
+            'receiver_type' => $receiver_type,
+            'receiver_id'   => $receiver_id
+        ]);
+        if ($res) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function readNotificationAll($receiver_type, $receiver_id) {
+        $db = static::getDB();
+        $sql = 'UPDATE tbl_msg
+                SET msg_read=:msg_read_1
+                WHERE msg_read=:msg_read_0 AND receiver_type=:receiver_type AND receiver_id=:receiver_id;';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute([
+            'msg_read_1'    => 1,
+            'msg_read_0'    => 0,
+            'receiver_type' => $receiver_type,
+            'receiver_id'   => $receiver_id
+        ]);
+        if ($res) {
+            return true;
+        }
+        return false;
+    }
+
 }
