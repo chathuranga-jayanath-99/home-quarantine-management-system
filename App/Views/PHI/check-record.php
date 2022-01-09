@@ -9,8 +9,7 @@ include_once 'navbar.php';
 
 <section class="container pt-3">
 
-<a href="<?php echo URLROOT;?>/PHI">Home</a>
-<a href="<?php echo URLROOT;?>/PHI/logout">Logout</a>
+
 
 <h1>
 <?php 

@@ -373,7 +373,9 @@ class PHI extends \Core\Controller{
     }
     public function sendMsgToMyPatientsAction(){
         // send-msg-to-my-patients
-        $msg = $_REQUEST['msg'];
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        
+        $msg = $_POST['msg'];
 
         $myPatients = PHIModel::getPatientsOfPHI($_SESSION['phi_id']);
 
@@ -394,7 +396,13 @@ class PHI extends \Core\Controller{
         }
 
         $mediator->sendMessage($msg, $phi);
+
     }
+
+    else {
+        View::render('PHI/send-msg-view.php');
+    }
+}
 
     public function formNotFilledAction(){
 
