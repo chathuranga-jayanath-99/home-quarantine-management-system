@@ -6,6 +6,7 @@ use App\Models\PHIModel;
 use App\Models\ChatMediatorImpl;
 use App\Models\ChildPatientModel;
 use App\Models\AdultPatientModel;
+use App\RecordStatePattern\Record;
 
 class PHI extends \Core\Controller{
 
@@ -19,6 +20,7 @@ class PHI extends \Core\Controller{
                 'confirm_password' => trim($_POST['confirm_password']),
                 'moh_area' => trim($_POST['moh_area']),
                 'PHI_station' => trim($_POST['PHI_station']),
+                'PHI_id' => trim($_POST['PHI_id']),
                 'NIC' => trim($_POST['NIC']),
                 'contact_number' => trim($_POST['contact_number']) ,
                 'name_err' => '',
@@ -97,6 +99,7 @@ class PHI extends \Core\Controller{
                 'confirm_password' => '',
                 'moh_area' => '',
                 'PHI_station' => '',
+                'PHI_id' => '',
                 'NIC' => '',
                 'contact_number' => '',
                 'name_err' => '',
@@ -391,5 +394,15 @@ class PHI extends \Core\Controller{
         }
 
         $mediator->sendMessage($msg, $phi);
+    }
+
+    public function formNotFilledAction(){
+
+        $yesterday =  date('Y-m-d',strtotime("-1 days")) ;
+        $records = PHIModel::getFormNotfilledPatients($yesterday , $_SESSION['phi_id'] ) ;
+        View::render('PHI/form-not-filled.php', ['records' => $records]);
+        
+        
+
     }
 }

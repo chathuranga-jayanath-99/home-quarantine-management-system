@@ -25,14 +25,15 @@ class PHIModel extends User{
 
         $db = static::getDB();
 
-        $sql = 'INSERT INTO tbl_phi (name, email, moh_area, PHI_station, NIC, contact_number, password) 
-                             values (:name, :email, :moh_area, :PHI_station, :NIC, :contact_number, :password)';
+        $sql = 'INSERT INTO tbl_phi (name, email, moh_area, PHI_station,phi_id , NIC, contact_number, password) 
+                             values (:name, :email, :moh_area, :PHI_station, :phi_id , :NIC, :contact_number, :password)';
         $stmt = $db->prepare($sql);
         $res = $stmt->execute([
             'name'=>$data['name'],
             'email'=>$data['email'],
             'moh_area' => $data['moh_area'],
             'PHI_station' => $data['PHI_station'],
+            'phi_id' => $data['PHI_id'],
             'NIC' => $data['NIC'],
             'contact_number' => $data['contact_number'],
             'password'=>$data['password'],
@@ -178,5 +179,57 @@ class PHIModel extends User{
         //     return $medical_history_id;
         // }
         // return false;
+    }
+
+    public static function getFormNotfilledPatients($yesterday,$phiID){
+        $db = static::getDB();
+        // $sql = 'SELECT * FROM tbl_record WHERE phi_id=:phiID AND datetime!=:yesterday ' ;
+        // // SELECT * FROM `tbl_record` WHERE `datetime`!= "2022-01-08";
+        // $stmt = $db->prepare($sql);
+        // $stmt->execute(['phiID' => $phiID, 'yesterday'=>$yesterday]);
+        // $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        // if(!empty($row)){
+        //     echo "hello";
+        //     return $row;
+        // }
+
+        $sql1 = 'SELECT r.id, ap.name, ap.age, r.type, ap.contact_no
+        FROM tbl_record r
+        JOIN tbl_adult_patient ap
+        ON r.patient_id = ap.id
+        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND r.type="adult" ';
+        $stmt = $db->prepare($sql1);
+        $stmt->execute(['phiID' => $phiID, 'yesterday' => $yesterday]);
+        $row1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $sql2 = 'SELECT r.id, cp.name, cp.age, r.type, cp.contact_no
+        FROM tbl_record r
+        JOIN tbl_child_patient cp
+        ON r.patient_id = cp.id
+        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND r.type="child" ';
+        $stmt = $db->prepare($sql2);
+        $stmt->execute(['phiID' => $phiID, 'yesterday' => $yesterday]);
+        $row2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $res = ['adult' => $row1, 'child' => $row2];
+        
+        if(!empty($res['adult'] || !empty($res['child']))){
+            return $res;
+        }
+        else {
+            return false;
+        }
+
+        // $res = $row1+$row2 ;
+        // if(!empty($res)){
+        //     return $res ;
+        // }
+        // else{
+        //     return false ;
+        // }
+        
+
+        
+
     }
 }

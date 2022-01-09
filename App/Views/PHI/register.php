@@ -69,6 +69,16 @@
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fa fa-id-card fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0">
+                      <!-- <label class="form-label" for="PHI_station">PHI Range/Station</label> -->
+                      <input type="text" name="PHI_id" value="<?php echo $data['PHI_id']?>" class="form-control" placeholder="PHI ID" />
+                      
+                      
+                    </div>
+                  </div>
+
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fa fa-id-card fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
                       <!-- <label class="form-label" for="NIC">NIC Number</label> -->
                       <input type="text" name="NIC" value="<?php echo $data['NIC']?>" class="form-control" placeholder="NIC Number"/>
                       <span style="color:red"><?php echo $data['nic_err']?></span>
