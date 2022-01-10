@@ -57,7 +57,7 @@
     $subPage = '';
     include_once 'navbar.php';
     ?>
-    <section class="vh-100" style="background-color: #eee;">
+    <section class="vh-auto py-5" style="background-color: #eee;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-12 col-xl-20">
@@ -85,11 +85,11 @@
                                             <table class="table table-borderless">
                                                 <tr>
                                                     <th scope="col">Start Date</th>
-                                                    <td><?php echo $childObj->getStartQuarantineDate(); ?></td>
+                                                    <td><?php echo $adultObj->getStartQuarantineDate(); ?></td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="col">End Date</th>
-                                                    <td><?php echo $childObj->getEndQuarantineDate(); ?></td>
+                                                    <td><?php echo $adultObj->getEndQuarantineDate(); ?></td>
                                                 </tr>
                                             </table>
                                             <?php

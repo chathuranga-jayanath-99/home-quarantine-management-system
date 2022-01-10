@@ -39,7 +39,7 @@ if ($last) {
           <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/adult-patient/profile"><button class="btn <?php if ($page === 'profile') {echo 'btn-success';} ?>">Profile</button></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" <?php if ($notRecorded) { ?> data-bs-toggle="tooltip" data-bs-placement="bottom" title="You have not recorded symptoms in last 12 hours" <?php } ?> href="<?php echo URLROOT; ?>/child-patient/record"><button class="btn <?php if ($page === 'record') {echo 'btn-success';} ?>"><?php if ($notRecorded) { ?><span class="spinner-grow spinner-grow-sm text-danger me-2" id="rec-glow"></span><?php } ?>Record Symptoms</button></a>        </li>
+          <a class="nav-link" <?php if ($notRecorded) { ?> data-bs-toggle="tooltip" data-bs-placement="bottom" title="You have not recorded symptoms in last 12 hours" <?php } ?> href="<?php echo URLROOT; ?>/adult-patient/record"><button class="btn <?php if ($page === 'record') {echo 'btn-success';} ?>"><?php if ($notRecorded) { ?><span class="spinner-grow spinner-grow-sm text-danger me-2" id="rec-glow"></span><?php } ?>Record Symptoms</button></a>        </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/records-history"><button class="btn <?php if ($page === 'rec-history') {echo 'btn-success';} ?>">Record History</button></a>
         </li>

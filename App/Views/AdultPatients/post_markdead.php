@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                    <h4 class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">Do you want to continue marking adult patient deadths?</h4>
+                    <h4 class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">Do you want to continue marking adult patient deaths?</h4>
                     
                     <div class="text-center mt-3">
                         <a href="<?php echo URLROOT.'/adult-patient/markdead' ?>">

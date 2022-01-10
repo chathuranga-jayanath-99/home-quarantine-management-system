@@ -360,7 +360,7 @@ class PHI extends \Core\Controller{
             
             }
             else {
-                header('location: '.URLROOT.'/adult-patient/markdead');
+                header('location: '.URLROOT.'/adult-patient/activate-existing-acc');
             }
         }
 

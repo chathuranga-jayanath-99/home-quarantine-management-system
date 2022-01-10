@@ -400,7 +400,7 @@ class Adultpatient extends Patient{
         }
      }
 
-     public function markpositiveHelper(){
+    public function markpositiveHelper(){
         if(parent::checkPHISession()) {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $this->initialize($_POST['nic'], $_POST['email']);
@@ -418,104 +418,132 @@ class Adultpatient extends Patient{
                     echo 'Failed';
                 }
             }
-            }
         }
+    }
 
     public function markdead(){
+        if(parent::checkPHISession()) {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = [
+                    'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                    'nic_err' => ''
+                ];
 
-            if(parent::checkPHISession()) {
-                if($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    $data = [
-                        'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
-                        'nic_err' => ''
-                    ];
-    
-                    if(parent::isValidNIC($data['NIC'])){
-                        $adultData = AdultPatientModel::searchByNIC($data['NIC']);
-                        // $contact_children = array();
-                        View::render('AdultPatients/post_markdead.php', ['adultData' => $adultData , 'nic' => $data['NIC']]);
-                        
-                                    
-                    }
-                    else{
-                        $data['nic_err'] = 'Invalid NIC';
-                        View::render('AdultPatients/pre_markdead.php', ['data'=> $data]);
-                    }
+                if(parent::isValidNIC($data['NIC'])){
+                    $adultData = AdultPatientModel::searchByNIC($data['NIC']);
+                    // $contact_children = array();
+                    View::render('AdultPatients/post_markdead.php', ['adultData' => $adultData , 'nic' => $data['NIC']]);
+                    
+                                
                 }
-                else {
-                    $data = [
-                        'NIC' => '' ,
-                        'nic_err' => ''
-                    ] ;
-                    View::render('AdultPatients/pre_markdead.php', ['data'=> $data]); 
+                else{
+                    $data['nic_err'] = 'Invalid NIC';
+                    View::render('AdultPatients/pre_markdead.php', ['data'=> $data]);
                 }
             }
-    
+            else {
+                $data = [
+                    'NIC' => '' ,
+                    'nic_err' => ''
+                ] ;
+                View::render('AdultPatients/pre_markdead.php', ['data'=> $data]); 
+            }
         }
     
-        public function markdeadHelper(){
-            if(parent::checkPHISession()) {
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    $this->initialize($_POST['nic'], $_POST['email']);
-                    // if (is_callable([$this, $state])) {
-                    //  $this->$state();
-                        parent::markDead();
-                        $rows = AdultPatientModel::changeState($this->email, $this->NIC, 'dead');
-                        if($rows>0) {
-                            View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
-                        } else {
-                            echo 'Failed';
-                        }
-                    }
-                }
-            }
-
-            public function searchAction(){
-                if(parent::checkPHISession()) {
-                    if($_SERVER['REQUEST_METHOD'] == 'POST') {
-                        $data = [
-                            'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
-                            'nic_err' => ''
-                        ];
-
-                        if(parent::isValidNIC($data['NIC'])){
-                            $adultData = AdultPatientModel::searchByNIC($data['NIC']);
-                            View::render('AdultPatients/post_search.php', ['adultData' => $adultData , 'nic' => $data['NIC']]);
-        
-                        // if(parent::isValidNIC($data['NIC'])){
-                        //     $adultData = AdultPatientModel::searchByNIC($data['NIC']);
-                        //     if($adultData){
-                        //     $this->initialize($adultData[0]->NIC,$adultData[0]->email);
-                        //     View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
-                        //     }
-                            
-                                        
-                        }
-                        else{
-                            $data['nic_err'] = 'Invalid NIC';
-                            View::render('AdultPatients/pre_search.php', ['data'=> $data]);
-                        }
-                    }
-                    else {
-                        $data = [
-                            'NIC' => '' ,
-                            'nic_err' => ''
-                        ] ;
-                        View::render('AdultPatients/pre_search.php', ['data'=> $data]); 
-                    }
-                }
-            }
-        
-            public function searchHelper(){
-        
-                if(parent::checkPHISession()) {
-                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                        $this->initialize($_POST['nic'], $_POST['email']);
+    }
+    
+    public function markdeadHelper(){
+        if(parent::checkPHISession()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->initialize($_POST['nic'], $_POST['email']);
+                // if (is_callable([$this, $state])) {
+                //  $this->$state();
+                    parent::markDead();
+                    $rows = AdultPatientModel::changeState($this->email, $this->NIC, 'dead');
+                    if($rows>0) {
                         View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
-                           
+                    } else {
+                        echo 'Failed';
                     }
+            }
+        }
+    }
+
+    public function searchAction(){
+        if(parent::checkPHISession()) {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = [
+                    'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                    'nic_err' => ''
+                ];
+
+                if(parent::isValidNIC($data['NIC'])){
+                    $adultData = AdultPatientModel::searchByNIC($data['NIC']);
+                    View::render('AdultPatients/post_search.php', ['adultData' => $adultData , 'nic' => $data['NIC']]);
+
+                // if(parent::isValidNIC($data['NIC'])){
+                //     $adultData = AdultPatientModel::searchByNIC($data['NIC']);
+                //     if($adultData){
+                //     $this->initialize($adultData[0]->NIC,$adultData[0]->email);
+                //     View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
+                //     }
+                    
+                                
+                }
+                else{
+                    $data['nic_err'] = 'Invalid NIC';
+                    View::render('AdultPatients/pre_search.php', ['data'=> $data]);
                 }
             }
+            else {
+                $data = [
+                    'NIC' => '' ,
+                    'nic_err' => ''
+                ] ;
+                View::render('AdultPatients/pre_search.php', ['data'=> $data]); 
+            }
+        }
+    }
+        
+    public function searchHelper(){
+        
+        if(parent::checkPHISession()) {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $this->initialize($_POST['nic'], $_POST['email']);
+                View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
+                   
+            }
+        }
+    }
+
+    public function activateExistingAccAction(){
+
+        if(parent::checkPHISession()) {
+            if($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $data = [
+                    'NIC' => htmlspecialchars(strtoupper(trim($_POST['NIC']))),
+                    'nic_err' => ''
+                ];
+
+                if(parent::isValidNIC($data['NIC'])){
+                    $adultData = AdultPatientModel::searchByNIC($data['NIC']);
+                    View::render('AdultPatients/register.php', ['adultData' => $adultData , 'nic' => $data['NIC']]);
+                }
+                else{
+                    $data['nic_err'] = 'Invalid NIC';
+                    View::render('AdultPatients/pre_search.php', ['data'=> $data]);
+                }
+            }
+            else {
+                $data = [
+                    'NIC' => '' ,
+                    'nic_err' => ''
+                ] ;
+                View::render('AdultPatients/pre_activate.php', ['data'=> $data]); 
+            }
+        }
+
+    }
 
 
 
@@ -796,7 +824,7 @@ class Adultpatient extends Patient{
                     }
                 }
             } else {
-                View::render('AdultPatients/pwdChange1.php', ['data' => ['password' => '', 'password_err' => ''], 'has_msg' => $has_msg]);
+                View::render('AdultPatients/pwdChange1.php', ['data' => ['password' => '', 'password_err' => ''], 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
             }
         } else {
             View::render('AdultPatients/notLoggedIn.php', []);
