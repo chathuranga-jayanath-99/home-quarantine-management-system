@@ -407,4 +407,96 @@ class ChildPatientModel extends PatientModel {
         return false;
     }
 
+    public static function hasNotifications($receiver_type, $receiver_id) {
+        $db = static::getDB();
+        $sql = 'SELECT EXISTS (
+                    SELECT 1 FROM tbl_msg
+                    WHERE msg_read=:msg_read AND receiver_type=:receiver_type AND receiver_id=:receiver_id
+                    LIMIT 1
+                )';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute([
+            'msg_read'      => 0,
+            'receiver_type' => $receiver_type,
+            'receiver_id'   => $receiver_id
+        ]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row;
+    }
+
+    public static function getLastRecord($patient_id) {
+        $db = static::getDB();
+        $data = [
+            'patient_id' => $patient_id,
+            'type'       => 'child'
+        ];
+        $sql = 'SELECT id, datetime, checked, level, feedback FROM tbl_record WHERE
+                patient_id=:patient_id AND type=:type
+                ORDER BY id DESC
+                LIMIT 1';
+        $stmt = $db->prepare($sql);
+        $stmt->execute($data);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
+    }
+
+    public static function getMedHistory($patient_id) {
+        $db = static::getDB();
+        $data = [
+            'patient_id'    => $patient_id,
+            'patient_type'  => 'child'
+        ];
+        $sql = 'SELECT * FROM tbl_medical_history WHERE
+                patient_id=:patient_id AND patient_type=:patient_type';
+        $stmt = $db->prepare($sql);
+        $stmt->execute($data);
+        $row = $stmt->fetch(PDO::FETCH_OBJ);
+        return $row;
+    }
+
+    public static function recordMedHistory($patient_id, $medHistory){
+
+        $db = static::getDB();
+        $data = [
+            'patient_id'    => $patient_id,
+            'patient_type'  => 'child'
+        ];
+        $sql = 'SELECT * FROM tbl_medical_history WHERE
+                patient_id=:patient_id AND patient_type=:patient_type';
+        $stmt = $db->prepare($sql);
+        $stmt->execute($data);
+
+        if ($stmt->rowCount() > 0){
+            $sql = 'UPDATE tbl_medical_history 
+                SET description=:description
+                WHERE patient_id=:patient_id and patient_type=:patient_type';
+            $stmt = $db->prepare($sql);
+            $res = $stmt->execute($medHistory);
+            if ($res) {
+                return true;
+            }
+            return false;
+
+        } else {
+            $sql = 'INSERT INTO tbl_medical_history (
+                    patient_id,         patient_type,      description 
+                ) VALUES  (
+                   :patient_id,        :patient_type,     :description
+                )';
+            $stmt = $db->prepare($sql);
+            $res = $stmt->execute([
+                'patient_id'    =>  $data['patient_id'],
+                'patient_type'  =>  $data['patient_type'],
+                'description'   =>  $medHistory['description']
+            ]);
+            if ($res) {
+                return true;
+            }
+            return false;
+        }
+    }
+
 }
