@@ -1,3 +1,20 @@
+<?php
+$notRecorded = false;
+if ($last) {
+    $time_difference = time() - strtotime($last['datetime']);
+    $notRecorded = false;
+    if ($state === 'Positive' || $state === 'Contact Person') {
+        if ($time_difference > 43200) {
+            $notRecorded = true;    // active account; 43200s = 12h
+        }
+    }
+} else {
+    if ($state === 'Positive' || $state === 'Contact Person') {
+        $notRecorded = true;
+    }
+}
+?>
+
 <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="<?php echo URLROOT; ?>/child-patient">
@@ -22,7 +39,7 @@
           <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/child-patient/profile"><button class="btn <?php if ($page === 'profile') {echo 'btn-success';} ?>">Profile</button></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/record"><button class="btn <?php if ($page === 'record') {echo 'btn-success';} ?>">Record Symptoms</button></a>
+          <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/record"><button class="btn <?php if ($page === 'record') {echo 'btn-success';} ?>"><?php if ($notRecorded) { ?><span class="spinner-grow spinner-grow-sm text-danger me-2" id="msg-glow"></span><?php } ?>Record Symptoms</button></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/child-patient/records-history"><button class="btn <?php if ($page === 'rec-history') {echo 'btn-success';} ?>">Record History</button></a>

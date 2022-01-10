@@ -58,21 +58,6 @@
     $page = 'home';
     $subPage = '';
     include_once 'navbar.php';
-    $state = $childObj->stateToString();
-    $notRecorded = false;
-    if ($last) {
-        $time_difference = time() - strtotime($last['datetime']);
-        $notRecorded = false;
-        if ($state === 'Positive' || $state === 'Contact Person') {
-            if ($time_difference > 43200) {
-                $notRecorded = true;    // active account; 43200s = 12h
-            }
-        }
-    } else {
-        if ($state === 'Positive' || $state === 'Contact Person') {
-            $notRecorded = true;
-        }
-    }
     ?>
     <section class="vh-auto py-5" style="background-color: #eee;">
     <div class="container h-100">
@@ -153,7 +138,7 @@
                                 <div class="col">
                                     <div id="rem-div" class="card border-dark mb-3 h-100">
                                         <div class="card-body">
-                                            <h5 class="card-title">Reminder</h5>
+                                            <h5 class="card-title"><span class="spinner-grow text-danger me-3" role="status" aria-hidden="true"></span>Reminder</h5>
                                             <p class="card-text">You have not recorded symptoms in last 12 hours.</p>
                                             <div class="text-end">
                                                 <a href="<?php echo URLROOT; ?>/child-patient/record" style="width:85px;" class="btn btn-primary mx-2">Record</a>
@@ -167,8 +152,8 @@
                                 <div class="col">
                                     <div id="msg-div" class="card border-dark mb-3 h-100">
                                         <div class="card-body">
-                                            <h5 class="card-title">Notifications</h5>
-                                            <p class="card-text">You may have unread notifications</p>
+                                            <h5 class="card-title"><span class="spinner-grow text-warning me-3" role="status" aria-hidden="true"></span>Notifications</h5>
+                                            <p class="card-text">You have unread notifications</p>
                                             <div class="text-end">
                                                 <a href="#" style="width:85px;" class="btn btn-primary mx-2" onclick="removeMsgDiv();" data-bs-toggle="offcanvas" data-bs-target="#demo" aria-controls="demo">View</a>
                                                 <a href="#" style="width:85px;" class="btn btn-danger mx-2" onclick="removeMsgDiv();">Dismiss</a>
