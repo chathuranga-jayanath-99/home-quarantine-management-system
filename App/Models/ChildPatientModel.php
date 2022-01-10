@@ -407,4 +407,21 @@ class ChildPatientModel extends PatientModel {
         return false;
     }
 
+    public static function hasNotifications($receiver_type, $receiver_id) {
+        $db = static::getDB();
+        $sql = 'SELECT EXISTS (
+                    SELECT 1 FROM tbl_msg
+                    WHERE msg_read=:msg_read AND receiver_type=:receiver_type AND receiver_id=:receiver_id
+                    LIMIT 1
+                )';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute([
+            'msg_read'      => 0,
+            'receiver_type' => $receiver_type,
+            'receiver_id'   => $receiver_id
+        ]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row;
+    }
+
 }

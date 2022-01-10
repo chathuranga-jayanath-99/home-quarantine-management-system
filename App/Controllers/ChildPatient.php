@@ -276,7 +276,9 @@ class ChildPatient extends Patient {
 
     public function indexAction() {    
         if ($this->isLoggedIn()){
-            View::render('ChildPatients/index.php', []);
+            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+            $has_msg = array_values($res)[0];
+            View::render('ChildPatients/index.php', ['has_msg' => $has_msg]);
         }
         else {
             View::render('ChildPatients/notLoggedIn.php', []);
@@ -522,6 +524,8 @@ class ChildPatient extends Patient {
 
     public function recordAction() {
         if ($this->isLoggedIn()) {
+            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+            $has_msg = array_values($res)[0];
             $this->initializeFromSession();
             $record = new Record();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -625,11 +629,11 @@ class ChildPatient extends Patient {
                     ];
                     if (ChildPatientModel::recordSymptoms($symptoms)) {
                         $record->initialize($symptoms);
-                        View::render('ChildPatients/recordSuccess.php', ['symptoms' => $record]);
+                        View::render('ChildPatients/recordSuccess.php', ['symptoms' => $record, 'has_msg' => $has_msg]);
                     }
                 }
             } else {
-                View::render('ChildPatients/recordSymptoms.php', []);
+                View::render('ChildPatients/recordSymptoms.php', ['has_msg' => $has_msg]);
             }
         } else {
             View::render('ChildPatients/notLoggedIn.php', []);
@@ -723,6 +727,8 @@ class ChildPatient extends Patient {
 
     public function passwordChangeAction() {
         if ($this->isLoggedIn()) {
+            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+            $has_msg = array_values($res)[0];
             $this->initializeFromSession();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $data = [
@@ -731,7 +737,7 @@ class ChildPatient extends Patient {
                 ];
                 if ($_POST['entered'] === 'no') {
                     if(empty($_POST['password'])){
-                        View::render('ChildPatients/pwdChange1.php', ['data' => ['password' => '', 'password_err' => 'Please enter password']]);
+                        View::render('ChildPatients/pwdChange1.php', ['data' => ['password' => '', 'password_err' => 'Please enter password'], 'has_msg' => $has_msg]);
                     } else {
                         $data['password'] = trim($_POST['password']);
                         if (empty($data['password_err'])) {
@@ -743,11 +749,11 @@ class ChildPatient extends Patient {
                                     'password_err'      => '',
                                     'conf_password_err' => ''
                                 ];
-                                View::render('ChildPatients/pwdChange2.php', ['data' => $data]);
+                                View::render('ChildPatients/pwdChange2.php', ['data' => $data, 'has_msg' => $has_msg]);
                             }
                             else{
                                 $data['password_err'] = 'Invalid password';
-                                View::render('ChildPatients/pwdChange1.php', ['data' => $data]);
+                                View::render('ChildPatients/pwdChange1.php', ['data' => $data, 'has_msg' => $has_msg]);
                             }
                         }
                     }
@@ -778,17 +784,17 @@ class ChildPatient extends Patient {
                         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                         $id = ChildPatientModel::changePassword($this->email, $this->guardian_id, $data['password']);
                         if ($id) {
-                            View::render('ChildPatients/pwdChangeSuccess.php', []);
+                            View::render('ChildPatients/pwdChangeSuccess.php', ['has_msg' => $has_msg]);
                         }
                         else {
                             echo 'Failed';
                         }
                     } else {
-                        View::render('ChildPatients/pwdChange2.php', ['data' => $data]);
+                        View::render('ChildPatients/pwdChange2.php', ['data' => $data, 'has_msg' => $has_msg]);
                     }
                 }
             } else {
-                View::render('ChildPatients/pwdChange1.php', ['data' => ['password' => '', 'password_err' => '']]);
+                View::render('ChildPatients/pwdChange1.php', ['data' => ['password' => '', 'password_err' => ''], 'has_msg' => $has_msg]);
             }
         } else {
             View::render('ChildPatients/notLoggedIn.php', []);
@@ -797,7 +803,9 @@ class ChildPatient extends Patient {
 
     public function medHistoryAction() {
         if ($this->isLoggedIn()){
-            View::render('ChildPatients/medicalHistory.php', []);
+            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+            $has_msg = array_values($res)[0];
+            View::render('ChildPatients/medicalHistory.php', ['has_msg' => $has_msg]);
         }
         else {
             View::render('ChildPatients/notLoggedIn.php', []);
@@ -806,13 +814,15 @@ class ChildPatient extends Patient {
 
     public function editMedHistoryAction() {
         if ($this->isLoggedIn()){
+            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+            $has_msg = array_values($res)[0];
             $this->initializeFromSession();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 //TODO
-                View::render('ChildPatients/editMedHistorySuccess.php', []);
+                View::render('ChildPatients/editMedHistorySuccess.php', ['has_msg' => $has_msg]);
             } else {
                 //TODO
-                View::render('ChildPatients/editMedHistory.php', []);
+                View::render('ChildPatients/editMedHistory.php', ['has_msg' => $has_msg]);
             }
         }
         else {
@@ -823,7 +833,9 @@ class ChildPatient extends Patient {
     public function profileAction() {
         if ($this->isLoggedIn()){
             $this->initializeFromSession();
-            View::render('ChildPatients/profile.php', ['childData' => $this]);
+            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+            $has_msg = array_values($res)[0];
+            View::render('ChildPatients/profile.php', ['childData' => $this, 'has_msg' => $has_msg]);
         }
         else {
             View::render('ChildPatients/notLoggedIn.php', []);
@@ -833,9 +845,11 @@ class ChildPatient extends Patient {
     public function editProfileAction() {
         if ($this->isLoggedIn()){
             $this->initializeFromSession();
+            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+            $has_msg = array_values($res)[0];
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 //TODO
-                View::render('ChildPatients/editProfileSuccess.php', []);
+                View::render('ChildPatients/editProfileSuccess.php', ['has_msg' => $has_msg]);
             } else {
                 $data = [
                     'name'                  => $this->name,
@@ -852,7 +866,7 @@ class ChildPatient extends Patient {
                     'address_err'           => '',
                     'contact_no_err'        => ''
                 ];
-                View::render('ChildPatients/editProfile.php', ['data' => $data]);
+                View::render('ChildPatients/editProfile.php', ['data' => $data, 'has_msg' => $has_msg]);
             }
         }
         else {
@@ -862,7 +876,9 @@ class ChildPatient extends Patient {
 
     public function contactAction() {
         if ($this->isLoggedIn()){
-            View::render('ChildPatients/contact.php', []);
+            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+            $has_msg = array_values($res)[0];
+            View::render('ChildPatients/contact.php', ['has_msg' => $has_msg]);
         }
         else {
             View::render('ChildPatients/notLoggedIn.php', []);
@@ -871,7 +887,9 @@ class ChildPatient extends Patient {
 
     public function aboutUsAction() {
         if ($this->isLoggedIn()){
-            View::render('ChildPatients/aboutUs.php', []);
+            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+            $has_msg = array_values($res)[0];
+            View::render('ChildPatients/aboutUs.php', ['has_msg' => $has_msg]);
         }
         else {
             View::render('ChildPatients/notLoggedIn.php', []);
@@ -880,7 +898,9 @@ class ChildPatient extends Patient {
 
     public function noRecordSelectedAction() {
         if ($this->isLoggedIn()){
-            View::render('ChildPatients/recordNotSelected.php', []);
+            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+            $has_msg = array_values($res)[0];
+            View::render('ChildPatients/recordNotSelected.php', ['has_msg' => $has_msg]);
         }
         else {
             View::render('ChildPatients/notLoggedIn.php', []);
@@ -912,6 +932,8 @@ class ChildPatient extends Patient {
 
     public function recordsHistoryAction() {
         if ($this->isLoggedIn()){
+            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+            $has_msg = array_values($res)[0];
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (isset($_POST['record_cnt'])) {
                     $rec_cnt = $_POST['record_cnt'];
@@ -923,7 +945,8 @@ class ChildPatient extends Patient {
                                 'records'  => $records,
                                 'rec_cnt'  => $rec_cnt,
                                 'has_more' => true,
-                                'cnt'      => $cnt
+                                'cnt'      => $cnt,
+                                'has_msg'  => $has_msg
                             ];
                             if ($cnt < $rec_cnt) {
                                 $data['has_more'] = false;
@@ -931,10 +954,10 @@ class ChildPatient extends Patient {
                             View::render('ChildPatients/recordsAllView.php', $data);
                         }
                     } else {
-                        View::render('ChildPatients/noRecord.php', []);
+                        View::render('ChildPatients/noRecord.php', ['has_msg' => $has_msg]);
                     }
                 } else {
-                    View::render('ChildPatients/noRecord.php', []);
+                    View::render('ChildPatients/noRecord.php', ['has_msg' => $has_msg]);
                 }
             } else {
                 $records = ChildPatientModel::getRecordsCnt($_SESSION['child_id'], 10);
@@ -944,14 +967,15 @@ class ChildPatient extends Patient {
                         'records'  => $records,
                         'rec_cnt'  => 10,
                         'has_more' => true,
-                        'cnt'      => $cnt
+                        'cnt'      => $cnt,
+                        'has_msg'  => $has_msg
                     ];
                     if ($cnt < 10) {
                         $data['has_more'] = false;
                     }
                     View::render('ChildPatients/recordsAllView.php', $data);
                 } else {
-                    View::render('ChildPatients/noRecord.php', []);
+                    View::render('ChildPatients/noRecord.php', ['has_msg' => $has_msg]);
                 }
             }
         }
@@ -992,7 +1016,7 @@ class ChildPatient extends Patient {
     public function notificationReadAction() {
         if ($this->isLoggedIn()) {
             $msg_id = $_POST['msg_id'];
-            $receive_type = 'child_patient';
+            $receive_type = 'child';
             $receiver_id = $_SESSION['child_id'];
             ChildPatientModel::readNotification($msg_id, $receive_type, $receiver_id);
         } else {
@@ -1002,7 +1026,7 @@ class ChildPatient extends Patient {
 
     public function notificationReadAllAction() {
         if ($this->isLoggedIn()) {
-            $receive_type = 'child_patient';
+            $receive_type = 'child';
             $receiver_id = $_SESSION['child_id'];
             ChildPatientModel::readNotificationAll($receive_type, $receiver_id);
         } else {

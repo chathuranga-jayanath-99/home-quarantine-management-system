@@ -57,8 +57,9 @@
     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
       <li class= "nav-item">
         <a class="nav-link">
-          <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
+          <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo" onclick="removeMsgDiv();">
             <i class="fa fa-bell-o fa-lg me-3 fa-fw"></i>
+            <?php if ($has_msg) { ?><span class="spinner-grow spinner-grow-sm text-warning" id="msg-glow"></span><?php } ?>
           </button>
         </a>
       </li>
@@ -75,3 +76,12 @@
     <iframe src="<?php echo URLROOT; ?>/child-patient/show-notifications" frameborder="0" height=95% width=95%></iframe>
   </div>
 </div>
+
+<script>
+    function removeMsgDiv() {
+        var msg_div = document.getElementById('msg-div');
+        if (msg_div != null) msg_div.remove();
+        var msg_glow = document.getElementById('msg-glow');
+        if (msg_glow != null) msg_glow.remove();
+    }
+</script>
