@@ -396,6 +396,7 @@ class PHI extends \Core\Controller{
         }
 
         $mediator->sendMessage($msg, $phi);
+        View::render('PHI/index.php');
 
     }
 
