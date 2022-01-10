@@ -424,4 +424,23 @@ class ChildPatientModel extends PatientModel {
         return $row;
     }
 
+    public static function getLastRecord($patient_id) {
+        $db = static::getDB();
+        $data = [
+            'patient_id' => $patient_id,
+            'type'       => 'child'
+        ];
+        $sql = 'SELECT id, datetime, checked, level, feedback FROM tbl_record WHERE
+                patient_id=:patient_id AND type=:type
+                ORDER BY id DESC
+                LIMIT 1';
+        $stmt = $db->prepare($sql);
+        $stmt->execute($data);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(!empty($row)){
+            return $row;
+        }
+        return false;
+    }
+
 }

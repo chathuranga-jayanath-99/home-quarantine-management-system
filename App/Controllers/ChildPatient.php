@@ -30,6 +30,8 @@ class ChildPatient extends Patient {
     private $phi_range;
     private $phi_id;
     private $doctor_id;
+    private $start_quarantine_date;
+    private $end_quarantine_date;
 
     public function registerAction() {
         if(parent::checkPHISession()) {
@@ -275,10 +277,12 @@ class ChildPatient extends Patient {
     }
 
     public function indexAction() {    
-        if ($this->isLoggedIn()){
+        if ($this->isLoggedIn()) {
+            $this->initializeFromSession();
             $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
             $has_msg = array_values($res)[0];
-            View::render('ChildPatients/index.php', ['has_msg' => $has_msg]);
+            $last = ChildPatientModel::getLastRecord($_SESSION['child_id']);
+            View::render('ChildPatients/index.php', ['childObj' => $this, 'has_msg' => $has_msg, 'last' => $last]);
         }
         else {
             View::render('ChildPatients/notLoggedIn.php', []);
@@ -1045,17 +1049,19 @@ class ChildPatient extends Patient {
     public function initialize($guardianNIC, $email) {
         $childObj = ChildPatientModel::searchByEmailAndGuardianID($guardianNIC, $email);
         if ($childObj) {
-            $this->id          = $childObj->id;
-            $this->name        = $childObj->name;
-            $this->email       = $childObj->email;
-            $this->address     = $childObj->address;
-            $this->guardian_id = $childObj->guardian_id;
-            $this->gender      = $childObj->gender;
-            $this->age         = $childObj->age;
-            $this->contact_no  = $childObj->contact_no;
-            $this->phi_range   = $childObj->phi_range;
-            $this->phi_id      = $childObj->phi_id;
-            $this->doctor_id   = $childObj->doctor_id;
+            $this->id                    = $childObj->id;
+            $this->name                  = $childObj->name;
+            $this->email                 = $childObj->email;
+            $this->address               = $childObj->address;
+            $this->guardian_id           = $childObj->guardian_id;
+            $this->gender                = $childObj->gender;
+            $this->age                   = $childObj->age;
+            $this->contact_no            = $childObj->contact_no;
+            $this->phi_range             = $childObj->phi_range;
+            $this->phi_id                = $childObj->phi_id;
+            $this->doctor_id             = $childObj->doctor_id;
+            $this->start_quarantine_date = $childObj->start_quarantine_date;
+            $this->end_quarantine_date   = $childObj->end_quarantine_date;
             parent::transitionTo(PatientState::objFromName($childObj->state));
         }
     }
@@ -1064,17 +1070,19 @@ class ChildPatient extends Patient {
         $childObj = ChildPatientModel::getChildById($id);
         
         if ($childObj) {
-            $this->id          = $childObj->id;
-            $this->name        = $childObj->name;
-            $this->email       = $childObj->email;
-            $this->address     = $childObj->address;
-            $this->guardian_id = $childObj->guardian_id;
-            $this->gender      = $childObj->gender;
-            $this->age         = $childObj->age;
-            $this->contact_no  = $childObj->contact_no;
-            $this->phi_range   = $childObj->phi_range;
-            $this->phi_id      = $childObj->phi_id;
-            $this->doctor_id   = $childObj->doctor_id;
+            $this->id                    = $childObj->id;
+            $this->name                  = $childObj->name;
+            $this->email                 = $childObj->email;
+            $this->address               = $childObj->address;
+            $this->guardian_id           = $childObj->guardian_id;
+            $this->gender                = $childObj->gender;
+            $this->age                   = $childObj->age;
+            $this->contact_no            = $childObj->contact_no;
+            $this->phi_range             = $childObj->phi_range;
+            $this->phi_id                = $childObj->phi_id;
+            $this->doctor_id             = $childObj->doctor_id;
+            $this->start_quarantine_date = $childObj->start_quarantine_date;
+            $this->end_quarantine_date   = $childObj->end_quarantine_date;
             parent::transitionTo(PatientState::objFromName($childObj->state));
         }
     }
@@ -1119,6 +1127,14 @@ class ChildPatient extends Patient {
 
     public function getPHIRange() {
         return $this->phi_range;
+    }
+
+    public function getStartQuarantineDate() {
+        return $this->start_quarantine_date;
+    }
+
+    public function getEndQuarantineDate() {
+        return $this->end_quarantine_date;
     }
 
 }
