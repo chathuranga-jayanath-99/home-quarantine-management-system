@@ -59,11 +59,18 @@
     $subPage = '';
     include_once 'navbar.php';
     $state = $childObj->stateToString();
-    $time_difference = time() - strtotime($last['datetime']);
     $notRecorded = false;
-    if ($state === 'Positive' || $state === 'Contact') {
-        if ($time_difference > 43200) {
-            $notRecorded = true;    // active account; 43200s = 12h
+    if ($last) {
+        $time_difference = time() - strtotime($last['datetime']);
+        $notRecorded = false;
+        if ($state === 'Positive' || $state === 'Contact Person') {
+            if ($time_difference > 43200) {
+                $notRecorded = true;    // active account; 43200s = 12h
+            }
+        }
+    } else {
+        if ($state === 'Positive' || $state === 'Contact Person') {
+            $notRecorded = true;
         }
     }
     ?>
@@ -83,13 +90,13 @@
                                         <h5 class="card-title">Account Status</h5>
                                         <h6 class="card-subtitle my-3 text-muted"><?php echo $state; ?></h6>
                                         <p class="card-text">Your account is currently <?php
-                                            if ($state === 'Positive' || $state === 'Contact') {
+                                            if ($state === 'Positive' || $state === 'Contact Person') {
                                                 echo 'active. Please continue recording symptoms at least twice a day.';
                                             } else if ($state === 'Inactive') {
                                                 echo 'inactive. You cannot make any changes to your account.';
                                             }
                                         ?></p><?php
-                                        if ($state === 'Positive' || $state === 'Contact') {
+                                        if ($state === 'Positive' || $state === 'Contact Person') {
                                             ?>
                                             <h6 class="card-subtitle mb-2 text-muted">Quarantine Period</h6>
                                             <table class="table table-borderless">
