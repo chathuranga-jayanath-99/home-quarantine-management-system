@@ -30,6 +30,8 @@ class Adultpatient extends Patient{
     private $phi_range;
     private $phi_id;
     private $doctor_id;
+    private $start_quarantine_date;
+    private $end_quarantine_date;
 
     public function registerAction(){
         if(parent::checkPHISession()){
@@ -290,9 +292,12 @@ class Adultpatient extends Patient{
 
     public function indexAction(){
         if ($this->isLoggedIn()){
-            //$adultData = AdultPatientModel::getPatientData($_SESSION['adult_id']);
-            //View::render('AdultPatients/index.php', ['adultData' => $adultData]);
-            View::render('AdultPatients/index.php', []);
+            $this->initializeFromSession();
+            $res = AdultPatientModel::hasNotifications('adult', $_SESSION['adult_id']);
+            $has_msg = array_values($res)[0];
+            $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
+            $state = $this->stateToString();
+            View::render('AdultPatients/index.php', ['adultObj' => $this, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
         }
         else {
             View::render('AdultPatients/notLoggedIn.php', []);
@@ -344,6 +349,8 @@ class Adultpatient extends Patient{
                         $id_arr = AdultPatientModel::getDoctorToAssign();
                         $doctor_id = ($id_arr[0])->id;
                         $rows = AdultPatientModel::changeStateAndDoctor($this->email, $this->NIC, $_POST['act'], $doctor_id);
+                        $this->phi_id = $_SESSION['phi_id'];
+                        $this->phi_range = $_SESSION['phi_area'];
                         if($rows>0) {
                             View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
                         } else {
@@ -459,10 +466,7 @@ class Adultpatient extends Patient{
                         } else {
                             echo 'Failed';
                         }
-                    // } else {
-                    //     echo 'Failed';
-                    // }
-                  }
+                    }
                 }
             }
 
@@ -518,6 +522,9 @@ class Adultpatient extends Patient{
     public function recordAction() {
         if ($this->isLoggedIn()) {
             $this->initializeFromSession();
+            $res = AdultPatientModel::hasNotifications('adult', $_SESSION['adult_id']);
+            $has_msg = array_values($res)[0];
+            $state = $this->stateToString();
             $record = new Record();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $temperature = $_POST['temperature'];
@@ -620,11 +627,13 @@ class Adultpatient extends Patient{
                     ];
                     if (AdultPatientModel::recordSymptoms($symptoms)) {
                         $record->initialize($symptoms);
-                        View::render('AdultPatients/recordSuccess.php', ['symptoms' => $record]);
+                        $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
+                        View::render('AdultPatients/recordSuccess.php', ['symptoms' => $record, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                     }
                 }
             } else {
-                View::render('AdultPatients/recordSymptoms.php', []);
+                $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
+                View::render('AdultPatients/recordSymptoms.php', ['has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
             }
         } else {
             View::render('AdultPatients/notLoggedIn.php', []);
@@ -719,6 +728,10 @@ class Adultpatient extends Patient{
     public function passwordChangeAction() {
         if ($this->isLoggedIn()) {
             $this->initializeFromSession();
+            $res = AdultPatientModel::hasNotifications('adult', $_SESSION['adult_id']);
+            $has_msg = array_values($res)[0];
+            $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
+            $state = $this->stateToString();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $data = [
                     'password'     => '',
@@ -726,7 +739,7 @@ class Adultpatient extends Patient{
                 ];
                 if ($_POST['entered'] === 'no') {
                     if(empty($_POST['password'])){
-                        View::render('AdultPatients/pwdChange1.php', ['data' => ['password' => '', 'password_err' => 'Please enter password']]);
+                        View::render('AdultPatients/pwdChange1.php', ['data' => ['password' => '', 'password_err' => 'Please enter password'], 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                     } else {
                         $data['password'] = trim($_POST['password']);
                         if (empty($data['password_err'])) {
@@ -738,11 +751,11 @@ class Adultpatient extends Patient{
                                     'password_err'      => '',
                                     'conf_password_err' => ''
                                 ];
-                                View::render('AdultPatients/pwdChange2.php', ['data' => $data]);
+                                View::render('AdultPatients/pwdChange2.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                             }
                             else{
                                 $data['password_err'] = 'Invalid password';
-                                View::render('AdultPatients/pwdChange1.php', ['data' => $data]);
+                                View::render('AdultPatients/pwdChange1.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                             }
                         }
                     }
@@ -773,17 +786,17 @@ class Adultpatient extends Patient{
                         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
                         $id = AdultPatientModel::changePassword($this->email, $this->NIC, $data['password']);
                         if ($id) {
-                            View::render('AdultPatients/pwdChangeSuccess.php', []);
+                            View::render('AdultPatients/pwdChangeSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                         }
                         else {
                             echo 'Failed';
                         }
                     } else {
-                        View::render('AdultPatients/pwdChange2.php', ['data' => $data]);
+                        View::render('AdultPatients/pwdChange2.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                     }
                 }
             } else {
-                View::render('AdultPatients/pwdChange1.php', ['data' => ['password' => '', 'password_err' => '']]);
+                View::render('AdultPatients/pwdChange1.php', ['data' => ['password' => '', 'password_err' => ''], 'has_msg' => $has_msg]);
             }
         } else {
             View::render('AdultPatients/notLoggedIn.php', []);
@@ -792,8 +805,13 @@ class Adultpatient extends Patient{
 
     public function medHistoryAction(){
         if ($this->isLoggedIn()){
+            $this->initializeFromSession();
+            $res = AdultPatientModel::hasNotifications('adult', $_SESSION['adult_id']);
+            $has_msg = array_values($res)[0];
+            $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
+            $state = $this->stateToString();
             $medHistory = AdultPatientModel::getMedHistory($_SESSION['adult_id']);
-            View::render('AdultPatients/medicalHistory.php', ['medHistory' => $medHistory]);
+            View::render('AdultPatients/medicalHistory.php', ['medHistory' => $medHistory, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
         }
         else {
             View::render('AdultPatients/notLoggedIn.php', []);
@@ -804,6 +822,10 @@ class Adultpatient extends Patient{
     public function editMedHistoryAction() {
         if ($this->isLoggedIn()){
             $this->initializeFromSession();
+            $res = AdultPatientModel::hasNotifications('adult', $_SESSION['adult_id']);
+            $has_msg = array_values($res)[0];
+            $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
+            $state = $this->stateToString();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $description          = htmlspecialchars(trim($_POST['description']));
                     
@@ -813,32 +835,25 @@ class Adultpatient extends Patient{
                     "description"    => $description
                 ];
                 if (AdultPatientModel::recordMedHistory($this->id, $medicalHistory)) {
-                    View::render('AdultPatients/editMedHistorySuccess.php', ['description' => $description]);
+                    View::render('AdultPatients/editMedHistorySuccess.php', ['description' => $description, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                 }
             } else {
                 $medHistory = AdultPatientModel::getMedHistory($_SESSION['adult_id']);
-                View::render('AdultPatients/editMedHistory.php', ['medHistory' => $medHistory]);
+                View::render('AdultPatients/editMedHistory.php', ['medHistory' => $medHistory, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
             }
         } else {
             View::render('AdultPatients/notLoggedIn.php', []);
         }
-        //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        //         //TODO
-        //         View::render('AdultPatients/editMedHistorySuccess.php', []);
-        //     } else {
-        //         //TODO
-        //         View::render('AdultPatients/editMedHistory.php', []);
-        //     }
-        // }
-        // else {
-        //     View::render('AdultPatients/notLoggedIn.php', []);
-        // }
     }
 
     public function profileAction() {
         if ($this->isLoggedIn()){
             $this->initializeFromSession();
-            View::render('AdultPatients/profile.php', ['adultData' => $this]);
+            $res = AdultPatientModel::hasNotifications('adult', $_SESSION['adult_id']);
+            $has_msg = array_values($res)[0];
+            $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
+            $state = $this->stateToString();
+            View::render('AdultPatients/profile.php', ['adultData' => $this, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
         }
         else {
             View::render('AdultPatients/notLoggedIn.php', []);
@@ -848,9 +863,13 @@ class Adultpatient extends Patient{
     public function editProfileAction() {
         if ($this->isLoggedIn()){
             $this->initializeFromSession();
+            $res = AdultPatientModel::hasNotifications('adult', $_SESSION['adult_id']);
+            $has_msg = array_values($res)[0];
+            $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
+            $state = $this->stateToString();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 //TODO
-                View::render('AdultPatients/editProfileSuccess.php', []);
+                View::render('AdultPatients/editProfileSuccess.php', ['has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
             } else {
                 $data = [
                     'name'                  => $this->name,
@@ -867,7 +886,7 @@ class Adultpatient extends Patient{
                     'address_err'           => '',
                     'contact_no_err'        => ''
                 ];
-                View::render('AdultPatients/editProfile.php', ['data' => $data]);
+                View::render('AdultPatients/editProfile.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
             }
         }
         else {
@@ -877,7 +896,12 @@ class Adultpatient extends Patient{
 
     public function contactAction() {
         if ($this->isLoggedIn()){
-            View::render('AdultPatients/contact.php', []);
+            $this->initializeFromSession();
+            $res = AdultPatientModel::hasNotifications('adult', $_SESSION['adult_id']);
+            $has_msg = array_values($res)[0];
+            $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
+            $state = $this->stateToString();
+            View::render('AdultPatients/contact.php', ['has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
         }
         else {
             View::render('AdultPatients/notLoggedIn.php', []);
@@ -886,7 +910,12 @@ class Adultpatient extends Patient{
 
     public function aboutUsAction() {
         if ($this->isLoggedIn()){
-            View::render('AdultPatients/aboutUs.php', []);
+            $this->initializeFromSession();
+            $res = AdultPatientModel::hasNotifications('adult', $_SESSION['adult_id']);
+            $has_msg = array_values($res)[0];
+            $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
+            $state = $this->stateToString();
+            View::render('AdultPatients/aboutUs.php', ['has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
         }
         else {
             View::render('AdultPatients/notLoggedIn.php', []);
@@ -895,7 +924,12 @@ class Adultpatient extends Patient{
 
     public function noRecordSelectedAction() {
         if ($this->isLoggedIn()){
-            View::render('AdultPatients/recordNotSelected.php', []);
+            $this->initializeFromSession();
+            $res = AdultPatientModel::hasNotifications('adult', $_SESSION['adult_id']);
+            $has_msg = array_values($res)[0];
+            $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
+            $state = $this->stateToString();
+            View::render('AdultPatients/recordNotSelected.php', ['has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
         }
         else {
             View::render('AdultPatients/notLoggedIn.php', []);
@@ -927,6 +961,11 @@ class Adultpatient extends Patient{
 
     public function recordsHistoryAction() {
         if ($this->isLoggedIn()){
+            $this->initializeFromSession();
+            $res = AdultPatientModel::hasNotifications('adult', $_SESSION['adult_id']);
+            $has_msg = array_values($res)[0];
+            $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
+            $state = $this->stateToString();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (isset($_POST['record_cnt'])) {
                     $rec_cnt = $_POST['record_cnt'];
@@ -938,7 +977,10 @@ class Adultpatient extends Patient{
                                 'records'  => $records,
                                 'rec_cnt'  => $rec_cnt,
                                 'has_more' => true,
-                                'cnt'      => $cnt
+                                'cnt'      => $cnt,
+                                'has_msg'  => $has_msg,
+                                'last'     => $last,
+                                'state'    => $state
                             ];
                             if ($cnt < $rec_cnt) {
                                 $data['has_more'] = false;
@@ -946,10 +988,10 @@ class Adultpatient extends Patient{
                             View::render('AdultPatients/recordsAllView.php', $data);
                         }
                     } else {
-                        View::render('AdultPatients/noRecord.php', []);
+                        View::render('AdultPatients/noRecord.php', ['has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                     }
                 } else {
-                    View::render('AdultPatients/noRecord.php', []);
+                    View::render('AdultPatients/noRecord.php', ['has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                 }
             } else {
                 $records = AdultPatientModel::getRecordsCnt($_SESSION['adult_id'], 10);
@@ -959,18 +1001,71 @@ class Adultpatient extends Patient{
                         'records'  => $records,
                         'rec_cnt'  => 10,
                         'has_more' => true,
-                        'cnt'      => $cnt
+                        'cnt'      => $cnt,
+                        'has_msg'  => $has_msg,
+                        'last'     => $last,
+                        'state'    => $state
                     ];
                     if ($cnt < 10) {
                         $data['has_more'] = false;
                     }
                     View::render('AdultPatients/recordsAllView.php', $data);
                 } else {
-                    View::render('AdultPatients/noRecord.php', []);
+                    View::render('AdultPatients/noRecord.php', ['has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                 }
             }
         }
         else {
+            View::render('AdultPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function showNotificationsAction() {
+        if ($this->isLoggedIn()) {
+            $page = 'unread';
+            $notifications = [];
+            if (isset($_GET['page'])) {
+                $page = $_GET['page'];
+                if ($page === 'all') {
+                    $notifications = AdultPatientModel::getNotificationsAll($_SESSION['adult_id']);
+                } else if ($page === 'read') {
+                    $notifications = AdultPatientModel::getNotificationsRead($_SESSION['adult_id']);
+                } else if ($page === 'unread') {
+                    $notifications = AdultPatientModel::getNotificationsUnread($_SESSION['adult_id']);
+                } else {
+                    echo '<h1>Not found</h1>';
+                    die();
+                }
+            } else {
+                $notifications = AdultPatientModel::getNotificationsUnread($_SESSION['adult_id']);
+            }
+            $cnt = 0;
+            if ($notifications) {
+                $cnt = count($notifications);
+            }
+            View::render('AdultPatients/notifications.php', ['page' => $page, 'notifications' => $notifications, 'cnt' => $cnt]);
+        } else {
+            View::render('AdultPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function notificationReadAction() {
+        if ($this->isLoggedIn()) {
+            $msg_id = $_POST['msg_id'];
+            $receive_type = 'adult';
+            $receiver_id = $_SESSION['adult_id'];
+            AdultPatientModel::readNotification($msg_id, $receive_type, $receiver_id);
+        } else {
+            View::render('AdultPatients/notLoggedIn.php', []);
+        }
+    }
+
+    public function notificationReadAllAction() {
+        if ($this->isLoggedIn()) {
+            $receive_type = 'adult';
+            $receiver_id = $_SESSION['adult_id'];
+            AdultPatientModel::readNotificationAll($receive_type, $receiver_id);
+        } else {
             View::render('AdultPatients/notLoggedIn.php', []);
         }
     }
@@ -986,17 +1081,19 @@ class Adultpatient extends Patient{
     public function initialize($NIC, $email) {
         $adultObj = AdultPatientModel::searchByEmailAndNIC($NIC, $email);
         if ($adultObj) {
-            $this->id          = $adultObj->id;
-            $this->name        = $adultObj->name;
-            $this->email       = $adultObj->email;
-            $this->address     = $adultObj->address;
-            $this->NIC         = $adultObj->NIC;
-            $this->gender      = $adultObj->gender;
-            $this->age         = $adultObj->age;
-            $this->contact_no  = $adultObj->contact_no;
-            $this->phi_range   = $adultObj->phi_range;
-            $this->phi_id      = $adultObj->phi_id;
-            $this->doctor_id   = $adultObj->doctor_id;
+            $this->id                    = $adultObj->id;
+            $this->name                  = $adultObj->name;
+            $this->email                 = $adultObj->email;
+            $this->address               = $adultObj->address;
+            $this->NIC                   = $adultObj->NIC;
+            $this->gender                = $adultObj->gender;
+            $this->age                   = $adultObj->age;
+            $this->contact_no            = $adultObj->contact_no;
+            $this->phi_range             = $adultObj->phi_range;
+            $this->phi_id                = $adultObj->phi_id;
+            $this->doctor_id             = $adultObj->doctor_id;
+            $this->start_quarantine_date = $adultObj->start_quarantine_date;
+            $this->end_quarantine_date   = $adultObj->end_quarantine_date;
             parent::transitionTo(PatientState::objFromName($adultObj->state));
         }
     }
@@ -1004,17 +1101,19 @@ class Adultpatient extends Patient{
     public function initializeById($id) {
         $adultObj = AdultPatientModel::getAdultById($id);
         if ($adultObj) {
-            $this->id          = $adultObj->id;
-            $this->name        = $adultObj->name;
-            $this->email       = $adultObj->email;
-            $this->address     = $adultObj->address;
-            $this->NIC         = $adultObj->NIC;
-            $this->gender      = $adultObj->gender;
-            $this->age         = $adultObj->age;
-            $this->contact_no  = $adultObj->contact_no;
-            $this->phi_range   = $adultObj->phi_range;
-            $this->phi_id      = $adultObj->phi_id;
-            $this->doctor_id   = $adultObj->doctor_id;
+            $this->id                    = $adultObj->id;
+            $this->name                  = $adultObj->name;
+            $this->email                 = $adultObj->email;
+            $this->address               = $adultObj->address;
+            $this->NIC                   = $adultObj->NIC;
+            $this->gender                = $adultObj->gender;
+            $this->age                   = $adultObj->age;
+            $this->contact_no            = $adultObj->contact_no;
+            $this->phi_range             = $adultObj->phi_range;
+            $this->phi_id                = $adultObj->phi_id;
+            $this->doctor_id             = $adultObj->doctor_id;
+            $this->start_quarantine_date = $adultObj->start_quarantine_date;
+            $this->end_quarantine_date   = $adultObj->end_quarantine_date;
             parent::transitionTo(PatientState::objFromName($adultObj->state));
         }
     }
@@ -1059,6 +1158,14 @@ class Adultpatient extends Patient{
 
     public function getPHIRange() {
         return $this->phi_range;
+    }
+
+    public function getStartQuarantineDate() {
+        return $this->start_quarantine_date;
+    }
+
+    public function getEndQuarantineDate() {
+        return $this->end_quarantine_date;
     }
 
 }
