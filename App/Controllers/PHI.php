@@ -396,12 +396,14 @@ class PHI extends \Core\Controller{
         }
 
         $mediator->sendMessage($msg, $phi);
-        View::render('PHI/index.php');
+        $data['success'] = 'Message sent successfully' ;
+        View::render('PHI/send-msg-view.php',['data'=>$data]);
 
     }
 
     else {
-        View::render('PHI/send-msg-view.php');
+        $data = ['success' => ''] ;
+        View::render('PHI/send-msg-view.php',['data'=>$data]);
     }
 }
 

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="<?php echo URLROOT; ?>/adult-patient">
-      <img src="https://www.pngitem.com/pimgs/m/10-106042_male-professional-avatar-icon-hd-png-download.png" alt="" height="24" class="d-inline-block align-text-top">
+      <img src="https://image.flaticon.com/icons/png/512/1022/1022382.png" alt="" height="24" class="d-inline-block align-text-top">
       <?php echo $_SESSION['phi_name']; ?>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/PHI"><button class="btn <?php if ($page === 'home') {echo 'btn-success';} ?>">Home</button></a>
+          <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/PHI"><button class="btn <?php if ($page === 'home') {echo 'btn-success';} ?>">Home Page</button></a>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/adult-patient/profile"><button class="btn <?php if ($page === 'profile') {echo 'btn-success';} ?>">Profile</button></a>
@@ -41,6 +41,11 @@
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/PHI/form-not-filled"><button class="btn <?php if ($page === 'form-not-filled') {echo 'btn-success';} ?>">Form not filled patients</button></a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/PHI/send-msg-to-my-patients"><button class="btn <?php if ($page === 'send-msg') {echo 'btn-success';} ?>">Send Message</button></a>
+        </li>
+
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">

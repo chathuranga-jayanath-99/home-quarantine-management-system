@@ -13,7 +13,7 @@
 <body>
 
 <?php 
-$page = 'mark-positive';
+$page = 'send-msg';
 include_once 'navbar.php';
 ?>
 
@@ -27,18 +27,19 @@ include_once 'navbar.php';
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">SEND MESSAGE TO MY PATIENTS</h2>
+                <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">SEND MESSAGE TO PATIENTS</h2>
                 <form action="<?php echo URLROOT?>/PHI/send-msg-to-my-patients" method='POST'>
                   
                 <div class="form-group">
-                <label for="comment">Message:</label>
+                <!-- <label for="comment">Message:</label> -->
                 <br>
-                <textarea class="form-control" rows="5" id="msg" name="msg"></textarea>
+                <textarea class="form-control" rows="5" id="msg" name="msg" placeholder= "Please enter your message" required></textarea>
                 </div>
 
                 <div class="text-center mt-4 col-md-10" >
                      <button type="Submit" class="btn btn-primary ">Send Message</button>
-                      
+                     <br>
+                     <span style="color:green"><?php echo $data['success']?></span>
                 </div>
                     
 
