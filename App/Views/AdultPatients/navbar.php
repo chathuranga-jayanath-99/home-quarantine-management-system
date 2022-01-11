@@ -1,3 +1,20 @@
+<?php
+$notRecorded = false;
+if ($last) {
+    $time_difference = time() - strtotime($last['datetime']);
+    $notRecorded = false;
+    if ($state === 'Positive' || $state === 'Contact Person') {
+        if ($time_difference > 43200) {
+            $notRecorded = true;    // active account; 43200s = 12h
+        }
+    }
+} else {
+    if ($state === 'Positive' || $state === 'Contact Person') {
+        $notRecorded = true;
+    }
+}
+?>
+
 <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="<?php echo URLROOT; ?>/adult-patient">
@@ -22,8 +39,7 @@
           <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/adult-patient/profile"><button class="btn <?php if ($page === 'profile') {echo 'btn-success';} ?>">Profile</button></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/record"><button class="btn <?php if ($page === 'record') {echo 'btn-success';} ?>">Record Symptoms</button></a>
-        </li>
+          <a class="nav-link" <?php if ($notRecorded) { ?> data-bs-toggle="tooltip" data-bs-placement="bottom" title="You have not recorded symptoms in last 12 hours" <?php } ?> href="<?php echo URLROOT; ?>/adult-patient/record"><button class="btn <?php if ($page === 'record') {echo 'btn-success';} ?>"><?php if ($notRecorded) { ?><span class="spinner-grow spinner-grow-sm text-danger me-2" id="rec-glow"></span><?php } ?>Record Symptoms</button></a>        </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/records-history"><button class="btn <?php if ($page === 'rec-history') {echo 'btn-success';} ?>">Record History</button></a>
         </li>
@@ -39,16 +55,13 @@
               Update profile
             </a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/adult-patient/edit-med-history"  <?php if ($subPage === 'history') {echo 'style="color: green;"';} ?>>
+            <li><a class="dropdown-item" href="<?php echo URLROOT; ?>/adult-patient/edit-med-history"  <?php if ($subPage === 'history') {echo 'style="color: green;"';} ?> >
               Update Medical History
             </a></li>
           </ul>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/contact"><button class="btn <?php if ($page === 'contact') {echo 'btn-success';} ?>">Emergency Contact</button></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?php echo URLROOT; ?>/adult-patient/password-change"><button class="btn <?php if ($page === 'pwd_change') {echo 'btn-success';} ?>">Change Password</button></a>
         </li>
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -57,5 +70,34 @@
         </li>
       </ul>
     </div>
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+      <li class= "nav-item">
+        <a class="nav-link">
+          <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo" onclick="removeMsgDiv();">
+            <i class="fa fa-bell-o fa-lg me-3 fa-fw"></i>
+            <?php if ($has_msg) { ?><span class="spinner-grow spinner-grow-sm text-warning" id="msg-glow" <?php if ($notRecorded) { ?> data-bs-toggle="tooltip" data-bs-placement="bottom" title="You have unread Notifications" <?php } ?> ></span><?php } ?>          
+          </button>
+        </a>
+      </li>
+    </ul>
   </div>
 </nav>
+
+<div class="offcanvas offcanvas-end" id="demo">
+  <div class="offcanvas-header">
+    <h1 class="offcanvas-title">Notifications</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body text-center">
+    <iframe src="<?php echo URLROOT; ?>/adult-patient/show-notifications" frameborder="0" height=95% width=95%></iframe>
+  </div>
+</div>
+
+<script>
+    function removeMsgDiv() {
+        var msg_div = document.getElementById('msg-div');
+        if (msg_div != null) msg_div.remove();
+        var msg_glow = document.getElementById('msg-glow');
+        if (msg_glow != null) msg_glow.remove();
+    }
+</script>
