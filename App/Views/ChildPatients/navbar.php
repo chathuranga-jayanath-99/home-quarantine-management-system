@@ -97,7 +97,10 @@ if ($last) {
 <script>
     function removeMsgDiv() {
         var msg_div = document.getElementById('msg-div');
-        if (msg_div != null) msg_div.remove();
+        if (msg_div != null) {
+          msg_div.style.opacity = '0';
+          setTimeout(function(){msg_div.parentNode.removeChild(msg_div);}, 1000);
+        }
         var msg_glow = document.getElementById('msg-glow');
         if (msg_glow != null) msg_glow.remove();
     }

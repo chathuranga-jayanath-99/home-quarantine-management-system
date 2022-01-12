@@ -9,10 +9,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .exit-fade {
+            opacity: 1;
+            -webkit-transition: opacity 1000ms linear;
+            transition: opacity 1000ms linear;
+        }
+    </style>
     <script>
         function removeRemDiv() {
             var rem_div = document.getElementById('rem-div');
-            if (rem_div != null) rem_div.remove();
+            rem_div.style.opacity = '0';
+            setTimeout(function(){rem_div.parentNode.removeChild(rem_div);}, 1000);
         }
 
         function resizeRecordPage() {
@@ -136,7 +144,7 @@
                                 </div>
                                 <?php if ($notRecorded) { ?>
                                 <div class="col">
-                                    <div id="rem-div" class="card border-dark mb-3 h-100">
+                                    <div id="rem-div" class="card border-dark mb-3 h-100 exit-fade">
                                         <div class="card-body">
                                             <h5 class="card-title"><span class="spinner-grow text-danger me-3" role="status" aria-hidden="true"></span>Reminder</h5>
                                             <p class="card-text">You have not recorded symptoms in last 12 hours.</p>
@@ -150,7 +158,7 @@
                                 <?php } ?>
                                 <?php if ($has_msg) { ?>
                                 <div class="col">
-                                    <div id="msg-div" class="card border-dark mb-3 h-100">
+                                    <div id="msg-div" class="card border-dark mb-3 h-100 exit-fade">
                                         <div class="card-body">
                                             <h5 class="card-title"><span class="spinner-grow text-warning me-3" role="status" aria-hidden="true"></span>Notifications</h5>
                                             <p class="card-text">You have unread notifications</p>
