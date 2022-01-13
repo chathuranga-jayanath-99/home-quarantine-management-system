@@ -21,15 +21,22 @@
         <div class="col-lg-12 col-xl-10">
             <div class="card text-black" style="border-radius: 25px;">
                 <div class="card-body p-md-5">
-                    <div class="row justify-content-center">
-                        <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-							<h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Edit Medical History</h1>
-                            <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Not implemented</h1>
+                    <form class="mx-1 mx-md-4" action="<?php echo URLROOT?>/child-patient/edit-med-history" method='POST'>
+                        <div class="row justify-content-center">
+                            <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Child-Patient <br /> Edit Medical History</h1>
                         </div>
-                        <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                            <img src="https://img.freepik.com/free-vector/set-doctor-nurse-team-cartoon-hand-drawn-cartoon-art-illustration_56104-753.jpg" width=700 height=700 class="img-fluid" alt="Sample image"> 
+                        <div class="row justify-content-center">
+                            <div class="mb-3">
+                                <label for="description" class="form-label"><i class="fa fa-puzzle-piece fa-lg me-3 fa-fw"></i>Medical History</label>
+                                <textarea class="form-control" id="description" name="description" rows="5" > <?php if($medHistory){ echo $medHistory->description; } else { echo ''; } ?></textarea>
+                            </div>
                         </div>
-                    </div>
+                        <div class="row justify-content-center">
+                            <div class="mb-3">
+                                <input type="submit" class="btn btn-success" value="Submit">
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="text-center mt-5 text-muted">

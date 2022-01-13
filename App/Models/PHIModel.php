@@ -194,19 +194,19 @@ class PHIModel extends User{
         // }
 
         $sql1 = 'SELECT r.id, ap.name, ap.age, r.type, ap.contact_no
-        FROM tbl_record r
-        JOIN tbl_adult_patient ap
+        FROM tbl_adult_patient ap
+        JOIN tbl_record r
         ON r.patient_id = ap.id
-        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND r.type="adult" ';
+        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND r.datetime >:yesterday  AND r.type="adult" ';
         $stmt = $db->prepare($sql1);
         $stmt->execute(['phiID' => $phiID, 'yesterday' => $yesterday]);
         $row1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $sql2 = 'SELECT r.id, cp.name, cp.age, r.type, cp.contact_no
-        FROM tbl_record r
-        JOIN tbl_child_patient cp
+        FROM tbl_child_patient cp
+        JOIN tbl_record r
         ON r.patient_id = cp.id
-        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND r.type="child" ';
+        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND r.datetime >:yesterday AND cp.start_quarantine_date <:yesterday AND r.type="child" ';
         $stmt = $db->prepare($sql2);
         $stmt->execute(['phiID' => $phiID, 'yesterday' => $yesterday]);
         $row2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -219,6 +219,8 @@ class PHIModel extends User{
         else {
             return false;
         }
+
+        // AND cp.start_quarantine_date <: AND yesterday <:cp.end_quarantine_date
 
         // $res = $row1+$row2 ;
         // if(!empty($res)){

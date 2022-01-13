@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <title>HOME QURANTINE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <section class="vh-100" style="background-color: #eee;">
@@ -34,7 +36,7 @@
                                         </div>  
                                     </form>
                                     <?php }else{?>
-                                        <h2 class="text-center h fw-bold mb-5 mx-1 mx-md-4 mt-4">This NIC Already Have an Active Acoount</h2>  
+                                        <h2 class="text-center h fw-bold mb-5 mx-1 mx-md-4 mt-4"> <?php if (ucfirst($adultData[0]->state) === 'Dead') { ?> This NIC already have an acoount. But the patient was passed away <?php }else { ?> This NIC already have an active acoount <?php } ?> </h2>  
                                     <div>
                                         <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">NIC : <?php echo $adultData[0]->NIC ;?></h4>
                                         <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Patient Name : <?php echo $adultData[0]->name ;?></h4>

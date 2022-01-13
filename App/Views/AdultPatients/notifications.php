@@ -18,17 +18,17 @@
                 <ul class="nav nav-pills nav-justified mb-4">
                     <li class="nav-item">
                         <a class="nav-link <?php if ($page === 'unread') {echo 'active';} ?>" href="<?php 
-                        if ($page !== 'unread') {echo URLROOT.'/child-patient/show-notifications?page=unread';}
+                        if ($page !== 'unread') {echo URLROOT.'/adult-patient/show-notifications?page=unread';}
                         else {echo '#';} ?>">Unread</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php if ($page === 'read') {echo 'active';} ?>" href="<?php 
-                        if ($page !== 'read') {echo URLROOT.'/child-patient/show-notifications?page=read';}
+                        if ($page !== 'read') {echo URLROOT.'/adult-patient/show-notifications?page=read';}
                         else {echo '#';} ?>">Read</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php if ($page === 'all') {echo 'active';} ?>" href="<?php 
-                        if ($page !== 'all') {echo URLROOT.'/child-patient/show-notifications?page=all';}
+                        if ($page !== 'all') {echo URLROOT.'/adult-patient/show-notifications?page=all';}
                         else {echo '#';} ?>">All</a>
                     </li>
                 </ul>
@@ -40,7 +40,7 @@
                 echo '
                 <div class="text-center pb-3">
                     <div>
-                        <a href="'.URLROOT.'/child-patient/show-notifications" onclick="return markAllAsRead()">
+                        <a href="'.URLROOT.'/adult-patient/show-notifications" onclick="return markAllAsRead()">
                         <button class="btn btn-warning">Mark All as Read</button></a>
                     </div>
                 </div>';
@@ -61,7 +61,7 @@
                         <p class="card-text ms-2 <?php if ($notification->msg_read) {echo 'text-black-50';} ?>"><?php echo $notification->content; ?></p>
                         <?php
                         if (!$notification->msg_read) {
-                            echo '<a href="'.URLROOT.'/child-patient/show-notifications?page='.$page.'" class="card-link"
+                            echo '<a href="'.URLROOT.'/adult-patient/show-notifications?page='.$page.'" class="card-link"
                             onclick="return markAsRead('.$notification->id.')">Mark as Read</a>';
                         }
                         ?>
@@ -77,5 +77,5 @@
         </div>
     </section>
 </body>
-<script src="../static/js/child-notification.js"></script>
+<script src="../static/js/adult-notification.js"></script>
 </html>
