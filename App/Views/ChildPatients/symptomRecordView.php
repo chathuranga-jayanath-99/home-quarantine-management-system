@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <section class="vh-auto pt-5 pb-5" style="background-color: #eee; min-height:100vh;">
+    <section class="vh-auto pt-5 pb-5">
     <div class="container h-100">
         <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Record View</h1>
         <form class="mx-1 mx-md-4" action="#" method='POST'>
