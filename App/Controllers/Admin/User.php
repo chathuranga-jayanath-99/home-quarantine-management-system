@@ -66,6 +66,16 @@ class User extends \Core\Controller
         View::render('Admins/manage-phi.php', ['phis' => $phis]);
     } 
 
+    public function resetPasswordAction(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $adminId = $_REQUEST['admin_id'];
+            echo $adminId;
+        }
+        else{
+            View::render('Admins/reset-password.php');
+        }
+    }
+
     public function registerAction(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = [

@@ -30,9 +30,8 @@
                         <td><?php echo $admin->name; ?></td>
                         <td><?php echo $admin->email; ?></td>
                         <td>
-                            <a href="#">Delete Admin</a>
                             <a href="#">Update Admin</a>
-                            <a href="#">Change Passowrd</a>
+                            <a href="<?php echo URLROOT.'/admin/user/reset-password?id='.$admin->id;?>">Reset Passowrd</a>
                         </td>
                     </tr>
 

@@ -30,7 +30,6 @@
                         <td><?php echo $doctor->name; ?></td>
                         <td><?php echo $doctor->email; ?></td>
                         <td>
-                            <a href="#">Delete Doctor</a>
                             <a href="#">View Details</a>
                         </td>
                     </tr>
