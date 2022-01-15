@@ -58,6 +58,7 @@
                         }
                         ?>
                         </h5>
+                        <h6 class="card-subtile text-muted"><?php echo $notification->send_time; ?></h6>
                         <p class="card-text ms-2 <?php if ($notification->msg_read) {echo 'text-black-50';} ?>"><?php echo $notification->content; ?></p>
                         <?php
                         if (!$notification->msg_read) {
