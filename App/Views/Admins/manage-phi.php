@@ -30,7 +30,6 @@
                         <td><?php echo $phi->name; ?></td>
                         <td><?php echo $phi->email; ?></td>
                         <td>
-                            <a href="#">Delete PHI</a>
                             <a href="#">View Details</a>
                         </td>
                     </tr>

@@ -11,6 +11,8 @@
         <a href="<?php echo URLROOT;?>/admin/user/logout">Logout</a>
     </div>
 
+    <?php flash('reset_password');?>
+
     <h1>Manage Admin</h1>
 
     <a href="<?php echo URLROOT;?>/admin/user/register" class="btn btn-primary">Add Admin</a>
@@ -31,7 +33,8 @@
                         <td><?php echo $admin->email; ?></td>
                         <td>
                             <a href="#">Update Admin</a>
-                            <a href="<?php echo URLROOT.'/admin/user/reset-password?id='.$admin->id;?>">Reset Passowrd</a>
+                            <a href="<?php echo URLROOT.'/admin/user/reset-password'?>" onclick="resetRoutine(event, <?php echo $admin->id;?>)">Reset Password</a>
+                            <!-- <button onclick="resetRoutine">Reset Password</button> -->
                         </td>
                     </tr>
 
@@ -47,5 +50,11 @@
             }     
         ?>
     </table>
+
+    <script>
+        function resetRoutine(e, adminId){
+            sessionStorage.setItem('reset_admin_id', adminId);
+        }
+    </script>
 </body>
 </html>

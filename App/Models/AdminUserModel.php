@@ -118,4 +118,38 @@ class AdminUserModel extends \Core\Model{
 
         return $phis;
     }
+
+    public static function resetPassword($id, $data){
+        $db = static::getDB();
+
+        $sql = 'SELECT password FROM tbl_admin WHERE id=:id';
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $admin = $stmt->fetch(PDO::FETCH_OBJ);   
+
+        if ($admin){
+
+            if (password_verify($data['current_password'], $admin->password)){
+                // change password to new one.
+
+                $sql2 = 'UPDATE tbl_admin SET password=:password WHERE id=:id';
+                $stmt2 = $db->prepare($sql2);
+                $res = $stmt2->execute([
+                    'password' => $data['new_password'],
+                    'id' => $id,
+                ]);
+
+                if ($res){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            else{
+                return false;
+            }
+        }
+        return false;
+    }
 }
