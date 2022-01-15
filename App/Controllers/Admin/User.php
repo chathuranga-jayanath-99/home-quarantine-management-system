@@ -68,11 +68,52 @@ class User extends \Core\Controller
 
     public function resetPasswordAction(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            $adminId = $_REQUEST['admin_id'];
-            echo $adminId;
+            $reset_admin_id = htmlspecialchars($_POST['reset_admin_id']);
+
+            $data = [
+                'current_password' => htmlspecialchars($_POST['current_password']),
+                'new_password' => htmlspecialchars($_POST['new_password']),
+                'confirm_password' => htmlspecialchars($_POST['confirm_password']),
+                'password_err' => '',
+            ];
+
+            if ((strlen($data['new_password']) < 4) || (strlen($data['confirm_password']) < 4)){
+                $data['password_err'] = 'Password must be at least 4 characters';
+            }
+            else{
+                if (strcmp($data['new_password'], $data['confirm_password']) != 0) {
+                    $data['password_err'] = 'Passwords do not match';
+                }
+            }
+            if (empty($data['password_err'])){
+                $data['current_password'] = $data['current_password'];
+                $data['new_password'] = password_hash($data['new_password'], PASSWORD_DEFAULT);
+                $data['confirm_password'] = $data['new_password'];
+                // die('success');
+                $res = AdminUserModel::resetPassword($reset_admin_id, $data);
+
+                if ($res){
+                    flash('reset_password', 'Password reset successful.', 'alert alert-success');
+                    header('location: '.URLROOT.'/admin/user/manage-admin');
+                }
+                else{
+                    flash('reset_password', 'Password reset failed.', 'alert alert-danger');
+                    header('location: '.URLROOT.'/admin/user/manage-admin');
+                }
+            }
+            else{
+                View::render('Admins/reset-password.php', ['data' => $data]);
+            }
         }
         else{
-            View::render('Admins/reset-password.php');
+
+            $data = [
+                'current_password' => '',
+                'new_password' => '',
+                'confirm_password' => '',
+                'password_err' => '',
+            ];
+            View::render('Admins/reset-password.php', ['data' => $data]);
         }
     }
 
@@ -130,7 +171,10 @@ class User extends \Core\Controller
                     die('couldn\'t write to database');
                 }
             }
-            
+            else {
+                // load view with errors
+                View::render('Doctors/register.php', ['data'=> $data]);
+            }
         }
         else{
             $data = [

@@ -22,12 +22,27 @@
         <div class="form-group">
             <label for="">New Password:</label>
             <input type="password" name="new_password" class="form-control" required placeholder="Enter new password">
+            <span id="password_err" name="password_err" value="" style="color: red"><?php echo $data['password_err']?></span>
         </div>
 
         <div class="form-group">
             <label for="">Confirm new password: </label>
             <input type="password" name="confirm_password" class="form-control" required placeholder="Confirm new password">
         </div>
-        <input type="hidden" name="admin_id" value="<?php echo $_REQUEST['id']; ?>">
-        <button type="submit" class="btn btn-primary">Change Password</button>
+        <input type="hidden" id="reset_admin_id" name="reset_admin_id">
+
+        <input type="submit" class="btn btn-primary" value="Change Password" onclick="submitRoutine(event)">
     </form>
+
+    <script>
+        function submitRoutine(e){
+            var reset_admin_id = document.getElementById('reset_admin_id');
+            reset_admin_id.value = sessionStorage.getItem('reset_admin_id');
+
+            sessionStorage.removeItem('reset_admin_id');
+        }
+
+    </script>
+
+</body>
+</html>
