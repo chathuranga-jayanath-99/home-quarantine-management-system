@@ -25,7 +25,7 @@
                         <div>
                             <h6 class="text-left h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Choose an account to reset the password.</h6>
                         </div>
-                    <form action="<?php echo URLROOT?>/adult-patient/password-reset" method="POST">
+                    <form action="<?php echo URLROOT?>/PHI/adult-patient/password-reset" method="POST">
                         <div>
                         <?php 
                         $cnt = 0;

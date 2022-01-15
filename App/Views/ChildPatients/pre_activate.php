@@ -21,7 +21,7 @@
                 <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                     <h2 class="text-center h fw-bold mb-5 mx-1 mx-md-4 mt-4">Enter Guardian NIC</h2>
-                    <form action="<?php echo URLROOT?>/child-patient/activate-existing-acc" method='POST'>
+                    <form action="<?php echo URLROOT?>/PHI/child-patient/activate-existing-acc" method='POST'>
                         <div class="d-flex flex-row align-items-center mb-4">
                         <i class="fa fa-id-card fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">

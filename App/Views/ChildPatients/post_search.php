@@ -25,7 +25,7 @@
                         <div>
                             <h6 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Please select the one of the account under this NIC</h6>
                         </div>
-                    <form action="<?php echo URLROOT?>/child-patient/searchHelper " method="POST">
+                    <form action="<?php echo URLROOT?>/PHI/child-patient/searchHelper " method="POST">
                         <div>
                         <?php 
 
@@ -67,7 +67,7 @@
                     <h4 class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">Do you want to continue searching child patients  ?</h4>
                     
                     <div class="text-center mt-3">
-                        <a href="<?php echo URLROOT.'/child-patient/search' ?>">
+                        <a href="<?php echo URLROOT.'/PHI/child-patient/search' ?>">
                                 <button style="width:100px;" class="btn btn-success ">Yes</button>
                         </a>
                     </div>

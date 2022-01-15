@@ -25,7 +25,7 @@
                         <div>
                             <h6 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">You can either activate one of the following existing accounts or create a new account.</h6>
                         </div>
-                    <form action="<?php echo URLROOT?>/child-patient/active" method="POST">
+                    <form action="<?php echo URLROOT?>/PHI/child-patient/active" method="POST">
                         <div>
                         <?php 
                         $cnt = 0;
@@ -87,7 +87,7 @@
 
                     <h2 class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4">Create an Account</h2>
 
-                    <form action="<?php echo URLROOT?>/child-patient/register" method='POST'>
+                    <form action="<?php echo URLROOT?>/PHI/child-patient/register" method='POST'>
                         <div>
                             <h6 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Do you want to continue account creation?</h6>
                         </div>

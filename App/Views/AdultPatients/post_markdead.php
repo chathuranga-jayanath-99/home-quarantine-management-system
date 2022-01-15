@@ -26,7 +26,7 @@
                         <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">NIC : <?php echo $adultData[0]->NIC ;?></h4>
                         <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Patient Name : <?php echo $adultData[0]->name ;?></h4>
                     </div>
-                    <form action="<?php echo URLROOT?>/adult-patient/markdeadHelper " method="POST">
+                    <form action="<?php echo URLROOT?>/PHI/adult-patient/markdeadHelper " method="POST">
                         <div>
                         <?php 
                        
@@ -68,7 +68,7 @@
                     <h4 class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">Do you want to continue marking adult patient deaths?</h4>
                     
                     <div class="text-center mt-3">
-                        <a href="<?php echo URLROOT.'/adult-patient/markdead' ?>">
+                        <a href="<?php echo URLROOT.'/PHI/adult-patient/markdead' ?>">
                                 <button style="width:100px;" class="btn btn-success ">Yes</button>
                         </a>
                     </div>

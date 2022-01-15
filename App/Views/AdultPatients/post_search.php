@@ -26,7 +26,7 @@
                             <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">NIC : <?php echo $adultData[0]->NIC ;?></h4>
                             <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Patient Name : <?php echo $adultData[0]->name ;?></h4>
                         </div>
-                    <form action="<?php echo URLROOT?>/adult-patient/searchHelper " method="POST">
+                    <form action="<?php echo URLROOT?>/PHI/adult-patient/searchHelper " method="POST">
                         <div>
                             <input class="form-check-input" type="hidden" name="email" value="<?php echo $adultData[0]->email ?>">
                             <input type="hidden" name="nic" value="<?php echo $nic ?>">
@@ -54,7 +54,7 @@
                     <h4 class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">Do you want to continue searching patients ?</h4>
                     
                     <div class="text-center mt-3">
-                        <a href="<?php echo URLROOT.'/adult-patient/search' ?>">
+                        <a href="<?php echo URLROOT.'/PHI/adult-patient/search' ?>">
                                 <button style="width:100px;" class="btn btn-success ">Yes</button>
                         </a>
                     </div>

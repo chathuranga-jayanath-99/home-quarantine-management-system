@@ -25,7 +25,7 @@
                         <div>
                             <h6 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Please select the account that want to mark as dead</h6>
                         </div>
-                    <form action="<?php echo URLROOT?>/child-patient/markdeadHelper " method="POST">
+                    <form action="<?php echo URLROOT?>/PHI/child-patient/markdeadHelper " method="POST">
                         <div>
                         <?php 
 
@@ -67,7 +67,7 @@
                     <h4 class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">Do you want to continue marking  child patients deaths ?</h4>
                     
                     <div class="text-center mt-3">
-                        <a href="<?php echo URLROOT.'/child-patient/markdead' ?>">
+                        <a href="<?php echo URLROOT.'/PHI/child-patient/markdead' ?>">
                                 <button style="width:100px;" class="btn btn-success ">Yes</button>
                         </a>
                     </div>
