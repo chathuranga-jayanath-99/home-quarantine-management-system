@@ -7,10 +7,10 @@
     <ol class="breadcrumb navbar-nav ms-5 me-auto mb-2 mb-lg-0">
       <li class="breadcrumb-item">Home</li>
       <li class="breadcrumb-item active" aria-current="page"><?php echo $nav['page']; ?></li>
+      <li class="breadcrumb-item active" aria-current="page">Adult Patient</li>
       <?php if (isset($nav['subPage'])) { ?>
       <li class="breadcrumb-item active" aria-current="page"><?php echo $nav['subPage']; ?></li>
       <?php } ?>
-      <li class="breadcrumb-item active" aria-current="page">Adult Patient</li>
       <?php if ($nav['totalSteps'] > 0) { ?>
       <li class="navbar-nav ms-5 me-auto mb-2 mb-lg-0 text-muted"> Step <?php echo $nav['step']; ?> of <?php echo $nav['totalSteps']; ?></li>
       <?php } ?>
