@@ -124,8 +124,13 @@ class Adultpatient extends Patient{
                             die('SUCCESS');
                         }
                         else {
+                            $nav = [
+                                'page'       => "Registration",
+                                'totalSteps' => 3,
+                                'step'       => 3
+                            ];
                             // load view with errors
-                            View::render('AdultPatients/post_register.php', ['data'=> $data]);
+                            View::render('AdultPatients/post_register.php', ['data'=> $data, 'nav' => $nav]);
                         }
                     }
                     else {
@@ -149,9 +154,13 @@ class Adultpatient extends Patient{
                             'address_err'           => '',
                             'contact_no_err'        => ''
                         ];
-            
+                        $nav = [
+                            'page'       => "Registration",
+                            'totalSteps' => 3,
+                            'step'       => 3
+                        ];
                         // load view
-                        View::render('AdultPatients/post_register.php', ['data'=> $data]);
+                        View::render('AdultPatients/post_register.php', ['data'=> $data, 'nav' => $nav]);
                     }
                 }
                 else {
@@ -181,14 +190,29 @@ class Adultpatient extends Patient{
                         if (parent::isValidNIC($data['NIC'])) {
                             $adultData = AdultPatientModel::searchByNIC($data['NIC']);
                             if($adultData){
-                                View::render('AdultPatients/register.php', ['adultData' => $adultData, 'nic' => $data['NIC']]);
+                                $nav = [
+                                    'page'       => "Registration",
+                                    'totalSteps' => 3,
+                                    'step'       => 2
+                                ];
+                                View::render('AdultPatients/register.php', ['adultData' => $adultData, 'nic' => $data['NIC'], 'nav' => $nav]);
                             }else{
-                                View::render('AdultPatients/post_register.php', ['data'=> $data]);
+                                $nav = [
+                                    'page'       => "Registration",
+                                    'totalSteps' => 3,
+                                    'step'       => 3
+                                ];
+                                View::render('AdultPatients/post_register.php', ['data'=> $data, 'nav' => $nav]);
                             }
                             //View::render('AdultPatients/register.php', ['adultData' => $adultData, 'nic' => $data['NIC']]);
                         } else {
                             $data['nic_err'] = 'Invalid NIC';
-                            View::render('AdultPatients/pre_register.php', ['data'=> $data]);
+                            $nav = [
+                                'page'       => "Registration",
+                                'totalSteps' => 3,
+                                'step'       => 1
+                            ];
+                            View::render('AdultPatients/pre_register.php', ['data'=> $data, 'nav' => $nav]);
                         }
                     }
                 }
@@ -214,9 +238,13 @@ class Adultpatient extends Patient{
                     'address_err'           => '',
                     'contact_no_err'        => ''
                 ];
-
+                $nav = [
+                    'page'       => "Registration",
+                    'totalSteps' => 3,
+                    'step'       => 1
+                ];
                 // load view
-                View::render('AdultPatients/pre_register.php', ['data'=> $data]);
+                View::render('AdultPatients/pre_register.php', ['data'=> $data, 'nav' => $nav]);
             }
         }
     }   
@@ -352,7 +380,12 @@ class Adultpatient extends Patient{
                         $this->phi_id = $_SESSION['phi_id'];
                         $this->phi_range = $_SESSION['phi_area'];
                         if($rows>0) {
-                            View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
+                            $nav = [
+                                'page'       => "Active Account",
+                                'totalSteps' => 2,
+                                'step'       => 2
+                            ];
+                            View::render('AdultPatients/accSuccess.php', ['adultObj' => $this, 'nav' => $nav]);
                         } else {
                             echo 'Failed';
                         }
@@ -380,13 +413,23 @@ class Adultpatient extends Patient{
                             array_push( $contact_patient , $adult);
                         }
                     }
-                    View::render('AdultPatients/post_markpositive.php', ['contact_patient' => $contact_patient , 'nic' => $data['NIC']]);
+                    $nav = [
+                        'page'       => "Mark Positive",
+                        'totalSteps' => 3,
+                        'step'       => 2
+                    ];
+                    View::render('AdultPatients/post_markpositive.php', ['contact_patient' => $contact_patient , 'nic' => $data['NIC'], 'nav' => $nav]);
                     
                                 
                 }
                 else{
                     $data['nic_err'] = 'Invalid NIC';
-                    View::render('AdultPatients/pre_markpositive.php', ['data'=> $data]);
+                    $nav = [
+                        'page'       => "Mark Positive",
+                        'totalSteps' => 3,
+                        'step'       => 1
+                    ];
+                    View::render('AdultPatients/pre_markpositive.php', ['data'=> $data, 'nav' => $nav]);
                 }
             }
             else {
@@ -394,7 +437,12 @@ class Adultpatient extends Patient{
                     'NIC' => '' ,
                     'nic_err' => ''
                 ] ;
-                View::render('AdultPatients/pre_markpositive.php', ['data'=> $data]); 
+                $nav = [
+                    'page'       => "Mark Positive",
+                    'totalSteps' => 3,
+                    'step'       => 1
+                ];
+                View::render('AdultPatients/pre_markpositive.php', ['data'=> $data, 'nav' => $nav]); 
             }
 
         }
@@ -410,7 +458,12 @@ class Adultpatient extends Patient{
                     $this->$state();
                     $rows = AdultPatientModel::changeState($this->email, $this->NIC, 'positive');
                     if($rows>0) {
-                        View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
+                        $nav = [
+                            'page'       => "Mark Positive",
+                            'totalSteps' => 3,
+                            'step'       => 3
+                        ];
+                        View::render('AdultPatients/accSuccess.php', ['adultObj' => $this, 'nav' => $nav]);
                     } else {
                         echo 'Failed';
                     }
@@ -432,13 +485,23 @@ class Adultpatient extends Patient{
                 if(parent::isValidNIC($data['NIC'])){
                     $adultData = AdultPatientModel::searchByNIC($data['NIC']);
                     // $contact_children = array();
-                    View::render('AdultPatients/post_markdead.php', ['adultData' => $adultData , 'nic' => $data['NIC']]);
+                    $nav = [
+                        'page'       => "Mark Dead",
+                        'totalSteps' => 3,
+                        'step'       => 2
+                    ];
+                    View::render('AdultPatients/post_markdead.php', ['adultData' => $adultData , 'nic' => $data['NIC'], 'nav' => $nav]);
                     
                                 
                 }
                 else{
                     $data['nic_err'] = 'Invalid NIC';
-                    View::render('AdultPatients/pre_markdead.php', ['data'=> $data]);
+                    $nav = [
+                        'page'       => "Mark Dead",
+                        'totalSteps' => 3,
+                        'step'       => 1
+                    ];
+                    View::render('AdultPatients/pre_markdead.php', ['data'=> $data, 'nav' => $nav]);
                 }
             }
             else {
@@ -446,7 +509,12 @@ class Adultpatient extends Patient{
                     'NIC' => '' ,
                     'nic_err' => ''
                 ] ;
-                View::render('AdultPatients/pre_markdead.php', ['data'=> $data]); 
+                $nav = [
+                    'page'       => "Mark Dead",
+                    'totalSteps' => 3,
+                    'step'       => 1
+                ];
+                View::render('AdultPatients/pre_markdead.php', ['data'=> $data, 'nav' => $nav]); 
             }
         }
     
@@ -461,7 +529,12 @@ class Adultpatient extends Patient{
                     parent::markDead();
                     $rows = AdultPatientModel::changeState($this->email, $this->NIC, 'dead');
                     if($rows>0) {
-                        View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
+                        $nav = [
+                            'page'       => "Mark Dead",
+                            'totalSteps' => 3,
+                            'step'       => 3
+                        ];
+                        View::render('AdultPatients/accSuccess.php', ['adultObj' => $this, 'nav' => $nav]);
                     } else {
                         echo 'Failed';
                     }
@@ -479,7 +552,12 @@ class Adultpatient extends Patient{
 
                 if(parent::isValidNIC($data['NIC'])){
                     $adultData = AdultPatientModel::searchByNIC($data['NIC']);
-                    View::render('AdultPatients/post_search.php', ['adultData' => $adultData , 'nic' => $data['NIC']]);
+                    $nav = [
+                        'page'       => "Search",
+                        'totalSteps' => 3,
+                        'step'       => 2
+                    ];
+                    View::render('AdultPatients/post_search.php', ['adultData' => $adultData , 'nic' => $data['NIC'], 'nav' => $nav]);
 
                 // if(parent::isValidNIC($data['NIC'])){
                 //     $adultData = AdultPatientModel::searchByNIC($data['NIC']);
@@ -491,8 +569,13 @@ class Adultpatient extends Patient{
                                 
                 }
                 else{
+                    $nav = [
+                        'page'       => "Search",
+                        'totalSteps' => 3,
+                        'step'       => 1
+                    ];
                     $data['nic_err'] = 'Invalid NIC';
-                    View::render('AdultPatients/pre_search.php', ['data'=> $data]);
+                    View::render('AdultPatients/pre_search.php', ['data'=> $data, 'nav' => $nav]);
                 }
             }
             else {
@@ -500,7 +583,12 @@ class Adultpatient extends Patient{
                     'NIC' => '' ,
                     'nic_err' => ''
                 ] ;
-                View::render('AdultPatients/pre_search.php', ['data'=> $data]); 
+                $nav = [
+                    'page'       => "Search",
+                    'totalSteps' => 3,
+                    'step'       => 1
+                ];
+                View::render('AdultPatients/pre_search.php', ['data'=> $data, 'nav' => $nav]); 
             }
         }
     }
@@ -510,7 +598,12 @@ class Adultpatient extends Patient{
         if(parent::checkPHISession()) {
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $this->initialize($_POST['nic'], $_POST['email']);
-                View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
+                $nav = [
+                    'page'       => "Search",
+                    'totalSteps' => 3,
+                    'step'       => 3
+                ];
+                View::render('AdultPatients/accSuccess.php', ['adultObj' => $this, 'nav' => $nav]);
                    
             }
         }
@@ -527,11 +620,23 @@ class Adultpatient extends Patient{
 
                 if(parent::isValidNIC($data['NIC'])){
                     $adultData = AdultPatientModel::searchByNIC($data['NIC']);
-                    View::render('AdultPatients/register.php', ['adultData' => $adultData , 'nic' => $data['NIC']]);
+                    $nav = [
+                        'page'       => "Activate Existing",
+                        'subPage'    => "Search",
+                        'totalSteps' => 2,
+                        'step'       => 2
+                    ];
+                    View::render('AdultPatients/register.php', ['adultData' => $adultData , 'nic' => $data['NIC'], 'nav' => $nav]);
                 }
                 else{
                     $data['nic_err'] = 'Invalid NIC';
-                    View::render('AdultPatients/pre_search.php', ['data'=> $data]);
+                    $nav = [
+                        'page'       => "Activate Existing",
+                        'subPage'    => "Search",
+                        'totalSteps' => 2,
+                        'step'       => 1
+                    ];
+                    View::render('AdultPatients/pre_search.php', ['data'=> $data, 'nav' => $nav]);
                 }
             }
             else {
@@ -539,7 +644,13 @@ class Adultpatient extends Patient{
                     'NIC' => '' ,
                     'nic_err' => ''
                 ] ;
-                View::render('AdultPatients/pre_activate.php', ['data'=> $data]); 
+                $nav = [
+                    'page'       => "Activate Existing",
+                    'subPage'    => "Search",
+                    'totalSteps' => 2,
+                    'step'       => 1
+                ];
+                View::render('AdultPatients/pre_activate.php', ['data'=> $data, 'nav' => $nav]); 
             }
         }
 
@@ -677,15 +788,30 @@ class Adultpatient extends Patient{
                 ];
                 if ($_POST['id_checked'] === 'no') {
                     if(empty($_POST['NIC'])){
-                        View::render('AdultPatients/pwdReset1.php', ['NIC' => '', 'nic_err' => 'Please enter NIC']);
+                        $nav = [
+                            'page'       => "Password Reset",
+                            'totalSteps' => 4,
+                            'step'       => 1
+                        ];
+                        View::render('AdultPatients/pwdReset1.php', ['NIC' => '', 'nic_err' => 'Please enter NIC', 'nav' => $nav]);
                     } else {
                         $data['NIC'] = htmlspecialchars(strtoupper(trim($_POST['NIC'])));
                         if (parent::isValidNIC($data['NIC'])) {
                             $adultData = AdultPatientModel::searchByNIC($data['NIC']);
-                            View::render('AdultPatients/pwdReset2.php', ['adultData' => $adultData, 'nic' => $data['NIC']]);
+                            $nav = [
+                                'page'       => "Password Reset",
+                                'totalSteps' => 4,
+                                'step'       => 2
+                            ];
+                            View::render('AdultPatients/pwdReset2.php', ['adultData' => $adultData, 'nic' => $data['NIC'], 'nav' => $nav]);
                         } else {
                             $data['nic_err'] = 'Enter a valid NIC';
-                            View::render('AdultPatients/pwdReset1.php', ['data' => $data]);
+                            $nav = [
+                                'page'       => "Password Reset",
+                                'totalSteps' => 4,
+                                'step'       => 1
+                            ];
+                            View::render('AdultPatients/pwdReset1.php', ['data' => $data, 'nav' => $nav]);
                         }
                     }
                 } else {
@@ -724,14 +850,24 @@ class Adultpatient extends Patient{
                             $id = AdultPatientModel::changePassword($email, $nic, $data['password']);
                             if ($id) {
                                 $this->initialize($nic, $email);
-                                View::render('AdultPatients/accSuccess.php', ['adultObj' => $this]);
+                                $nav = [
+                                    'page'       => "Password Reset",
+                                    'totalSteps' => 4,
+                                    'step'       => 4
+                                ];
+                                View::render('AdultPatients/accSuccess.php', ['adultObj' => $this, 'nav' => $nav]);
                             }
                             else {
                                 die('something went wrong');
                             }
                             die('SUCCESS');
                         } else {
-                            View::render('AdultPatients/pwdReset3.php', ['nic' => $_POST['nic'], 'email' => $_POST['email'], 'name' => $this->name, 'data' => $data]);
+                            $nav = [
+                                'page'       => "Password Reset",
+                                'totalSteps' => 4,
+                                'step'       => 3
+                            ];
+                            View::render('AdultPatients/pwdReset3.php', ['nic' => $_POST['nic'], 'email' => $_POST['email'], 'name' => $this->name, 'data' => $data, 'nav' => $nav]);
                         }
 
                     } else {
@@ -744,11 +880,21 @@ class Adultpatient extends Patient{
                             'password_err'      => '',
                             'conf_password_err' => ''
                         ];
-                        View::render('AdultPatients/pwdReset3.php', ['nic' => $nic, 'email' => $email, 'name' => $this->name, 'data' => $data]);
+                        $nav = [
+                            'page'       => "Password Reset",
+                            'totalSteps' => 4,
+                            'step'       => 3
+                        ];
+                        View::render('AdultPatients/pwdReset3.php', ['nic' => $nic, 'email' => $email, 'name' => $this->name, 'data' => $data, 'nav' => $nav]);
                     }
                 }
             } else {
-                View::render('AdultPatients/pwdReset1.php', ['data' => ['NIC' => '', 'nic_err' => '']]);
+                $nav = [
+                    'page'       => "Password Reset",
+                    'totalSteps' => 4,
+                    'step'       => 1
+                ];
+                View::render('AdultPatients/pwdReset1.php', ['data' => ['NIC' => '', 'nic_err' => ''], 'nav' => $nav]);
             }
         }
     }
@@ -1099,7 +1245,12 @@ class Adultpatient extends Patient{
     }
 
     protected function activeHelper($patient) {
-        View::render('AdultPatients/active.php', ['adultObj' => $patient]);
+        $nav = [
+            'page'       => "Active Account",
+            'totalSteps' => 2,
+            'step'       => 1
+        ];
+        View::render('AdultPatients/active.php', ['adultObj' => $patient, 'nav' => $nav]);
     }
 
     private function initializeFromSession() {

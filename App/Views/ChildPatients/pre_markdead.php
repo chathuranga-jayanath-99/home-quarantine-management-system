@@ -11,6 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <body>
+<?php
+    include 'phi-navbar.php';
+?>
     <section class="vh-auto pt-5 pb-5" style="background-color: #eee; min-height:100vh;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
