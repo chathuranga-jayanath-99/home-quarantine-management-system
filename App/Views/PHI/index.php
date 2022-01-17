@@ -43,6 +43,8 @@ include_once 'navbar.php';
                 <a href="<?php echo URLROOT?>/PHI/form-not-filled">VIEW FORM NOT FILLED PATIENTS</a>
                 <br>
                 <a href="<?php echo URLROOT?>/PHI/send-msg-to-my-patients">SEND MSG TO MY PATIENTS</a>
+                <br>
+                <a href="<?php echo URLROOT?>/PHI/get-updates">GET PROFILE UPDATES</a>
 
                 
 

@@ -1,9 +1,13 @@
-<?php include(APPROOT.'/App/Views/Includes/header.php'); ?>
+<?php
+
+use function PHPSTORM_META\type;
+
+include(APPROOT.'/App/Views/Includes/header.php'); ?>
 
 <body>
 
 <?php 
-$page = 'view-record';
+$page = 'get-updates';
 include_once 'navbar.php';
 ?>
 
@@ -17,7 +21,7 @@ include_once 'navbar.php';
             <div class="row justify-content-center">
               <!-- <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1"> -->
 
-                <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4"> RECORDS </h2>
+                <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4"> UPDATES </h2>
                 
                 <?php flash('check_fail'); ?>
                 <?php flash('check_success'); ?>
@@ -27,7 +31,6 @@ include_once 'navbar.php';
                         <tr>
                         <th scope="col">No</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Age</th>
                         <th scope="col">Type</th>
                         <th scope="col">Actions</th>
                         </tr>
@@ -36,14 +39,14 @@ include_once 'navbar.php';
 
                                     <tr>
                         <?php
-                            if (sizeof($records['adult']) > 0 || sizeof($records['child']) > 0){
+                            if (sizeof($updates['adult']) > 0 || sizeof($updates['child']) > 0){
                                 $sn = 0;
-                                foreach($records['adult'] as $record):
+                                foreach($updates['adult'] as $update):
                                     ?>
                                     <tr>
                                         <td><?php echo $sn++; ?></td>
                                     <?php
-                                    foreach($record as $key=>$value){
+                                    foreach($update as $key=>$value){
                                         if ($key == 'id'){
                                             continue;
                                         }
@@ -53,18 +56,18 @@ include_once 'navbar.php';
                                     }
                                     ?>
                                     <td>
-                                        <a href="<?php echo URLROOT.'/PHI/check-record?id='.$record['id'].'&task=mark&name='.$record['name']; ?>" class="btn btn-primary">View</a>
+                                        <a href="<?php echo URLROOT.'/PHI/get-update?id='.$update['id'].'&type='.$update['type'].'&task=mark&name='.$update['name']; ?>" class="btn btn-primary">View Changes</a>
                                     </td>
                                     </tr>
                                     <?php
                                 endforeach;
 
-                                foreach($records['child'] as $record):
+                                foreach($updates['child'] as $update):
                                     ?>
                                     <tr>
                                         <td><?php echo $sn++; ?></td>
                                     <?php
-                                    foreach($record as $key=>$value){
+                                    foreach($update as $key=>$value){
                                         if ($key == 'id'){
                                             continue;
                                         }
@@ -74,7 +77,7 @@ include_once 'navbar.php';
                                     }
                                     ?>
                                     <td>
-                                        <a href="<?php echo URLROOT.'/PHI/check-record?id='.$record['id'].'&task=mark&name='.$record['name']; ?>" class="btn btn-primary">View</a>
+                                        <a href="<?php echo URLROOT.'/PHI/get-update?id='.$update['id'].'&type='.$update['type'].'&task=mark&name='.$update['name']; ?>" class="btn btn-primary">View Changes</a>
                                     </td>
                                     </tr>
                                     <?php
