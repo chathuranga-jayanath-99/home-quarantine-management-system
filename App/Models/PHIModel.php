@@ -212,13 +212,7 @@ class PHIModel extends User{
         $row2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $res = ['adult' => $row1, 'child' => $row2];
-        
-        if(!empty($res['adult'] || !empty($res['child']))){
-            return $res;
-        }
-        else {
-            return false;
-        }
+        return $res;   
 
         // AND cp.start_quarantine_date <: AND yesterday <:cp.end_quarantine_date
 
@@ -229,9 +223,65 @@ class PHIModel extends User{
         // else{
         //     return false ;
         // }
+    }
+
+    public static function getUpdates($phiID){
+
+        $db = static::getDB();
+        $sql1 = 'SELECT u.id, ap.name, u.type
+        FROM tbl_updates u
+        JOIN tbl_adult_patient ap
+        ON u.patient_id = ap.id
+        WHERE u.phi_id=:phiId AND u.type="adult" AND u.approve_state="pending"';
+        $stmt = $db->prepare($sql1);
+        $stmt->execute(['phiId' => $phiID]);
+        $row1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $sql2 = 'SELECT u.id, cp.name, u.type
+        FROM tbl_updates u
+        JOIN tbl_child_patient cp
+        ON u.patient_id = cp.id
+        WHERE u.phi_id=:phiId AND u.type="child" AND u.approve_state="pending"';
+        $stmt = $db->prepare($sql2);
+        $stmt->execute(['phiId' => $phiID]);
+        $row2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $res = ['adult' => $row1, 'child' => $row2];
+        return $res; 
+
+    }
+
+
+    public static function getUpdate($updateID,$type){
+        $db = static::getDB();
         
+        if($type == 'adult'){
 
         
+        $sql1 = 'SELECT u.id, u.name_change, u.type, u.email_change, u.contact_no_change,
+                        ap.name , ap.email , ap.contact_no 
+        FROM tbl_updates u
+        JOIN tbl_adult_patient ap
+        ON u.patient_id = ap.id
+        WHERE u.id=:updateID';
+        $stmt = $db->prepare($sql1);
+        $stmt->execute(['updateID' => $updateID ]);
+        $row1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        }
+        else{
+        $sql1 = 'SELECT u.id, u.name_change, u.type, u.email_change, u.contact_no_change,
+                        cp.name , cp.email , cp.contact_no 
+        FROM tbl_updates u
+        JOIN tbl_child_patient cp
+        ON u.patient_id = cp.id
+        WHERE u.id=:updateID';
+        $stmt = $db->prepare($sql1);
+        $stmt->execute(['updateID' => $updateID ]);
+        $row1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        
+        return $row1; 
 
     }
 }

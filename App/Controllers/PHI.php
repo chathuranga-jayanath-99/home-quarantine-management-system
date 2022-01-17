@@ -416,4 +416,28 @@ class PHI extends \Core\Controller{
         
 
     }
+
+    public function approveUpdateAction(){
+
+    }
+
+    public function getUpdatesAction(){
+        if ($this->isLoggedIn()){
+            $updates = PHIModel::getUpdates($_SESSION['phi_id'] ) ;
+            View::render('PHI/get-updates.php', ['updates' => $updates]);
+        }
+    }
+
+    public function getUpdateAction(){
+        if ($_GET['id']){
+            $updateId = $_GET['id'];
+            $type = $_GET['type'];
+            $changes = PHIModel::getUpdate($updateId,$type) ;
+            //print_r($changes ) ;
+            View::render('PHI/get-update.php', ['changes' => $changes]);
+            
+        
+        }
+
+    }
 }
