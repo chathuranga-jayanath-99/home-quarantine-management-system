@@ -1,7 +1,7 @@
 <?php include(APPROOT.'/App/Views/Includes/header.php'); ?>
 <body>
     
-<div class="navbar">
+    <div class="navbar">
         <a href="<?php echo URLROOT;?>/admin/user">Home</a>
         <a href="<?php echo URLROOT;?>/admin/user/manage-admin">Admin</a>
         

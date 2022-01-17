@@ -390,6 +390,69 @@ class Doctor extends \Core\Controller{
         }
     }
 
+    public function resetPasswordAction(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            $password_len_limit = 4;
+
+            $data = [
+                'current_password' => htmlspecialchars($_POST['current_password']),
+                'new_password' => htmlspecialchars($_POST['new_password']),
+                'confirm_password' => htmlspecialchars($_POST['confirm_password']),
+                'current_password_err' => '',
+                'new_password_err' => '',
+                'confirm_password_err' => '',
+            ];
+
+            if (strlen($data['current_password']) < $password_len_limit){
+                $data['current_password_err'] = 'Password must be '.$password_len_limit.' characters long';
+            }
+            if (strlen($data['new_password']) < $password_len_limit){
+                $data['new_password_err'] = 'Password must be '.$password_len_limit.' characters long';
+            }
+            else if (strlen($data['confirm_password']) < $password_len_limit){
+                $data['confirm_password_err'] = 'Password must be '.$password_len_limit.' characters long';
+            }
+            else{
+                if (strcmp($data['new_password'], $data['confirm_password']) != 0) {
+                    $data['new_password_err'] = 'Passwords do not match';
+                }
+            }
+            
+            if (empty($data['current_password_err']) 
+            && empty($data['new_password_err']) && empty($data['confirm_password_err'])){
+
+                $data['new_password'] = password_hash($data['new_password'], PASSWORD_DEFAULT);
+                $data['confirm_password'] = $data['new_password'];
+
+                $data['id'] = $_SESSION['doctor_id'];
+
+                $res = DoctorModel::resetPassword($data);
+
+                if ($res){
+                    flash('doctor_reset_password', 'Password reset successful.', 'alert alert-success');
+                    header('location: '.URLROOT.'/doctor');
+                }
+                else{
+                    flash('doctor_reset_password', 'Password reset failed.', 'alert alert-danger');
+                    header('location: '.URLROOT.'/doctor');
+                }
+            }
+            View::render('Doctors/reset-password.php', ['data' => $data]);
+        }
+        else{
+            $data = [
+                'current_password' => '',
+                'new_password' => '',
+                'confirm_password' => '',
+                'current_password_err' => '',
+                'new_password_err' => '',
+                'confirm_password_err' => '',
+            ];
+            View::render('Doctors/reset-password.php', ['data' => $data]);
+        }
+    }
+
     private function createSession($doctor){
         $_SESSION['doctor_id'] = $doctor->id;
         $_SESSION['doctor_email'] = $doctor->email;

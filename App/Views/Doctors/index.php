@@ -9,10 +9,12 @@
     <a href="<?php echo URLROOT;?>/doctor/logout">Logout</a>
     
     <?php flash('update_result');?>
-
+    <?php flash('doctor_reset_password');?>
+    
     <h1>Welcome Dr. <?php echo $_SESSION['doctor_name']?>!</h1>
 
     <a class="btn btn-primary" href="<?php echo URLROOT;?>/doctor/update">Upadate Account</a>
+    <a href="<?php echo URLROOT.'/doctor/reset-password'?>" class="btn btn-primary">Change Password</a>
 
     <br><br>
 
@@ -27,7 +29,6 @@
     <div class="container" >
         <h3>Total patients assigned to you: <?php echo $count;?></h3>
         <br>
-        <!-- <P ><strong>Count: </strong></P> -->
 
         <div style="padding: 50px;        display: flex;        justify-content:  space-between;">
             <a class="btn btn-dark" href="<?php echo URLROOT; ?>/doctor/check-patients">Check all patients</a>

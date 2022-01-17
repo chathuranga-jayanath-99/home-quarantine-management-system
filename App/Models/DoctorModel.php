@@ -313,6 +313,40 @@ class DoctorModel extends MedicalOfficerModel{
         return $res;
     }
 
+    public static function resetPassword($data){
+        $db = static::getDB();
+
+        $sql = 'SELECT password FROM tbl_doctor WHERE id=:id';
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['id' => $data['id']]);
+        $doctor = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if ($doctor){
+
+            if (password_verify($data['current_password'], $doctor->password)){
+
+                // change password to new one
+                $sql2 = 'UPDATE tbl_doctor SET password=:password WHERE id=:id';
+                $stmt2 = $db->prepare($sql2);
+                $res = $stmt2->execute([
+                    'password' => $data['new_password'],
+                    'id' => $data['id'],
+                ]);
+
+                if ($res){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            else{
+                return false;
+            }
+        }
+        return false;
+    }
+
     // public static function endQuarantinePeriod($patientId, $patientType){
     //     $db = static::getDB();
 

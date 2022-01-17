@@ -89,7 +89,7 @@ class User extends \Core\Controller
                 $data['current_password'] = $data['current_password'];
                 $data['new_password'] = password_hash($data['new_password'], PASSWORD_DEFAULT);
                 $data['confirm_password'] = $data['new_password'];
-                // die('success');
+                
                 $res = AdminUserModel::resetPassword($reset_admin_id, $data);
 
                 if ($res){
