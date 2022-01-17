@@ -12,7 +12,9 @@
 </head>
 
 <body>
-
+<?php
+    include 'phi-navbar.php';
+?>
     <section class="vh-100" style="background-color: #eee;">    
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -22,7 +24,7 @@
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 							<h1 class="fs-4 card-title fw-bold mb-4">Change State</h1>
-                            <form action="<?php echo URLROOT?>/adult-patient/active" method='POST'>
+                            <form action="<?php echo URLROOT?>/PHI/adult-patient/active" method='POST'>
                                 <div>
                                     <div class="pb-2"><h6 class="text-left h5 ">Select new state</h6></div><div></div>
                                     <?php

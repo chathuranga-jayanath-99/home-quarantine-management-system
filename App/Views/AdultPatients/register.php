@@ -10,6 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<?php
+    include 'phi-navbar.php';
+?>
     <section class="vh-100" style="background-color: #eee;">
         <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -24,7 +27,7 @@
                                         <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">NIC : <?php echo $adultData[0]->NIC ;?></h4>
                                         <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Patient Name : <?php echo $adultData[0]->name ;?></h4>
                                     </div>
-                                    <form action="<?php echo URLROOT?>/adult-patient/active" method="POST">
+                                    <form action="<?php echo URLROOT?>/PHI/adult-patient/active" method="POST">
                                         <div>
                                             <input class="form-check-input" type="hidden" name="email" value="<?php echo $adultData[0]->email ?>">
                                         </div>

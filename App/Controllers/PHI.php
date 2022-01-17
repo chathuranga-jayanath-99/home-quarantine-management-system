@@ -223,11 +223,11 @@ class PHI extends \Core\Controller{
             $type = $_POST['Patient_type'];
             
             if($type == 'child'){
-                header('location: '.URLROOT.'/child-patient/register');
+                header('location: '.URLROOT.'/PHI/child-patient/register');
             
             }
             else {
-                header('location: '.URLROOT.'/adult-patient/register');
+                header('location: '.URLROOT.'/PHI/adult-patient/register');
             }
         }
 
@@ -245,11 +245,11 @@ class PHI extends \Core\Controller{
             $type = $_POST['Patient_type'];
             
             if($type == 'child'){
-                header('location: '.URLROOT.'/child-patient/markpositive');
+                header('location: '.URLROOT.'/PHI/child-patient/markpositive');
             
             }
             else {
-                header('location: '.URLROOT.'/adult-patient/markpositive');
+                header('location: '.URLROOT.'/PHI/adult-patient/markpositive');
             }
         }
 
@@ -267,11 +267,11 @@ class PHI extends \Core\Controller{
             $type = $_POST['Patient_type'];
             
             if($type == 'child'){
-                header('location: '.URLROOT.'/child-patient/markdead');
+                header('location: '.URLROOT.'/PHI/child-patient/markdead');
             
             }
             else {
-                header('location: '.URLROOT.'/adult-patient/markdead');
+                header('location: '.URLROOT.'/PHI/adult-patient/markdead');
             }
         }
 
@@ -290,11 +290,11 @@ class PHI extends \Core\Controller{
             $type = $_POST['Patient_type'];
             
             if($type == 'child'){
-                header('location: '.URLROOT.'/child-patient/search');
+                header('location: '.URLROOT.'/PHI/child-patient/search');
             
             }
             else {
-                header('location: '.URLROOT.'/adult-patient/search');
+                header('location: '.URLROOT.'/PHI/adult-patient/search');
             }
         }
 
@@ -356,11 +356,11 @@ class PHI extends \Core\Controller{
             $type = $_POST['Patient_type'];
             
             if($type == 'child'){
-                header('location: '.URLROOT.'/child-patient/activate-existing-acc');
+                header('location: '.URLROOT.'/PHI/child-patient/activate-existing-acc');
             
             }
             else {
-                header('location: '.URLROOT.'/adult-patient/activate-existing-acc');
+                header('location: '.URLROOT.'/PHI/adult-patient/activate-existing-acc');
             }
         }
 

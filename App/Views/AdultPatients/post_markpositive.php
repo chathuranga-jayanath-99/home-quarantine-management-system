@@ -12,6 +12,9 @@
 </head>
 
 <body>
+<?php
+    include 'phi-navbar.php';
+?>
     <section class="vh-100" style="background-color: #eee;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -26,7 +29,7 @@
                         <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">NIC : <?php echo $contact_patient[0]->NIC ;?></h4>
                         <h4 class="text-center h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Patient Name : <?php echo $contact_patient[0]->name ;?></h4>
                     </div>
-                    <form action="<?php echo URLROOT?>/adult-patient/markpositiveHelper " method="POST">
+                    <form action="<?php echo URLROOT?>/PHI/adult-patient/markpositiveHelper " method="POST">
                         <div>
                         <?php 
                        
@@ -65,7 +68,7 @@
                     <h4 class="text-center h4 fw-bold mb-5 mx-1 mx-md-4 mt-4">Do you want to continue marking positive adult patients?</h4>
                     
                     <div class="text-center mt-3">
-                        <a href="<?php echo URLROOT.'/adult-patient/markpositive' ?>">
+                        <a href="<?php echo URLROOT.'/PHI/adult-patient/markpositive' ?>">
                                 <button style="width:100px;" class="btn btn-success ">Yes</button>
                         </a>
                     </div>

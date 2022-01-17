@@ -12,7 +12,9 @@
 </head>
 
 <body>
-
+<?php
+    include 'phi-navbar.php';
+?>
     <section class="vh-auto" style="background-color: #eee;">    
     <div class="container h-100 pt-5">
         <div class="row d-flex justify-content-center align-items-center h-100">

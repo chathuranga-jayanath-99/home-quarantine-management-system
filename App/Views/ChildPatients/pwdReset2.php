@@ -12,6 +12,9 @@
 </head>
 
 <body>
+<?php
+    include 'phi-navbar.php';
+?>
     <section class="vh-auto pt-5 pb-5" style="background-color: #eee; min-height:100vh;">
     <div class="container h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -25,7 +28,7 @@
                         <div>
                             <h6 class="text-left h6 fw-bold mb-5 mx-1 mx-md-4 mt-4">Choose an account to reset the password.</h6>
                         </div>
-                    <form action="<?php echo URLROOT?>/child-patient/password-reset" method="POST">
+                    <form action="<?php echo URLROOT?>/PHI/child-patient/password-reset" method="POST">
                         <div>
                         <?php 
                         $cnt = 0;
