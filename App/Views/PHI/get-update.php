@@ -20,12 +20,11 @@ include_once 'navbar.php';
           <div class="card-body p-md-5">
             <div class="row justify-content-center">
               <!-- <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1"> -->
-
                 <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4"> UPDATES </h2>
                 
                 <?php flash('check_fail'); ?>
                 <?php flash('check_success'); ?>
-
+                
                 <table class="table table-primary table-hover">
                     <thead>
                         <tr>
@@ -52,8 +51,26 @@ include_once 'navbar.php';
                         </tr>
                     </tbody>
                     </table>
+                        
+                        
+                        <form action="<?php echo URLROOT?>/PHI/approve-update " method="POST">
+                        <input type="hidden" name="update_id" value="<?php echo $changes[0]['id']?>">
+                        <input type="hidden" name="name_change" value="<?php echo $changes[0]['name_change']?>">
+                        <input type="hidden" name="email_change" value="<?php echo $changes[0]['email_change']?>">
+                        <input type="hidden" name="contact_no_change" value="<?php echo $changes[0]['contact_no_change']?>">
+                        <input type="hidden" name="name" value="<?php echo $changes[0]['name']?>">
+                        <input type="hidden" name="email" value="<?php echo $changes[0]['email']?>">
+                        <input type="hidden" name="contact_no" value="<?php echo $changes[0]['contact_no']?>">
+                        <input type="hidden" name="type" value="<?php echo $changes[0]['type']?>">
+                        <input type="hidden" name="patient_id" value="<?php echo $changes[0]['patient_id']?>">
 
-    
+                        <button type="Submit" class="btn btn-success ">Approve</button> 
+                        </form>
+                        <form action="<?php echo URLROOT?>/PHI/decline-update" method="POST">
+                        <input type="hidden" name="update_id" value="<?php echo $changes[0]['id']?>">
+                        <button type="Submit" class="btn btn-danger ">Decline</button> 
+                        </form>
+                               
 
               <!-- </div> -->
               </div>

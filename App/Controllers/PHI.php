@@ -417,6 +417,28 @@ class PHI extends \Core\Controller{
     }
 
     public function approveUpdateAction(){
+        if ($this->isLoggedIn()){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+               $update = ['update_id' => $_POST['update_id'],
+                        'name' => $_POST['name'],
+                        'email' => $_POST['email'],
+                        'contact_no' => $_POST['contact_no'],
+                        'name_change' => $_POST['name_change'],
+                        'email_change' => $_POST['email_change'],
+                        'contact_no_change' => $_POST['contact_no_change'],
+                        'type' => $_POST['type'],
+                        'patient_id' => $_POST['patient_id']
+                        ] ;
+               
+               $p = PHIModel::approveUpdate($update) ;
+               
+            }
+        }
+
+
+    }
+
+    public function declineUpdateAction(){
 
     }
 
@@ -435,7 +457,6 @@ class PHI extends \Core\Controller{
             //print_r($changes ) ;
             View::render('PHI/get-update.php', ['changes' => $changes]);
             
-        
         }
 
     }

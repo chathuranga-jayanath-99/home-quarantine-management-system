@@ -253,7 +253,7 @@ class PHIModel extends User{
         if($type == 'adult'){
 
         
-        $sql1 = 'SELECT u.id, u.name_change, u.type, u.email_change, u.contact_no_change,
+        $sql1 = 'SELECT u.id, u.name_change, u.type, u.email_change, u.contact_no_change, u.patient_id ,
                         ap.name , ap.email , ap.contact_no 
         FROM tbl_updates u
         JOIN tbl_adult_patient ap
@@ -265,7 +265,7 @@ class PHIModel extends User{
 
         }
         else{
-        $sql1 = 'SELECT u.id, u.name_change, u.type, u.email_change, u.contact_no_change,
+        $sql1 = 'SELECT u.id, u.name_change, u.type, u.email_change, u.contact_no_change, u.patient_id ,
                         cp.name , cp.email , cp.contact_no 
         FROM tbl_updates u
         JOIN tbl_child_patient cp
@@ -277,6 +277,71 @@ class PHIModel extends User{
         }
         
         return $row1; 
+
+    }
+
+    public static function approveUpdate($update){
+        $updateID = $update['update_id'];
+        $db = static::getDB();
+        $sql1 = 'UPDATE tbl_updates u
+                 SET u.approve_state=:approveStat
+                 WHERE u.id=:updateID' ;
+        $stmt1 = $db->prepare($sql1);
+        $stmt1->execute(['updateID' => $updateID , 'approveStat' => 'approved']);
+        
+        // $sql2 = 'SELECT u.id, u.name_change, u.type, u.email_change, u.contact_no_change, u.type, u.patient_id
+        //          FROM tbl_updates u 
+        //          WHERE u.id=:updateID' ;
+        // $stmt2 = $db->prepare($sql2);
+        // $stmt2->execute(['updateID' => $updateID ]);
+        // $row2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+        // $name_change = $row2[0]['name_change'];
+        // $email_change = $row2[0]['email_change'];
+        // $contact_no_change = $row2[0]['contact_no_change'];
+        // $type = $row2[0]['type'];
+        // $patient_id = $row2[0]['patient_id'];
+
+        if(empty($update['name_change'])){
+            $update['name_change'] = $update['name'];
+        }
+        if(empty($update['email_change'])){
+            $update['email_change']= $update['email'];
+        }
+        if(empty($update['contact_no_change'])){
+            $update['contact_no_change']=$update['contact_no'];
+        }
+
+
+        if($update['type'] == 'adult'){
+
+            $sql2 = 'UPDATE tbl_adult_patient ap
+                 SET ap.name=:name , ap.email=:email , ap.contact_no=:contact_no
+                 WHERE ap.id=:patient_id' ;
+            $stmt2 = $db->prepare($sql2);
+            $stmt2->execute(['name' =>  $update['name_change'] , 'email' => $update['email_change'] ,
+             'contact_no' => $update['contact_no_change'], 'patient_id' =>$update['patient_id'] ]);
+           
+
+
+        }
+        elseif($update['type'] == 'child'){
+
+            $sql2 = 'UPDATE tbl_child_patient cp
+            SET cp.name=:name , cp.email=:email , cp.contact_no=:contact_no
+            WHERE cp.id=:patient_id' ;
+            $stmt2 = $db->prepare($sql2);
+            $stmt2->execute(['name' =>  $update['name_change'] , 'email' => $update['email_change'] , 
+            'contact_no' => $update['contact_no_change'],'patient_id' =>$update['patient_id'] ]);
+
+        }
+
+        
+
+        
+        
+        
+
 
     }
 }
