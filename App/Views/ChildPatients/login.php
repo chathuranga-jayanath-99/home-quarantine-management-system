@@ -22,19 +22,19 @@
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 							<h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Child-Patient Login</h1>
-                            <form class="mx-1 mx-md-4" action="<?php echo URLROOT?>/child-patient/login" method='POST'>
+                            <form id="log-form" class="mx-1 mx-md-4" action="<?php echo URLROOT?>/child-patient/login" method='POST'>
                                 <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fa fa-envelope fa-lg me-3 fa-fw"></i>
-                                    <div class="form-outline flex-fill mb-0">
-                                        <input class="form-control" type="text" name="email" value="<?php echo $data['email']?>" placeholder="Email">
-                                        <span style="color:red"><?php echo $data['email_err']?></span>
+                                    <div class="form-floating flex-fill mb-0">
+                                        <input onclick="checkEmail()" onblur="checkEmail()" onchange="checkEmail()" class="form-control" id="email" type="text" name="email" value="<?php echo $data['email']?>" placeholder="Email">
+                                        <label for="email"><i class="fa fa-envelope fa-lg me-3 fa-fw"></i>Email</label>
+                                        <span id="email_err" style="color:red"><?php echo $data['email_err']?></span>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fa fa-key fa-lg me-3 fa-fw"></i>
-                                    <div class="form-outline flex-fill mb-0">
-                                        <input class="form-control" type="password" name="password" value="<?php echo $data['password']?>" placeholder="Password">
-                                        <span style="color:red"><?php echo $data['password_err']?></span>
+                                    <div class="form-floating flex-fill mb-0">
+                                        <input onclick="checkPassword()" onblur="checkPassword()" onchange="checkPassword()" class="form-control" id="password" type="password" name="password" value="<?php echo $data['password']?>" placeholder="Password">
+                                        <label for="password"><i class="fa fa-key fa-lg me-3 fa-fw"></i>Password</label>
+                                        <span id="password_err" style="color:red"><?php echo $data['password_err']?></span>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -64,5 +64,67 @@
         </div>
     </div>
     </section>
+    <script src="../../static/js/validation-script.js"></script>
+    <script>
+        document.getElementById("log-form").addEventListener('submit', submitRoutine);
+
+        function checkEmail() {
+            var email = document.getElementById("email");
+            var email_err = document.getElementById('email_err');
+            if (!validator.validateEmail(email.value)) {
+                email_err.innerHTML = "Please enter a valid email";
+            }
+            else{
+                email_err.innerHTML = "";
+            }
+        }
+
+        function checkPassword() {
+            var password = document.getElementById('password');
+            var password_err = document.getElementById('password_err');
+            if (password.value.length == 0) {
+                password_err.innerHTML = "Please enter a password";
+            } else if (password.value.length < 6) {
+                password_err.innerHTML = "Password must be at least 6 characters";
+            } else {
+                password_err.innerHTML = "";
+            }
+        }
+
+        function submitRoutine(e){
+
+            var password = document.getElementById('password');
+            var email = document.getElementById("email");
+
+            var password_err = document.getElementById('password_err');
+            var email_err = document.getElementById('email_err');
+
+            var err_count = 0;
+
+            if (!validator.validateEmail(email.value)){
+                email_err.innerHTML = "Enter a valid email";
+                err_count++;
+            }
+            else{
+                email_err.innerHTML = "";
+            }
+
+            if (password.value.length == 0) {
+                password_err.innerHTML = "Please enter a password";
+                err_count++;
+            } else if (password.value.length < 6) {
+                password_err.innerHTML = "Password must be at least 6 characters";
+                err_count++;
+            } else {
+                password_err.innerHTML = "";
+            }
+
+            if (err_count){
+                e.preventDefault();
+            }
+
+        }
+
+    </script>
 </body>
 </html>

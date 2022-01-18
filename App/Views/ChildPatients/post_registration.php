@@ -26,57 +26,57 @@
                     <h2 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Create an Account</h2>
                     <form action="<?php echo URLROOT?>/PHI/child-patient/register" method='POST' id="reg-form">
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-user fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
+                            <div class="form-outline form-floating flex-fill mb-0">
                                 <input onclick="checkName()" onblur="checkName()" onchange="checkName()" id="name" class="form-control" type="text" name="name" value="<?php echo $data['name']?>" placeholder="Name" required>
+                                <label for="name"><i class="fa fa-user fa-lg me-3 fa-fw"></i>Name</label>
                                 <span id="name_err" style="color:red;"><?php echo $data['name_err']?></span>
                             </div>
                         </div>                   
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-id-card fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="NIC" value="<?php echo $data['NIC']?>" readonly>
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input id="NIC" class="form-control" type="text" name="NIC" value="<?php echo $data['NIC']?>" readonly>
+                                <label for="NIC"><i class="fa fa-id-card fa-lg me-3 fa-fw"></i>Guardian NIC</label>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-envelope fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
+                            <div class="form-outline form-floating flex-fill mb-0">
                                 <input onclick="checkEmail()" onblur="checkEmail()" onchange="checkEmail()" class="form-control" id="email" type="email" name="email" value="<?php echo $data['email']?>" placeholder="Email" required>
+                                <label for="email"><i class="fa fa-envelope fa-lg me-3 fa-fw"></i>Email</label>
                                 <span id="email_err" style="color:red;"><?php echo $data['email_err']?></span>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-key fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
+                            <div class="form-outline form-floating flex-fill mb-0">
                                 <input onclick="checkPassword()" onblur="checkPassword()" onchange="checkPassword()" id="password" class="form-control" id="password" type="password" name="password" value="<?php echo $data['password']?>" placeholder="Password" required>
+                                <label for="password"><i class="fa fa-key fa-lg me-3 fa-fw"></i>Password</label>
                                 <span id="password_err" style="color:red;"><?php echo $data['password_err']?></span>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-key fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
+                            <div class="form-outline form-floating flex-fill mb-0">
                                 <input onclick="checkConfPassword()" onblur="checkConfPassword()" onchange="checkConfPassword()" id="confirm_password" class="form-control" type="password" name="confirm_password" value="<?php echo $data['confirm_password']?>" placeholder="Confirm Password" required>
+                                <label for="confirm_password"><i class="fa fa-key fa-lg me-3 fa-fw"></i>Confirm Password</label>
                                 <span id="confirm_password_err" style="color:red;"><?php echo $data['confirm_password_err']?></span>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-calendar fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="age" value="<?php echo $data['age']?>" placeholder="Age" required>
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input class="form-control" id="age" type="text" name="age" value="<?php echo $data['age']?>" placeholder="Age" required>
+                                <label for="age"><i class="fa fa-calendar fa-lg me-3 fa-fw"></i>Age</label>
                                 <span style="color:red;"><?php echo $data['age_err']?></span>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-mobile fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="contact_no" value="<?php echo $data['contact_no']?>" placeholder="Contact No" required>
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input class="form-control" id="contact_no" type="text" name="contact_no" value="<?php echo $data['contact_no']?>" placeholder="Contact No" required>
+                                <label for="contact_no"><i class="fa fa-mobile fa-lg me-3 fa-fw"></i>Contact No</label>
                                 <span style="color:red;"><?php echo $data['contact_no_err']?></span>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-home fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="address" value="<?php echo $data['address']?>" placeholder="Address" required>
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input class="form-control" id="address" type="text" name="address" value="<?php echo $data['address']?>" placeholder="Address" required>
+                                <label for="address"><i class="fa fa-home fa-lg me-3 fa-fw"></i>Address</label>
                                 <span style="color:red;"><?php echo $data['address_err']?></span>
                             </div>
                         </div>
@@ -140,11 +140,14 @@
 
         function checkPassword() {
             var password = document.getElementById('password');
-            var confirm_password = document.getElementById('confirm_password');
+            var password_err = document.getElementById('password_err');
             if (password.value.length == 0) {
                 password_err.innerHTML = "Please enter a password";
             } else if (password.value.length < 6) {
                 password_err.innerHTML = "Password must be at least 6 characters";
+            } else {
+                password_err.innerHTML = "";
+                checkConfPassword();
             }
         }
 
@@ -157,6 +160,8 @@
                 confirm_password_err.innerHTML = "Please enter password again";
             } else if (password.value.length >= 6 && password.value == confirm_password.value){
                 password_err.innerHTML = "";
+                confirm_password_err.innerHTML = "";
+            } else if (password.value == confirm_password.value) {
                 confirm_password_err.innerHTML = "";
             } else {
                 confirm_password_err.innerHTML = "Passwords do not match";
@@ -197,16 +202,15 @@
                 e.preventDefault();
             }
             else{
-                if (password.value == confirm_password.value){
-
+                if (password.value.length >= 6 && password.value == confirm_password.value){
                     password_err.innerHTML = "";
                 }
                 else{
-                    password_err.innerHTML = "Passwords do not match";
+                    checkPassword();
+                    checkConfPassword();
                     e.preventDefault();
                 }
             }
-            e.preventDefault();
         }
 
     </script>
