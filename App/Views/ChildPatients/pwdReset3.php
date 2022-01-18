@@ -41,14 +41,14 @@
                                     <div class="form-outline form-floating flex-fill mb-0">
                                         <input onclick="checkPassword()" onblur="checkPassword()" onchange="checkPassword()" id="password" class="form-control" type="password" name="password" value="<?php echo $data['password']?>" placeholder="New password" required>
                                         <label for="password"><i class="fa fa-key fa-lg me-3 fa-fw"></i>New Password</label>
-                                        <span style="color:red"><?php echo $data['password_err']?></span>
+                                        <span id="password_err" style="color:red"><?php echo $data['password_err']?></span>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <div class="form-outline form-floating flex-fill mb-0">
                                         <input onclick="checkConfPassword()" onblur="checkConfPassword()" onchange="checkConfPassword()" id="confirm_password" class="form-control" type="password" name="conf_password" value="<?php echo $data['conf_password']?>" placeholder="Confirm password" required>
-                                        <label for="conf_password"><i class="fa fa-key fa-lg me-3 fa-fw"></i>Confirm Password</label>
-                                        <span style="color:red"><?php echo $data['conf_password_err']?></span>
+                                        <label for="confirm_password"><i class="fa fa-key fa-lg me-3 fa-fw"></i>Confirm Password</label>
+                                        <span id="confirm_password_err" style="color:red"><?php echo $data['conf_password_err']?></span>
                                     </div>
                                 </div>
                                 <input type="hidden" name="nic" value="<?php echo $nic; ?>">
@@ -86,14 +86,15 @@
                 password_err.innerHTML = "Password must be at least 6 characters";
             } else {
                 password_err.innerHTML = "";
+                checkConfPassword();
             }
         }
 
         function checkConfPassword() {
             var password = document.getElementById('password');
-            var confirm_password = document.getElementById('conf_password');
+            var confirm_password = document.getElementById('confirm_password');
             var password_err = document.getElementById('password_err');
-            var confirm_password_err = document.getElementById('conf_password_err');
+            var confirm_password_err = document.getElementById('confirm_password_err');
             if (confirm_password.value.length == 0) {
                 confirm_password_err.innerHTML = "Please enter password again";
             } else if (password.value.length >= 6 && password.value == confirm_password.value){

@@ -147,6 +147,7 @@
                 password_err.innerHTML = "Password must be at least 6 characters";
             } else {
                 password_err.innerHTML = "";
+                checkConfPassword();
             }
         }
 
