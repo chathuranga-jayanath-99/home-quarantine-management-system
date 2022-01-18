@@ -183,30 +183,25 @@ class PHIModel extends User{
 
     public static function getFormNotfilledPatients($yesterday,$phiID){
         $db = static::getDB();
-        // $sql = 'SELECT * FROM tbl_record WHERE phi_id=:phiID AND datetime!=:yesterday ' ;
-        // // SELECT * FROM `tbl_record` WHERE `datetime`!= "2022-01-08";
-        // $stmt = $db->prepare($sql);
-        // $stmt->execute(['phiID' => $phiID, 'yesterday'=>$yesterday]);
-        // $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        // if(!empty($row)){
-        //     echo "hello";
-        //     return $row;
-        // }
-
+       
         $sql1 = 'SELECT r.id, ap.name, ap.age, r.type, ap.contact_no
         FROM tbl_adult_patient ap
         JOIN tbl_record r
         ON r.patient_id = ap.id
-        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND r.datetime >:yesterday  AND r.type="adult" ';
+        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday  AND   r.type="adult"
+        GROUP BY ap.id ';                                // cp.start_quarantine_date <:yesterday AND
         $stmt = $db->prepare($sql1);
         $stmt->execute(['phiID' => $phiID, 'yesterday' => $yesterday]);
         $row1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        
 
         $sql2 = 'SELECT r.id, cp.name, cp.age, r.type, cp.contact_no
         FROM tbl_child_patient cp
         JOIN tbl_record r
         ON r.patient_id = cp.id
-        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND r.datetime >:yesterday AND cp.start_quarantine_date <:yesterday AND r.type="child" ';
+        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND  cp.start_quarantine_date <:yesterday  AND r.type="child" 
+        GROUP BY cp.id ';
         $stmt = $db->prepare($sql2);
         $stmt->execute(['phiID' => $phiID, 'yesterday' => $yesterday]);
         $row2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
