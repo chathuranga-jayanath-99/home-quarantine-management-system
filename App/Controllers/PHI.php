@@ -430,7 +430,9 @@ class PHI extends \Core\Controller{
                         'patient_id' => $_POST['patient_id']
                         ] ;
                
-               $p = PHIModel::approveUpdate($update) ;
+               $approve = PHIModel::approveUpdate($update) ;
+               header('location: '.URLROOT.'/PHI/get-updates'); 
+
                
             }
         }
@@ -439,6 +441,14 @@ class PHI extends \Core\Controller{
     }
 
     public function declineUpdateAction(){
+        if($this->isLoggedIn()){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $update_id = $_POST['update_id'];
+                $decline = PHIModel::declineUpdate($update_id);
+                header('location: '.URLROOT.'/PHI/get-updates'); 
+
+            }
+        }
 
     }
 
@@ -454,8 +464,15 @@ class PHI extends \Core\Controller{
             $updateId = $_GET['id'];
             $type = $_GET['type'];
             $changes = PHIModel::getUpdate($updateId,$type) ;
-            //print_r($changes ) ;
-            View::render('PHI/get-update.php', ['changes' => $changes]);
+
+            if($type == 'child'){
+                $email_exist = ChildPatientModel::findUserByEmail($changes[0]['email_change']);
+            }
+            else{
+                $email_exist = AdultPatientModel::findUserByEmail($changes[0]['email_change']);
+            }
+            
+            View::render('PHI/get-update.php', ['changes' => $changes , 'email_exist' => $email_exist]);
             
         }
 

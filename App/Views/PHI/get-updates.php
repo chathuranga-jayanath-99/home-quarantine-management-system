@@ -86,7 +86,7 @@ include_once 'navbar.php';
                             else{
                                 ?>
                                 <tr>
-                                    <td>No records yet.</td>
+                                    <td class ="text-center table-secondary" colspan = "4">No Profile Updates</td>
                                 </tr>
                                 <?php
                             }
