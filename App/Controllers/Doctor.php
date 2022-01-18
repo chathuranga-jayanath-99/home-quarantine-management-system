@@ -9,7 +9,12 @@ class Doctor extends \Core\Controller{
 
     protected function before()
     {
-        return $this->isLoggedIn();
+        if ($this->isLoggedIn()){
+            return true;
+        }
+        else{
+            $this->login();
+        }
     }
 
     public function registerAction()
@@ -390,6 +395,14 @@ class Doctor extends \Core\Controller{
         }
     }
 
+    public function viewProfileAction(){
+        $doctor = DoctorModel::getDetails();
+
+        if ($doctor){
+            View::render('Doctors/view-profile.php', ['doctor' => $doctor]);
+        }
+    }
+
     public function resetPasswordAction(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -457,6 +470,7 @@ class Doctor extends \Core\Controller{
         $_SESSION['doctor_id'] = $doctor->id;
         $_SESSION['doctor_email'] = $doctor->email;
         $_SESSION['doctor_name'] = $doctor->name;
+        $_SESSION['doctor_gender'] = $doctor->gender;
     }
 
     public function isLoggedIn(){
