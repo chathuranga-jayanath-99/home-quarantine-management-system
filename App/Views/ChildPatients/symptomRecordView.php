@@ -295,8 +295,10 @@
             </div>
             <div class="row justify-content-center">
                 <div class="mb-3">
-                    <label for="other" class="form-label"><i class="fa fa-puzzle-piece fa-lg me-3 fa-fw"></i>Other</label>
-                    <textarea class="form-control" id="other" name="other" rows="3" disabled><?php echo htmlspecialchars(trim($symptoms->get_other())); ?></textarea>
+                    <div class="form-floating">
+                        <textarea class="form-control" id="other" name="other" style="height: 100px;" disabled><?php echo htmlspecialchars(trim($symptoms->get_other())); ?></textarea>
+                        <label for="other" class="form-label"><i class="fa fa-puzzle-piece fa-lg me-3 fa-fw"></i>Other</label>
+                    </div>
                 </div>
             </div>
         </form>
