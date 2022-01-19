@@ -28,10 +28,10 @@
                                 </div>
                             </div>
                             <div class="container h-auto col-md-10 col-lg-10 my-3 text-center">
-                                <div class="btn-group" role="group" aria-label="Actions">
-                                    <a href="<?php echo URLROOT; ?>/doctor/check-patients" class="btn btn-outline-primary px-3">Check All Patients</a>
-                                    <a href="<?php echo URLROOT; ?>/doctor/check-records" class="btn btn-outline-primary px-3">Check Records</a>
-                                    <a href="<?php echo URLROOT; ?>/doctor/mark-quarantine-results" class="btn btn-outline-primary px-3">Mark Cured or Extend Quarantine</a>
+                                <div class="btn-group-vertical" role="group" aria-label="Actions">
+                                    <a href="<?php echo URLROOT; ?>/doctor/check-patients" class="btn btn-outline-primary">Check All Patients</a>
+                                    <a href="<?php echo URLROOT; ?>/doctor/check-records" class="btn btn-outline-primary">Check Records</a>
+                                    <a href="<?php echo URLROOT; ?>/doctor/mark-quarantine-results" class="btn btn-outline-primary">Mark Cured or Extend Quarantine</a>
                                 </div>
                             </div>
                         </div>
