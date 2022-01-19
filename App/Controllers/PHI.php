@@ -410,8 +410,32 @@ class PHI extends \Core\Controller{
     public function formNotFilledAction(){
 
         $yesterday =  date('Y-m-d',strtotime("-1 days")) ;
-        $records = PHIModel::getFormNotfilledPatients($yesterday , $_SESSION['phi_id'] ) ;
+        $patients = PHIModel::getPatientsOfPHI($_SESSION['phi_id']);
+        $adultPatients = array();
+        $childPatients = array();
+
+        foreach ($patients['adult'] as $adultPatient){
+            
+            if(PHIModel::getFormNotfilledAdultPatients($yesterday , $adultPatient->id )) {
+                    $adultPatient->type = 'adult' ;
+                    array_push($adultPatients,$adultPatient);
+            }
+        }
+
+        foreach($patients['child'] as $childPatient){
+            if(PHIModel::getFormNotfilledChildPatients($yesterday , $childPatient->id )){
+                $childPatient->type = 'child' ;
+                array_push($childPatients,$childPatient);
+            }
+        }
+
+        $records = ['adult' => $adultPatients , 'child' => $childPatients];
         View::render('PHI/form-not-filled.php', ['records' => $records]);
+
+        
+        
+        // $records = PHIModel::getFormNotfilledPatients($yesterday , $_SESSION['phi_id'] ) ;
+        // View::render('PHI/form-not-filled.php', ['records' => $records]);
         
 
     }

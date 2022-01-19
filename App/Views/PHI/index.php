@@ -28,7 +28,7 @@ include_once 'navbar.php';
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                 
-                <a href="<?php echo URLROOT?>/PHI/addpatient">ADD NEW ACCOUNT</a>
+                <!-- <a href="<?php echo URLROOT?>/PHI/addpatient">ADD NEW ACCOUNT</a>
                 <br>
                 <a href="<?php echo URLROOT?>/PHI/markpositive">MARK POSITIVE</a>
                 <br>
@@ -44,7 +44,7 @@ include_once 'navbar.php';
                 <br>
                 <a href="<?php echo URLROOT?>/PHI/send-msg-to-my-patients">SEND MSG TO MY PATIENTS</a>
                 <br>
-                <a href="<?php echo URLROOT?>/PHI/get-updates">GET PROFILE UPDATES</a>
+                <a href="<?php echo URLROOT?>/PHI/get-updates">GET PROFILE UPDATES</a> -->
 
                 
 
@@ -93,10 +93,10 @@ include_once 'navbar.php';
               
              
               </div>   -->
-              <div class="text-center h3 fw-bold mb-3 mx-1 mx-md-4 mt-5">
+              <!-- <div class="text-center h3 fw-bold mb-3 mx-1 mx-md-4 mt-5">
               <a href="<?php echo URLROOT;?>/PHI/logout">
               <button type="Submit" class="btn btn-danger">Log Out</button>
-              </div>
+              </div> -->
               </div>
             </div>
           </div>

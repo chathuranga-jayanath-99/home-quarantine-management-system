@@ -51,15 +51,18 @@ include_once 'navbar.php';
                         </tr>
                     </tbody>
                     </table>
-
+                    </div>
                     <?php 
 
-                      if($email_exist){
-                        echo $changes[0]['email_change'].' email address already in use' ;
-                      }
+                      if($email_exist){  ?>
+                        <span style="color:red">* <?php echo $changes[0]['email_change']?> email address already in use  </span>
+                        <!-- echo $changes[0]['email_change'].' email address already in use' ; -->
+                        <?php   }
                     
-                    ?>
+                       ?>
                         
+                        <div class= "row row-col-2">
+                        <div class="col-8 justify-content-left">
                         
                         <form action="<?php echo URLROOT?>/PHI/approve-update " method="POST">
                             <input type="hidden" name="update_id" value="<?php echo $changes[0]['id']?>">
@@ -85,11 +88,19 @@ include_once 'navbar.php';
                             
                         </form>
 
+                        </div>
+
+                        <div class="col-4 justify-content-right">
+
                         <form action="<?php echo URLROOT?>/PHI/decline-update" method="POST">
                             <input type="hidden" name="update_id" value="<?php echo $changes[0]['id']?>">
                             <button type="Submit" class="btn btn-danger ">Decline</button> 
                         </form>
-                               
+
+                        </div>
+
+                        </div>
+                                 
 
               <!-- </div> -->
               </div>

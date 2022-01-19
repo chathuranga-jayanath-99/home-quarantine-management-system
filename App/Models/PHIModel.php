@@ -142,13 +142,13 @@ class PHIModel extends User{
     public static function getPatientsOfPHI($phiId){
         $db = static::getDB();
 
-        $sql1 = 'SELECT ap.id, ap.name
+        $sql1 = 'SELECT ap.id, ap.name, ap.age, ap.contact_no
         FROM tbl_adult_patient ap WHERE ap.phi_id=:phiId';
         $stmt1 = $db->prepare($sql1);
         $stmt1->execute(['phiId'=>$phiId]);
         $res1 = $stmt1->fetchAll(PDO::FETCH_OBJ);
 
-        $sql2 = 'SELECT cp.id, cp.name
+        $sql2 = 'SELECT cp.id, cp.name, cp.age, cp.contact_no
         FROM tbl_child_patient cp WHERE cp.phi_id=:phiId';
         $stmt2 = $db->prepare($sql2);
         $stmt2->execute(['phiId'=>$phiId]);
@@ -181,43 +181,69 @@ class PHIModel extends User{
         // return false;
     }
 
-    public static function getFormNotfilledPatients($yesterday,$phiID){
+    public static function getFormNotfilledAdultPatients($yesterday,$patientId){
         $db = static::getDB();
-       
-        $sql1 = 'SELECT r.id, ap.name, ap.age, r.type, ap.contact_no
-        FROM tbl_adult_patient ap
-        JOIN tbl_record r
-        ON r.patient_id = ap.id
-        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday  AND   r.type="adult"
-        GROUP BY ap.id ';                                // cp.start_quarantine_date <:yesterday AND
-        $stmt = $db->prepare($sql1);
-        $stmt->execute(['phiID' => $phiID, 'yesterday' => $yesterday]);
-        $row1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $sql1 = 'SELECT r.id
+                 FROM tbl_record r
+                 WHERE r.datetime=:yesterday AND r.patient_id=:patient_id AND r.type="adult" ';
 
         
+        $stmt = $db->prepare($sql1);
+        $stmt->execute(['patient_id' => $patientId, 'yesterday' => $yesterday]);
+        $row1 = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if(empty($row1)){
+            return true;
+        }
+        else{
+            return false;
+        }
 
-        $sql2 = 'SELECT r.id, cp.name, cp.age, r.type, cp.contact_no
-        FROM tbl_child_patient cp
-        JOIN tbl_record r
-        ON r.patient_id = cp.id
-        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND  cp.start_quarantine_date <:yesterday  AND r.type="child" 
-        GROUP BY cp.id ';
-        $stmt = $db->prepare($sql2);
-        $stmt->execute(['phiID' => $phiID, 'yesterday' => $yesterday]);
-        $row2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $res = ['adult' => $row1, 'child' => $row2];
-        return $res;   
+       
+        // $sql1 = 'SELECT r.id, ap.name, ap.age, r.type, ap.contact_no
+        // FROM tbl_adult_patient ap
+        // LEFT JOIN tbl_record r
+        // ON r.patient_id = ap.id
+        // WHERE r.phi_id=:phiID AND r.datetime!=:yesterday  AND   r.type="adult"
+        // GROUP BY ap.id ';                                // cp.start_quarantine_date <:yesterday AND
+        // $stmt = $db->prepare($sql1);
+        // $stmt->execute(['phiID' => $phiID, 'yesterday' => $yesterday]);
+        // $row1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // AND cp.start_quarantine_date <: AND yesterday <:cp.end_quarantine_date
+        // $sql2 = 'SELECT r.id, cp.name, cp.age, r.type, cp.contact_no
+        // FROM tbl_child_patient cp
+        // LEFT JOIN tbl_record r
+        // ON r.patient_id = cp.id
+        // WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND  cp.start_quarantine_date <:yesterday  AND r.type="child" 
+        // GROUP BY cp.id ';
+        // $stmt = $db->prepare($sql2);
+        // $stmt->execute(['phiID' => $phiID, 'yesterday' => $yesterday]);
+        // $row2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // $res = $row1+$row2 ;
-        // if(!empty($res)){
-        //     return $res ;
-        // }
-        // else{
-        //     return false ;
-        // }
+        // $res = ['adult' => $row1, 'child' => $row2];
+        // return $res;   
+
+    }
+
+    public static function getFormNotfilledChildPatients($yesterday,$patientId){
+        $db = static::getDB();
+
+        $sql1 = 'SELECT r.id
+                 FROM tbl_record r
+                 WHERE r.datetime=:yesterday AND r.patient_id=:patient_id AND r.type="child" ';
+
+        
+        $stmt = $db->prepare($sql1);
+        $stmt->execute(['patient_id' => $patientId, 'yesterday' => $yesterday]);
+        $row1 = $stmt->fetchAll(PDO::FETCH_OBJ);
+        if(empty($row1)){
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
     public static function getUpdates($phiID){
