@@ -17,7 +17,6 @@
     $subPage = '';
     include_once 'navbar.php';
 ?>
-<?php include_once 'navbar.php'; ?>
 <section class="vh-auto pt-5 pb-5" style="background-color: #eee; min-height:100vh;">
     <div class="container h-100 pt-5">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -32,7 +31,7 @@
                                     <i class="fa fa-thermometer-half fa-lg me-3 fa-fw"></i>
                                 </div>
                                 <div class="col-auto">
-                                    <input type="number" step="0.01" class="col-form-control" name="temperature" min=0 max=120 placeholder="Temperature" style="width: 112px;">
+                                    <input type="number" step="0.01" class="col-form-control" name="temperature" min=0 max=120 placeholder="Temperature" style="width: 120px;">
                                 </div>
                                 <div class="col-auto">
                                     <fieldset id="temp-unit">
@@ -221,8 +220,10 @@
                         </div>
                         <div class="row justify-content-center">
                             <div class="mb-3">
-                                <label for="other" class="form-label"><i class="fa fa-puzzle-piece fa-lg me-3 fa-fw"></i>Other</label>
-                                <textarea class="form-control" id="other" name="other" rows="3"></textarea>
+                                <div class="from-floating">
+                                    <textarea class="form-control" id="other" name="other" style="height: 100px" placeholder="Other"></textarea>
+                                    <label for="other" class="form-label"><i class="fa fa-puzzle-piece fa-lg me-3 fa-fw"></i>Other</label>
+                                </div>
                             </div>
                         </div>
                         <div class="row justify-content-center">

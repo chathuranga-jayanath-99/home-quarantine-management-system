@@ -24,31 +24,31 @@
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 							<h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Child-Patient<br />Password Reset</h1>
-                            <form class="mx-1 mx-md-4" action="<?php echo URLROOT?>/PHI/child-patient/password-reset" method='POST'>
+                            <form id="pwd-form" class="mx-1 mx-md-4" action="<?php echo URLROOT?>/PHI/child-patient/password-reset" method='POST'>
                                 <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fa fa-user fa-lg me-3 fa-fw"></i>
-                                    <div class="form-outline flex-fill mb-0">
-                                        <input class="form-control" type="text" name="c_name" value="<?php echo $name; ?>" disabled>
+                                    <div class="form-outline form-floating flex-fill mb-0">
+                                        <input id="c_name" class="form-control" type="text" name="c_name" value="<?php echo $name; ?>" disabled>
+                                        <label for="c_name"><i class="fa fa-user fa-lg me-3 fa-fw"></i>Name</label>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fa fa-id-card fa-lg me-3 fa-fw"></i>
-                                    <div class="form-outline flex-fill mb-0">
-                                        <input class="form-control" type="text" name="nic" value="<?php echo $nic; ?>" disabled>
+                                    <div class="form-outline form-floating flex-fill mb-0">
+                                        <input id="nic" class="form-control" type="text" name="nic" value="<?php echo $nic; ?>" disabled>
+                                        <label for="nic"><i class="fa fa-id-card fa-lg me-3 fa-fw"></i>NIC</label>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fa fa-key fa-lg me-3 fa-fw"></i>
-                                    <div class="form-outline flex-fill mb-0">
-                                        <input class="form-control" type="password" name="password" value="<?php echo $data['password']?>" placeholder="New password" required>
-                                        <span style="color:red"><?php echo $data['password_err']?></span>
+                                    <div class="form-outline form-floating flex-fill mb-0">
+                                        <input onclick="checkPassword()" onblur="checkPassword()" onchange="checkPassword()" id="password" class="form-control" type="password" name="password" value="<?php echo $data['password']?>" placeholder="New password" required>
+                                        <label for="password"><i class="fa fa-key fa-lg me-3 fa-fw"></i>New Password</label>
+                                        <span id="password_err" style="color:red"><?php echo $data['password_err']?></span>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fa fa-key fa-lg me-3 fa-fw"></i>
-                                    <div class="form-outline flex-fill mb-0">
-                                        <input class="form-control" type="password" name="conf_password" value="<?php echo $data['conf_password']?>" placeholder="Confirm password" required>
-                                        <span style="color:red"><?php echo $data['conf_password_err']?></span>
+                                    <div class="form-outline form-floating flex-fill mb-0">
+                                        <input onclick="checkConfPassword()" onblur="checkConfPassword()" onchange="checkConfPassword()" id="confirm_password" class="form-control" type="password" name="conf_password" value="<?php echo $data['conf_password']?>" placeholder="Confirm password" required>
+                                        <label for="confirm_password"><i class="fa fa-key fa-lg me-3 fa-fw"></i>Confirm Password</label>
+                                        <span id="confirm_password_err" style="color:red"><?php echo $data['conf_password_err']?></span>
                                     </div>
                                 </div>
                                 <input type="hidden" name="nic" value="<?php echo $nic; ?>">
@@ -73,5 +73,55 @@
         </div>
     </div>
     </section>
+    <script src="../../static/js/validation-script.js"></script>
+    <script>
+        document.getElementById("pwd-form").addEventListener('submit', submitRoutine);
+
+        function checkPassword() {
+            var password = document.getElementById('password');
+            var password_err = document.getElementById('password_err');
+            if (password.value.length == 0) {
+                password_err.innerHTML = "Please enter a password";
+            } else if (password.value.length < 6) {
+                password_err.innerHTML = "Password must be at least 6 characters";
+            } else {
+                password_err.innerHTML = "";
+                checkConfPassword();
+            }
+        }
+
+        function checkConfPassword() {
+            var password = document.getElementById('password');
+            var confirm_password = document.getElementById('confirm_password');
+            var password_err = document.getElementById('password_err');
+            var confirm_password_err = document.getElementById('confirm_password_err');
+            if (confirm_password.value.length == 0) {
+                confirm_password_err.innerHTML = "Please enter password again";
+            } else if (password.value.length >= 6 && password.value == confirm_password.value){
+                password_err.innerHTML = "";
+                confirm_password_err.innerHTML = "";
+            } else if (password.value == confirm_password.value) {
+                confirm_password_err.innerHTML = "";
+            } else {
+                confirm_password_err.innerHTML = "Passwords do not match";
+            }
+        }
+
+        function submitRoutine(e){
+            var password = document.getElementById('password');
+            var confirm_password = document.getElementById('confirm_password');
+            var password_err = document.getElementById('password_err');
+            var confirm_password_err = document.getElementById('confirm_password_err');
+            if (password.value.length >= 6 && password.value == confirm_password.value){
+                password_err.innerHTML = "";
+            }
+            else {
+                checkPassword();
+                checkConfPassword();
+                e.preventDefault();
+            }
+        }
+
+    </script>
 </body>
 </html>

@@ -379,6 +379,8 @@ class Adultpatient extends Patient{
                         $rows = AdultPatientModel::changeStateAndDoctor($this->email, $this->NIC, $_POST['act'], $doctor_id);
                         $this->phi_id = $_SESSION['phi_id'];
                         $this->phi_range = $_SESSION['phi_area'];
+                        $this->start_quarantine_date = date("Y-m-d");
+                        $this->end_quarantine_date = date("Y-m-d", strtotime("+14 days"));
                         if($rows>0) {
                             $nav = [
                                 'page'       => "Active Account",
