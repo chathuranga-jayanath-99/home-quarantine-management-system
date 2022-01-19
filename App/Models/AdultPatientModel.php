@@ -503,4 +503,27 @@ class AdultPatientModel extends PatientModel{
         return $row;
     }
 
+    public static function  recordEditProfile($data){
+        $db = static::getDB();
+        $sql = 'INSERT INTO tbl_updates 
+            ( patient_id,  phi_id,  type,  name_change,  email_change,  address_change,  contact_no_change,  approve_state) VALUES 
+            (:patient_id, :phi_id, :type, :name,        :email,        :address,         :contact_no,       :state)';
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute([
+            'patient_id'    =>  $data['patient_id'],
+            'phi_id'        =>  $data['phi_id'],
+            'type'          =>  'adult',
+            'name'          =>  $data['name'],
+            'email'         =>  $data['email'],
+            'address'       =>  $data['address'],
+            'contact_no'    =>  $data['contact_no'],
+            'state'         =>  'pending' 
+        ]);
+        if ($res) {
+            return true;
+        }
+        return false;
+    }
+
 }
+

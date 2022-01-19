@@ -1042,21 +1042,54 @@ class Adultpatient extends Patient{
             $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
             $state = $this->stateToString();
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                //TODO
-                View::render('AdultPatients/editProfileSuccess.php', ['has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                $data = [
+                    'name'                  => htmlspecialchars(trim($_POST['name'])),
+                    'NIC'                   => $this->NIC,
+                    'email'                 => htmlspecialchars(trim($_POST['email'])),
+                    'contact_no'            => htmlspecialchars(trim($_POST['contact_no'])),
+                    'address'               => htmlspecialchars(trim($_POST['address'])),
+                    'patient_id'            => $_SESSION['adult_id'],
+                    'phi_id'                => $this->phi_id,
+                    'name_err'              => '',
+                    'email_err'             => '',
+                    'address_err'           => '',
+                    'contact_no_err'        => ''
+                ];
+
+                if(empty($data['name'])){
+                    $data['name_err'] = 'Please enter name';
+                }
+    
+                if(empty($data['email'])){
+                    $data['email_err'] = 'Please enter email';
+                }
+
+                if(empty($data['contact_no'])){
+                    $data['contact_no_err'] = 'Please enter contact no';
+                }
+
+                if(empty($data['address'])){
+                    $data['address_err'] = 'Please enter address';
+                }
+
+                if (empty($data['name_err']) && empty($data['email_err']) &&
+                empty($data['address_err']) && empty($data['contact_no_err'])){
+                    $id = AdultPatientModel::recordEditProfile($data);
+                    View::render('AdultPatients/editProfileSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+
+                }
+                else{
+                    View::render('AdultPatients/editProfile.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                }
             } else {
                 $data = [
                     'name'                  => $this->name,
                     'email'                 => $this->email,
                     'NIC'                   => $this->NIC,
-                    'age'                   => $this->age,
                     'contact_no'            => $this->contact_no,
                     'address'               => $this->address,
-                    'gender'                => $this->gender,
                     'name_err'              => '',
                     'email_err'             => '',
-                    'nic_err'               => '',
-                    'age_err'               => '',
                     'address_err'           => '',
                     'contact_no_err'        => ''
                 ];

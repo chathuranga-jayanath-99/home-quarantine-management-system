@@ -43,15 +43,8 @@
                         <div class="d-flex flex-row align-items-center mb-4">
                             <i class="fa fa-envelope fa-lg me-3 fa-fw"></i>
                             <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="email" value="<?php echo $data['email']?>" placeholder="Email" required>
+                                <input class="form-control" type="email" name="email" value="<?php echo $data['email']?>" placeholder="Email" required>
                                 <span style="color:red;"><?php echo $data['email_err']?></span>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-calendar fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="age" value="<?php echo $data['age']?>" placeholder="Age" required>
-                                <span style="color:red;"><?php echo $data['age_err']?></span>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
@@ -66,18 +59,6 @@
                             <div class="form-outline flex-fill mb-0">
                                 <input class="form-control" type="text" name="address" value="<?php echo $data['address']?>" placeholder="Address" required>
                                 <span style="color:red;"><?php echo $data['address_err']?></span>
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <input class="form-check-input" type="radio" name="gender" id="male" value="male" <?php if($data['gender'] == 'male') {echo 'checked';} ?> >
-                                <i class="fa fa-male fa-lg fa-fw"></i>
-                                <label class="form-check-label" for="male">Male</label>
-                            </div>
-                            <div>
-                                <input class="form-check-input" type="radio" name="gender" value="female" id="female" <?php if($data['gender'] == 'female') {echo 'checked';} ?> >
-                                <i class="fa fa-female fa-lg fa-fw"></i>
-                                <label class="form-check-label" for="female">Female</label>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
