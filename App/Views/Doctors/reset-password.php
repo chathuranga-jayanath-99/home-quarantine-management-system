@@ -1,5 +1,4 @@
-<?php include(APPROOT.'/App/Views/Includes/header.php'); ?><?php include(APPROOT.'/App/Views/Includes/header.php'); ?>
-
+<?php include(APPROOT.'/App/Views/Includes/header.php'); ?>
 <title>Home Isolation System</title>
 </head>
 
