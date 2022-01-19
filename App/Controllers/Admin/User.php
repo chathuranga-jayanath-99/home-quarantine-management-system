@@ -4,6 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Models\AdminUserModel;
 use App\Models\DoctorModel;
+use App\Models\PHIModel;
 use \Core\View;
 
 class User extends \Core\Controller
@@ -303,6 +304,103 @@ class User extends \Core\Controller
 
             // load view
             View::render('Admins/register-doctor.php', ['data'=> $data]);
+        }
+    }
+
+    public function registerPHIAction() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){      //POST method used to access the page
+            $data = [
+                'name'                 => trim($_POST['name']),
+                'email'                => trim($_POST['email']),
+                'password'             => trim($_POST['password']),
+                'confirm_password'     => trim($_POST['confirm_password']),
+                'moh_area'             => trim($_POST['moh_area']),
+                'PHI_station'          => trim($_POST['PHI_station']),
+                'PHI_id'               => trim($_POST['PHI_id']),
+                'NIC'                  => trim($_POST['NIC']),
+                'contact_number'       => trim($_POST['contact_number']) ,
+                'name_err'             => '',
+                'email_err'            => '',
+                'password_err'         => '',
+                'nic_err'              => '',
+                'confirm_password_err' => ''
+            ];
+
+            if(empty($data['name'])){
+                $data['name_err'] = 'Please enter name';
+            }
+
+            if(empty($data['email'])){
+                $data['email_err'] = 'Please enter email';
+            }
+            else {
+                if (PHIModel::findUserByEmail($data['email'])){
+                    $data['email_err'] = 'Email is already taken';
+                }
+            }
+            
+            if(empty($data['password'])){
+                $data['password_err'] = 'Please enter password';
+            }
+            else if(strlen($data['password']) < 6){
+                $data['password_err'] = 'Password must be at least 6 characters';
+            }
+
+            if(!$this->isValidNIC($data['NIC'])){
+                $data['nic_err'] = 'Invalid NIC' ;
+            }
+
+            if(empty($data['confirm_password'])){
+                $data['confirm_password_err'] = 'Please confirm password';
+            }
+            else {
+                if($data['password'] != $data['confirm_password']){
+                    $data['confirm_password_err'] = 'Passwords do not match';
+                }
+            }
+
+            if (empty($data['name_err']) && empty($data['email_err']) &&
+            empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['nic_err'])){
+                // validated
+                // Hash password
+                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                // Register User
+                if (PHIModel::register($data)){
+                    flash('register_PHI', 'Registration of PHI successful', "alert alert-success");
+                    header('location: '.URLROOT.'/admin/user/manage-PHI');
+                }
+                else {
+                    flash('register_PHI', 'PHI registration failed', "alert alert-danger");
+                    header('location: '.URLROOT.'/admin/user/manage-PHI');
+                }
+            }
+            else {
+                // load view with errors
+                View::render('PHI/register.php', ['data'=> $data]);
+            }
+
+        }
+
+        else {
+            $data = [
+                'name'                 => '',
+                'email'                => '',
+                'password'             => '',
+                'confirm_password'     => '',
+                'moh_area'             => '',
+                'PHI_station'          => '',
+                'PHI_id'               => '',
+                'NIC'                  => '',
+                'contact_number'       => '',
+                'name_err'             => '',
+                'email_err'            => '',
+                'password_err'         => '',
+                'nic_err'              => '',
+                'confirm_password_err' => ''
+            ];
+
+            // load view
+            View::render('PHI/register.php', ['data'=> $data]);
         }
     }
 

@@ -11,9 +11,10 @@
         <a href="<?php echo URLROOT;?>/admin/user/logout">Logout</a>
     </div>
 
+    <?php flash('register_PHI');?>
     <h1>Manage PHI</h1>
 
-    <a href="#" class="btn btn-primary">Add PHI</a>
+    <a href="<?php echo URLROOT; ?>/admin/user/register-PHI" class="btn btn-primary">Add PHI</a>
 
     <table>
         <tr>
