@@ -108,7 +108,7 @@
                     <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
                         <div>
                         <img src="https://image.freepik.com/free-vector/doctor-examining-patient-clinic-illustrated_23-2148856559.jpg" width=700 height=700 class="img-fluid" alt="Sample image"> 
-                        <div class="text-center">
+                        <div class="text-center pt-5">
                         <div>
                             <a href="<?php echo URLROOT; ?>/phi"><button class="btn btn-warning">Home</button></a>
                         </div>
