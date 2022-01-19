@@ -46,7 +46,7 @@
                         <div><div>    
                             <img src="https://image.freepik.com/free-vector/people-wearing-medical-mask_52683-35467.jpg" width=700 height=700 class="img-fluid" alt="Sample image" style="border-radius: 50px;"> 
                         </div>
-                        <div class="text-center">
+                        <div class="text-center pt-4">
                             <div>
                                 <a href="<?php echo URLROOT; ?>"><button class="btn btn-warning">Main Page</button></a>
                             </div>
