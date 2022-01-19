@@ -1,4 +1,6 @@
 <?php include(APPROOT.'/App/Views/Includes/header.php'); ?>
+<title>Home Isolation System</title>
+</head>
 
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
@@ -9,7 +11,7 @@
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-              <a href="<?php echo URLROOT; ?>">Main Page</a>
+              <a href="<?php echo URLROOT; ?>" class="btn btn-warning">Main Page</a>
         
               <?php flash('register_success');?>
               
@@ -22,7 +24,7 @@
                         
                         <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="email">Email </label>
-                            <input class="form-control" required type="text" name="email" value="<?php echo $data['email']?>">
+                            <input class="form-control" required type="text" name="email" value="<?php echo $data['email']?>" autofocus>
                             
                             <span style="color: red"><?php echo $data['email_err']?></span>
                         </div>
@@ -41,9 +43,6 @@
                         <input class="btn btn-primary" type="submit" value="Log in">
                     </div>
 
-                    <div class="text-center">
-                        <a href="<?php echo URLROOT; ?>/doctor/register">Want to create an account?</a>
-                    </div>
                 </form>  
                 </div>
                 <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
@@ -56,7 +55,7 @@
           </div>
         </div>
         <div class="text-center mt-5 text-muted">
-				Copyright &copy; Code Devours 
+                <a href="<?php echo URLROOT?>/doctor/about-us" class="text-muted" style="text-decoration: none;">Copyright &copy; Code Devours</a>
 			</div>
       </div>
     </div>

@@ -113,7 +113,8 @@ class DoctorModel extends MedicalOfficerModel{
         $stmt = $db->prepare($sql);
         $stmt->execute(['patientId' => $patientId]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        $row['type'] = $patientType;
+        
         if(!empty($row)){
             return $row;
         }

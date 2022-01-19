@@ -325,14 +325,17 @@ class Doctor extends \Core\Controller{
                     'contact_no' => $doctor['contact_no'],
                     'NIC'=> $doctor['NIC'],
                     'slmc_reg_no' => $doctor['slmc_reg_no'],
+                    'gender' => $doctor['gender'],
+                    'birthday' => $doctor['birthday'],
                     // 'password' => $doctor['password'],
                     'name_err' => '',
                     'email_err' => '',
                     'moh_area_err' => '',
                     'contact_no_err' => '',
                     'NIC_err' => '',
-                    'slmc_reg_no_err' => ''
-
+                    'slmc_reg_no_err' => '',
+                    'gender_err' => '',
+                    'birthday_err' => '',
                     
                 ];
                 View::render('Doctors/update-account.php', ['data'=> $data]);

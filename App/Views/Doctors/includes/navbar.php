@@ -2,9 +2,9 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="<?php echo URLROOT; ?>/doctor">
     <img src="<?php
-      if ($_SESSION['doctor_gender'] === 'male') {
+      if ($_SESSION['doctor_gender'] === 'Male') {
         echo "https://www.pngitem.com/pimgs/m/10-106042_male-professional-avatar-icon-hd-png-download.png";
-      } else {
+      } else if ($_SESSION['doctor_gender'] === 'Female') {
         echo "https://www.pinclipart.com/picdir/middle/105-1057269_author-avatar-woman-doctor-icon-png-clipart.png";
       }
       ?>" alt="" height="24" class="d-inline-block align-text-top">
@@ -45,7 +45,7 @@
       
     </div>
 
-    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+    <!-- <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
       <li class= "nav-item">
         <a class="nav-link">
           <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo" onclick="removeMsgDiv();">
@@ -54,12 +54,12 @@
           </button>
         </a>
       </li>
-    </ul>
+    </ul> -->
 
     </div>
 </nav>
 
-<div class="offcanvas offcanvas-end" id="demo">
+<!-- <div class="offcanvas offcanvas-end" id="demo">
   <div class="offcanvas-header">
     <h1 class="offcanvas-title">Notifications</h1>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
@@ -67,4 +67,4 @@
   <div class="offcanvas-body text-center">
     <iframe src="" frameborder="0" height=95% width=95%></iframe>
   </div>
-</div>
+</div> -->
