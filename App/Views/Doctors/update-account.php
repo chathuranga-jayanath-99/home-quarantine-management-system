@@ -86,7 +86,7 @@
                         </div>
 
                         <div class="form-outline flex-fill mb-0">
-                                <label class="form-label" for="birthday">Gender</label>
+                                <label class="form-label" for="gender">Gender</label>
                             </div>
 
                         <div class="d-flex flex-row align-items-center mb-4">

@@ -11,9 +11,10 @@
         <a href="<?php echo URLROOT;?>/admin/user/logout">Logout</a>
     </div>
 
+    <?php flash('register_doctor');?>
     <h1>Manage Doctor</h1>
 
-    <a href="#" class="btn btn-primary">Add Doctor</a>
+    <a href="<?php echo URLROOT;?>/admin/user/register-doctor" class="btn btn-primary">Add Doctor</a>
 
     <table>
         <tr>

@@ -11,8 +11,8 @@ class DoctorModel extends MedicalOfficerModel{
         $db = static::getDB();
 
         $sql = 'INSERT INTO tbl_doctor 
-        (name, email, password, moh_area, contact_no, NIC, slmc_reg_no) values 
-        (:name, :email, :password, :moh_area, :contact_no, :NIC, :slmc_reg_no)';
+        (name, email, password, moh_area, contact_no, NIC, slmc_reg_no, gender, birthday) values 
+        (:name, :email, :password, :moh_area, :contact_no, :NIC, :slmc_reg_no, :gender, :birthday)';
         $stmt = $db->prepare($sql);
         $res = $stmt->execute([
             'name'=>$data['name'],
@@ -21,7 +21,9 @@ class DoctorModel extends MedicalOfficerModel{
             'moh_area'=>$data['moh_area'],
             'contact_no'=>$data['contact_no'],
             'NIC'=>$data['NIC'],
-            'slmc_reg_no'=>$data['slmc_reg_no']
+            'slmc_reg_no'=>$data['slmc_reg_no'],
+            'gender'=>$data['gender'],
+            'birthday'=>$data['birthday'],
         ]);
         
         if($res){

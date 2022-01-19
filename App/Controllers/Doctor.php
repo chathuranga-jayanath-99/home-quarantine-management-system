@@ -17,108 +17,108 @@ class Doctor extends \Core\Controller{
         }
     }
 
-    public function registerAction()
-    {
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            $data = [
-                'name' => htmlspecialchars(trim($_POST['name'])),
-                'email' => htmlspecialchars(trim($_POST['email'])),
-                'password' => trim($_POST['password']),
-                'confirm_password' => trim($_POST['confirm_password']),
-                'moh_area' => htmlspecialchars(trim($_POST['moh_area'])),
-                'contact_no' => htmlspecialchars(trim($_POST['contact_no'])),
-                'NIC' => htmlspecialchars(trim($_POST['NIC'])),
-                'slmc_reg_no' => htmlspecialchars(trim($_POST['slmc_reg_no'])),
-                // 'assigned_patients' => 0,
-                'name_err' => '',
-                'email_err' => '',
-                'password_err' => '',
-                'confirm_password_err' => '',
-                'moh_area_err' => '',
-                'contact_no_err' => '',
-                'NIC_err' => '',
-                'slmc_reg_no_err' => ''
-            ];
+    // public function registerAction()
+    // {
+    //     if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    //         $data = [
+    //             'name' => htmlspecialchars(trim($_POST['name'])),
+    //             'email' => htmlspecialchars(trim($_POST['email'])),
+    //             'password' => trim($_POST['password']),
+    //             'confirm_password' => trim($_POST['confirm_password']),
+    //             'moh_area' => htmlspecialchars(trim($_POST['moh_area'])),
+    //             'contact_no' => htmlspecialchars(trim($_POST['contact_no'])),
+    //             'NIC' => htmlspecialchars(trim($_POST['NIC'])),
+    //             'slmc_reg_no' => htmlspecialchars(trim($_POST['slmc_reg_no'])),
+    //             // 'assigned_patients' => 0,
+    //             'name_err' => '',
+    //             'email_err' => '',
+    //             'password_err' => '',
+    //             'confirm_password_err' => '',
+    //             'moh_area_err' => '',
+    //             'contact_no_err' => '',
+    //             'NIC_err' => '',
+    //             'slmc_reg_no_err' => ''
+    //         ];
             
-            if(empty($data['name'])){
-                $data['name_err'] = 'Please enter name';
-            }
+    //         if(empty($data['name'])){
+    //             $data['name_err'] = 'Please enter name';
+    //         }
 
-            if(empty($data['email'])){
-                $data['email_err'] = 'Please enter email';
-            }
-            else {
-                if (DoctorModel::findUserByEmail($data['email'])){
-                    $data['email_err'] = 'Email is already taken';
-                }
-            }
+    //         if(empty($data['email'])){
+    //             $data['email_err'] = 'Please enter email';
+    //         }
+    //         else {
+    //             if (DoctorModel::findUserByEmail($data['email'])){
+    //                 $data['email_err'] = 'Email is already taken';
+    //             }
+    //         }
             
-            if(empty($data['password'])){
-                $data['password_err'] = 'Please enter password';
-            }
-            else if(strlen($data['password']) < 4){
-                $data['password_err'] = 'Password must be at least 6 characters';
-            }
+    //         if(empty($data['password'])){
+    //             $data['password_err'] = 'Please enter password';
+    //         }
+    //         else if(strlen($data['password']) < 4){
+    //             $data['password_err'] = 'Password must be at least 6 characters';
+    //         }
 
-            if(empty($data['confirm_password'])){
-                $data['confirm_password_err'] = 'Please confirm password';
-            }
-            else {
-                if($data['password'] != $data['confirm_password']){
-                    $data['confirm_password_err'] = 'Passwords do not match';
-                }
-            }
+    //         if(empty($data['confirm_password'])){
+    //             $data['confirm_password_err'] = 'Please confirm password';
+    //         }
+    //         else {
+    //             if($data['password'] != $data['confirm_password']){
+    //                 $data['confirm_password_err'] = 'Passwords do not match';
+    //             }
+    //         }
 
-            if (empty($data['name_err']) && empty($data['email_err']) &&
-            empty($data['password_err']) && empty($data['confirm_password_err'])){
-                // validated
+    //         if (empty($data['name_err']) && empty($data['email_err']) &&
+    //         empty($data['password_err']) && empty($data['confirm_password_err'])){
+    //             // validated
                 
-                // Hash password
-                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+    //             // Hash password
+    //             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
-                // Register User
-                if (DoctorModel::register($data)){
-                    flash('register_success', 'You are registered. Now you can Log in', "alert alert-success");
-                    header('location: '.URLROOT.'/doctor/login');
-                }
-                else {
-                    die('something went wrong');
-                }
+    //             // Register User
+    //             if (DoctorModel::register($data)){
+    //                 flash('register_success', 'You are registered. Now you can Log in', "alert alert-success");
+    //                 header('location: '.URLROOT.'/doctor/login');
+    //             }
+    //             else {
+    //                 die('something went wrong');
+    //             }
 
-                die('SUCCESS');
+    //             die('SUCCESS');
                 
                 
-            }
-            else {
-                // load view with errors
-                View::render('Doctors/register.php', ['data'=> $data]);
-            }
-        }
-        else {
-            $data = [
-                'name' => '',
-                'email' => '',
-                'password' => '',
-                'confirm_password' => '',
-                'moh_area' => '',
-                'contact_no' => '',
-                'NIC' => '',
-                'slmc_reg_no' => '',
-                'name_err' => '',
-                'email_err' => '',
-                'password_err' => '',
-                'confirm_password_err' => '',
-                'moh_area_err' => '',
-                'contact_no_err' => '',
-                'NIC_err' => '',
-                'slmc_reg_no_err' => ''
+    //         }
+    //         else {
+    //             // load view with errors
+    //             View::render('Doctors/register.php', ['data'=> $data]);
+    //         }
+    //     }
+    //     else {
+    //         $data = [
+    //             'name' => '',
+    //             'email' => '',
+    //             'password' => '',
+    //             'confirm_password' => '',
+    //             'moh_area' => '',
+    //             'contact_no' => '',
+    //             'NIC' => '',
+    //             'slmc_reg_no' => '',
+    //             'name_err' => '',
+    //             'email_err' => '',
+    //             'password_err' => '',
+    //             'confirm_password_err' => '',
+    //             'moh_area_err' => '',
+    //             'contact_no_err' => '',
+    //             'NIC_err' => '',
+    //             'slmc_reg_no_err' => ''
                  
-            ];
+    //         ];
 
-            // load view
-            View::render('Doctors/register.php', ['data'=> $data]);
-        }
-    }
+    //         // load view
+    //         View::render('Doctors/register.php', ['data'=> $data]);
+    //     }
+    // }
 
     public function login()
     {

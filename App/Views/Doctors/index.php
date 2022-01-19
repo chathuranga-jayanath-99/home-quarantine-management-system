@@ -81,32 +81,12 @@
                 <a href="<?php echo URLROOT?>/doctor/about-us" class="text-muted" style="text-decoration: none;">Copyright &copy; Code Devours</a>
 			</div>
 
-<<<<<<< HEAD
-=======
-    <div class="container" >
-        <h3>Total patients assigned to you: <?php echo $count;?></h3>
-        <br>
-        //< <P ><strong>Count: </strong></P> >
-
-        <div style="padding: 50px;        display: flex;        justify-content:  space-between;">
-            <a class="btn btn-dark" href="<?php echo URLROOT; ?>/doctor/check-patients">Check all patients</a>
-            //< <br> >
-            <a class="btn btn-dark" href="<?php echo URLROOT; ?>/doctor/check-records">Check Records</a>
-            //< <br> >
-            <a class="btn btn-dark" href="<?php echo URLROOT; ?>/doctor/mark-quarantine-results">Mark Cured or Extend Quarantine</a>
->>>>>>> master
         </div>
         </div>
     </div>
     </section>
 
 
-<<<<<<< HEAD
-=======
-</div>
-</section>
--->
->>>>>>> master
     <script src="static/js/doctor-script.js">   
     </script>
 </body>

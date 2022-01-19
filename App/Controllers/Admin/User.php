@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Models\AdminUserModel;
+use App\Models\DoctorModel;
 use \Core\View;
 
 class User extends \Core\Controller
@@ -185,6 +186,123 @@ class User extends \Core\Controller
             ];
 
             View::render('Admins/register.php', ['data' => $data]);
+        }
+    }
+
+    public function registerDoctorAction(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $data = [
+                'name' => htmlspecialchars(trim($_POST['name'])),
+                'email' => htmlspecialchars(trim($_POST['email'])),
+                'password' => trim($_POST['password']),
+                'confirm_password' => trim($_POST['confirm_password']),
+                'moh_area' => htmlspecialchars(trim($_POST['moh_area'])),
+                'contact_no' => htmlspecialchars(trim($_POST['contact_no'])),
+                'NIC' => htmlspecialchars(trim($_POST['NIC'])),
+                'slmc_reg_no' => htmlspecialchars(trim($_POST['slmc_reg_no'])),
+                'gender' => htmlspecialchars(trim($_POST['gender'])),
+                'birthday' => htmlspecialchars(trim($_POST['birthday'])),
+                // 'assigned_patients' => 0,
+                'name_err' => '',
+                'email_err' => '',
+                'password_err' => '',
+                'confirm_password_err' => '',
+                'moh_area_err' => '',
+                'contact_no_err' => '',
+                'NIC_err' => '',
+                'slmc_reg_no_err' => '',
+                'gender_err' => '',
+                'birthday_err' => '',
+            ];
+            
+            if(empty($data['name'])){
+                $data['name_err'] = 'Please enter name';
+            }
+
+            if(empty($data['email'])){
+                $data['email_err'] = 'Please enter email';
+            }
+            else {
+                if (DoctorModel::findUserByEmail($data['email'])){
+                    $data['email_err'] = 'Email is already taken';
+                }
+            }
+            
+            if(empty($data['password'])){
+                $data['password_err'] = 'Please enter password';
+            }
+            else if(strlen($data['password']) < 4){
+                $data['password_err'] = 'Password must be at least 6 characters';
+            }
+
+            if(empty($data['confirm_password'])){
+                $data['confirm_password_err'] = 'Please confirm password';
+            }
+            else {
+                if($data['password'] != $data['confirm_password']){
+                    $data['confirm_password_err'] = 'Passwords do not match';
+                }
+            }
+
+            if(empty($data['gender'])){
+                $data['gender_err'] = 'Please select a gender';
+            }
+
+            if(empty($data['birthday'])){
+                $data['birthday_err'] = 'Please enter a birthday';
+            }
+
+            if (empty($data['name_err']) && empty($data['email_err']) &&
+            empty($data['password_err']) && empty($data['confirm_password_err'] &&
+            empty($data['gender_err']) && empty($data['birthday_err']))){
+                // validated
+                
+                // Hash password
+                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+                // Register User
+                if (DoctorModel::register($data)){
+                    flash('register_doctor', 'Registration of doctor successful', "alert alert-success");
+                    header('location: '.URLROOT.'/admin/user/manage-doctor');
+                }
+                else {
+                    flash('register_doctor', 'Doctor registration failed', "alert alert-danger");
+                    header('location: '.URLROOT.'/admin/user/manage-doctor');
+                }
+               
+                
+            }
+            else {
+                // load view with errors
+                View::render('Admins/register-doctor.php', ['data'=> $data]);
+            }
+        }
+        else {
+            $data = [
+                'name' => '',
+                'email' => '',
+                'password' => '',
+                'confirm_password' => '',
+                'moh_area' => '',
+                'contact_no' => '',
+                'NIC' => '',
+                'slmc_reg_no' => '',
+                'gender' => '',
+                'birthday' => '',
+                'name_err' => '',
+                'email_err' => '',
+                'password_err' => '',
+                'confirm_password_err' => '',
+                'moh_area_err' => '',
+                'contact_no_err' => '',
+                'NIC_err' => '',
+                'slmc_reg_no_err' => '',
+                'gender_err' => '',
+                'birthday_err' => '',
+            ];
+
+            // load view
+            View::render('Admins/register-doctor.php', ['data'=> $data]);
         }
     }
 
