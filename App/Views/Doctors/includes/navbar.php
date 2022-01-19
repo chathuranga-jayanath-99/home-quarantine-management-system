@@ -8,7 +8,7 @@
         echo "https://www.pinclipart.com/picdir/middle/105-1057269_author-avatar-woman-doctor-icon-png-clipart.png";
       }
       ?>" alt="" height="24" class="d-inline-block align-text-top">
-      <?php echo $_SESSION['doctor_name']; ?>
+      <?php echo 'Dr. '.$_SESSION['doctor_name']; ?>
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

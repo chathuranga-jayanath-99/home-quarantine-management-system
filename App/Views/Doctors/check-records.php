@@ -3,11 +3,19 @@
 </head>
 
 <body>
+<<<<<<< HEAD
     <?php
     $page = 'check-records';
     $subPage = '';
     include_once 'includes/navbar.php';
     ?>
+=======
+<?php 
+    $page = 'records';
+    include_once("navbar.php");
+    ?>
+<section class="container pt-3">
+>>>>>>> master
 
 <section class="vh-auto py-5" style="background-color: #eee;">
     <div class="container h-100">

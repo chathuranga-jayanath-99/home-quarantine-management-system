@@ -413,7 +413,68 @@ class PHI extends \Core\Controller{
         $records = PHIModel::getFormNotfilledPatients($yesterday , $_SESSION['phi_id'] ) ;
         View::render('PHI/form-not-filled.php', ['records' => $records]);
         
-        
+
+    }
+
+    public function approveUpdateAction(){
+        if ($this->isLoggedIn()){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+               $update = ['update_id' => $_POST['update_id'],
+                        'name' => $_POST['name'],
+                        'email' => $_POST['email'],
+                        'contact_no' => $_POST['contact_no'],
+                        'name_change' => $_POST['name_change'],
+                        'email_change' => $_POST['email_change'],
+                        'contact_no_change' => $_POST['contact_no_change'],
+                        'type' => $_POST['type'],
+                        'patient_id' => $_POST['patient_id']
+                        ] ;
+               
+               $approve = PHIModel::approveUpdate($update) ;
+               header('location: '.URLROOT.'/PHI/get-updates'); 
+
+               
+            }
+        }
+
+
+    }
+
+    public function declineUpdateAction(){
+        if($this->isLoggedIn()){
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                $update_id = $_POST['update_id'];
+                $decline = PHIModel::declineUpdate($update_id);
+                header('location: '.URLROOT.'/PHI/get-updates'); 
+
+            }
+        }
+
+    }
+
+    public function getUpdatesAction(){
+        if ($this->isLoggedIn()){
+            $updates = PHIModel::getUpdates($_SESSION['phi_id'] ) ;
+            View::render('PHI/get-updates.php', ['updates' => $updates]);
+        }
+    }
+
+    public function getUpdateAction(){
+        if ($_GET['id']){
+            $updateId = $_GET['id'];
+            $type = $_GET['type'];
+            $changes = PHIModel::getUpdate($updateId,$type) ;
+
+            if($type == 'child'){
+                $email_exist = ChildPatientModel::findUserByEmail($changes[0]['email_change']);
+            }
+            else{
+                $email_exist = AdultPatientModel::findUserByEmail($changes[0]['email_change']);
+            }
+            
+            View::render('PHI/get-update.php', ['changes' => $changes , 'email_exist' => $email_exist]);
+            
+        }
 
     }
 }

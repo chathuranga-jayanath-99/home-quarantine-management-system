@@ -183,42 +183,31 @@ class PHIModel extends User{
 
     public static function getFormNotfilledPatients($yesterday,$phiID){
         $db = static::getDB();
-        // $sql = 'SELECT * FROM tbl_record WHERE phi_id=:phiID AND datetime!=:yesterday ' ;
-        // // SELECT * FROM `tbl_record` WHERE `datetime`!= "2022-01-08";
-        // $stmt = $db->prepare($sql);
-        // $stmt->execute(['phiID' => $phiID, 'yesterday'=>$yesterday]);
-        // $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        // if(!empty($row)){
-        //     echo "hello";
-        //     return $row;
-        // }
-
+       
         $sql1 = 'SELECT r.id, ap.name, ap.age, r.type, ap.contact_no
         FROM tbl_adult_patient ap
         JOIN tbl_record r
         ON r.patient_id = ap.id
-        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND r.datetime >:yesterday  AND r.type="adult" ';
+        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday  AND   r.type="adult"
+        GROUP BY ap.id ';                                // cp.start_quarantine_date <:yesterday AND
         $stmt = $db->prepare($sql1);
         $stmt->execute(['phiID' => $phiID, 'yesterday' => $yesterday]);
         $row1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        
 
         $sql2 = 'SELECT r.id, cp.name, cp.age, r.type, cp.contact_no
         FROM tbl_child_patient cp
         JOIN tbl_record r
         ON r.patient_id = cp.id
-        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND r.datetime >:yesterday AND cp.start_quarantine_date <:yesterday AND r.type="child" ';
+        WHERE r.phi_id=:phiID AND r.datetime!=:yesterday AND  cp.start_quarantine_date <:yesterday  AND r.type="child" 
+        GROUP BY cp.id ';
         $stmt = $db->prepare($sql2);
         $stmt->execute(['phiID' => $phiID, 'yesterday' => $yesterday]);
         $row2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $res = ['adult' => $row1, 'child' => $row2];
-        
-        if(!empty($res['adult'] || !empty($res['child']))){
-            return $res;
-        }
-        else {
-            return false;
-        }
+        return $res;   
 
         // AND cp.start_quarantine_date <: AND yesterday <:cp.end_quarantine_date
 
@@ -229,9 +218,122 @@ class PHIModel extends User{
         // else{
         //     return false ;
         // }
+    }
+
+    public static function getUpdates($phiID){
+
+        $db = static::getDB();
+        $sql1 = 'SELECT u.id, ap.name, u.type
+        FROM tbl_updates u
+        JOIN tbl_adult_patient ap
+        ON u.patient_id = ap.id
+        WHERE u.phi_id=:phiId AND u.type="adult" AND u.approve_state="pending"';
+        $stmt = $db->prepare($sql1);
+        $stmt->execute(['phiId' => $phiID]);
+        $row1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $sql2 = 'SELECT u.id, cp.name, u.type
+        FROM tbl_updates u
+        JOIN tbl_child_patient cp
+        ON u.patient_id = cp.id
+        WHERE u.phi_id=:phiId AND u.type="child" AND u.approve_state="pending"';
+        $stmt = $db->prepare($sql2);
+        $stmt->execute(['phiId' => $phiID]);
+        $row2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $res = ['adult' => $row1, 'child' => $row2];
+        return $res; 
+
+    }
+
+
+    public static function getUpdate($updateID,$type){
+        $db = static::getDB();
         
+        if($type == 'adult'){
 
         
+        $sql1 = 'SELECT u.id, u.name_change, u.type, u.email_change, u.contact_no_change, u.patient_id ,
+                        ap.name , ap.email , ap.contact_no 
+        FROM tbl_updates u
+        JOIN tbl_adult_patient ap
+        ON u.patient_id = ap.id
+        WHERE u.id=:updateID';
+        $stmt = $db->prepare($sql1);
+        $stmt->execute(['updateID' => $updateID ]);
+        $row1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        }
+        else{
+        $sql1 = 'SELECT u.id, u.name_change, u.type, u.email_change, u.contact_no_change, u.patient_id ,
+                        cp.name , cp.email , cp.contact_no 
+        FROM tbl_updates u
+        JOIN tbl_child_patient cp
+        ON u.patient_id = cp.id
+        WHERE u.id=:updateID';
+        $stmt = $db->prepare($sql1);
+        $stmt->execute(['updateID' => $updateID ]);
+        $row1 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        
+        return $row1; 
+
+    }
+
+    public static function approveUpdate($update){
+
+        $updateID = $update['update_id'];
+        $db = static::getDB();
+        $sql1 = 'UPDATE tbl_updates u
+                 SET u.approve_state=:approveStat
+                 WHERE u.id=:updateID' ;
+        $stmt1 = $db->prepare($sql1);
+        $stmt1->execute(['updateID' => $updateID , 'approveStat' => 'approved']);
+
+        if(empty($update['name_change'])){
+            $update['name_change'] = $update['name'];
+        }
+        if(empty($update['email_change'])){
+            $update['email_change']= $update['email'];
+        }
+        if(empty($update['contact_no_change'])){
+            $update['contact_no_change']=$update['contact_no'];
+        }
+
+
+        if($update['type'] == 'adult'){
+
+            $sql2 = 'UPDATE tbl_adult_patient ap
+                 SET ap.name=:name , ap.email=:email , ap.contact_no=:contact_no
+                 WHERE ap.id=:patient_id' ;
+            $stmt2 = $db->prepare($sql2);
+            $stmt2->execute(['name' =>  $update['name_change'] , 'email' => $update['email_change'] ,
+             'contact_no' => $update['contact_no_change'], 'patient_id' =>$update['patient_id'] ]);
+           
+
+
+        }
+        elseif($update['type'] == 'child'){
+
+            $sql2 = 'UPDATE tbl_child_patient cp
+            SET cp.name=:name , cp.email=:email , cp.contact_no=:contact_no
+            WHERE cp.id=:patient_id' ;
+            $stmt2 = $db->prepare($sql2);
+            $stmt2->execute(['name' =>  $update['name_change'] , 'email' => $update['email_change'] , 
+            'contact_no' => $update['contact_no_change'],'patient_id' =>$update['patient_id'] ]);
+
+        }
+
+    }
+
+    public static function declineUpdate($updateID){
+       
+        $db = static::getDB();
+        $sql1 = 'UPDATE tbl_updates u
+                 SET u.approve_state=:approveStat
+                 WHERE u.id=:updateID' ;
+        $stmt1 = $db->prepare($sql1);
+        $stmt1->execute(['updateID' => $updateID , 'approveStat' => 'declined']);
 
     }
 }

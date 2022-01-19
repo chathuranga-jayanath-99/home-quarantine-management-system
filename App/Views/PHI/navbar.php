@@ -46,6 +46,10 @@
           <a class="nav-link" href="<?php echo URLROOT; ?>/PHI/send-msg-to-my-patients"><button class="btn <?php if ($page === 'send-msg') {echo 'btn-success';} ?>">Send Message</button></a>
         </li>
 
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/PHI/getUpdates"><button class="btn <?php if ($page === 'get-updates') {echo 'btn-success';} ?>">Profile Updates</button></a>
+        </li>
+
       </ul>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">

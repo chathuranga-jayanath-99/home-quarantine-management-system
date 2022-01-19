@@ -18,7 +18,7 @@
     include_once 'navbar.php';
 ?>
 <?php include_once 'navbar.php'; ?>
-<section class="vh-auto pt-5 pb-5" style="background-color: #eee;">
+<section class="vh-auto pt-5 pb-5" style="background-color: #eee; min-height:100vh;">
     <div class="container h-100 pt-5">
         <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-12 col-xl-10">
