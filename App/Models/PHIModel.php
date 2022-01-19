@@ -338,7 +338,8 @@ class PHIModel extends User{
             $stmt2 = $db->prepare($sql2);
             $stmt2->execute(['name' =>  $update['name_change'] , 'email' => $update['email_change'] ,
              'contact_no' => $update['contact_no_change'], 'patient_id' =>$update['patient_id'], 'address' => $update['address_change'] ]);
-           
+            
+            self::sendApproveMessageToPatient($update['patient_id'], 'adult',1 );
 
 
         }
@@ -351,11 +352,15 @@ class PHIModel extends User{
             $stmt2->execute(['name' =>  $update['name_change'] , 'email' => $update['email_change'] , 
             'contact_no' => $update['contact_no_change'],'patient_id' =>$update['patient_id'],'address' => $update['address_change']  ]);
 
+            self::sendApproveMessageToPatient($update['patient_id'], 'child',1 );
+
         }
+
+        
 
     }
 
-    public static function declineUpdate($updateID){
+    public static function declineUpdate($updateID, $type,$patientId){
        
         $db = static::getDB();
         $sql1 = 'UPDATE tbl_updates u
@@ -363,6 +368,33 @@ class PHIModel extends User{
                  WHERE u.id=:updateID' ;
         $stmt1 = $db->prepare($sql1);
         $stmt1->execute(['updateID' => $updateID , 'approveStat' => 'declined']);
+        self::sendApproveMessageToPatient($patientId, $type,0 );
 
+    }
+
+    private static function sendApproveMessageToPatient($patientId, $patientType, $approve_state){
+        $db = static::getDB();
+
+        $phiId = $_SESSION['phi_id'];
+        if($approve_state){
+            //aproved
+            $content = 'Your profile updates has approved by the PHI';
+        }
+        else{
+            $content = 'Your profile updates has declined by the PHI';
+        }
+
+        $sql = 'INSERT INTO tbl_msg (content, sender_id, sender_type, receiver_id, receiver_type)
+        values (:content, :senderId, :senderType, :receiverId, :receiverType)';
+
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute([
+            'content' => $content,
+            'senderId' => $phiId,
+            'senderType' => 'phi',
+            'receiverId' => $patientId,
+            'receiverType' => $patientType
+        ]);
+        return $res;
     }
 }

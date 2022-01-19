@@ -101,6 +101,8 @@ include_once 'navbar.php';
 
                         <form action="<?php echo URLROOT?>/PHI/decline-update" method="POST">
                             <input type="hidden" name="update_id" value="<?php echo $changes[0]['id']?>">
+                            <input type="hidden" name="type" value="<?php echo $changes[0]['type']?>">
+                            <input type="hidden" name="patient_id" value="<?php echo $changes[0]['patient_id']?>">
                             <button type="Submit" class="btn btn-danger ">Decline</button> 
                         </form>
 

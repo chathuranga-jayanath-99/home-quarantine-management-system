@@ -470,7 +470,9 @@ class PHI extends \Core\Controller{
         if($this->isLoggedIn()){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $update_id = $_POST['update_id'];
-                $decline = PHIModel::declineUpdate($update_id);
+                $type = $_POST['type'] ;
+                $patientID = $_POST['patient_id'] ;
+                $decline = PHIModel::declineUpdate($update_id , $type , $patientID);
                 header('location: '.URLROOT.'/PHI/get-updates'); 
 
             }
