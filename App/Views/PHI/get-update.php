@@ -49,26 +49,36 @@ include_once 'navbar.php';
                             <td><?php echo $changes[0]['contact_no']?></td>
                             <td><?php echo $changes[0]['contact_no_change']?></td>
                         </tr>
+                        <tr>
+                            <td class="w-25 option">Home Address</td>
+                            <td><?php echo $changes[0]['address']?></td>
+                            <td><?php echo $changes[0]['address_change']?></td>
+                        </tr>
                     </tbody>
                     </table>
-
+                    </div>
                     <?php 
 
-                      if($email_exist){
-                        echo $changes[0]['email_change'].' email address already in use' ;
-                      }
+                      if($email_exist){  ?>
+                        <span style="color:red">* <?php echo $changes[0]['email_change']?> email address already in use  </span>
+                        <!-- echo $changes[0]['email_change'].' email address already in use' ; -->
+                        <?php   }
                     
-                    ?>
+                       ?>
                         
+                        <div class= "row row-col-2">
+                        <div class="col-8 justify-content-left">
                         
                         <form action="<?php echo URLROOT?>/PHI/approve-update " method="POST">
                             <input type="hidden" name="update_id" value="<?php echo $changes[0]['id']?>">
                             <input type="hidden" name="name_change" value="<?php echo $changes[0]['name_change']?>">
                             <input type="hidden" name="email_change" value="<?php echo $changes[0]['email_change']?>">
+                            <input type="hidden" name="address_change" value="<?php echo $changes[0]['address_change']?>">
                             <input type="hidden" name="contact_no_change" value="<?php echo $changes[0]['contact_no_change']?>">
                             <input type="hidden" name="name" value="<?php echo $changes[0]['name']?>">
                             <input type="hidden" name="email" value="<?php echo $changes[0]['email']?>">
                             <input type="hidden" name="contact_no" value="<?php echo $changes[0]['contact_no']?>">
+                            <input type="hidden" name="address" value="<?php echo $changes[0]['address']?>">
                             <input type="hidden" name="type" value="<?php echo $changes[0]['type']?>">
                             <input type="hidden" name="patient_id" value="<?php echo $changes[0]['patient_id']?>">
 
@@ -85,11 +95,21 @@ include_once 'navbar.php';
                             
                         </form>
 
+                        </div>
+
+                        <div class="col-4 justify-content-right">
+
                         <form action="<?php echo URLROOT?>/PHI/decline-update" method="POST">
                             <input type="hidden" name="update_id" value="<?php echo $changes[0]['id']?>">
+                            <input type="hidden" name="type" value="<?php echo $changes[0]['type']?>">
+                            <input type="hidden" name="patient_id" value="<?php echo $changes[0]['patient_id']?>">
                             <button type="Submit" class="btn btn-danger ">Decline</button> 
                         </form>
-                               
+
+                        </div>
+
+                        </div>
+                                 
 
               <!-- </div> -->
               </div>
