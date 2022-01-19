@@ -410,8 +410,32 @@ class PHI extends \Core\Controller{
     public function formNotFilledAction(){
 
         $yesterday =  date('Y-m-d',strtotime("-1 days")) ;
-        $records = PHIModel::getFormNotfilledPatients($yesterday , $_SESSION['phi_id'] ) ;
+        $patients = PHIModel::getPatientsOfPHI($_SESSION['phi_id']);
+        $adultPatients = array();
+        $childPatients = array();
+
+        foreach ($patients['adult'] as $adultPatient){
+            
+            if(PHIModel::getFormNotfilledAdultPatients($yesterday , $adultPatient->id )) {
+                    $adultPatient->type = 'adult' ;
+                    array_push($adultPatients,$adultPatient);
+            }
+        }
+
+        foreach($patients['child'] as $childPatient){
+            if(PHIModel::getFormNotfilledChildPatients($yesterday , $childPatient->id )){
+                $childPatient->type = 'child' ;
+                array_push($childPatients,$childPatient);
+            }
+        }
+
+        $records = ['adult' => $adultPatients , 'child' => $childPatients];
         View::render('PHI/form-not-filled.php', ['records' => $records]);
+
+        
+        
+        // $records = PHIModel::getFormNotfilledPatients($yesterday , $_SESSION['phi_id'] ) ;
+        // View::render('PHI/form-not-filled.php', ['records' => $records]);
         
 
     }
@@ -423,9 +447,11 @@ class PHI extends \Core\Controller{
                         'name' => $_POST['name'],
                         'email' => $_POST['email'],
                         'contact_no' => $_POST['contact_no'],
+                        'address' => $_POST['address'],
                         'name_change' => $_POST['name_change'],
                         'email_change' => $_POST['email_change'],
                         'contact_no_change' => $_POST['contact_no_change'],
+                        'address_change' => $_POST['address_change'],
                         'type' => $_POST['type'],
                         'patient_id' => $_POST['patient_id']
                         ] ;
@@ -444,7 +470,9 @@ class PHI extends \Core\Controller{
         if($this->isLoggedIn()){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $update_id = $_POST['update_id'];
-                $decline = PHIModel::declineUpdate($update_id);
+                $type = $_POST['type'] ;
+                $patientID = $_POST['patient_id'] ;
+                $decline = PHIModel::declineUpdate($update_id , $type , $patientID);
                 header('location: '.URLROOT.'/PHI/get-updates'); 
 
             }

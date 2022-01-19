@@ -105,3 +105,26 @@ if ($last) {
         if (msg_glow != null) msg_glow.remove();
     }
 </script>
+
+<?php if ($notRecorded && $page !== 'record') { ?>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div class="toast border-0" role="alert" aria-live="assertive" aria-atomic="true" id="rec-toast">
+            <div class="toast-header">
+                <span class="spinner-grow spinner-grow-sm text-danger me-2" id="rec-glow"></span>
+                <strong class="me-auto">Reminder</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                You have not recorded symptoms in last 12 hours.
+                <div class="mt-2 pt-2">
+                    <a href="<?php echo URLROOT; ?>/adult-patient/record"><button type="button" class="btn btn-primary btn-sm">Record Now</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var rec_toast_el = document.getElementById('rec-toast')
+        var rec_toast = bootstrap.Toast.getOrCreateInstance(rec_toast_el)
+        rec_toast.show();
+    </script>
+<?php } ?>
