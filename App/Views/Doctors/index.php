@@ -28,11 +28,25 @@
                                 </div>
                             </div>
                             <div class="container h-auto col-md-10 col-lg-10 my-3 text-center">
-                                <div class="btn-group-vertical" role="group" aria-label="Actions">
-                                    <a href="<?php echo URLROOT; ?>/doctor/check-patients" class="btn btn-outline-primary">Check All Patients</a>
-                                    <a href="<?php echo URLROOT; ?>/doctor/check-records" class="btn btn-outline-primary">Check Records</a>
-                                    <a href="<?php echo URLROOT; ?>/doctor/mark-quarantine-results" class="btn btn-outline-primary">Mark Cured or Extend Quarantine</a>
-                                </div>
+                                <nav class="navbar navbar-expand-lg">
+                                    <div class="container-fluid justify-content-center">
+                                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#actions" aria-controls="actions" aria-expanded="true" aria-label="Toggle navigation">
+                                        <span class="btn btn-primary">Actions</span>
+                                        </button>
+                                        <div class="collapse navbar-collapse text-start card bg-success my-2" id="actions">
+                                            <ul class="navbar-nav">
+                                                <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/doctor/check-patients"><button class="btn">Check All Patients</button></a>
+                                                </li><li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/doctor/check-records"><button class="btn">Check Records</button></a>
+                                                </li>
+                                                <li class="nav-item">
+                                                <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/doctor/mark-quarantine-results"><button class="btn">Update Quarantine Periods</button></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </nav>
                             </div>
                         </div>
                     </div>
