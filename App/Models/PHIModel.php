@@ -279,8 +279,8 @@ class PHIModel extends User{
         if($type == 'adult'){
 
         
-        $sql1 = 'SELECT u.id, u.name_change, u.type, u.email_change, u.contact_no_change, u.patient_id ,
-                        ap.name , ap.email , ap.contact_no 
+        $sql1 = 'SELECT u.id, u.name_change, u.type, u.email_change, u.contact_no_change, u.patient_id ,u.address_change,
+                        ap.name , ap.email , ap.contact_no,ap.address 
         FROM tbl_updates u
         JOIN tbl_adult_patient ap
         ON u.patient_id = ap.id
@@ -291,8 +291,8 @@ class PHIModel extends User{
 
         }
         else{
-        $sql1 = 'SELECT u.id, u.name_change, u.type, u.email_change, u.contact_no_change, u.patient_id ,
-                        cp.name , cp.email , cp.contact_no 
+        $sql1 = 'SELECT u.id, u.name_change, u.type, u.email_change, u.contact_no_change, u.patient_id ,u.address_change,
+                        cp.name , cp.email , cp.contact_no,cp.address
         FROM tbl_updates u
         JOIN tbl_child_patient cp
         ON u.patient_id = cp.id
@@ -325,16 +325,19 @@ class PHIModel extends User{
         if(empty($update['contact_no_change'])){
             $update['contact_no_change']=$update['contact_no'];
         }
+        if(empty($update['address_change'])){
+            $update['address_change'] = $update['address'];
+        }
 
 
         if($update['type'] == 'adult'){
 
             $sql2 = 'UPDATE tbl_adult_patient ap
-                 SET ap.name=:name , ap.email=:email , ap.contact_no=:contact_no
+                 SET ap.name=:name , ap.email=:email , ap.contact_no=:contact_no , ap.address=:address
                  WHERE ap.id=:patient_id' ;
             $stmt2 = $db->prepare($sql2);
             $stmt2->execute(['name' =>  $update['name_change'] , 'email' => $update['email_change'] ,
-             'contact_no' => $update['contact_no_change'], 'patient_id' =>$update['patient_id'] ]);
+             'contact_no' => $update['contact_no_change'], 'patient_id' =>$update['patient_id'], 'address' => $update['address_change'] ]);
            
 
 
@@ -342,11 +345,11 @@ class PHIModel extends User{
         elseif($update['type'] == 'child'){
 
             $sql2 = 'UPDATE tbl_child_patient cp
-            SET cp.name=:name , cp.email=:email , cp.contact_no=:contact_no
+            SET cp.name=:name , cp.email=:email , cp.contact_no=:contact_no, cp.address=:address
             WHERE cp.id=:patient_id' ;
             $stmt2 = $db->prepare($sql2);
             $stmt2->execute(['name' =>  $update['name_change'] , 'email' => $update['email_change'] , 
-            'contact_no' => $update['contact_no_change'],'patient_id' =>$update['patient_id'] ]);
+            'contact_no' => $update['contact_no_change'],'patient_id' =>$update['patient_id'],'address' => $update['address_change']  ]);
 
         }
 

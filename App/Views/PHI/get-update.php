@@ -49,6 +49,11 @@ include_once 'navbar.php';
                             <td><?php echo $changes[0]['contact_no']?></td>
                             <td><?php echo $changes[0]['contact_no_change']?></td>
                         </tr>
+                        <tr>
+                            <td class="w-25 option">Home Address</td>
+                            <td><?php echo $changes[0]['address']?></td>
+                            <td><?php echo $changes[0]['address_change']?></td>
+                        </tr>
                     </tbody>
                     </table>
                     </div>
@@ -68,10 +73,12 @@ include_once 'navbar.php';
                             <input type="hidden" name="update_id" value="<?php echo $changes[0]['id']?>">
                             <input type="hidden" name="name_change" value="<?php echo $changes[0]['name_change']?>">
                             <input type="hidden" name="email_change" value="<?php echo $changes[0]['email_change']?>">
+                            <input type="hidden" name="address_change" value="<?php echo $changes[0]['address_change']?>">
                             <input type="hidden" name="contact_no_change" value="<?php echo $changes[0]['contact_no_change']?>">
                             <input type="hidden" name="name" value="<?php echo $changes[0]['name']?>">
                             <input type="hidden" name="email" value="<?php echo $changes[0]['email']?>">
                             <input type="hidden" name="contact_no" value="<?php echo $changes[0]['contact_no']?>">
+                            <input type="hidden" name="address" value="<?php echo $changes[0]['address']?>">
                             <input type="hidden" name="type" value="<?php echo $changes[0]['type']?>">
                             <input type="hidden" name="patient_id" value="<?php echo $changes[0]['patient_id']?>">
 

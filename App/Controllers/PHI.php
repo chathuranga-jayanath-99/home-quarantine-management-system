@@ -447,9 +447,11 @@ class PHI extends \Core\Controller{
                         'name' => $_POST['name'],
                         'email' => $_POST['email'],
                         'contact_no' => $_POST['contact_no'],
+                        'address' => $_POST['address'],
                         'name_change' => $_POST['name_change'],
                         'email_change' => $_POST['email_change'],
                         'contact_no_change' => $_POST['contact_no_change'],
+                        'address_change' => $_POST['address_change'],
                         'type' => $_POST['type'],
                         'patient_id' => $_POST['patient_id']
                         ] ;
