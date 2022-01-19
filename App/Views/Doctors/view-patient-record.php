@@ -1,7 +1,10 @@
 <?php include(APPROOT.'/App/Views/Includes/header.php'); ?>
 
 <body>
-    
+<?php 
+    $page = 'records';
+    include_once("navbar.php");
+    ?>
 <table>
 <tr>
         <td>Date</td>

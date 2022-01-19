@@ -1,5 +1,9 @@
 <?php include(APPROOT.'/App/Views/Includes/header.php'); ?>
 <body>
+<?php 
+    $page = 'quarantine';
+    include_once("navbar.php");
+    ?>
 <section class="container pt-3">
 
 <a href="<?php echo URLROOT;?>/doctor">Home</a>
