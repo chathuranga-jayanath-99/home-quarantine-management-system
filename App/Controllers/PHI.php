@@ -598,15 +598,15 @@ class PHI extends \Core\Controller{
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $data = [
                         'name'                  => htmlspecialchars(trim($_POST['name'])),
-                        'NIC'                   => $this->guardian_id,
+                        'NIC'                   => $this->NIC,
                         'email'                 => htmlspecialchars(trim($_POST['email'])),
                         'contact_no'            => htmlspecialchars(trim($_POST['contact_no'])),
-                        'address'               => htmlspecialchars(trim($_POST['address'])),
-                        'patient_id'            => $_SESSION['child_id'],
-                        'phi_id'                => $this->phi_id,
+                        'phi_id'                => $_SESSION['phi_id'],
+                        'MOH_Area'              => $this->moh_area,
+                        'PHI_Range'             => $this->PHI_station,
                         'name_err'              => '',
                         'email_err'             => '',
-                        'address_err'           => '',
+                        
                         'contact_no_err'        => ''
                     ];
 
@@ -627,27 +627,28 @@ class PHI extends \Core\Controller{
                     }
 
                     if (empty($data['name_err']) && empty($data['email_err']) &&
-                    empty($data['address_err']) && empty($data['contact_no_err'])){
-                        $id = ChildPatientModel::recordEditProfile($data);
-                        View::render('ChildPatients/editProfileSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                      empty($data['contact_no_err'])){
+                        $id = PHIModel::recordEditProfile($data);
+                        View::render('PHI/editProfileSuccess.php', ['data' => $data]);
 
                     }
                     else{
-                        View::render('ChildPatients/editProfile.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                        
+                        View::render('PHI/editProfile.php', ['data' => $data]);
                     }
                 } else {
                     $data = [
                         'name'                  => $this->name,
                         'email'                 => $this->email,
-                        'NIC'                   => $this->guardian_id,
+                        'NIC'                   => $this->NIC,
                         'contact_no'            => $this->contact_no,
-                        'address'               => $this->address,
+                        'MOH_Area'              => $this->moh_area,
+                        'PHI_Range'             => $this->PHI_station,
                         'name_err'              => '',
                         'email_err'             => '',
-                        'address_err'           => '',
                         'contact_no_err'        => ''
                     ];
-                    View::render('ChildPatients/editProfile.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                    View::render('PHI/editProfile.php', ['data' => $data]);
                 }
         }
         else {

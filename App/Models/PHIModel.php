@@ -410,4 +410,24 @@ class PHIModel extends User{
         ]);
         return $res;
     }
+
+    public static function recordEditProfile($data){
+
+        $db = static::getDB();
+        $sql = 'UPDATE tbl_phi p
+        SET p.name=:name , p.email=:email , p.contact_number=:contact_no
+        WHERE p.id=:phi_id' ;
+        $stmt = $db->prepare($sql);
+        $res = $stmt->execute(['name' =>  $data['name'] , 'email' => $data['email'] , 
+        'contact_no' => $data['contact_no'],'phi_id' =>$data['phi_id'] ]);
+
+        if ($res) {
+            return true;
+        }
+        return false;
+
+        
+        
+    }
+    
 }
