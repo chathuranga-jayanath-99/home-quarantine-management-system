@@ -20,8 +20,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Type</th>
                                             <th scope="col">Count</th>
-                                            <th scope="col">Manage</th>
-                                            <th scope="col">Add New</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -29,22 +28,19 @@
                                             <th scope="row">1</th>
                                             <th scope="row">Admins</td>
                                             <td><?php echo $data['adminCount']?></td>
-                                            <td><a class="btn" href="<?php echo URLROOT;?>/admin/user/manage-admin">Manage Admins</a></td>
-                                            <td><a href="<?php echo URLROOT;?>/admin/user/register" class="btn">Add Admin</a></td>
+                                            <td><a href="<?php echo URLROOT;?>/admin/user/manage-admin">Manage Admins</a></td>
                                         </tr>
                                         <tr>
                                             <th scope="row">2</th>
                                             <th scope="row">Doctors</td>
                                             <td><?php echo $data['doctorCount']?></td>
-                                            <td><a class="btn" href="<?php echo URLROOT;?>/admin/user/manage-doctor">Manage Doctors</a></td>
-                                            <td><a href="<?php echo URLROOT;?>/admin/user/register-doctor" class="btn">Add Doctor</a></td>
+                                            <td><a href="<?php echo URLROOT;?>/admin/user/manage-doctor">Manage Doctors</a></td>
                                         </tr>
                                         <tr>
                                             <th scope="row">3</th>
                                             <th scope="row">PHIs</td>
                                             <td><?php echo $data['phiCount']?></td>
-                                            <td><a class="btn" href="<?php echo URLROOT;?>/admin/user/manage-PHI">Manage PHIs</a></td>
-                                            <td><a href="<?php echo URLROOT; ?>/admin/user/register-PHI" class="btn">Add PHI</a></td>
+                                            <td><a href="<?php echo URLROOT;?>/admin/user/manage-PHI">Manage PHIs</a></td>
                                         </tr>
                                     </tbody>
                                 </table>
