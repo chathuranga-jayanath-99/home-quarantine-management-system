@@ -152,4 +152,35 @@ class AdminUserModel extends \Core\Model{
         }
         return false;
     }
+
+    public static function getDoctor($doctorID) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_doctor WHERE id=:id';
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['id' => $doctorID]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if(!empty($row)){
+            return $row;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public static function getPHI($phiID) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_phi WHERE id=:id';
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['id' => $phiID]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if(!empty($row)){
+            return $row;
+        }
+        else {
+            return false;
+        }
+    }
+
 }
