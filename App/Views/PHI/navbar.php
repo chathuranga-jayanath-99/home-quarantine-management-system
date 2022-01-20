@@ -12,9 +12,9 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/PHI"><button class="btn <?php if ($page === 'home') {echo 'btn-success';} ?>">Home Page</button></a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/adult-patient/profile"><button class="btn <?php if ($page === 'profile') {echo 'btn-success';} ?>">Profile</button></a>
-        </li> -->
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<?php echo URLROOT; ?>/PHI/profile"><button class="btn <?php if ($page === 'profile') {echo 'btn-success';} ?>">Profile</button></a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/PHI/addpatient"><button class="btn <?php if ($page === 'add-new') {echo 'btn-success';} ?>">Add New Account</button></a>
         </li>

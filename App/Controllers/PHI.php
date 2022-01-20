@@ -10,6 +10,14 @@ use App\RecordStatePattern\Record;
 
 class PHI extends \Core\Controller{
 
+    private $phi_id ;
+    private $name;
+    private $email ;
+    private $contact_no ;
+    private $moh_area;
+    private $PHI_station;
+    private $NIC;
+
     // public function registerAction(){
 
     //     if ($_SERVER['REQUEST_METHOD'] == 'POST'){      //POST method used to access the page
@@ -572,5 +580,121 @@ class PHI extends \Core\Controller{
             
         }
 
+    }
+
+    public function profileAction() {
+        if ($this->isLoggedIn()){
+            $this->initializeFromSession();
+            View::render('PHI/profile.php', ['phiData' => $this]);
+        }
+        else {
+           echo "Please log in first";
+        }
+    }
+
+    public function editProfileAction() {
+        if ($this->isLoggedIn()){
+            $this->initializeFromSession();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $data = [
+                        'name'                  => htmlspecialchars(trim($_POST['name'])),
+                        'NIC'                   => $this->guardian_id,
+                        'email'                 => htmlspecialchars(trim($_POST['email'])),
+                        'contact_no'            => htmlspecialchars(trim($_POST['contact_no'])),
+                        'address'               => htmlspecialchars(trim($_POST['address'])),
+                        'patient_id'            => $_SESSION['child_id'],
+                        'phi_id'                => $this->phi_id,
+                        'name_err'              => '',
+                        'email_err'             => '',
+                        'address_err'           => '',
+                        'contact_no_err'        => ''
+                    ];
+
+                    if(empty($data['name'])){
+                        $data['name_err'] = 'Please enter name';
+                    }
+        
+                    if(empty($data['email'])){
+                        $data['email_err'] = 'Please enter email';
+                    }
+
+                    if(empty($data['contact_no'])){
+                        $data['contact_no_err'] = 'Please enter contact no';
+                    }
+
+                    if(empty($data['address'])){
+                        $data['address_err'] = 'Please enter address';
+                    }
+
+                    if (empty($data['name_err']) && empty($data['email_err']) &&
+                    empty($data['address_err']) && empty($data['contact_no_err'])){
+                        $id = ChildPatientModel::recordEditProfile($data);
+                        View::render('ChildPatients/editProfileSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+
+                    }
+                    else{
+                        View::render('ChildPatients/editProfile.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                    }
+                } else {
+                    $data = [
+                        'name'                  => $this->name,
+                        'email'                 => $this->email,
+                        'NIC'                   => $this->guardian_id,
+                        'contact_no'            => $this->contact_no,
+                        'address'               => $this->address,
+                        'name_err'              => '',
+                        'email_err'             => '',
+                        'address_err'           => '',
+                        'contact_no_err'        => ''
+                    ];
+                    View::render('ChildPatients/editProfile.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                }
+        }
+        else {
+           // View::render('ChildPatients/notLoggedIn.php', []);
+        }
+    }
+
+
+    private function initializeFromSession() {
+        $this->initialize($_SESSION['phi_id']);
+    }
+
+    public function initialize($phi_id) {
+        $phiObj = PHIModel::findUserByID($phi_id);
+        
+        if ($phiObj) {
+            
+            $this->phi_id                = $phiObj->phi_id;
+            $this->name                  = $phiObj->name;
+            $this->email                 = $phiObj->email;
+            $this->contact_no            = $phiObj->contact_number;
+            $this->moh_area              = $phiObj->moh_area;
+            $this->PHI_station           = $phiObj->PHI_station;
+            $this->NIC                   = $phiObj->NIC;
+        }
+    }
+
+    public function getPhiID(){
+        return $this->phi_id ;
+    }
+    public function getName(){
+        return $this->name ;
+    }
+    public function getEmail(){
+        return $this->email;
+    }
+    public function getContactNo(){
+        return $this->contact_no;
+    }
+    public function getMohArea(){
+        return $this->moh_area;
+    }
+
+    public function getPHIStation(){
+        return $this->PHI_station;
+    }
+    public function getNIC(){
+        return $this->NIC ;
     }
 }
