@@ -3,11 +3,11 @@
     <a class="navbar-brand" href="<?php echo URLROOT; ?>/doctor">
     <img src="<?php
       if ($_SESSION['doctor_gender'] === 'Male') {
-        echo "https://www.pngitem.com/pimgs/m/10-106042_male-professional-avatar-icon-hd-png-download.png";
+        echo "https://i.pinimg.com/originals/e3/7e/14/e37e14e207070d62cfc4d0b050f3ad91.png";
       } else if ($_SESSION['doctor_gender'] === 'Female') {
-        echo "https://www.pinclipart.com/picdir/middle/105-1057269_author-avatar-woman-doctor-icon-png-clipart.png";
+        echo "https://previews.123rf.com/images/grgroup/grgroup1705/grgroup170503271/78206085-colorful-portrait-half-body-of-female-doctor-vector-illustration.jpg";
       }
-      ?>" alt="" height="24" class="d-inline-block align-text-top">
+      ?>" alt="" height="50" class="d-inline-block align-text-top">
       <?php echo 'Dr. '.$_SESSION['doctor_name']; ?>
     </a>
 
