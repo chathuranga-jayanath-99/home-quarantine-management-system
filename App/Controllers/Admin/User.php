@@ -492,4 +492,20 @@ class User extends \Core\Controller
         }
     }
 
+    public function viewAdminAction() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $adminID = $_POST['admin_id'];
+            $admin = AdminUserModel::getAdmin($adminID);
+            if ($adminID) {
+                View::render('Admins/viewAdmin.php', ['admin' => $admin]);
+            } else {
+                echo 'Not Found';
+                die();
+            }
+        } else {
+            header('location: '.URLROOT.'/admin/user/manage-admin');
+            die();
+        }
+    }
+
 }

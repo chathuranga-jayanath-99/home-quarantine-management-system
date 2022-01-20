@@ -39,7 +39,7 @@
                                                     <td><?php echo $admin->name; ?></td>
                                                     <td><?php echo $admin->email; ?></td>
                                                     <td>
-                                                        <a class="m-2" href="#">Update Admin</a>
+                                                        <a class="m-2" href="#" onclick="viewAdmin(<?php echo $admin->id; ?>)">View Admin</a>
                                                         <a class="m-2" href="<?php echo URLROOT.'/admin/user/reset-password'?>" onclick="resetRoutine(event, <?php echo $admin->id;?>)">Reset Password</a>
                                                         <!-- <button onclick="resetRoutine">Reset Password</button> -->
                                                     </td>
@@ -72,6 +72,15 @@
         </div>
     </div>
     </section>
+    <form action="<?php echo URLROOT; ?>/admin/user/view-admin" method="post" id="view-form">
+        <input type="hidden" name="admin_id" id="admin_id">
+    </form>
+    <script>
+        function viewAdmin(adminID) {
+            document.getElementById("admin_id").value = adminID;
+            document.getElementById("view-form").submit();
+        }
+    </script>
 
 
 <!--
