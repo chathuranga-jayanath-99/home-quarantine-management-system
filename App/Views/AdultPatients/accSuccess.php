@@ -26,39 +26,39 @@
                     <h2 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Success</h2>
                     <form>
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-user fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="name" value="<?php echo $adultObj->getName() ?>" placeholder="Name" readonly>
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input id="name" class="form-control" type="text" name="name" value="<?php echo $adultObj->getName() ?>" placeholder="Name" readonly>
+                                <label for="name"><i class="fa fa-user fa-lg me-3 fa-fw"></i>Name</label>
                             </div>
                         </div>                   
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-id-card fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="NIC" value="<?php echo $adultObj->getNIC() ?>" readonly>
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input id="NIC" class="form-control" type="text" name="NIC" value="<?php echo $adultObj->getNIC() ?>" readonly>
+                                <label for="NIC"><i class="fa fa-id-card fa-lg me-3 fa-fw"></i>NIC</label>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-envelope fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="email" value="<?php echo $adultObj->getEmail() ?>" readonly>
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input id="email" class="form-control" type="email" name="email" value="<?php echo $adultObj->getEmail() ?>" readonly>
+                                <label for="email"><i class="fa fa-envelope fa-lg me-3 fa-fw"></i>Email</label>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-calendar fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="age" value="<?php echo $adultObj->getAge() ?>" readonly>
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input id="age" class="form-control" type="text" name="age" value="<?php echo $adultObj->getAge() ?>" readonly>
+                                <label for="age"><i class="fa fa-calendar fa-lg me-3 fa-fw"></i>Age</label>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-mobile fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="contact_no" value="<?php echo $adultObj->getContactNo() ?>" readonly>
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input id="contact_no" class="form-control" type="text" name="contact_no" value="<?php echo $adultObj->getContactNo() ?>" readonly>
+                                <label for="contact_no"><i class="fa fa-mobile fa-lg me-3 fa-fw"></i>Contact No</label>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-home fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="address" value="<?php echo $adultObj->getAddress() ?>" readonly>
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input id="address" class="form-control" type="text" name="address" value="<?php echo $adultObj->getAddress() ?>" readonly>
+                                <label for="address"><i class="fa fa-home fa-lg me-3 fa-fw"></i>Address</label>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
@@ -71,24 +71,36 @@
                                 $Gender = 'Female';
                             } 
                             ?>
-                            <i class="fa fa-<?php echo $gender ?> fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="gender" value="<?php echo $Gender ?>" readonly>
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input id="gender" class="form-control" type="text" name="gender" value="<?php echo $Gender ?>" readonly>
+                                <label for="gender"><i class="fa fa-<?php echo $gender ?> fa-lg me-3 fa-fw"></i></label>
                             </div>
                         </div>
                         <?php
                             $state = $adultObj->stateToString();
                         ?>
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-check fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="state" value="<?php echo $state ?>" readonly>
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input id="state" class="form-control" type="text" name="state" value="<?php echo $state ?>" readonly>
+                                <label for="state"><i class="fa fa-check fa-lg me-3 fa-fw"></i>State</label>
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center mb-4">
-                            <i class="fa fa-hospital-o fa-lg me-3 fa-fw"></i>
-                            <div class="form-outline flex-fill mb-0">
-                                <input class="form-control" type="text" name="phi_range" value="<?php echo $adultObj->getPHIRange() ?>" readonly>
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input id="start_date" class="form-control" type="text" name="start_date" value="<?php echo $adultObj->getStartQuarantineDate() ?>" readonly>
+                                <label for="start_date"><i class="fa fa-calendar-o fa-lg me-3 fa-fw"></i>Quarantine Period Start Date</label>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center mb-4">
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input id="end_date" class="form-control" type="text" name="end_date" value="<?php echo $adultObj->getEndQuarantineDate() ?>" readonly>
+                                <label for="end_date"><i class="fa fa-calendar fa-lg me-3 fa-fw"></i>Quarantine Period End Date</label>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center mb-4">
+                            <div class="form-outline form-floating flex-fill mb-0">
+                                <input id="phi_range" class="form-control" type="text" name="phi_range" value="<?php echo $adultObj->getPHIRange() ?>" readonly>
+                                <label for="phi_range"><i class="fa fa-hospital-o fa-lg me-3 fa-fw"></i>PHI Area</label>
                             </div>
                         </div>
                     </form>
@@ -96,7 +108,7 @@
                     <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
                         <div>
                         <img src="https://image.freepik.com/free-vector/doctor-examining-patient-clinic-illustrated_23-2148856559.jpg" width=700 height=700 class="img-fluid" alt="Sample image"> 
-                        <div class="text-center">
+                        <div class="text-center pt-5">
                         <div>
                             <a href="<?php echo URLROOT; ?>/phi"><button class="btn btn-warning">Home</button></a>
                         </div>

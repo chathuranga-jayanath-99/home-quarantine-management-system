@@ -11,7 +11,7 @@ $page = 'get-updates';
 include_once 'navbar.php';
 ?>
 
-<section class="vh-100" style="background-color: #eee;">
+<section class="vh-auto pt-5 pb-5" style="background-color: #eee; min-height:100vh;">
   <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
      
