@@ -28,7 +28,6 @@
 							<h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Password Change</h1>
                             <form id="pwd-form" class="mx-1 mx-md-4" action="<?php echo URLROOT?>/adult-patient/password-change" method='POST'>
                                 <div class="d-flex flex-row align-items-center mb-4">
-                                <i class="fa fa-envelope fa-lg me-3 fa-fw"></i>
                                     <div class="form-outline form-floating flex-fill mb-0">
                                         <input id="email" class="form-control" type="email" name="email" value="<?php echo $_SESSION['adult_email']; ?>" placeholder="New password" disabled>
                                         <label for="email"><i class="fa fa-envelope fa-lg me-3 fa-fw"></i>Email</label>

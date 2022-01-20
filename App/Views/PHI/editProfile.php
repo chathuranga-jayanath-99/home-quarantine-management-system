@@ -73,7 +73,7 @@
                     </form>
                     </div>
                         <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                            <img src="https://image.freepik.com/free-vector/doctor-professional-team-cartoon-art-illustration_56104-640.jpg" width=400 height=400 class="img-fluid" alt="Sample image"> 
+                            <img src="https://image.freepik.com/free-vector/system-software-update-data-update-synchronize-with-progress-bar-screen-vector-stock-illustration_100456-5608.jpg" width=700 height=700 class="img-fluid" alt="Sample image" style="border-radius: 25px;"> 
                         </div>
                     </div>
                 </div>

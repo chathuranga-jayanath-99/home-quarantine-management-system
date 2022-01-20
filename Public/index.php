@@ -1,5 +1,8 @@
 <?php
 
+date_default_timezone_set("Asia/Kolkata");
+
+
 require('../App/Config.php');
 
 // Require Core
@@ -67,3 +70,5 @@ $router->add('phi/{controller}/{action}');
 // Match the requested route
 $url = $_SERVER['QUERY_STRING'];
 $router->dispatch($url);
+
+

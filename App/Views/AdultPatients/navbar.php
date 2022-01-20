@@ -1,4 +1,6 @@
 <?php
+//echo "The time is " . date("Y/m/d h:i:sa");
+
 $notRecorded = false;
 if ($last) {
     $time_difference = time() - strtotime($last['datetime']);
