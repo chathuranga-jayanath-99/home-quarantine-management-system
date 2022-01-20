@@ -88,7 +88,7 @@ class Doctor extends MedicalOfficer{
             $pendingResultPatients = DoctorModel::getPatientsToMarkResult($_SESSION['doctor_id']);
 
             $patientCount = sizeof($patients['adult']) + sizeof($patients['child']);
-            $recordCount = sizeof($records);
+            $recordCount = sizeof($records['adult']) + sizeof($records['child']);
             $pendingResultPatientCount = sizeof($pendingResultPatients);
 
             $data = [
