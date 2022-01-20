@@ -1089,6 +1089,9 @@ class Adultpatient extends Patient{
 
                     if (empty($data['name_err']) && empty($data['email_err']) &&
                     empty($data['address_err']) && empty($data['contact_no_err'])){
+                        if( $data['email'] === $this->email){
+                            $data['email'] = '';
+                        }
                         $id = AdultPatientModel::recordEditProfile($data);
                         View::render('AdultPatients/editProfileSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
 
