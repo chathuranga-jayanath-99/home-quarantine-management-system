@@ -7,11 +7,11 @@
       <img src="https://buckinghambowlsclub.bowls.com.au/wp-content/uploads/sites/484/2020/05/administrator-logo-png-6.png" alt="" height="24" class="d-inline-block align-text-top">
       <?php echo $_SESSION['admin_name']; ?>
     </a>
-    <a href="<?php echo URLROOT; ?>/admin/user/manage-doctor" class="navbar-brand ms-5"><i class="fa fa-arrow-circle-left fa-lg me-3 fa-fw"></i></a>
+    <a href="<?php echo URLROOT; ?>/admin/user/manage-admin" class="navbar-brand ms-5"><i class="fa fa-arrow-circle-left fa-lg me-3 fa-fw"></i></a>
     <ol class="breadcrumb navbar-nav me-auto mb-2 mb-lg-0">
       <li class="breadcrumb-item">Home</li>
       <li class="breadcrumb-item active" aria-current="page">Manage Admin</li>
-      <li class="breadcrumb-item active" aria-current="page">Reset Paasword</li>
+      <li class="breadcrumb-item active" aria-current="page">Reset Password</li>
     </ol>
   </div>
 </nav>
