@@ -15,7 +15,9 @@ class ChatMediatorImpl implements ChatMediator{
 
     public function sendMessage($msg, $officer){
         foreach ($this->users as $user){
-            $user->receive($msg);
+            if ($officer != $user){
+                $user->receive($msg);
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ use App\Models\ChildPatientModel;
 use App\Models\AdultPatientModel;
 use App\RecordStatePattern\Record;
 
-class PHI extends \Core\Controller{
+class PHI extends MedicalOfficer{
 
     private $phi_id ;
     private $name;
@@ -322,7 +322,9 @@ class PHI extends \Core\Controller{
     }
 
     public function markpositive(){
-
+        if ($this->isLoggedIn()){
+            
+        }
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
             $type = $_POST['Patient_type'];
@@ -465,16 +467,22 @@ class PHI extends \Core\Controller{
         $mediator = new ChatMediatorImpl;
         
         $phi = new PHIModel($mediator, $_SESSION['phi_name']);
+        $mediator->addUser($phi);
+        
+        $adultPatientPrototype = new AdultPatientModel(null, null, null);
+        $childPatientPrototype = new ChildPatientModel(null, null, null);
 
         foreach ($myPatients['adult'] as $adultPatient){
-            $patient = new AdultPatientModel($adultPatient->id, $mediator, $adultPatient->name);
-
+            // $patient = new AdultPatientModel($adultPatient->id, $mediator, $adultPatient->name);
+            $patient = clone $adultPatientPrototype;
+            $patient->setParams($adultPatient->id, $mediator, $adultPatient->name);
             $mediator->addUser($patient);
         }
 
         foreach ($myPatients['child'] as $childPatient){
-            $patient = new ChildPatientModel($childPatient->id, $mediator, $childPatient->name);
-
+            // $patient = new ChildPatientModel($childPatient->id, $mediator, $childPatient->name);
+            $patient = clone $childPatientPrototype;
+            $patient->setParams($childPatient->id, $mediator, $childPatient->name);
             $mediator->addUser($patient);
         }
 

@@ -216,8 +216,8 @@ class DoctorModel extends MedicalOfficerModel{
         $db = static::getDB();
 
         $sql = 'UPDATE tbl_doctor SET
-        name=:name, email=:email, 
-        moh_area=:moh_area, contact_no=:contact_no, NIC=:NIC, slmc_reg_no=:slmc_reg_no
+        name=:name, email=:email, moh_area=:moh_area, contact_no=:contact_no, 
+        NIC=:NIC, slmc_reg_no=:slmc_reg_no, gender=:gender, birthday=:birthday
         WHERE id=:doctor_id';
 
         $stmt = $db->prepare($sql);
@@ -228,7 +228,9 @@ class DoctorModel extends MedicalOfficerModel{
             'contact_no'=>$data['contact_no'],
             'NIC'=>$data['NIC'],
             'slmc_reg_no'=>$data['slmc_reg_no'],
-            'doctor_id' => $data['doctor_id']
+            'doctor_id' => $data['doctor_id'],
+            'gender' => $data['gender'],
+            'birthday' => $data['birthday'],
         ]);
 
         if($res){

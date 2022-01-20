@@ -51,7 +51,7 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <div class="form-outline form-floating flex-fill mb-0">
                                             <input class="form-control" type="password" name="confirm_password" placeholder="Confirm password">
-                                            <label class="form-label" for=""><i class="fa fa-key fa-lg me-3 fa-fw"></i> Password</label>
+                                            <label class="form-label" for=""><i class="fa fa-key fa-lg me-3 fa-fw"></i>Confirm Password</label>
                                             <span style="color: red"><?php echo $data['confirm_password_err']?></span>
                                         </div>
                                     </div>

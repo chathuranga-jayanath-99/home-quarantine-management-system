@@ -1,5 +1,8 @@
 <?php
 
+date_default_timezone_set("Asia/Kolkata");
+
+
 require('../App/Config.php');
 
 // Require Core
@@ -13,11 +16,12 @@ require '../Core/Database.php';
 require '../App/helpers/session_helper.php';
 
 // Require the controller classes
+require '../App/Controllers/MedicalOfficer.php';
 require '../App/Controllers/Doctor.php';
 require '../App/Controllers/Patient.php';
 require '../App/Controllers/ChildPatient.php';
 require '../App/Controllers/Home.php';
-require '../App/Controllers/PHI.php' ;    // require the controller PHI
+require '../App/Controllers/PHI.php';    // require the controller PHI
 require '../App/Controllers/AdultPatient.php';
 require '../App/Controllers/Admin/User.php';
 require '../App/Controllers/Image.php';
@@ -66,3 +70,5 @@ $router->add('phi/{controller}/{action}');
 // Match the requested route
 $url = $_SERVER['QUERY_STRING'];
 $router->dispatch($url);
+
+
