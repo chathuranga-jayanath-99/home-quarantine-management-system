@@ -636,118 +636,124 @@ class ChildPatient extends Patient {
     public function recordAction() {
         if ($this->isLoggedIn()) {
             $this->initializeFromSession();
-            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
-            $has_msg = array_values($res)[0];
-            $state = $this->stateToString();
-            $record = new Record();
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $temperature = $_POST['temperature'];
-                if (is_numeric($temperature) || is_float($temperature)) {
-                    if ($_POST['temp-unit'] === 'fahrenheit') {
-                        $temperature = ($temperature - 32) * 5 / 9;
-                        $temperature = round($temperature, 2);
+            if ($this->isActive()) {
+                $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+                $has_msg = array_values($res)[0];
+                $state = $this->stateToString();
+                $record = new Record();
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $temperature = $_POST['temperature'];
+                    if (is_numeric($temperature) || is_float($temperature)) {
+                        if ($_POST['temp-unit'] === 'fahrenheit') {
+                            $temperature = ($temperature - 32) * 5 / 9;
+                            $temperature = round($temperature, 2);
+                        }
+                        $fever          = 0;
+                        $cough          = 0;
+                        $sore_throat    = 0;
+                        $short_breath   = 0;
+                        $runny_nose     = 0;
+                        $chills         = 0;
+                        $muscle_ache    = 0;
+                        $headache       = 0;
+                        $fatigue        = 0;
+                        $abdominal_pain = 0;
+                        $vomiting       = 0;
+                        $diarrhea       = 0;
+                        $other          = htmlspecialchars(trim($_POST['other']));
+                        $checked_count  = 0;
+                        $level          = 'normal';
+                        if ($_POST['fever'] === 'yes') {
+                            $fever = 1;
+                            $checked_count += 1;
+                        }
+                        if ($_POST['cough'] === 'yes') {
+                            $cough = 1;
+                            $checked_count += 1;
+                        }
+                        if ($_POST['sore_throat'] === 'yes') {
+                            $sore_throat = 1;
+                            $checked_count += 1;
+                        }
+                        if ($_POST['short_breath'] === 'yes') {
+                            $short_breath = 1;
+                            $checked_count += 1;
+                        }
+                        if ($_POST['runny_nose'] === 'yes') {
+                            $runny_nose = 1;
+                            $checked_count += 1;
+                        }
+                        if ($_POST['chills'] === 'yes') {
+                            $chills = 1;
+                            $checked_count += 1;
+                        }
+                        if ($_POST['muscle_ache'] === 'yes') {
+                            $muscle_ache = 1;
+                            $checked_count += 1;
+                        }
+                        if ($_POST['headache'] === 'yes') {
+                            $headache = 1;
+                            $checked_count += 1;
+                        }
+                        if ($_POST['fatigue'] === 'yes') {
+                            $fatigue = 1;
+                            $checked_count += 1;
+                        }
+                        if ($_POST['abdominal_pain'] === 'yes') {
+                            $abdominal_pain = 1;
+                            $checked_count += 1;
+                        }
+                        if ($_POST['vomiting'] === 'yes') {
+                            $vomiting = 1;
+                            $checked_count += 1;
+                        }
+                        if ($_POST['diarrhea'] === 'yes') {
+                            $diarrhea = 1;
+                            $checked_count += 1;
+                        }
+                        if ($checked_count > 7) {
+                            $level = 'critical';
+                        } else if ($checked_count > 4) {
+                            $level = 'serious';
+                        }
+                        $symptoms = [
+                            "patient_id"     => $this->id,
+                            "doctor_id"      => $this->doctor_id,
+                            "phi_id"         => $this->phi_id,
+                            "type"           => "child",
+                            "feedback"       => "",
+                            "checked"        => 0,
+                            "temperature"    => $temperature,
+                            "fever"          => $fever,
+                            "cough"          => $cough,
+                            "sore_throat"    => $sore_throat,
+                            "short_breath"   => $short_breath,
+                            "runny_nose"     => $runny_nose,
+                            "chills"         => $chills,
+                            "muscle_ache"    => $muscle_ache,
+                            "headache"       => $headache,
+                            "fatigue"        => $fatigue,
+                            "abdominal_pain" => $abdominal_pain,
+                            "vomiting"       => $vomiting,
+                            "diarrhea"       => $diarrhea,
+                            "other"          => $other,
+                            "level"          => $level,
+                            "checked_count"  => $checked_count
+                        ];
+                        if (ChildPatientModel::recordSymptoms($symptoms)) {
+                            $record->initialize($symptoms);
+                            $last = ChildPatientModel::getLastRecord($_SESSION['child_id']);
+                            View::render('ChildPatients/recordSuccess.php', ['symptoms' => $record, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                        }
                     }
-                    $fever          = 0;
-                    $cough          = 0;
-                    $sore_throat    = 0;
-                    $short_breath   = 0;
-                    $runny_nose     = 0;
-                    $chills         = 0;
-                    $muscle_ache    = 0;
-                    $headache       = 0;
-                    $fatigue        = 0;
-                    $abdominal_pain = 0;
-                    $vomiting       = 0;
-                    $diarrhea       = 0;
-                    $other          = htmlspecialchars(trim($_POST['other']));
-                    $checked_count  = 0;
-                    $level          = 'normal';
-                    if ($_POST['fever'] === 'yes') {
-                        $fever = 1;
-                        $checked_count += 1;
-                    }
-                    if ($_POST['cough'] === 'yes') {
-                        $cough = 1;
-                        $checked_count += 1;
-                    }
-                    if ($_POST['sore_throat'] === 'yes') {
-                        $sore_throat = 1;
-                        $checked_count += 1;
-                    }
-                    if ($_POST['short_breath'] === 'yes') {
-                        $short_breath = 1;
-                        $checked_count += 1;
-                    }
-                    if ($_POST['runny_nose'] === 'yes') {
-                        $runny_nose = 1;
-                        $checked_count += 1;
-                    }
-                    if ($_POST['chills'] === 'yes') {
-                        $chills = 1;
-                        $checked_count += 1;
-                    }
-                    if ($_POST['muscle_ache'] === 'yes') {
-                        $muscle_ache = 1;
-                        $checked_count += 1;
-                    }
-                    if ($_POST['headache'] === 'yes') {
-                        $headache = 1;
-                        $checked_count += 1;
-                    }
-                    if ($_POST['fatigue'] === 'yes') {
-                        $fatigue = 1;
-                        $checked_count += 1;
-                    }
-                    if ($_POST['abdominal_pain'] === 'yes') {
-                        $abdominal_pain = 1;
-                        $checked_count += 1;
-                    }
-                    if ($_POST['vomiting'] === 'yes') {
-                        $vomiting = 1;
-                        $checked_count += 1;
-                    }
-                    if ($_POST['diarrhea'] === 'yes') {
-                        $diarrhea = 1;
-                        $checked_count += 1;
-                    }
-                    if ($checked_count > 7) {
-                        $level = 'critical';
-                    } else if ($checked_count > 4) {
-                        $level = 'serious';
-                    }
-                    $symptoms = [
-                        "patient_id"     => $this->id,
-                        "doctor_id"      => $this->doctor_id,
-                        "phi_id"         => $this->phi_id,
-                        "type"           => "child",
-                        "feedback"       => "",
-                        "checked"        => 0,
-                        "temperature"    => $temperature,
-                        "fever"          => $fever,
-                        "cough"          => $cough,
-                        "sore_throat"    => $sore_throat,
-                        "short_breath"   => $short_breath,
-                        "runny_nose"     => $runny_nose,
-                        "chills"         => $chills,
-                        "muscle_ache"    => $muscle_ache,
-                        "headache"       => $headache,
-                        "fatigue"        => $fatigue,
-                        "abdominal_pain" => $abdominal_pain,
-                        "vomiting"       => $vomiting,
-                        "diarrhea"       => $diarrhea,
-                        "other"          => $other,
-                        "level"          => $level,
-                        "checked_count"  => $checked_count
-                    ];
-                    if (ChildPatientModel::recordSymptoms($symptoms)) {
-                        $record->initialize($symptoms);
-                        $last = ChildPatientModel::getLastRecord($_SESSION['child_id']);
-                        View::render('ChildPatients/recordSuccess.php', ['symptoms' => $record, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
-                    }
+                } else {
+                    $last = ChildPatientModel::getLastRecord($_SESSION['child_id']);
+                    View::render('ChildPatients/recordSymptoms.php', ['has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                 }
             } else {
-                $last = ChildPatientModel::getLastRecord($_SESSION['child_id']);
-                View::render('ChildPatients/recordSymptoms.php', ['has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                flash('acc_inactive', 'Your account is inactive. You can\'t make any changes to your account.', 'alert alert-danger');
+                header('location: '.URLROOT.'/child-patient');
+                die();
             }
         } else {
             View::render('ChildPatients/notLoggedIn.php', []);
@@ -970,23 +976,29 @@ class ChildPatient extends Patient {
     public function editMedHistoryAction() {
         if ($this->isLoggedIn()){
             $this->initializeFromSession();
-            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
-            $has_msg = array_values($res)[0];
-            $last = ChildPatientModel::getLastRecord($_SESSION['child_id']);
-            $state = $this->stateToString();
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $description          = htmlspecialchars(trim($_POST['description']));
-                $medicalHistory = [
-                    "patient_id"     => $this->id,
-                    "patient_type"   => "child",
-                    "description"    => $description
-                ];
-                if (ChildPatientModel::recordMedHistory($this->id, $medicalHistory)) {
-                    View::render('ChildPatients/editMedHistorySuccess.php', ['description' => $description, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+            if ($this->isActive()) {
+                $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+                $has_msg = array_values($res)[0];
+                $last = ChildPatientModel::getLastRecord($_SESSION['child_id']);
+                $state = $this->stateToString();
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $description          = htmlspecialchars(trim($_POST['description']));
+                    $medicalHistory = [
+                        "patient_id"     => $this->id,
+                        "patient_type"   => "child",
+                        "description"    => $description
+                    ];
+                    if (ChildPatientModel::recordMedHistory($this->id, $medicalHistory)) {
+                        View::render('ChildPatients/editMedHistorySuccess.php', ['description' => $description, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                    }
+                } else {
+                    $medHistory = ChildPatientModel::getMedHistory($_SESSION['child_id']);
+                    View::render('ChildPatients/editMedHistory.php', ['medHistory' => $medHistory, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                 }
             } else {
-                $medHistory = ChildPatientModel::getMedHistory($_SESSION['child_id']);
-                View::render('ChildPatients/editMedHistory.php', ['medHistory' => $medHistory, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                flash('acc_inactive', 'Your account is inactive. You can\'t make any changes to your account.', 'alert alert-danger');
+                header('location: '.URLROOT.'/child-patient');
+                die();
             }
         }
         else {
@@ -1011,63 +1023,73 @@ class ChildPatient extends Patient {
     public function editProfileAction() {
         if ($this->isLoggedIn()){
             $this->initializeFromSession();
-            $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
-            $has_msg = array_values($res)[0];
-            $last = ChildPatientModel::getLastRecord($_SESSION['child_id']);
-            $state = $this->stateToString();
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $data = [
-                    'name'                  => htmlspecialchars(trim($_POST['name'])),
-                    'NIC'                   => $this->guardian_id,
-                    'email'                 => htmlspecialchars(trim($_POST['email'])),
-                    'contact_no'            => htmlspecialchars(trim($_POST['contact_no'])),
-                    'address'               => htmlspecialchars(trim($_POST['address'])),
-                    'patient_id'            => $_SESSION['child_id'],
-                    'phi_id'                => $this->phi_id,
-                    'name_err'              => '',
-                    'email_err'             => '',
-                    'address_err'           => '',
-                    'contact_no_err'        => ''
-                ];
+            if ($this->isActive()) {
+                $res = ChildPatientModel::hasNotifications('child', $_SESSION['child_id']);
+                $has_msg = array_values($res)[0];
+                $last = ChildPatientModel::getLastRecord($_SESSION['child_id']);
+                $state = $this->stateToString();
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $data = [
+                        'name'                  => htmlspecialchars(trim($_POST['name'])),
+                        'NIC'                   => $this->guardian_id,
+                        'email'                 => htmlspecialchars(trim($_POST['email'])),
+                        'contact_no'            => htmlspecialchars(trim($_POST['contact_no'])),
+                        'address'               => htmlspecialchars(trim($_POST['address'])),
+                        'patient_id'            => $_SESSION['child_id'],
+                        'phi_id'                => $this->phi_id,
+                        'name_err'              => '',
+                        'email_err'             => '',
+                        'address_err'           => '',
+                        'contact_no_err'        => ''
+                    ];
 
-                if(empty($data['name'])){
-                    $data['name_err'] = 'Please enter name';
-                }
-    
-                if(empty($data['email'])){
-                    $data['email_err'] = 'Please enter email';
-                }
+                    if(empty($data['name'])){
+                        $data['name_err'] = 'Please enter name';
+                    }
+        
+                    if(empty($data['email'])){
+                        $data['email_err'] = 'Please enter email';
+                    }
 
-                if(empty($data['contact_no'])){
-                    $data['contact_no_err'] = 'Please enter contact no';
-                }
+                    if(empty($data['contact_no'])){
+                        $data['contact_no_err'] = 'Please enter contact no';
+                    }
 
-                if(empty($data['address'])){
-                    $data['address_err'] = 'Please enter address';
-                }
+                    if(empty($data['address'])){
+                        $data['address_err'] = 'Please enter address';
+                    }
 
-                if (empty($data['name_err']) && empty($data['email_err']) &&
-                empty($data['address_err']) && empty($data['contact_no_err'])){
-                    $id = ChildPatientModel::recordEditProfile($data);
-                    View::render('ChildPatients/editProfileSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                    if (empty($data['name_err']) && empty($data['email_err']) &&
+                    empty($data['address_err']) && empty($data['contact_no_err'])){
+                        if (strcmp($data['email'],$this->email)===0){
+                            $data['email'] = '';
+                        }
+                        $id = ChildPatientModel::recordEditProfile($data);
+                        $data['email'] = htmlspecialchars(trim($_POST['email']));
+                        View::render('ChildPatients/editProfileSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
 
-                }
-                else{
+                    }
+                    else{
+                        View::render('ChildPatients/editProfile.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                    }
+                } else {
+                    $data = [
+                        'name'                  => $this->name,
+                        'email'                 => $this->email,
+                        'NIC'                   => $this->guardian_id,
+                        'contact_no'            => $this->contact_no,
+                        'address'               => $this->address,
+                        'name_err'              => '',
+                        'email_err'             => '',
+                        'address_err'           => '',
+                        'contact_no_err'        => ''
+                    ];
                     View::render('ChildPatients/editProfile.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                 }
             } else {
-                $data = [
-                    'name'                  => $this->name,
-                    'email'                 => $this->email,
-                    'NIC'                   => $this->guardian_id,
-                    'contact_no'            => $this->contact_no,
-                    'address'               => $this->address,
-                    'name_err'              => '',
-                    'email_err'             => '',
-                    'address_err'           => '',
-                    'contact_no_err'        => ''
-                ];
-                View::render('ChildPatients/editProfile.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                flash('acc_inactive', 'Your account is inactive. You can\'t make any changes to your account.', 'alert alert-danger');
+                header('location: '.URLROOT.'/child-patient');
+                die();
             }
         }
         else {
@@ -1353,6 +1375,11 @@ class ChildPatient extends Patient {
 
     public function getEndQuarantineDate() {
         return $this->end_quarantine_date;
+    }
+
+    public function isActive() {
+        $stateStr = $this->stateToString();
+        return $stateStr === 'Contact Person' || $stateStr === 'Positive';
     }
 
 }

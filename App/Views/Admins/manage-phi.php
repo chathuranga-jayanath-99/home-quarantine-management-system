@@ -10,7 +10,7 @@
         <div class="col-lg-12 col-xl-10">
             <div class="card text-black" style="border-radius: 25px;">
                 <div class="card-body p-md-5">
-                    <?php flash('register_phi');?>
+                    <?php flash('register_PHI');?>
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-20 col-xl-20 order-2 order-lg-1">
                             <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Manage PHIs</h1>
@@ -39,7 +39,7 @@
                                                     <td><?php echo $phi->name; ?></td>
                                                     <td><?php echo $phi->email; ?></td>
                                                     <td>
-                                                        <a class="m-2" href="#">View</a>
+                                                    <a class="m-2" onclick="viewPHI(<?php echo $phi->id;?>)" href="#">View</a>
                                                     </td>
                                                 </tr>
 
@@ -70,6 +70,15 @@
         </div>
     </div>
     </section>
+    <form action="<?php echo URLROOT.'/admin/user/view-PHI'?>" method="post" id="phi-view">
+        <input type="hidden" name="phi_id" id="phi_id">
+    </form>
+    <script>
+        function viewPHI(phiID){
+            document.getElementById('phi_id').value = phiID;
+            document.getElementById('phi-view').submit();
+        }
+    </script>
 
 
 <!--
@@ -83,7 +92,7 @@
         <a href="<?php echo URLROOT;?>/admin/user/logout">Logout</a>
     </div>
 
-    <?php flash('register_PHI');?>
+    <?php //flash('register_PHI');?>
     <h1>Manage PHI</h1>
 
     <a href="<?php echo URLROOT; ?>/admin/user/register-PHI" class="btn btn-primary">Add PHI</a>
@@ -95,28 +104,28 @@
             <td><strong>Actions</strong></td>
         </tr>
         <?php
-            if (sizeof($phis) > 0){
-                foreach($phis as $phi){
+            // if (sizeof($phis) > 0){
+            //     foreach($phis as $phi){
                     ?>
 
                     <tr>
-                        <td><?php echo $phi->name; ?></td>
-                        <td><?php echo $phi->email; ?></td>
+                        <td><?php //echo $phi->name; ?></td>
+                        <td><?php //echo $phi->email; ?></td>
                         <td>
                             <a href="#">View Details</a>
                         </td>
                     </tr>
 
                     <?php
-                }
-            }   
-            else{
+            //     }
+            // }   
+            // else{
                 ?>
                 <tr>
                     <td>No PHIs</td>
                 </tr>
                 <?php
-            }     
+            //}     
         ?>
     </table>
 -->

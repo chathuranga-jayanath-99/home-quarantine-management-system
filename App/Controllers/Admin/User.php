@@ -394,7 +394,7 @@ class User extends \Core\Controller
             }
             else {
                 // load view with errors
-                View::render('PHI/register.php', ['data'=> $data]);
+                View::render('Admins/register-phi.php', ['data'=> $data]);
             }
 
         }
@@ -418,7 +418,7 @@ class User extends \Core\Controller
             ];
 
             // load view
-            View::render('PHI/register.php', ['data'=> $data]);
+            View::render('Admins/register-phi.php', ['data'=> $data]);
         }
     }
 
@@ -459,4 +459,37 @@ class User extends \Core\Controller
         $_SESSION['admin_email'] = $admin->email;
         $_SESSION['admin_name'] = $admin->name;
     }
+
+    public function viewDoctorAction() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $doctorID = $_POST['doctor_id'];
+            $doctor = AdminUserModel::getDoctor($doctorID);
+            if ($doctorID) {
+                View::render('Admins/viewDoctor.php', ['doctor' => $doctor]);
+            } else {
+                echo 'Not Found';
+                die();
+            }
+        } else {
+            header('location: '.URLROOT.'/admin/user/manage-doctor');
+            die();
+        }
+    }
+
+    public function viewPHIAction() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $phiID = $_POST['phi_id'];
+            $phi = AdminUserModel::getPHI($phiID);
+            if ($phiID) {
+                View::render('Admins/viewPhi.php', ['phi' => $phi]);
+            } else {
+                echo 'Not Found';
+                die();
+            }
+        } else {
+            header('location: '.URLROOT.'/admin/user/manage-phi');
+            die();
+        }
+    }
+
 }

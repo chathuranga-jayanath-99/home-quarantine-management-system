@@ -183,15 +183,11 @@ class PHI extends \Core\Controller{
 
     public function indexAction(){
         
+        
         if ($this->isLoggedIn()){
-            // echo $_SESSION['doctor_id'];
-            // $patients = DoctorModel::getAssingedPatients($_SESSION['doctor_id']);
-            //echo ($_SESSION['phi_name']);
-            $data = [
-                'name' =>  $_SESSION['phi_name']
-                
-            ];
-            View::render('PHI/index.php',['data' => $data]);  /// changed
+            
+            $updateCount = $this->getUpdatesCount();
+            View::render('PHI/index.php',['count'=> $_SESSION['patient_count'], 'update_count' => $updateCount, 'form_not_filled'=> $_SESSION['form_not_filled_count'] ]); 
         }
         else {
             echo 'not logged in';
@@ -199,12 +195,91 @@ class PHI extends \Core\Controller{
                 
     }
 
+    public function getFormNotFilledCount(){
+
+        $yesterday =  date('Y-m-d',strtotime("-1 days")) ;
+        $patients = PHIModel::getPatientsOfPHI($_SESSION['phi_id']);
+        $adultPatients = 0;
+        $childPatients = 0;
+
+        foreach ($patients['adult'] as $adultPatient){
+            
+            if(PHIModel::getFormNotfilledAdultPatients($yesterday , $adultPatient->id )) {
+                    $adultPatient->type = 'adult' ;
+                    $adultPatients ++ ;
+                    
+            }
+        }
+
+        foreach($patients['child'] as $childPatient){
+            if(PHIModel::getFormNotfilledChildPatients($yesterday , $childPatient->id )){
+                $childPatient->type = 'child' ;
+                $childPatients ++ ;
+            }
+        }
+
+        $result = ['adult'=> $adultPatients , 'child' => $childPatients] ;
+        return $result ; 
+
+    }
+
+    public function getUpdatesCount(){
+
+        $updates = PHIModel::getUpdates($_SESSION['phi_id'] ) ;
+        $updateCount = 0 ; 
+        foreach ($updates['adult'] as $adultUpdate){
+            $updateCount ++ ;
+        }
+        foreach($updates['child'] as $childUpdate){
+            $updateCount ++ ;
+        }
+        return $updateCount ;
+    
+    }
+
+    public function getAssignedPatientCount(){
+        
+        $patients = PHIModel::getPatientsOfPHI($_SESSION['phi_id']);
+        $positive_count = 0;
+        $contact_count = 0;
+
+        foreach ($patients['adult'] as $adultPatient){
+            if($adultPatient->state == 'contact'){
+                $contact_count ++ ;
+
+            }
+            elseif($adultPatient->state == 'positive'){
+                $positive_count ++ ;
+            }
+        }
+        foreach($patients['child'] as $childPatient){
+            if($childPatient->state == 'contact'){
+                $contact_count ++ ;
+
+            }
+            elseif($childPatient->state == 'positive'){
+                $positive_count ++ ;
+            }
+        }
+
+        $total_count = $positive_count + $contact_count ;
+        $result = ['positive' => $positive_count , 'contact' => $contact_count, 'total'=> $total_count] ; 
+        return $result ;
+
+    }
+
 
     private function createSession($curr_phi){
+         
         $_SESSION['phi_id'] =   $curr_phi->id;
         $_SESSION['phi_email'] = $curr_phi->email;
         $_SESSION['phi_name'] = $curr_phi->name;
         $_SESSION['phi_area'] = $curr_phi->PHI_station;
+
+        $form_not_filled_count = $this->getFormNotFilledCount();
+        $count = $this->getAssignedPatientCount();
+        $_SESSION['patient_count'] = $count ;
+        $_SESSION['form_not_filled_count'] = $form_not_filled_count ;
     }
 
     public function isLoggedIn(){
@@ -431,13 +506,6 @@ class PHI extends \Core\Controller{
 
         $records = ['adult' => $adultPatients , 'child' => $childPatients];
         View::render('PHI/form-not-filled.php', ['records' => $records]);
-
-        
-        
-        // $records = PHIModel::getFormNotfilledPatients($yesterday , $_SESSION['phi_id'] ) ;
-        // View::render('PHI/form-not-filled.php', ['records' => $records]);
-        
-
     }
 
     public function approveUpdateAction(){

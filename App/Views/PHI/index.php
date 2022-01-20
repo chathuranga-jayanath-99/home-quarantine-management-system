@@ -21,82 +21,81 @@ include_once 'navbar.php';
 <section class="vh-100" style="background-color: #eee;">
   <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
-     <h3 class="text-center h2 fw-bold ">Welcome PHI <?php echo $data['name']?> !!!</h3> 
-      <div class="col-lg-12 col-xl-10">
+      <div class="col-lg-20 col-xl-20">
         <div class="card text-black" style="border-radius: 25px;">
           <div class="card-body p-md-5">
             <div class="row justify-content-center">
-              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                
-                <!-- <a href="<?php echo URLROOT?>/PHI/addpatient">ADD NEW ACCOUNT</a>
-                <br>
-                <a href="<?php echo URLROOT?>/PHI/markpositive">MARK POSITIVE</a>
-                <br>
-                <a href="<?php echo URLROOT?>/PHI/markdead">MARK DEATHS</a>
-                <br>
-                <a href="<?php echo URLROOT?>/PHI/searchPatient">SEARCH PATIENT</a>
-                <br>
-                <a href="<?php echo URLROOT?>/PHI/checkRecords">VIEW PATIENT RECORDS</a>
-                <br>
-                <a href="<?php echo URLROOT?>/PHI/active-existing-acc">ACTIVE ACCOUNT</a>
-                <br>
-                <a href="<?php echo URLROOT?>/PHI/form-not-filled">VIEW FORM NOT FILLED PATIENTS</a>
-                <br>
-                <a href="<?php echo URLROOT?>/PHI/send-msg-to-my-patients">SEND MSG TO MY PATIENTS</a>
-                <br>
-                <a href="<?php echo URLROOT?>/PHI/get-updates">GET PROFILE UPDATES</a> -->
+             <div class="col-md-10 col-lg-20 col-xl-20 order-2 order-lg-1">
+                <h1 class="text-center h1 fw-bold ">Welcome !</h1> 
+                 <div class="row row-cols-1 row-cols-md-2 g-2 mb-5">
+                   
+                    <div class="col">
+                        <div class="card border-secondary mb-3 h-100">
+                        <div class="card-body">
+                        <h5 class="card-title mb-3 mt-3 text-muted">Assigned Patients Details</h5>
+                        <table class="table table-borderless table-hover">
+                                                <tr>
+                                                    <th scope="col">Total Assigned Patients</th>
+                                                    <td><?php echo $count['total']; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col">Contact Patients</th>
+                                                    <td><?php echo $count['contact']; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col">Positive Patients</th>
+                                                    <td><?php echo $count['positive']; ?></td>
+                                                </tr>
+                        </table>
+                                            <div class="text-end">
+                                                <a href="<?php echo URLROOT; ?>/PHI/checkRecords" style="width:85px;" id="hide-btn" class="btn btn-danger mx-2">View</a>
+                                            </div>
+                                        
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card border-secondary mb-3 h-100">
+                        <div class="card-body">
+                        <h5 class="card-title mb-3 mt-3 text-muted">Form-not-filled Patients on <?php echo date('Y-m-d',strtotime("-1 days")) ; ?> </h5>
+                        <table class="table table-borderless table-hover">
+                                                <tr>
+                                                    <th scope="col">Total Count</th>
+                                                    <td><?php echo $form_not_filled['child']+$form_not_filled['adult']; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col">Child Patients</th>
+                                                    <td><?php echo $form_not_filled['child']; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col">Adult Patients</th>
+                                                    <td><?php echo $form_not_filled['adult']; ?></td>
+                                                </tr>
+                        </table> 
+                                            <div class="text-end">
+                                                <a href="<?php echo URLROOT; ?>/PHI/form-not-filled" style="width:85px;" id="hide-btn" class="btn btn-danger mx-2">View</a>
+                                            </div>
+
+                                            <?php 
+                                                if( $update_count > 0){?>
+                                                      <h5 class="text-muted"> You have <?php echo $update_count;?> profile updates for confirmation. </h5>
+                                                      <div class="text-end">
+                                                      <a href="<?php echo URLROOT; ?>/PHI/getUpdates" style="width:85px;" id="hide-btn" class="btn btn-primary mx-2">View</a>
+                                                      </div>
+                                            <?php
+                                                }
+                                            ?>
+                                            
+                                            
+                        </div>
+                        </div>
+                    </div>
+
+
+                 </div>
 
                 
-
-                <!-- <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4"></h2> -->
-                <!-- <form action="<?php echo URLROOT?>/PHI/addpatient" method='POST'>
-                  
-                  <div class=" h6 text-center form-check col-md-10">
-                      <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio"  name="Patient_type"  value="child" required>Child Account</label>
-                  </div>
-                  <div class=" h6 text-center  form-check col-md-10">
-                      <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio" name="Patient_type" value="adult">Adult Account</label>
-                  </div>
-                 
-
-                  <div class="text-center mt-4 col-md-10" >
-                      <button type="Submit" class="btn btn-primary ">Submit</button>
-                      
-                  </div>
-                    
-
-                </form> -->
-                
-
-              <!-- </div>
-              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-
-              <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">MARK POSITIVE</h2>
-                <form action="<?php echo URLROOT?>/PHI/markpositive" method='POST'>
-                  
-                  <div class=" h6 text-center form-check col-md-10">
-                      <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio"  name="Patient_type"  value="child" required>Child Account</label>
-                  </div>
-                  <div class=" h6 text-center  form-check col-md-10">
-                      <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio" name="Patient_type" value="adult">Adult Account</label>
-                  </div>
-                 
-
-                  <div class="text-center mt-4 col-md-10" >
-                      <button type="Submit" class="btn btn-primary ">Submit</button>
-                      <input type="submit" name="Submit" value="submit">
-                  </div>
-                    
-
-                </form>
-
-              
-             
-              </div>   -->
-              <!-- <div class="text-center h3 fw-bold mb-3 mx-1 mx-md-4 mt-5">
-              <a href="<?php echo URLROOT;?>/PHI/logout">
-              <button type="Submit" class="btn btn-danger">Log Out</button>
-              </div> -->
               </div>
             </div>
           </div>
