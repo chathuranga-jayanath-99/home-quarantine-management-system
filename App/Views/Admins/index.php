@@ -49,9 +49,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div id="hide-div" style="display:none;">
-                                <iframe id="record-frame" class="responsive-iframe" src="<?php echo URLROOT; ?>/child-patient/view-record?recordID=<?php echo $last['id']; ?>" style="width: 100%;" onload="resizeRecordPage()"></iframe>
-                            </div>
                         </div>
                     </div>
                 </div>
