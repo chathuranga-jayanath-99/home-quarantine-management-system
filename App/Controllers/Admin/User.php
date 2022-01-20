@@ -175,7 +175,7 @@ class User extends \Core\Controller
             }
             else {
                 // load view with errors
-                View::render('Doctors/register.php', ['data'=> $data]);
+                View::render('Admins/register.php', ['data'=> $data]);
             }
         }
         else{
@@ -270,7 +270,6 @@ class User extends \Core\Controller
                     flash('register_doctor', 'Doctor registration failed', "alert alert-danger");
                     header('location: '.URLROOT.'/admin/user/manage-doctor');
                 }
-               
                 
             }
             else {

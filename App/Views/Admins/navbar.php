@@ -25,7 +25,7 @@
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo URLROOT; ?>/admin/user/manage-PHI"><button class="btn <?php if($page === 'PHIs'){echo 'btn-success';} ?>">Manage PHIs</button></a>
+                    <a class="nav-link" href="<?php echo URLROOT; ?>/admin/user/manage-PHI"><button class="btn <?php if($page === 'phis'){echo 'btn-success';} ?>">Manage PHIs</button></a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
