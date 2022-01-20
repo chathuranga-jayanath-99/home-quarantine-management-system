@@ -22,10 +22,14 @@
                             <table class="table table-hover">
                                 <tr>
                                     <th>Name</th>
-                                    <td><?php echo $patient['email']?></td>
+                                    <td><?php echo $patient['name']?></td>
                                 </tr>
                                 <tr>
                                     <th>Email</th>
+                                    <td><?php echo $patient['email']?></td>
+                                </tr>
+                                <tr>
+                                    <th>PHI range</th>
                                     <td><?php echo $patient['phi_range']?></td>
                                 </tr>
                                 <tr>

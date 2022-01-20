@@ -25,6 +25,24 @@
 
                             <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Welcome!</h1>
                             
+                            <div class="row row-cols-1 row-cols-md-2 g-4 mb-5 justify-content-center">
+                                
+                                <div class="col text-center">
+                                    <div class="card mb-3 h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Summary</h5>
+                                            <hr>
+                                            <p>Patients assigned to you: <?php echo $data['patientCount'];?></p>
+                                            <p>Records to check: <?php echo $data['recordCount'];?></p>
+                                            <p>Patients to update quarantine period: <?php echo $data['pendingResultPatientCount'];?></p>
+                                        </div>
+                                    </div>   
+
+                                </div>
+                                
+                            
+                            </div>
+
                             <div class="container card mb-5 h-auto col-md-10 col-lg-10 ">
                                 <div class="card-body">
                                     <h5 class="card-title">Search a Patient</h5>
@@ -35,19 +53,6 @@
                                     <p class="card-text mx-3"><span id="search_result" style="font-weight:bold"></span></p>
                                     <a href="#"></a>
                                 </div>
-                            </div>
-
-                            <div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
-                                
-                                <div class="col">
-                                    <div class="card border-dark mb-3 h-100">
-                                        <div class="card-body">
-                                            <p>Total patients assigned to you: <?php echo $count;?></p>
-                                        </div>
-                                    </div>   
-                                </div>
-                                
-                            
                             </div>
 
                             <!-- <div class="container h-auto col-md-10 col-lg-10 my-3 text-center">
