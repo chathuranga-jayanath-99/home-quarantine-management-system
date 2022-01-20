@@ -5,7 +5,7 @@ namespace App\Controllers;
 use \Core\View;
 use App\Models\DoctorModel;
 
-class Doctor extends \Core\Controller{
+class Doctor extends MedicalOfficer{
 
     protected function before()
     {

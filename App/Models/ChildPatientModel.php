@@ -12,6 +12,8 @@ use App\RecordStatePattern\Checked;
 
 class ChildPatientModel extends PatientModel {
 
+    public function __clone(){}
+
     public static function register($data) {
         $db = static::getDB();
         $sql = 'INSERT INTO tbl_child_patient 

@@ -13,6 +13,14 @@ abstract class PatientModel extends User {
         $this->id = $id;
     }
 
+    public function setParams($id, $mediator, $name){
+        $this->id = $id;
+        $this->mediator = $mediator;
+        $this->name = $name;
+    }
+
+    abstract function __clone();
+
     public function receive($msg){
         // write msg to db 
     }
