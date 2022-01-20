@@ -27,6 +27,7 @@ abstract class Patient extends \Core\Controller {
     public abstract function getAddress();
     public abstract function getGender();
     public abstract function getPHIRange();
+    public abstract function isActive();
 
     protected abstract function activeHelper($patient);
 
