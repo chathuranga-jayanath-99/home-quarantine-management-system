@@ -220,7 +220,7 @@
                         </div>
                         <div class="row justify-content-center">
                             <div class="mb-3">
-                                <div class="from-floating">
+                                <div class="form-floating">
                                     <textarea class="form-control" id="other" name="other" style="height: 100px" placeholder="Other"></textarea>
                                     <label for="other" class="form-label"><i class="fa fa-puzzle-piece fa-lg me-3 fa-fw"></i>Other</label>
                                 </div>
@@ -241,6 +241,5 @@
         </div>
     </div>
     </section>
-
 </body>
 </html>
