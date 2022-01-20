@@ -10,112 +10,112 @@ use App\RecordStatePattern\Record;
 
 class PHI extends \Core\Controller{
 
-    public function registerAction(){
+    // public function registerAction(){
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST'){      //POST method used to access the page
-            $data = [
-                'name'  => trim($_POST['name']),
-                'email' => trim($_POST['email']),
-                'password' => trim($_POST['password']),
-                'confirm_password' => trim($_POST['confirm_password']),
-                'moh_area' => trim($_POST['moh_area']),
-                'PHI_station' => trim($_POST['PHI_station']),
-                'PHI_id' => trim($_POST['PHI_id']),
-                'NIC' => trim($_POST['NIC']),
-                'contact_number' => trim($_POST['contact_number']) ,
-                'name_err' => '',
-                'email_err' => '',
-                'password_err' => '',
-                'nic_err' => '',
-                'confirm_password_err' => ''
-            ];
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST'){      //POST method used to access the page
+    //         $data = [
+    //             'name'  => trim($_POST['name']),
+    //             'email' => trim($_POST['email']),
+    //             'password' => trim($_POST['password']),
+    //             'confirm_password' => trim($_POST['confirm_password']),
+    //             'moh_area' => trim($_POST['moh_area']),
+    //             'PHI_station' => trim($_POST['PHI_station']),
+    //             'PHI_id' => trim($_POST['PHI_id']),
+    //             'NIC' => trim($_POST['NIC']),
+    //             'contact_number' => trim($_POST['contact_number']) ,
+    //             'name_err' => '',
+    //             'email_err' => '',
+    //             'password_err' => '',
+    //             'nic_err' => '',
+    //             'confirm_password_err' => ''
+    //         ];
 
 
-            if(empty($data['name'])){
-                $data['name_err'] = 'Please enter name';
-            }
+    //         if(empty($data['name'])){
+    //             $data['name_err'] = 'Please enter name';
+    //         }
 
-            if(empty($data['email'])){
-                $data['email_err'] = 'Please enter email';
-            }
-            else {
-                if (PHIModel::findUserByEmail($data['email'])){
-                    $data['email_err'] = 'Email is already taken';
-                }
-            }
+    //         if(empty($data['email'])){
+    //             $data['email_err'] = 'Please enter email';
+    //         }
+    //         else {
+    //             if (PHIModel::findUserByEmail($data['email'])){
+    //                 $data['email_err'] = 'Email is already taken';
+    //             }
+    //         }
             
-            if(empty($data['password'])){
-                $data['password_err'] = 'Please enter password';
-            }
-            else if(strlen($data['password']) < 6){
-                $data['password_err'] = 'Password must be at least 6 characters';
-            }
+    //         if(empty($data['password'])){
+    //             $data['password_err'] = 'Please enter password';
+    //         }
+    //         else if(strlen($data['password']) < 6){
+    //             $data['password_err'] = 'Password must be at least 6 characters';
+    //         }
 
-            if(!$this->isValidNIC($data['NIC'])){
-                $data['nic_err'] = 'Invalid NIC' ;
-            }
+    //         if(!$this->isValidNIC($data['NIC'])){
+    //             $data['nic_err'] = 'Invalid NIC' ;
+    //         }
 
-            if(empty($data['confirm_password'])){
-                $data['confirm_password_err'] = 'Please confirm password';
-            }
-            else {
-                if($data['password'] != $data['confirm_password']){
-                    $data['confirm_password_err'] = 'Passwords do not match';
-                }
-            }
+    //         if(empty($data['confirm_password'])){
+    //             $data['confirm_password_err'] = 'Please confirm password';
+    //         }
+    //         else {
+    //             if($data['password'] != $data['confirm_password']){
+    //                 $data['confirm_password_err'] = 'Passwords do not match';
+    //             }
+    //         }
 
-            if (empty($data['name_err']) && empty($data['email_err']) &&
-            empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['nic_err'])){
-                // validated
+    //         if (empty($data['name_err']) && empty($data['email_err']) &&
+    //         empty($data['password_err']) && empty($data['confirm_password_err']) && empty($data['nic_err'])){
+    //             // validated
 
-                // Hash password
-                $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+    //             // Hash password
+    //             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
-                // Register User
-                if (PHIModel::register($data)){
+    //             // Register User
+    //             if (PHIModel::register($data)){
                     
-                    header('location: '.URLROOT.'/PHI/login'); 
-                }
-                else {
-                    die('something went wrong');
-                }
+    //                 header('location: '.URLROOT.'/PHI/login'); 
+    //             }
+    //             else {
+    //                 die('something went wrong');
+    //             }
 
-                die('SUCCESS');
+    //             die('SUCCESS');
                 
                 
-            }
-            else {
-                // load view with errors
-                View::render('PHI/register.php', ['data'=> $data]);
-            }
+    //         }
+    //         else {
+    //             // load view with errors
+    //             View::render('PHI/register.php', ['data'=> $data]);
+    //         }
 
-        }
+    //     }
 
-        else {
-            $data = [
-                'name' => '',
-                'email' => '',
-                'password' => '',
-                'confirm_password' => '',
-                'moh_area' => '',
-                'PHI_station' => '',
-                'PHI_id' => '',
-                'NIC' => '',
-                'contact_number' => '',
-                'name_err' => '',
-                'email_err' => '',
-                'password_err' => '',
-                'nic_err' => '',
-                'confirm_password_err' => ''
+    //     else {
+    //         $data = [
+    //             'name' => '',
+    //             'email' => '',
+    //             'password' => '',
+    //             'confirm_password' => '',
+    //             'moh_area' => '',
+    //             'PHI_station' => '',
+    //             'PHI_id' => '',
+    //             'NIC' => '',
+    //             'contact_number' => '',
+    //             'name_err' => '',
+    //             'email_err' => '',
+    //             'password_err' => '',
+    //             'nic_err' => '',
+    //             'confirm_password_err' => ''
                  
-            ];
+    //         ];
 
-            // load view
-            View::render('PHI/register.php', ['data'=> $data]);
+    //         // load view
+    //         View::render('PHI/register.php', ['data'=> $data]);
 
 
-        }
-    }
+    //     }
+    // }
 
     public function loginAction()
     {
