@@ -185,11 +185,9 @@ class PHI extends \Core\Controller{
         
         
         if ($this->isLoggedIn()){
-            $count = $this->getAssignedPatientCount(); 
-            $updateCount = $this->getUpdatesCount();
-            $form_not_filled_count = $this->getFormNotFilledCount();
             
-            View::render('PHI/index.php',['count'=>$count, 'update_count' => $updateCount, 'form_not_filled'=> $form_not_filled_count] ); 
+            $updateCount = $this->getUpdatesCount();
+            View::render('PHI/index.php',['count'=> $_SESSION['patient_count'], 'update_count' => $updateCount, 'form_not_filled'=> $_SESSION['form_not_filled_count'] ]); 
         }
         else {
             echo 'not logged in';
@@ -272,10 +270,16 @@ class PHI extends \Core\Controller{
 
 
     private function createSession($curr_phi){
+         
         $_SESSION['phi_id'] =   $curr_phi->id;
         $_SESSION['phi_email'] = $curr_phi->email;
         $_SESSION['phi_name'] = $curr_phi->name;
         $_SESSION['phi_area'] = $curr_phi->PHI_station;
+
+        $form_not_filled_count = $this->getFormNotFilledCount();
+        $count = $this->getAssignedPatientCount();
+        $_SESSION['patient_count'] = $count ;
+        $_SESSION['form_not_filled_count'] = $form_not_filled_count ;
     }
 
     public function isLoggedIn(){

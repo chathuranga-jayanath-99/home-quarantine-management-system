@@ -32,7 +32,7 @@ include_once 'navbar.php';
                     <div class="col">
                         <div class="card border-secondary mb-3 h-100">
                         <div class="card-body">
-                        <h5 class="card-title mb-3 mt-3">Assigned Patients Details</h5>
+                        <h5 class="card-title mb-3 mt-3 text-muted">Assigned Patients Details</h5>
                         <table class="table table-borderless table-hover">
                                                 <tr>
                                                     <th scope="col">Total Assigned Patients</th>
@@ -58,14 +58,36 @@ include_once 'navbar.php';
                     <div class="col">
                         <div class="card border-secondary mb-3 h-100">
                         <div class="card-body">
+                        <h5 class="card-title mb-3 mt-3 text-muted">Form-not-filled Patients on <?php echo date('Y-m-d',strtotime("-1 days")) ; ?> </h5>
+                        <table class="table table-borderless table-hover">
+                                                <tr>
+                                                    <th scope="col">Total Count</th>
+                                                    <td><?php echo $form_not_filled['child']+$form_not_filled['adult']; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col">Child Patients</th>
+                                                    <td><?php echo $form_not_filled['child']; ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col">Adult Patients</th>
+                                                    <td><?php echo $form_not_filled['adult']; ?></td>
+                                                </tr>
+                        </table> 
+                                            <div class="text-end">
+                                                <a href="<?php echo URLROOT; ?>/PHI/form-not-filled" style="width:85px;" id="hide-btn" class="btn btn-danger mx-2">View</a>
+                                            </div>
 
-                        <h5 class="mt-3"> You have <?php echo $update_count;?> patient profile updates to approve.</h5>
-                        <h5 class="mt-3"> You have <?php echo $form_not_filled['child'];?> form-not-filled child</h5>
-                        <h5 class="mt-3"> You have <?php echo $form_not_filled['adult'];?> form-not-filled adult</h5>
-
-                        <!-- <h5 class="card-title  mb-3 mt-3">Assigned Patients Details</h5> -->
-                        
-                                        
+                                            <?php 
+                                                if( $update_count > 0){?>
+                                                      <h5 class="text-muted"> You have <?php echo $update_count;?> profile updates for confirmation. </h5>
+                                                      <div class="text-end">
+                                                      <a href="<?php echo URLROOT; ?>/PHI/getUpdates" style="width:85px;" id="hide-btn" class="btn btn-primary mx-2">View</a>
+                                                      </div>
+                                            <?php
+                                                }
+                                            ?>
+                                            
+                                            
                         </div>
                         </div>
                     </div>
