@@ -17,16 +17,16 @@
               
               <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Doctor Login</p>
 
-                <form  class="mx-1 mx-md-4" action="<?php echo URLROOT?>/doctor/login" method='POST'>
+                <form id="log-form"  class="mx-1 mx-md-4" action="<?php echo URLROOT?>/doctor/login" method='POST'>
 
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fa fa-envelope fa-lg me-3 fa-fw"></i>               
                         
                         <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="email">Email </label>
-                            <input class="form-control" required type="text" name="email" value="<?php echo $data['email']?>" autofocus>
+                            <input class="form-control" required type="text" name="email" id="email" value="<?php echo $data['email']?>" autofocus>
                             
-                            <span style="color: red"><?php echo $data['email_err']?></span>
+                            <span id="email_err" style="color: red"><?php echo $data['email_err']?></span>
                         </div>
                     </div>
 
@@ -34,8 +34,8 @@
                       <i class="fa fa-key fa-lg me-3 fa-fw"></i>                
                         <div class="form-outline flex-fill mb-0">
                             <label class="form-label" for="password">Password </label>
-                            <input class="form-control" required type="password" name="password" value="<?php echo $data['password']?>">
-                            <span style="color: red"><?php echo $data['password_err']?></span>
+                            <input class="form-control" required type="password" name="password" id="password" value="<?php echo $data['password']?>">
+                            <span id="password_err" style="color: red"><?php echo $data['password_err']?></span>
                         </div>
                     </div>
 
@@ -64,5 +64,46 @@
 
 </section>
 
+<script src="../static/js/validation-script.js"></script>
+<script>
+  document.getElementById('log-form').addEventListener('submit', submitRoutine);
+
+  function submitRoutine(e){
+    var password_leng_limit = 4;
+
+    var email = document.getElementById("email");
+    var password = document.getElementById("password");
+
+    var email_err = document.getElementById('email_err');
+    var password_err = document.getElementById('password_err');
+
+    var err_count = 0;
+
+    if (!validator.validateEmail(email.value)){
+        email_err.innerHTML = "Enter a valid email";
+        err_count++;
+    }
+    else{
+        email_err.innerHTML = "";
+    }
+
+    // if (!validator.validatePassword(password.value, password_leng_limit)){
+    //     email_err.innerHTML = "Password must be at least ";
+    //     err_count++;
+    // }
+    // else{
+    //     email_err.innerHTML = "";
+    // }
+
+    if (err_count){
+        e.preventDefault();
+    }
+    else{
+
+    }
+
+  }
+
+</script>
 </body>
 </html>

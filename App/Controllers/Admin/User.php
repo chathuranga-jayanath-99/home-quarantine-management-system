@@ -245,6 +245,23 @@ class User extends \Core\Controller
                 }
             }
 
+            if(empty($data['moh_area'])){
+                $data['moh_area_err'] = 'Please select a MOH area';
+            }
+            if(empty($data['contact_no'])){
+                $data['contact_no_err'] = 'Please enter a contact number';
+            }
+
+            if(empty($data['NIC'])){
+                $data['NIC_err'] = 'Please enter a NIC';
+            }
+            else if (!$this->isValidNIC($data['NIC'])){
+                $data['NIC_err'] = 'Please enter a valid NIC';
+            }
+
+            if(empty($data['slmc_reg_no'])){
+                $data['slmc_reg_no_err'] = 'Please enter a SLMC reg No';
+            }
             if(empty($data['gender'])){
                 $data['gender_err'] = 'Please select a gender';
             }
@@ -254,8 +271,10 @@ class User extends \Core\Controller
             }
 
             if (empty($data['name_err']) && empty($data['email_err']) &&
-            empty($data['password_err']) && empty($data['confirm_password_err'] &&
-            empty($data['gender_err']) && empty($data['birthday_err']))){
+            empty($data['password_err']) && empty($data['confirm_password_err']) &&
+            empty($data['moh_area_err']) && empty($data['contact_no_err']) &&
+            empty($data['NIC_err']) && empty($data['slmc_reg_no_err']) &&
+            empty($data['gender_err']) && empty($data['birthday_err'])){
                 // validated
                 
                 // Hash password
@@ -469,6 +488,22 @@ class User extends \Core\Controller
             }
         } else {
             header('location: '.URLROOT.'/admin/user/manage-phi');
+            die();
+        }
+    }
+
+    public function viewAdminAction() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $adminID = $_POST['admin_id'];
+            $admin = AdminUserModel::getAdmin($adminID);
+            if ($adminID) {
+                View::render('Admins/viewAdmin.php', ['admin' => $admin]);
+            } else {
+                echo 'Not Found';
+                die();
+            }
+        } else {
+            header('location: '.URLROOT.'/admin/user/manage-admin');
             die();
         }
     }
