@@ -375,7 +375,7 @@ class User extends \Core\Controller
             }
             else {
                 // load view with errors
-                View::render('PHI/register.php', ['data'=> $data]);
+                View::render('Admins/register-phi.php', ['data'=> $data]);
             }
 
         }
@@ -399,7 +399,7 @@ class User extends \Core\Controller
             ];
 
             // load view
-            View::render('PHI/register.php', ['data'=> $data]);
+            View::render('Admins/register-phi.php', ['data'=> $data]);
         }
     }
 
