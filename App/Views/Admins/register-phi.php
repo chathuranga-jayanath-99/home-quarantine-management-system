@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -117,7 +117,7 @@
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                      <button type="submit" class="btn btn-primary btn-lg" value="register">Register</button> 
                      <!-- <input type="submit" value="Register">  -->
-                  <!-- </div>
+                  </div>
 
                 </form>
 
@@ -140,8 +140,8 @@
   </div>
 </section>
 <script src="../../static/js/validation-script.js"></script>
-    <script> -->
-        <!-- document.getElementById("reg-form").addEventListener('submit', submitRoutine);
+    <script>
+        document.getElementById("reg-form").addEventListener('submit', submitRoutine);
 
         function checkName() {
             var name = document.getElementById("name");
@@ -260,7 +260,7 @@
                     e.preventDefault();
                 }
             }
-        } -->
+        }
 
-    <!-- </script>
-</body> -->
+    </script>
+</body>

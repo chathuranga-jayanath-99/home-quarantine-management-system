@@ -10,7 +10,7 @@
         <div class="col-lg-12 col-xl-10">
             <div class="card text-black" style="border-radius: 25px;">
                 <div class="card-body p-md-5">
-                    <?php flash('register_phi');?>
+                    <?php flash('register_PHI');?>
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-20 col-xl-20 order-2 order-lg-1">
                             <h1 class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Manage PHIs</h1>

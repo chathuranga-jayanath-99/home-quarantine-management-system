@@ -1061,7 +1061,11 @@ class ChildPatient extends Patient {
 
                     if (empty($data['name_err']) && empty($data['email_err']) &&
                     empty($data['address_err']) && empty($data['contact_no_err'])){
+                        if (strcmp($data['email'],$this->email)===0){
+                            $data['email'] = '';
+                        }
                         $id = ChildPatientModel::recordEditProfile($data);
+                        $data['email'] = htmlspecialchars(trim($_POST['email']));
                         View::render('ChildPatients/editProfileSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
 
                     }
