@@ -5,7 +5,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
   <div class="container-fluid justify-content-left">
-    <a class="navbar-brand" href="<?php echo URLROOT; ?>/adult-patient">
+    <a class="navbar-brand" href="<?php echo URLROOT; ?>/admin/user">
       <img src="https://buckinghambowlsclub.bowls.com.au/wp-content/uploads/sites/484/2020/05/administrator-logo-png-6.png" alt="" height="24" class="d-inline-block align-text-top">
       <?php echo $_SESSION['admin_name']; ?>
     </a>
