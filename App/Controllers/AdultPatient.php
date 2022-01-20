@@ -1090,7 +1090,7 @@ class Adultpatient extends Patient{
                     if (empty($data['name_err']) && empty($data['email_err']) &&
                     empty($data['address_err']) && empty($data['contact_no_err'])){
                         if (strcmp($data['name'],$this->name)===0){
-                            $data['email'] = '';
+                            $data['name'] = '';
                         }
                         if (strcmp($data['email'],$this->email)===0){
                             $data['email'] = '';

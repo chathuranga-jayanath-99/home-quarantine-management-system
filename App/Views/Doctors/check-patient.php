@@ -49,11 +49,20 @@
                                             echo 'Guardian NIC';
                                         }                
                                     ?></th>
-                                    <td><?php echo $patient['NIC']?></td>
+                                    <td>
+                                        <?php 
+                                            if ($patient['type'] === 'adult'){
+                                                echo $patient['NIC'];
+                                            }
+                                            else if ($patient['type'] === 'child'){
+                                                echo $patient['guardian_id'];
+                                            }  
+                                        ?>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>State</th>
-                                    <td><?php echo $patient['state']?></td>
+                                    <td><?php echo ucfirst($patient['state']).' Person'; ?></td>
                                 </tr>
                                 <tr>
                                     <th>Contact No</th>
@@ -61,7 +70,7 @@
                                 </tr>
                                 <tr>
                                     <th>Gender</th>
-                                    <td><?php echo $patient['gender']?></td>
+                                    <td><?php echo ucfirst($patient['gender'])?></td>
                                 </tr>
                                 <tr>
                                     <th>End Quarantine Date</th>

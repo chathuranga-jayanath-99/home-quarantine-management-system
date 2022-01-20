@@ -7,7 +7,7 @@
       } else if ($_SESSION['doctor_gender'] === 'Female') {
         echo "https://previews.123rf.com/images/grgroup/grgroup1705/grgroup170503271/78206085-colorful-portrait-half-body-of-female-doctor-vector-illustration.jpg";
       }
-      ?>" alt="" height="50" class="d-inline-block align-text-top">
+      ?>" alt="" height="35" class="d-inline-block align-text-top">
       <?php echo 'Dr. '.$_SESSION['doctor_name']; ?>
     </a>
 
