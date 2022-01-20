@@ -183,4 +183,19 @@ class AdminUserModel extends \Core\Model{
         }
     }
 
+    public static function getAdmin($adminID) {
+        $db = static::getDB();
+        $sql = 'SELECT * FROM tbl_admin WHERE id=:id';
+        $stmt = $db->prepare($sql);
+        $stmt->execute(['id' => $adminID]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if(!empty($row)){
+            return $row;
+        }
+        else {
+            return false;
+        }
+    }
+
 }
