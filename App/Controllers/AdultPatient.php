@@ -1089,11 +1089,23 @@ class Adultpatient extends Patient{
 
                     if (empty($data['name_err']) && empty($data['email_err']) &&
                     empty($data['address_err']) && empty($data['contact_no_err'])){
+                        if (strcmp($data['name'],$this->name)===0){
+                            $data['email'] = '';
+                        }
                         if (strcmp($data['email'],$this->email)===0){
                             $data['email'] = '';
                         }
+                        if (strcmp($data['contact_no'],$this->contact_no)===0){
+                            $data['contact_no'] = '';
+                        }
+                        if (strcmp($data['address'],$this->address)===0){
+                            $data['address'] = '';
+                        }
                         $id = AdultPatientModel::recordEditProfile($data);
+                        $data['name'] = htmlspecialchars(trim($_POST['name']));
                         $data['email'] = htmlspecialchars(trim($_POST['email']));
+                        $data['contact_no'] = htmlspecialchars(trim($_POST['contact_no']));
+                        $data['address'] = htmlspecialchars(trim($_POST['address']));
                         View::render('AdultPatients/editProfileSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
 
                     }
