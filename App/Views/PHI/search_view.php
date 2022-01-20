@@ -48,34 +48,9 @@ include_once 'navbar.php';
                 
 
               </div>
-              <!-- <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-
-              <h2 class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">MARK POSITIVE</h2>
-                <form action="<?php echo URLROOT?>/PHI/markpositive" method='POST'>
-                  
-                  <div class=" h6 text-center form-check col-md-10">
-                      <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio"  name="Patient_type"  value="child" required>Child Account</label>
-                  </div>
-                  <div class=" h6 text-center  form-check col-md-10">
-                      <label class="form-check-label" for="flexRadioDefault1"><input class="form-check-input" type="radio" name="Patient_type" value="adult">Adult Account</label>
-                  </div>
-                 
-
-                  <div class="text-center mt-4 col-md-10" >
-                      <button type="Submit" class="btn btn-primary ">Submit</button>
-                      
-                  </div>
-                    
-
-                </form>
-
-
-             
-              </div>   -->
-              <!-- <div class="text-center h3 fw-bold mb-3 mx-1 mx-md-4 mt-5">
-              <a href="<?php echo URLROOT;?>/PHI/logout">
-              <button type="Submit" class="btn btn-danger">Log Out</button>
-              </div> -->
+              <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                    <img src="https://image.freepik.com/free-vector/magnifying-glass-with-file-searching_52683-22967.jpg" width=400 height=400 class="img-fluid" alt="Sample image"> 
+              </div>
               </div>
             </div>
           </div>

@@ -25,9 +25,9 @@ include_once 'navbar.php';
 </h1>
 
 
-    <br>
+    <!-- <br>
     <a href="<?php echo URLROOT.'/PHI/view-medical-history?id='.$medical_history_id?>" class="btn btn-primary">View Medical History</a>
-    <br>
+    <br> -->
     <br>
     <table class="table">
         <tr>
