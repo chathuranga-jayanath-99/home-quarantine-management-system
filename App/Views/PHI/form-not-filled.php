@@ -29,6 +29,7 @@ include_once 'navbar.php';
                         <th scope="col">Name</th>
                         <th scope="col">Age</th>
                         <th scope="col">Contact No</th>
+                        <th scope="col">State</th>
                         <th scope="col">Type</th>
                         </tr>
                     </thead>

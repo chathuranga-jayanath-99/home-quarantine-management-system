@@ -22,7 +22,7 @@
           <div class="card-body p-md-5">
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-              <a href="<?php echo URLROOT; ?>">Main Page</a>
+               <a href="<?php echo URLROOT; ?>"><button class="btn btn-warning">Main Page</button></a>
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">PHI LOGIN</p>
 
                 <form class="mx-1 mx-md-4" action="<?php echo URLROOT?>/PHI/login" method='POST'>
@@ -53,9 +53,6 @@
                      <!-- <input type="submit" value="LOGIN">  -->
                   </div>
 
-                  <div class="text-center">
-                        <a href="<?php echo URLROOT; ?>/PHI/register">Want to create an account?</a>
-                    </div>
 
                 </form>
 
