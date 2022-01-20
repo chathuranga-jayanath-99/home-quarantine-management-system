@@ -465,6 +465,7 @@ class PHI extends \Core\Controller{
         $mediator = new ChatMediatorImpl;
         
         $phi = new PHIModel($mediator, $_SESSION['phi_name']);
+        $mediator->addUser($phi);
 
         foreach ($myPatients['adult'] as $adultPatient){
             $patient = new AdultPatientModel($adultPatient->id, $mediator, $adultPatient->name);
