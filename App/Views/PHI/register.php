@@ -11,9 +11,22 @@
 
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-light sticky-top bg-light" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+  <div class="container-fluid justify-content-left">
+    <a class="navbar-brand" href="<?php echo URLROOT; ?>/adult-patient">
+      <img src="https://buckinghambowlsclub.bowls.com.au/wp-content/uploads/sites/484/2020/05/administrator-logo-png-6.png" alt="" height="24" class="d-inline-block align-text-top">
+      <?php echo $_SESSION['admin_name']; ?>
+    </a>
+    <a href="<?php echo URLROOT; ?>/admin/user/manage-PHI" class="navbar-brand ms-5"><i class="fa fa-arrow-circle-left fa-lg me-3 fa-fw"></i></a>
+    <ol class="breadcrumb navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="breadcrumb-item">Home</li>
+      <li class="breadcrumb-item active" aria-current="page">Manage PHIs</li>
+      <li class="breadcrumb-item active" aria-current="page">Add PHI</li>
+    </ol>
+  </div>
+</nav>
 
-
-<section class="vh-auto" style="background-color: #eee;">
+<section class="vh-auto py-5" style="background-color: #eee; min-height:100vh;">
   <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-lg-12 col-xl-10">
@@ -22,7 +35,7 @@
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Registration Info</p>
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">PHI Registration</p>
 
                 <form class="mx-1 mx-md-4" action="<?php echo URLROOT?>/admin/user/register-PHI" method='POST'>
 
@@ -136,6 +149,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="text-center mt-5 text-muted pt-auto">
+            Copyright &copy; Code Devours
         </div>
       </div>
     </div>

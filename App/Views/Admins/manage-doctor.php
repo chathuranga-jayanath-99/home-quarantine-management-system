@@ -21,7 +21,7 @@
                                     </div>
                                 </div>
                                 <div class="m-3 mt-5 justify-content-center">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover" style="width:100%">
                                         <thead><tr>
                                             <th scope="col">#</td>
                                             <th scope="col">Full Name</td>
@@ -39,7 +39,7 @@
                                                     <td><?php echo $doctor->name; ?></td>
                                                     <td><?php echo $doctor->email; ?></td>
                                                     <td>
-                                                        <a class="m-2" href="#">View</a>
+                                                        <a class="m-2" onclick="viewDoctor(<?php echo $doctor->id;?>)" href="#">View</a>
                                                     </td>
                                                 </tr>
 
@@ -70,6 +70,15 @@
         </div>
     </div>
     </section>
+    <form action="<?php echo URLROOT.'/admin/user/view-doctor'?>" method="post" id="doctor-view">
+        <input type="hidden" name="doctor_id" id="doctor_id">
+    </form>
+    <script>
+        function viewDoctor(doctorID){
+            document.getElementById('doctor_id').value = doctorID;
+            document.getElementById('doctor-view').submit();
+        }
+    </script>
 
 
 <!--
