@@ -142,14 +142,14 @@ class PHIModel extends User{
     public static function getPatientsOfPHI($phiId){
         $db = static::getDB();
 
-        $sql1 = 'SELECT ap.id, ap.name, ap.age, ap.contact_no
-        FROM tbl_adult_patient ap WHERE ap.phi_id=:phiId';
+        $sql1 = 'SELECT ap.id, ap.name, ap.age, ap.contact_no,ap.state
+        FROM tbl_adult_patient ap WHERE ap.phi_id=:phiId AND (ap.state="contact" OR ap.state="positive") ';
         $stmt1 = $db->prepare($sql1);
         $stmt1->execute(['phiId'=>$phiId]);
         $res1 = $stmt1->fetchAll(PDO::FETCH_OBJ);
 
-        $sql2 = 'SELECT cp.id, cp.name, cp.age, cp.contact_no
-        FROM tbl_child_patient cp WHERE cp.phi_id=:phiId';
+        $sql2 = 'SELECT cp.id, cp.name, cp.age, cp.contact_no,cp.state
+        FROM tbl_child_patient cp WHERE cp.phi_id=:phiId AND (cp.state="contact" OR cp.state="positive")';
         $stmt2 = $db->prepare($sql2);
         $stmt2->execute(['phiId'=>$phiId]);
         $res2 = $stmt2->fetchAll(PDO::FETCH_OBJ);
