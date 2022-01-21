@@ -38,7 +38,7 @@ include_once 'navbar.php';
                          <tr>
                                 <?php
                                     if (sizeof($records['adult']) > 0 || sizeof($records['child']) > 0){
-                                        $sn = 0;
+                                        $sn = 1;
                                         foreach($records['adult'] as $record):
                                             ?>
                                             <tr>
