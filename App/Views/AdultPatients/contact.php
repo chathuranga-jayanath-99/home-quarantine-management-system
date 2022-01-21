@@ -17,9 +17,9 @@
     $subPage = '';
     include_once 'navbar.php'; 
 ?>
-    <section>
+    <section style="background-color: #eee; min-height:100vh;">
     <div class="text-center">
-        <iframe class="responsive-iframe" src="<?php echo URLROOT; ?>/home/contact?logged=yes" style="width: 80vw; height: 100vh;"></iframe>
+        <iframe class="responsive-iframe" src="<?php echo URLROOT; ?>/home/contact?logged=yes" style="width: 90vw; height: 100vh;"></iframe>
     </div>
     </section>
 </body>

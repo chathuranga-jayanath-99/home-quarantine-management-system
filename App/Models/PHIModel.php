@@ -88,7 +88,7 @@ class PHIModel extends User{
         if(!empty($row)){
             
             $hashed_password = $row->password;
-            echo $password ;
+            
             if(password_verify($password, $hashed_password)){
                 
                 return $row;
