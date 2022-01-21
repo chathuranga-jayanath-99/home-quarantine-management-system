@@ -154,8 +154,8 @@ class Doctor extends MedicalOfficer{
     public function checkRecordAction(){
         if ($this->isLoggedIn()){
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                $feedback = $_POST['feedback'];
-                $recordId = $_POST['id'];
+                $feedback = htmlspecialchars($_POST['feedback']);
+                $recordId = htmlspecialchars($_POST['id']);
                 
                 $res = DoctorModel::giveFeedback($recordId, $feedback);
                 if ($res){
@@ -193,15 +193,15 @@ class Doctor extends MedicalOfficer{
             
             if($_SERVER['REQUEST_METHOD'] == 'POST'){ 
                 $data = [
-                    'doctor_id' => $_SESSION['doctor_id'],
-                    'name' => trim($_POST['name']),
-                    'email' => trim($_POST['email']),
-                    'moh_area' => trim($_POST['moh_area']),
-                    'contact_no' => trim($_POST['contact_no']),
-                    'NIC'=> trim($_POST['NIC']),
-                    'slmc_reg_no' => trim($_POST['slmc_reg_no']),
-                    'gender'=> trim($_POST['gender']),
-                    'birthday'=> trim($_POST['birthday']),
+                    'doctor_id' => htmlspecialchars($_SESSION['doctor_id']),
+                    'name' => htmlspecialchars(trim($_POST['name'])),
+                    'email' => htmlspecialchars(trim($_POST['email'])),
+                    'moh_area' => htmlspecialchars(trim($_POST['moh_area'])),
+                    'contact_no' => htmlspecialchars(trim($_POST['contact_no'])),
+                    'NIC'=> htmlspecialchars(trim($_POST['NIC'])),
+                    'slmc_reg_no' => htmlspecialchars(trim($_POST['slmc_reg_no'])),
+                    'gender'=> htmlspecialchars(trim($_POST['gender'])),
+                    'birthday'=> htmlspecialchars(trim($_POST['birthday'])),
                     // 'password' => trim($_POST['password']),
                     'name_err' => '',
                     'email_err' => '',
