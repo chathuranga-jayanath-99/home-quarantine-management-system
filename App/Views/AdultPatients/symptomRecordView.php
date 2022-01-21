@@ -77,11 +77,16 @@
                         <i class="fa fa-thermometer-half fa-lg me-3 fa-fw"></i>
                     </div>
                     <div class="col-auto">
-                        <?php
-                        $temp_f = $symptoms->get_temperature() * 9 / 5 + 32;
-                        $temp_f = round($temp_f, 2);
-                        echo $symptoms->get_temperature()."&#176C (".$temp_f."&#176F)";
-                        ?>
+                    <?php
+                        $temperature = $symptoms->get_temperature();
+                        if ($temperature != 0) {
+                            $temp_f = $temperature * 9 / 5 + 32;
+                            $temp_f = round($temp_f, 2);
+                            echo $temperature."&#176C (".$temp_f."&#176F)";
+                        } else {
+                            echo 'Not Recorded';
+                        }
+                    ?>
                     </div>
                 </div>
             </div>

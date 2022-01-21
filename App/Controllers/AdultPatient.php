@@ -675,103 +675,105 @@ class Adultpatient extends Patient{
                             $temperature = ($temperature - 32) * 5 / 9;
                             $temperature = round($temperature, 2);
                         }
-                        $fever          = 0;
-                        $cough          = 0;
-                        $sore_throat    = 0;
-                        $short_breath   = 0;
-                        $runny_nose     = 0;
-                        $chills         = 0;
-                        $muscle_ache    = 0;
-                        $headache       = 0;
-                        $fatigue        = 0;
-                        $abdominal_pain = 0;
-                        $vomiting       = 0;
-                        $diarrhea       = 0;
-                        $other          = htmlspecialchars(trim($_POST['other']));
-                        $checked_count  = 0;
-                        $level = 'normal';
-                        if ($_POST['fever'] === 'yes') {
-                            $fever = 1;
-                            $checked_count += 1;
-                        }
-                        if ($_POST['cough'] === 'yes') {
-                            $cough = 1;
-                            $checked_count += 1;
-                        }
-                        if ($_POST['sore_throat'] === 'yes') {
-                            $sore_throat = 1;
-                            $checked_count += 1;
-                        }
-                        if ($_POST['short_breath'] === 'yes') {
-                            $short_breath = 1;
-                            $checked_count += 1;
-                        }
-                        if ($_POST['runny_nose'] === 'yes') {
-                            $runny_nose = 1;
-                            $checked_count += 1;
-                        }
-                        if ($_POST['chills'] === 'yes') {
-                            $chills = 1;
-                            $checked_count += 1;
-                        }
-                        if ($_POST['muscle_ache'] === 'yes') {
-                            $muscle_ache = 1;
-                            $checked_count += 1;
-                        }
-                        if ($_POST['headache'] === 'yes') {
-                            $headache = 1;
-                            $checked_count += 1;
-                        }
-                        if ($_POST['fatigue'] === 'yes') {
-                            $fatigue = 1;
-                            $checked_count += 1;
-                        }
-                        if ($_POST['abdominal_pain'] === 'yes') {
-                            $abdominal_pain = 1;
-                            $checked_count += 1;
-                        }
-                        if ($_POST['vomiting'] === 'yes') {
-                            $vomiting = 1;
-                            $checked_count += 1;
-                        }
-                        if ($_POST['diarrhea'] === 'yes') {
-                            $diarrhea = 1;
-                            $checked_count += 1;
-                        }
-                        if ($checked_count > 7) {
-                            $level = 'critical';
-                        } else if ($checked_count > 4) {
-                            $level = 'serious';
-                        }
-                        $symptoms = [
-                            "patient_id"     => $this->id,
-                            "doctor_id"      => $this->doctor_id,
-                            "phi_id"         => $this->phi_id,
-                            "type"           => "adult",
-                            "feedback"       => "",
-                            "checked"        => 0,
-                            "temperature"    => $temperature,
-                            "fever"          => $fever,
-                            "cough"          => $cough,
-                            "sore_throat"    => $sore_throat,
-                            "short_breath"   => $short_breath,
-                            "runny_nose"     => $runny_nose,
-                            "chills"         => $chills,
-                            "muscle_ache"    => $muscle_ache,
-                            "headache"       => $headache,
-                            "fatigue"        => $fatigue,
-                            "abdominal_pain" => $abdominal_pain,
-                            "vomiting"       => $vomiting,
-                            "diarrhea"       => $diarrhea,
-                            "other"          => $other,
-                            "level"          => $level,
-                            "checked_count"  => $checked_count
-                        ];
-                        if (AdultPatientModel::recordSymptoms($symptoms)) {
-                            $record->initialize($symptoms);
-                            $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
-                            View::render('AdultPatients/recordSuccess.php', ['symptoms' => $record, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
-                        }
+                    } else {
+                        $temperature = 0;
+                    }
+                    $fever          = 0;
+                    $cough          = 0;
+                    $sore_throat    = 0;
+                    $short_breath   = 0;
+                    $runny_nose     = 0;
+                    $chills         = 0;
+                    $muscle_ache    = 0;
+                    $headache       = 0;
+                    $fatigue        = 0;
+                    $abdominal_pain = 0;
+                    $vomiting       = 0;
+                    $diarrhea       = 0;
+                    $other          = htmlspecialchars(trim($_POST['other']));
+                    $checked_count  = 0;
+                    $level = 'normal';
+                    if ($_POST['fever'] === 'yes') {
+                        $fever = 1;
+                        $checked_count += 1;
+                    }
+                    if ($_POST['cough'] === 'yes') {
+                        $cough = 1;
+                        $checked_count += 1;
+                    }
+                    if ($_POST['sore_throat'] === 'yes') {
+                        $sore_throat = 1;
+                        $checked_count += 1;
+                    }
+                    if ($_POST['short_breath'] === 'yes') {
+                        $short_breath = 1;
+                        $checked_count += 1;
+                    }
+                    if ($_POST['runny_nose'] === 'yes') {
+                        $runny_nose = 1;
+                        $checked_count += 1;
+                    }
+                    if ($_POST['chills'] === 'yes') {
+                        $chills = 1;
+                        $checked_count += 1;
+                    }
+                    if ($_POST['muscle_ache'] === 'yes') {
+                        $muscle_ache = 1;
+                        $checked_count += 1;
+                    }
+                    if ($_POST['headache'] === 'yes') {
+                        $headache = 1;
+                        $checked_count += 1;
+                    }
+                    if ($_POST['fatigue'] === 'yes') {
+                        $fatigue = 1;
+                        $checked_count += 1;
+                    }
+                    if ($_POST['abdominal_pain'] === 'yes') {
+                        $abdominal_pain = 1;
+                        $checked_count += 1;
+                    }
+                    if ($_POST['vomiting'] === 'yes') {
+                        $vomiting = 1;
+                        $checked_count += 1;
+                    }
+                    if ($_POST['diarrhea'] === 'yes') {
+                        $diarrhea = 1;
+                        $checked_count += 1;
+                    }
+                    if ($checked_count > 7) {
+                        $level = 'critical';
+                    } else if ($checked_count > 4) {
+                        $level = 'serious';
+                    }
+                    $symptoms = [
+                        "patient_id"     => $this->id,
+                        "doctor_id"      => $this->doctor_id,
+                        "phi_id"         => $this->phi_id,
+                        "type"           => "adult",
+                        "feedback"       => "",
+                        "checked"        => 0,
+                        "temperature"    => $temperature,
+                        "fever"          => $fever,
+                        "cough"          => $cough,
+                        "sore_throat"    => $sore_throat,
+                        "short_breath"   => $short_breath,
+                        "runny_nose"     => $runny_nose,
+                        "chills"         => $chills,
+                        "muscle_ache"    => $muscle_ache,
+                        "headache"       => $headache,
+                        "fatigue"        => $fatigue,
+                        "abdominal_pain" => $abdominal_pain,
+                        "vomiting"       => $vomiting,
+                        "diarrhea"       => $diarrhea,
+                        "other"          => $other,
+                        "level"          => $level,
+                        "checked_count"  => $checked_count
+                    ];
+                    if (AdultPatientModel::recordSymptoms($symptoms)) {
+                        $record->initialize($symptoms);
+                        $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
+                        View::render('AdultPatients/recordSuccess.php', ['symptoms' => $record, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                     }
                 } else {
                     $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
