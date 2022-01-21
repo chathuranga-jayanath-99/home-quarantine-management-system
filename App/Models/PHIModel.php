@@ -126,13 +126,13 @@ class PHIModel extends User{
         
         $res = ['adult' => $row1, 'child' => $row2];
         
-        if(!empty($res['adult'] || !empty($res['child']))){
-            return $res;
-        }
-        else {
-            return false;
-        }
-
+        // if(!empty($res['adult'] || !empty($res['child']))){
+        //     return $res;
+        // }
+        // else {
+        //     return false;
+        // }
+        return $res;
     }
     
     public static function getRecord($recordId){
