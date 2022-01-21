@@ -200,6 +200,8 @@ class Doctor extends MedicalOfficer{
                     'contact_no' => trim($_POST['contact_no']),
                     'NIC'=> trim($_POST['NIC']),
                     'slmc_reg_no' => trim($_POST['slmc_reg_no']),
+                    'gender'=> trim($_POST['gender']),
+                    'birthday'=> trim($_POST['birthday']),
                     // 'password' => trim($_POST['password']),
                     'name_err' => '',
                     'email_err' => '',
