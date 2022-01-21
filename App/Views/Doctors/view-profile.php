@@ -20,10 +20,10 @@
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                             <?php
                                 if (strcmp($doctor['gender'], 'Male') == 0){
-                                    echo '<img class="rounded-circle mt-5" width="100px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">';
+                                    echo '<img class="rounded-circle mt-5" width="100px" src="https://i.pinimg.com/originals/e3/7e/14/e37e14e207070d62cfc4d0b050f3ad91.png">';
                                 }
                                 else if (strcmp($doctor['gender'], 'Female') == 0){
-                                    echo '<img class="rounded-circle mt-5" width="100px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqTjHOCWWdu_PhEoiAWJeEMZ2lecPS8WksQw&usqp=CAU">';
+                                    echo '<img class="rounded-circle mt-5" width="100px" src="https://previews.123rf.com/images/grgroup/grgroup1705/grgroup170503271/78206085-colorful-portrait-half-body-of-female-doctor-vector-illustration.jpg">';
                                 }
                             ?>
                             <span class="font-weight-bold"><?php echo $doctor['name']; ?></span>
