@@ -841,7 +841,7 @@ class ChildPatient extends Patient {
                             else {
                                 die('something went wrong');
                             }
-                            die('SUCCESS');
+                            die();
                         } else {
                             $nav = [
                                 'page'       => "Password Reset",
