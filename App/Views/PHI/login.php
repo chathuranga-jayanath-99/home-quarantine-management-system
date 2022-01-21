@@ -15,7 +15,7 @@
 
 
 
-<section class="vh-100" style="background-color: #eee;">
+<section class="vh-auto pt-5 pb-5" style="background-color: #eee; min-height:100vh;">
   <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-lg-12 col-xl-10">
@@ -23,7 +23,7 @@
           <div class="card-body p-md-5">
             <div class="row justify-content-center">
               <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-               <a href="<?php echo URLROOT; ?>"><button class="btn btn-warning">Main Page</button></a>
+               
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">PHI LOGIN</p>
 
                 <form class="mx-1 mx-md-4" action="<?php echo URLROOT?>/PHI/login" method='POST'>
@@ -59,9 +59,16 @@
 
               </div>
               <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-
-                  <img src= "https://cdn.dribbble.com/users/1475931/screenshots/10848109/media/cceef0db52d353328115239e84f2b7b3.png" width=700 height=700 class="img-fluid" alt="Sample image"> 
-
+                <div>
+                  <div> 
+                    <img src= "https://cdn.dribbble.com/users/1475931/screenshots/10848109/media/cceef0db52d353328115239e84f2b7b3.png" width=700 height=700 class="img-fluid" alt="Sample image"> 
+                  </div>
+                  <div class="text-center pt-4">
+                    <div>
+                    <a href="<?php echo URLROOT; ?>"><button class="btn btn-warning">Main Page</button></a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
