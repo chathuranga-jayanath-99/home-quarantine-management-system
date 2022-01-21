@@ -24,7 +24,7 @@
                                 <table class="table table-hover table-warning">
                                     <thead>
                                         <tr>
-                                            <th class="ps-3" scope="col">Calee</th>
+                                            <th class="ps-3" scope="col">Callee</th>
                                             <th scope="col">Contact Number</th>
                                         </tr>
                                     </thead>
