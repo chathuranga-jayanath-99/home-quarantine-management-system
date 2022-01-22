@@ -61,7 +61,9 @@ abstract class Patient extends \Core\Controller {
             $this->setActive();
             $this->setPositive($this);
         } else {
-            echo "Invalid operation: Changing state from ".$state_str." to Positive is not allowed";
+            $err = "Changing state from ".$state_str." to Positive is not allowed";
+            View::render("Errors/invalidOperation.php", ['err' => $err]);
+            die();
         }
     }
 
@@ -77,7 +79,9 @@ abstract class Patient extends \Core\Controller {
         } else if ($state_str === 'Positive') {
             $this->state->nextState($this);
         } else {
-            echo "Invalid operation: Changing state from ".$state_str." to Inactive is not allowed";
+            $err = "Changing state from ".$state_str." to Inactive is not allowed";
+            View::render("Errors/invalidOperation.php", ['err' => $err]);
+            die();
         }
     }
 
@@ -86,7 +90,9 @@ abstract class Patient extends \Core\Controller {
         if ($state_str === 'Pending' || $state_str === 'Inactive') {
             $this->state->nextState($this);
         } else {
-            echo "Invalid operation: Changing state from ".$state_str." to Contact Person is not allowed";
+            $err = "Changing state from ".$state_str." to Contact Person is not allowed";
+            View::render("Errors/invalidOperation.php", ['err' => $err]);
+            die();
         }
     }
 

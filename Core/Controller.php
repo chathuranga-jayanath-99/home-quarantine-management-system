@@ -22,7 +22,8 @@ abstract class Controller
                 $this->after();
             }
         } else {
-            echo "Method $method not found in controller " . get_class($this);
+            $err = "Method $method not found in controller " . get_class($this);
+            View::render("Errors/notFound.php", ['err' => $err]);
         }
     }
 

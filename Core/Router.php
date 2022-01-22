@@ -71,15 +71,18 @@ class Router
                     $controller_object->$action();
                 } 
                 else {
-                    echo "Method $action in controller $controller not found";
+                    $err = "Method $action in controller $controller not found";
+                    View::render("Errors/notFound.php", ['err' => $err]);
                 }
             }
             else {
-                echo "controller class $controller not found";
+                $err = "controller class $controller not found";
+                View::render("Errors/notFound.php", ['err' => $err]);
             }
         }
         else {
-            echo "No route found";
+            $err = "No route found";
+            View::render("Errors/notFound.php", ['err' => $err]);
         }
     }
 
