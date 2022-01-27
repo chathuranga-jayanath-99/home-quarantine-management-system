@@ -119,9 +119,9 @@ class ChildPatient extends Patient {
                                 $this->activeHelper($this);
                             }
                             else {
-                                die('something went wrong');
+                                View::render("Errors/requestError.php");
                             }
-                            die('SUCCESS');
+                            die();
                         }
                         else {
                             $nav = [
@@ -370,10 +370,12 @@ class ChildPatient extends Patient {
                             ];
                             View::render('ChildPatients/accSuccess.php', ['childObj' => $this, 'nav' => $nav]);
                         } else {
-                            echo 'Failed';
+                            View::render("Errors/requestError.php");
                         }
                     } else {
-                        echo 'Failed';
+                        $err = "State '".ucfirst($_POST['act'])."' is invalid.";
+                        View::render("Errors/invalidOperation.php", ['err' => $err]);
+                        die();
                     }
                 }
             }
@@ -397,10 +399,10 @@ class ChildPatient extends Patient {
                         ];
                         View::render('ChildPatients/accSuccess.php', ['childObj' => $this, 'nav' => $nav]);
                     } else {
-                        echo 'Failed';
+                        View::render("Errors/requestError.php");
                     }
                 } else {
-                    echo 'Failed';
+                    View::render("Errors/requestError.php");
                 }
             }
             }
@@ -518,7 +520,7 @@ class ChildPatient extends Patient {
                         ];
                         View::render('ChildPatients/accSuccess.php', ['childObj' => $this, 'nav' => $nav]);
                     } else {
-                        echo 'Failed';
+                        View::render("Errors/requestError.php");
                     }
                 // } else {
                 //     echo 'Failed';
@@ -747,6 +749,8 @@ class ChildPatient extends Patient {
                         $record->initialize($symptoms);
                         $last = ChildPatientModel::getLastRecord($_SESSION['child_id']);
                         View::render('ChildPatients/recordSuccess.php', ['symptoms' => $record, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                    } else {
+                        View::render("Errors/requestError.php");
                     }
                 } else {
                     $last = ChildPatientModel::getLastRecord($_SESSION['child_id']);
@@ -841,7 +845,7 @@ class ChildPatient extends Patient {
                                 View::render('ChildPatients/accSuccess.php', ['childObj' => $this, 'nav' => $nav]);
                             }
                             else {
-                                die('something went wrong');
+                                View::render("Errors/requestError.php");
                             }
                             die();
                         } else {
@@ -946,7 +950,7 @@ class ChildPatient extends Patient {
                             View::render('ChildPatients/pwdChangeSuccess.php', ['has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                         }
                         else {
-                            echo 'Failed';
+                            View::render("Errors/requestError.php");
                         }
                     } else {
                         View::render('ChildPatients/pwdChange2.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
@@ -992,6 +996,8 @@ class ChildPatient extends Patient {
                     ];
                     if (ChildPatientModel::recordMedHistory($this->id, $medicalHistory)) {
                         View::render('ChildPatients/editMedHistorySuccess.php', ['description' => $description, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                    } else {
+                        View::render("Errors/requestError.php");
                     }
                 } else {
                     $medHistory = ChildPatientModel::getMedHistory($_SESSION['child_id']);
@@ -1076,12 +1082,15 @@ class ChildPatient extends Patient {
                             $data['address'] = '';
                         }
                         $id = ChildPatientModel::recordEditProfile($data);
-                        $data['name'] = htmlspecialchars(trim($_POST['name']));
-                        $data['email'] = htmlspecialchars(trim($_POST['email']));
-                        $data['contact_no'] = htmlspecialchars(trim($_POST['contact_no']));
-                        $data['address'] = htmlspecialchars(trim($_POST['address']));
-                        View::render('ChildPatients/editProfileSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
-
+                        if ($id) {
+                            $data['name'] = htmlspecialchars(trim($_POST['name']));
+                            $data['email'] = htmlspecialchars(trim($_POST['email']));
+                            $data['contact_no'] = htmlspecialchars(trim($_POST['contact_no']));
+                            $data['address'] = htmlspecialchars(trim($_POST['address']));
+                            View::render('ChildPatients/editProfileSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                        } else {
+                            View::render("Errors/requestError.php");
+                        }
                     }
                     else{
                         View::render('ChildPatients/editProfile.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
@@ -1163,12 +1172,14 @@ class ChildPatient extends Patient {
                         $symptoms = new Record();
                         $symptoms->initialize($record);
                         View::render('ChildPatients/symptomRecordView.php', ['symptoms' => $symptoms]);
+                    } else {
+                        View::render("Errors/noData-Frame.php");
                     }
                 } else {
-                    echo "Not Found";
+                    View::render("Errors/noData-Frame.php");
                 }
             } else {
-                echo "Not Found";
+                View::render("Errors/noData-Frame.php");
             }
         }
         else {
@@ -1317,6 +1328,9 @@ class ChildPatient extends Patient {
             $this->start_quarantine_date = $childObj->start_quarantine_date;
             $this->end_quarantine_date   = $childObj->end_quarantine_date;
             parent::transitionTo(PatientState::objFromName($childObj->state));
+        } else {
+            View::render("Errors/requestError.php");
+            die();
         }
     }
 
@@ -1338,6 +1352,9 @@ class ChildPatient extends Patient {
             $this->start_quarantine_date = $childObj->start_quarantine_date;
             $this->end_quarantine_date   = $childObj->end_quarantine_date;
             parent::transitionTo(PatientState::objFromName($childObj->state));
+        } else {
+            View::render("Errors/requestError.php");
+            die();
         }
     }
 

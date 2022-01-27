@@ -119,9 +119,9 @@ class Adultpatient extends Patient{
                                 $this->activeHelper($this);
                             }
                             else {
-                                die('something went wrong');
+                                View::render("Errors/requestError.php");
                             }
-                            die('SUCCESS');
+                            die();
                         }
                         else {
                             $nav = [
@@ -389,10 +389,12 @@ class Adultpatient extends Patient{
                             ];
                             View::render('AdultPatients/accSuccess.php', ['adultObj' => $this, 'nav' => $nav]);
                         } else {
-                            echo 'Failed';
+                            View::render("Errors/requestError.php");
                         }
                     } else {
-                        echo 'Failed';
+                        $err = "State '".ucfirst($_POST['act'])."' is invalid.";
+                        View::render("Errors/invalidOperation.php", ['err' => $err]);
+                        die();
                     }
                 }
             }
@@ -467,10 +469,10 @@ class Adultpatient extends Patient{
                         ];
                         View::render('AdultPatients/accSuccess.php', ['adultObj' => $this, 'nav' => $nav]);
                     } else {
-                        echo 'Failed';
+                        View::render("Errors/requestError.php");
                     }
                 } else {
-                    echo 'Failed';
+                    View::render("Errors/requestError.php");
                 }
             }
         }
@@ -538,7 +540,7 @@ class Adultpatient extends Patient{
                         ];
                         View::render('AdultPatients/accSuccess.php', ['adultObj' => $this, 'nav' => $nav]);
                     } else {
-                        echo 'Failed';
+                        View::render("Errors/requestError.php");
                     }
             }
         }
@@ -774,6 +776,8 @@ class Adultpatient extends Patient{
                         $record->initialize($symptoms);
                         $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
                         View::render('AdultPatients/recordSuccess.php', ['symptoms' => $record, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                    } else {
+                        View::render("Errors/requestError.php");
                     }
                 } else {
                     $last = AdultPatientModel::getLastRecord($_SESSION['adult_id']);
@@ -868,7 +872,7 @@ class Adultpatient extends Patient{
                                 View::render('AdultPatients/accSuccess.php', ['adultObj' => $this, 'nav' => $nav]);
                             }
                             else {
-                                die('something went wrong');
+                                View::render("Errors/requestError.php");
                             }
                             die();
                         } else {
@@ -973,7 +977,7 @@ class Adultpatient extends Patient{
                             View::render('AdultPatients/pwdChangeSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
                         }
                         else {
-                            echo 'Failed';
+                            View::render("Errors/requestError.php");
                         }
                     } else {
                         View::render('AdultPatients/pwdChange2.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
@@ -1021,6 +1025,8 @@ class Adultpatient extends Patient{
                     ];
                     if (AdultPatientModel::recordMedHistory($this->id, $medicalHistory)) {
                         View::render('AdultPatients/editMedHistorySuccess.php', ['description' => $description, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                    } else {
+                        View::render("Errors/requestError.php");
                     }
                 } else {
                     $medHistory = AdultPatientModel::getMedHistory($_SESSION['adult_id']);
@@ -1104,11 +1110,15 @@ class Adultpatient extends Patient{
                             $data['address'] = '';
                         }
                         $id = AdultPatientModel::recordEditProfile($data);
-                        $data['name'] = htmlspecialchars(trim($_POST['name']));
-                        $data['email'] = htmlspecialchars(trim($_POST['email']));
-                        $data['contact_no'] = htmlspecialchars(trim($_POST['contact_no']));
-                        $data['address'] = htmlspecialchars(trim($_POST['address']));
-                        View::render('AdultPatients/editProfileSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                        if ($id) {
+                            $data['name'] = htmlspecialchars(trim($_POST['name']));
+                            $data['email'] = htmlspecialchars(trim($_POST['email']));
+                            $data['contact_no'] = htmlspecialchars(trim($_POST['contact_no']));
+                            $data['address'] = htmlspecialchars(trim($_POST['address']));
+                            View::render('AdultPatients/editProfileSuccess.php', ['data' => $data, 'has_msg' => $has_msg, 'last' => $last, 'state' => $state]);
+                        } else {
+                            View::render("Errors/requestError.php");
+                        }
 
                     }
                     else{
@@ -1191,12 +1201,14 @@ class Adultpatient extends Patient{
                         $symptoms = new Record();
                         $symptoms->initialize($record);
                         View::render('AdultPatients/symptomRecordView.php', ['symptoms' => $symptoms]);
+                    } else {
+                        View::render("Errors/noData-Frame.php");
                     }
                 } else {
-                    echo "Not Found";
+                    View::render("Errors/noData-Frame.php");
                 }
             } else {
-                echo "Not Found";
+                View::render("Errors/noData-Frame.php");
             }
         }
         else {
@@ -1345,6 +1357,8 @@ class Adultpatient extends Patient{
             $this->start_quarantine_date = $adultObj->start_quarantine_date;
             $this->end_quarantine_date   = $adultObj->end_quarantine_date;
             parent::transitionTo(PatientState::objFromName($adultObj->state));
+        } else {
+            View::render("Errors/noData-Frame.php");
         }
     }
 
@@ -1365,6 +1379,8 @@ class Adultpatient extends Patient{
             $this->start_quarantine_date = $adultObj->start_quarantine_date;
             $this->end_quarantine_date   = $adultObj->end_quarantine_date;
             parent::transitionTo(PatientState::objFromName($adultObj->state));
+        } else {
+            View::render("Errors/noData-Frame.php");
         }
     }
     
